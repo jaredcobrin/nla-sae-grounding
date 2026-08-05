@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+*.parquet
+*.parquet.nla_meta.yaml
+*.npz
+.DS_Store
+my_reports/

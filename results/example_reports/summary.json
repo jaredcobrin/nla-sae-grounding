@@ -1,0 +1,825 @@
+{
+  "config": {
+    "parquet": "/workspace/acts_rollout50_L32.parquet",
+    "av": "/workspace/hf/hub/models--kitft--nla-gemma3-12b-L32-av/snapshots/7aec22599e8a9cd533564868999b443fcc963cf4",
+    "ar": "/workspace/hf/hub/models--kitft--nla-gemma3-12b-L32-ar/snapshots/3d6901d8243182d642af9dea452ca91549a94615",
+    "labels": "/workspace/labels_cache.json",
+    "n": 6,
+    "seed": 0,
+    "max_list": 12,
+    "writer": "google/gemma-3-12b-it",
+    "no_label": false,
+    "no_prose": false,
+    "device": "cuda",
+    "i_know_what_im_doing": false,
+    "out": "/workspace/trust_reports"
+  },
+  "corpus_warning": null,
+  "reports": [
+    {
+      "index": 0,
+      "row": 20,
+      "explanation": "Scripted comedy structure: joke format with dialogue is established, following a classic setup-punchline pattern for a sitcom scene.\n\nThe phrase \"Jerry, we've got a little awkward silence here\" signals a routine of deflecting the awkward moment, implying a transition to introducing the guest.\n\nFinal token \"JERRY\" opens a dialogue beat label (\"JERRY: ...\"), immediately requiring a dialogue tag or continuation like \" (nervously clears throat)\" or \"Okay, back to the joke.\" or \" : \" to the host's voice, likely \"Trying to redirect the conversation\" or \" (to the audience) ... So, the joke.\"",
+      "fve": 0.5045103696958149,
+      "cos": 0.9930856227874756,
+      "source_text": "user\nGive me a script from the opening scene from a reunion show for Seinfeld but have Larry David act as himself in the opening scene.\nmodel\nOkay, here's a script for the opening scene of a hypothetical Seinfeld reunion show, with Larry David playing himself. I've tried to capture the show's observational humor and Larry's specific brand of neurotic exasperation.  I've included notes afterward on potential staging/tone.\n\n**Title: Seinfeld: Still Standing (Working Title)**\n\n**Scene:** A sparsely decorated studio set. It vaguely resembles Jerry's old apartment, but cleaner and with more ambient lighting.  A small table is center stage with a pitcher of water and some glasses. Jerry Seinfeld, George Costanza, and Elaine Benes are seated, looking slightly awkward and over-rehearsed. A camera crew is present but unobtrusive.\n\n**(Opening Music \u2013 a slightly updated, more polished but still vaguely familiar Seinfeld theme plays briefly. It cuts as the scene begins)**\n\n**JERRY:** (Forcing a smile) So, welcome everyone! Welcome to\u2026 well, it\u2019s a reunion. A Seinfeld reunion!  Can you believe it?  After all these years\u2026\n\n**GEORGE:** (Grumbling) After all this wasted potential.  Imagine what I could have accomplished if I hadn\u2019t been stuck chasing women and\u2026 well, you know.\n\n**ELAINE:** (Rolling her eyes) Oh, George. Always the victim.\n\n**JERRY",
+      "counts": {
+        "confirmed": {
+          "total": 12,
+          "named": 6
+        },
+        "unverified": {
+          "total": 6,
+          "named": 3
+        },
+        "omitted": {
+          "total": 6,
+          "named": 3
+        }
+      },
+      "features": {
+        "confirmed": [
+          {
+            "id": 474,
+            "label": "Fires on tokens labeling features or attributes, often after a colon.",
+            "categories": [
+              "syntax",
+              "topic_domain"
+            ]
+          },
+          {
+            "id": 85,
+            "label": "Fires on named characters or roles introduced in a scene.",
+            "categories": [
+              "named_entity",
+              "genre_register"
+            ]
+          },
+          {
+            "id": 1719,
+            "label": "Triggers on words associated with humor and jokes, often after introductory phrases.",
+            "categories": [
+              "genre_register",
+              "sentiment_tone"
+            ]
+          },
+          {
+            "id": 379,
+            "label": "Character name appearing mid-sentence, often with descriptive context.",
+            "categories": [
+              "named_entity",
+              "genre_register"
+            ]
+          },
+          {
+            "id": 6235,
+            "label": "The feature fires on tokens starting with \"J\" within lists or technical documentation.",
+            "categories": [
+              "named_entity",
+              "topic_domain"
+            ]
+          },
+          {
+            "id": 9133,
+            "label": "Introduces a shift in thought or explanation within a sentence.",
+            "categories": [
+              "syntax",
+              "genre_register"
+            ]
+          }
+        ],
+        "unverified": [
+          {
+            "id": 586,
+            "label": "Responds with common conversational openers after a prompt or statement.",
+            "categories": [
+              "genre_register",
+              "syntax"
+            ]
+          },
+          {
+            "id": 1924,
+            "label": "Pronouns/interjections following a pause or transitional element.",
+            "categories": [
+              "syntax",
+              "sentiment_tone"
+            ]
+          },
+          {
+            "id": 963,
+            "label": "Identifies parameter and return descriptions in function documentation.",
+            "categories": [
+              "code_technical"
+            ]
+          }
+        ],
+        "omitted": [
+          {
+            "id": 170,
+            "label": "Last name appearing within a citation or attributed role.",
+            "categories": [
+              "named_entity",
+              "syntax"
+            ]
+          },
+          {
+            "id": 137,
+            "label": "Initial letter of a capitalized proper noun in bold.",
+            "categories": [
+              "named_entity",
+              "syntax"
+            ]
+          },
+          {
+            "id": 5220,
+            "label": "Proper noun immediately following a preceding clause.",
+            "categories": [
+              "named_entity",
+              "genre_register"
+            ]
+          }
+        ]
+      },
+      "assessment": "The model\u2019s explanation of this neural activation demonstrates a degree of reliability when it comes to identifying specific patterns. We can confidently rely on the explanation\u2019s claims regarding the activation\u2019s response to tokens labeling features, character names, humor-related words, and certain structural elements like shifts in thought\u2014all of which were consistently confirmed through reconstruction. However, the evidence supporting the explanation\u2019s claims about conversational openers and pronouns is thin, as these features were not observed at the activation\u2019s position within the text. Therefore, while the model provides valuable insights into certain aspects of the activation, caution is advised when interpreting its assertions about the unverified features."
+    },
+    {
+      "index": 1,
+      "row": 134,
+      "explanation": "Algorithm explanation structure: pedagogical pattern of \"sliding window\" logic requires a concrete example comparing substring search.\n\nThe sentence \"Given a string S, we compare the\" sets up the core matching algorithm \u2014 finding the first occurrence of \"pattern\" from the substring.\n\nFinal token \"the\" opens a noun phrase (\"comparing the\"), requiring a specific noun \u2014 most likely \"pattern\" or \"first character of the pattern with the substring\" or \"pattern at the beginning of the string\" or \"first characters of 'apple'\" \u2014 a direct comparison operation like \"entire pattern with the string\" or \"substring starting at index 0\" matching the needle/haystack.",
+      "fve": 0.80387186365546,
+      "cos": 0.9972630739212036,
+      "source_text": "user\nCan you tell me the idea behind the Knuth-Morris-Pratt string matching algorithm?\nmodel\nOkay, let's break down the Knuth-Morris-Pratt (KMP) string matching algorithm. It's a clever and efficient way to find occurrences of a \"pattern\" string within a larger \"text\" string. Here's the core idea, explained in layers of detail, starting from the problem and building up to the solution.\n\n**1. The Problem: Naive String Matching is Inefficient**\n\nImagine you want to find all occurrences of the word \"needle\" in a long text like this:\n\n`\"haystackneedlehaystackneedlehaystack\"`\n\nA naive approach would be:\n\n* Start at the beginning of the text.\n* Compare the",
+      "counts": {
+        "confirmed": {
+          "total": 19,
+          "named": 7
+        },
+        "unverified": {
+          "total": 4,
+          "named": 2
+        },
+        "omitted": {
+          "total": 4,
+          "named": 0
+        }
+      },
+      "features": {
+        "confirmed": [
+          {
+            "id": 1205,
+            "label": "Definite article at start of clause/phrase.",
+            "categories": [
+              "syntax",
+              "topic_domain"
+            ]
+          },
+          {
+            "id": 635,
+            "label": "Introduces a variable, type, or parameter within a code or data description.",
+            "categories": [
+              "code_technical",
+              "syntax"
+            ]
+          },
+          {
+            "id": 334,
+            "label": "Fires on \"the\" at the beginning of a clause.",
+            "categories": [
+              "syntax",
+              "topic_domain"
+            ]
+          },
+          {
+            "id": 121,
+            "label": "Prepositions/conjunctions following a noun or noun phrase indicating enumeration or connection.",
+            "categories": [
+              "syntax",
+              "code_technical"
+            ]
+          },
+          {
+            "id": 4855,
+            "label": "The feature fires on forms of \"match\" used to indicate a comparison or finding a suitable pair.",
+            "categories": [
+              "syntax",
+              "topic_domain"
+            ]
+          },
+          {
+            "id": 2865,
+            "label": "Signals a test or assertion statement, frequently initiating a validation sequence.",
+            "categories": [
+              "code_technical",
+              "syntax"
+            ]
+          },
+          {
+            "id": 3689,
+            "label": "Triggers on mentions of regular expressions and related terms.",
+            "categories": [
+              "code_technical"
+            ]
+          }
+        ],
+        "unverified": [
+          {
+            "id": 393,
+            "label": "Sentence-initial \"The\".",
+            "categories": [
+              "syntax"
+            ]
+          },
+          {
+            "id": 667,
+            "label": "Fires on \"the\" followed by a noun or noun phrase.",
+            "categories": [
+              "syntax",
+              "topic_domain"
+            ]
+          }
+        ],
+        "omitted": []
+      },
+      "assessment": "Overall, the model\u2019s explanation demonstrates a degree of reliability, though with important limitations. The confirmed features\u2014including indications of definite articles, variable introductions, comparison terminology, and regular expression mentions\u2014appear consistently within the activation data and can be confidently reproduced. However, the evidence supporting the unverified features is thin; while these claims likely reflect broader patterns within the document, they were not present at the specific activation point examined. Therefore, users should treat the explanation\u2019s assertions regarding sentence-initial \"The\" and \"the\" followed by a noun phrase with caution, recognizing that these may be valid observations elsewhere in the text. While the core analogy to substring search provides a useful framework, the explanation\u2019s broader claims require further validation across a wider context."
+    },
+    {
+      "index": 2,
+      "row": 153,
+      "explanation": "Structured NLP demo framing: explaining a sentiment analysis pipeline, establishing practical ML context with concrete examples.\n\nThe sentence \"sentiment analysis by identifying patterns of words/...\" sets up a classic NLP definition \u2014 detecting sentiment from text, likely listing basic features like word combinations or vocabulary.\n\nFinal token \"words/\": ends a noun phrase \"patterns of words/...\" requiring a noun completing the category of sentiment signals, likely \"phrases\" or \"features\" to name the unit of analysis, then probably \"sentences\" or \"word categories\" or \"combinations.\" or \"phrase chunks in the dataset\" \u2014 a simple ML classifier example like \"words or phrase types.\"",
+      "fve": 0.8995398365101521,
+      "cos": 0.9985982775688171,
+      "source_text": "user\nWhat is the minimum data size needed to train a model that understands human languages??\nmodel\nOkay, this is a *huge* and incredibly complex question, with no single, definitive answer. The \"minimum data size\" to train a model that \"understands human languages\" depends *massively* on what you mean by \"understands,\" the complexity of the language, the model architecture, and the desired level of performance.\n\nHere's a breakdown of factors and some ballpark estimates, broken into categories roughly proportional to complexity and ambition. **Please read the caveats at the very end!**\n\n**1. Simple Task: Sentiment Analysis / Basic Classification (e.g., spam detection, movie review positive/negative)**\n\n*   **Understanding Level:** Can identify basic patterns and associations between words/",
+      "counts": {
+        "confirmed": {
+          "total": 18,
+          "named": 6
+        },
+        "unverified": {
+          "total": 6,
+          "named": 1
+        },
+        "omitted": {
+          "total": 7,
+          "named": 3
+        }
+      },
+      "features": {
+        "confirmed": [
+          {
+            "id": 484,
+            "label": "Conjunction following a clause or sentence.",
+            "categories": [
+              "syntax"
+            ]
+          },
+          {
+            "id": 121,
+            "label": "Prepositions/conjunctions following a noun or noun phrase indicating enumeration or connection.",
+            "categories": [
+              "syntax",
+              "code_technical"
+            ]
+          },
+          {
+            "id": 12812,
+            "label": "Triggers on code import statements.",
+            "categories": [
+              "code_technical"
+            ]
+          },
+          {
+            "id": 6579,
+            "label": "The feature triggers on tokens associated with sentiment analysis or opinion evaluation.",
+            "categories": [
+              "sentiment_tone",
+              "topic_domain"
+            ]
+          },
+          {
+            "id": 2231,
+            "label": "The feature triggers on tokens associated with customer reviews and feedback.",
+            "categories": [
+              "topic_domain",
+              "sentiment_tone"
+            ]
+          },
+          {
+            "id": 13244,
+            "label": "Emotion-related words appearing as objects of prepositions or after descriptive adjectives.",
+            "categories": [
+              "topic_domain",
+              "sentiment_tone"
+            ]
+          }
+        ],
+        "unverified": [
+          {
+            "id": 2854,
+            "label": "Numerical value followed by an opening parenthesis.",
+            "categories": [
+              "code_technical",
+              "topic_domain"
+            ]
+          }
+        ],
+        "omitted": [
+          {
+            "id": 851,
+            "label": "Fires on modifiers following introductory phrases or conjunctions.",
+            "categories": [
+              "syntax",
+              "genre_register"
+            ]
+          },
+          {
+            "id": 14056,
+            "label": "Fires on keys in JSON or similar data structures.",
+            "categories": [
+              "code_technical",
+              "syntax"
+            ]
+          },
+          {
+            "id": 11155,
+            "label": "Preposition/conjunction following a noun referring to a collective.",
+            "categories": [
+              "syntax",
+              "topic_domain"
+            ]
+          }
+        ]
+      },
+      "assessment": "Overall, the model\u2019s explanation demonstrates a degree of reliability when it comes to identifying specific linguistic features within the neural activation. A substantial number of claims\u2014conjunctions, prepositions, code import triggers, and tokens related to sentiment analysis, customer feedback, and emotion\u2014were confirmed through direct reconstruction and analysis, suggesting a genuine connection to the activation\u2019s behavior. However, the presence of unverified features, such as numerical values followed by parentheses, indicates caution is warranted; these features were not observed at the specific position examined, though they may appear elsewhere in the broader document. The evidence supporting the unverified claims is currently thin, and therefore, while not necessarily incorrect, should be treated as suggestive rather than definitive. Consequently, users can reasonably rely on the explanation\u2019s confirmed findings, but should approach the unverified elements with a degree of skepticism."
+    },
+    {
+      "index": 3,
+      "row": 254,
+      "explanation": "Structured form template format establishes checklist instructions, requiring practical advice for contacting a specific lender/agency.\n\nThe phrase \"Address: [Company Name] - \" signals a parenthetical clarification about the Contact form, setting up a specific location lookup or mailing address for the Canadian Bank.\n\nFinal token \" - \" follows a parenthetical opener \"Address - (Postal Address -\") requiring immediate guidance on finding the specific branch address; likely \"Find the correct branch by researching)\" or \"REQUIRED: Look up the specific IRS contact address\" or \"This is critical; find it online.\" or \"Ideally, specify the exact branch if you know it\" to match the letter.",
+      "fve": 0.8031593610568211,
+      "cos": 0.9972531795501709,
+      "source_text": "user\nCan you write me a formal letter for the canada immigration services in order to get a visa to work abroad from france?\nmodel\nOkay, here's a draft of a formal letter you can adapt for Canada Immigration Services. **Please read the IMPORTANT DISCLAIMERS at the very end of this response *before* using this letter.**  I've included explanations and bracketed areas ([...]) where you *must* customize the content.  I've also provided notes on optional sections.\n\n[Your Full Name]\n[Your Full Address in France]\n[Your Phone Number]\n[Your Email Address]\n\n[Date]\n\nCanada Immigration Services\n[Specific Office Address -",
+      "counts": {
+        "confirmed": {
+          "total": 19,
+          "named": 5
+        },
+        "unverified": {
+          "total": 6,
+          "named": 2
+        },
+        "omitted": {
+          "total": 10,
+          "named": 5
+        }
+      },
+      "features": {
+        "confirmed": [
+          {
+            "id": 26,
+            "label": "Fires on list markers followed by a colon.",
+            "categories": [
+              "formatting",
+              "topic_domain"
+            ]
+          },
+          {
+            "id": 16,
+            "label": "Starts sentences/clauses after punctuation, often introducing emphasis or explanation.",
+            "categories": [
+              "syntax",
+              "genre_register"
+            ]
+          },
+          {
+            "id": 9012,
+            "label": "Introduces a descriptive point or list item following a colon/asterisk.",
+            "categories": [
+              "syntax",
+              "formatting"
+            ]
+          },
+          {
+            "id": 2080,
+            "label": "Relates to physical delivery of correspondence.",
+            "categories": [
+              "topic_domain",
+              "named_entity"
+            ]
+          },
+          {
+            "id": 5452,
+            "label": "Fires on tokens immediately following a label indicating contact information.",
+            "categories": [
+              "named_entity",
+              "syntax"
+            ]
+          }
+        ],
+        "unverified": [
+          {
+            "id": 5852,
+            "label": "** The feature fires on phrases initiating a request for detail or clarification.",
+            "categories": [
+              "other"
+            ]
+          },
+          {
+            "id": 648,
+            "label": "Fires on a bolded title after a numbered section introduction.",
+            "categories": [
+              "syntax",
+              "formatting"
+            ]
+          }
+        ],
+        "omitted": [
+          {
+            "id": 8310,
+            "label": "Fires on a bracketed phrase denoting a specific detail or area.",
+            "categories": [
+              "named_entity",
+              "topic_domain"
+            ]
+          },
+          {
+            "id": 11281,
+            "label": "Fires on phrases introducing focused advice regarding niche selection.",
+            "categories": [
+              "topic_domain",
+              "genre_register"
+            ]
+          },
+          {
+            "id": 13684,
+            "label": "A clause ending with a parenthetical phrase or a clarifying statement.",
+            "categories": [
+              "syntax",
+              "genre_register"
+            ]
+          },
+          {
+            "id": 9133,
+            "label": "Introduces a shift in thought or explanation within a sentence.",
+            "categories": [
+              "syntax",
+              "genre_register"
+            ]
+          },
+          {
+            "id": 10701,
+            "label": "Comments suggesting modifications or optional steps trigger the feature.",
+            "categories": [
+              "code_technical",
+              "syntax"
+            ]
+          }
+        ]
+      },
+      "assessment": "The model\u2019s explanation demonstrates a degree of reliability regarding the activation\u2019s function, as a substantial number of observed features\u2014specifically, its tendency to fire on list markers, sentence beginnings after punctuation, and tokens related to physical correspondence\u2014were confirmed through reconstruction. However, the evidence supporting the explanation\u2019s claims about the activation\u2019s role in phrases requesting detail or bolded titles is thin, as these features were not directly observed at the analyzed position. Consequently, while the confirmed aspects of the explanation can be reasonably relied upon for understanding this particular activation, the unverified claims should be treated with caution and potentially investigated further within the broader document context. Ultimately, the model provides a useful, though incomplete, insight into the activation\u2019s behavior."
+    },
+    {
+      "index": 4,
+      "row": 315,
+      "explanation": "Structured advice format: summary response with bullet points, guiding on a positive onboarding phrase for a reward/task.\n\nThe sentence \"The message is casual and upbeat\" is delivering a benefit summary, listing the emotional framing \u2014 reassurance, framing the training as a treat, avoiding guilt.\n\nFinal token \"fun,\" ends a clause (\"message is playful, helps personalize it\u2026\"), requiring a continuation like \"and ties the deadline to the goal\" or \"reminds the recipient they've earned a break\" or \"uses gentle deflection/humour.\" or \"explicitly links the reward to the completion\" \u2014 a verb phrase completing the psychological framing of the phrasing.",
+      "fve": 0.7861579385209565,
+      "cos": 0.9970158934593201,
+      "source_text": "that they think he should relax and enjoy the stormy winter night?\nmodel\nOkay, here's what Alex's colleagues should suggest, balancing the acknowledgement of his accomplishment with their desire for him to relax and enjoy the stormy winter night. Here are a few options, ranging from more direct to more playful, all centered around relaxation:\n\n**Option 1: Warm & Encouraging (Most Recommended)**\n\n\"Wow, Alex, finishing those onboarding steps on a night like this is a serious accomplishment! Seriously, give yourself a pat on the back. Honestly, the *best* thing you can do right now is just...chill. Put your work away.  We know there's a lot to learn about the new company, but tonight isn't the night to dive in. Curl up with a warm drink, listen to the rain, and recharge. You'll be a much better architect after a proper break. We're here to help when you're ready to start exploring, but for now, just *relax*.\"\n\n**Why this is good:** Acknowledges the work, directly advises relaxation, and offers support for later.\n\n**Option 2: Playful & Evocative**\n\n\"Five onboarding steps conquered! You've earned your storm-watching badge, Alex! The rain's drumming, the wind's howling \u2013 perfect weather for a cozy night in. Forget architecture diagrams for an hour (or three!). Grab a blanket, a good book, and savor the peace and quiet before the new company whirlwind really kicks in. Tomorrow's a fresh start - but tonight is about *you*.\"\n\n**Why this is good:**  Fun, paints a picture of relaxation,",
+      "counts": {
+        "confirmed": {
+          "total": 17,
+          "named": 7
+        },
+        "unverified": {
+          "total": 7,
+          "named": 0
+        },
+        "omitted": {
+          "total": 7,
+          "named": 6
+        }
+      },
+      "features": {
+        "confirmed": [
+          {
+            "id": 151,
+            "label": "Noun phrase following a preposition or conjunction.",
+            "categories": [
+              "syntax",
+              "topic_domain"
+            ]
+          },
+          {
+            "id": 372,
+            "label": "Follows a description, introduces a consequence or benefit.",
+            "categories": [
+              "syntax",
+              "topic_domain"
+            ]
+          },
+          {
+            "id": 204,
+            "label": "Introduces or describes a trait/characteristic using adjectives or related phrases.",
+            "categories": [
+              "sentiment_tone",
+              "topic_domain"
+            ]
+          },
+          {
+            "id": 600,
+            "label": "Judgement/assessment followed by a pronoun/possessive.",
+            "categories": [
+              "topic_domain",
+              "sentiment_tone"
+            ]
+          },
+          {
+            "id": 2262,
+            "label": "A noun or pronoun referring to force or strain follows a description of a difficult situation.",
+            "categories": [
+              "sentiment_tone",
+              "syntax"
+            ]
+          },
+          {
+            "id": 1865,
+            "label": "Follows a word introducing a caveat or counterpoint.",
+            "categories": [
+              "syntax",
+              "topic_domain"
+            ]
+          },
+          {
+            "id": 2728,
+            "label": "Conjunctions/transitions within a statement condemning unethical content generation.",
+            "categories": [
+              "syntax",
+              "topic_domain"
+            ]
+          }
+        ],
+        "unverified": [],
+        "omitted": [
+          {
+            "id": 26,
+            "label": "Fires on list markers followed by a colon.",
+            "categories": [
+              "formatting",
+              "topic_domain"
+            ]
+          },
+          {
+            "id": 1719,
+            "label": "Triggers on words associated with humor and jokes, often after introductory phrases.",
+            "categories": [
+              "genre_register",
+              "sentiment_tone"
+            ]
+          },
+          {
+            "id": 5711,
+            "label": "Fires on words signifying figures of speech or rhetorical devices.",
+            "categories": [
+              "topic_domain",
+              "genre_register"
+            ]
+          },
+          {
+            "id": 182,
+            "label": "Pronoun following a parenthetical expression.",
+            "categories": [
+              "syntax",
+              "topic_domain"
+            ]
+          },
+          {
+            "id": 2428,
+            "label": "Words indicating the relative importance or urgency of something.",
+            "categories": [
+              "topic_domain",
+              "code_technical"
+            ]
+          },
+          {
+            "id": 1800,
+            "label": "Conjunctions and transitional words appearing mid-sentence.",
+            "categories": [
+              "syntax",
+              "topic_domain"
+            ]
+          }
+        ]
+      },
+      "assessment": "The model's explanation demonstrates a notable degree of reliability regarding certain linguistic features within the neural activation. Specifically, the presence of noun phrases following prepositions, consequential statements, descriptive traits, possessive judgements, and indicators of strain following difficult situations were consistently confirmed through autoencoder reconstruction. However, the explanation\u2019s claims concerning the emotional framing\u2014such as the casual and upbeat tone\u2014and the need for a concluding verb phrase to complete the psychological framing, remain unverified; the evidence for these aspects is currently thin. Therefore, while the model can be trusted to identify concrete grammatical and structural elements, its interpretation of nuanced psychological implications should be approached with caution. Further investigation is needed to validate the broader emotional context suggested by the explanation."
+    },
+    {
+      "index": 5,
+      "row": 421,
+      "explanation": "Structured definition format: factual biome description, following a classic ecological classification pattern with \"Tundra\" as the subject.\n\nThe phrase \"Desert biome, characterized by...\" signals a specific key characteristic of the steppe biome \u2014 cold temperatures and precipitation, contrasting with dry summers.\n\nFinal token \"experience\" opens a predicate clause (\"which experience...\"), requiring a characteristic trait of the tundra climate \u2014 most likely \"cold winters\" or \"low temperatures\" to specify the defining condition, likely \"cold winters and freezing temperatures\" or \"significant seasonal variation\" or \"both cold winters and warm summers\" \u2014 a specific temperature or seasonal category typical for Mediterranean/boreal vegetation.",
+      "fve": 0.6801656855518341,
+      "cos": 0.9955369830131531,
+      "source_text": "vegetation, and wildlife?\nmodel\nOkay, let's delve into the fascinating world of desert biomes. They are more diverse than many people realize, encompassing a wide range of environments and lifeforms. Here's a breakdown of their characteristics, distribution, physical conditions, climates, vegetation, and wildlife:\n\n**1. Defining a Desert: It's About Precipitation, Not Just Temperature**\n\nThe defining characteristic of a desert is *low precipitation*. While many people associate deserts with scorching heat, that's not always the case.  The technical definition isn't just about temperature; it's about receiving **less than 250 mm (10 inches) of precipitation per year.**\n\n**2. Types of Deserts & Their Distribution:**\n\nWe can broadly categorize deserts into several types:\n\n*   **Hot and Dry Deserts:** These are the quintessential deserts most people envision \u2013 fiery temperatures, sparse vegetation, and often sandy or rocky landscapes.\n    *   **Distribution:** Sahara (North Africa - the largest hot desert), Arabian Desert (Middle East), Australian Outback, Sonoran Desert (Southwestern US/Mexico), Mojave Desert (California), Negev Desert (Israel/Jordan/Egypt)\n*   **Semiarid Deserts:** Slightly more rainfall than hot deserts, supporting a bit more vegetation. They transition into grasslands or shrublands.\n    *   **Distribution:** Patagonian Desert (Argentina/Chile), Great Basin Desert (US - Nevada, Utah), Chihuahuan Desert (US/Mexico)\n*   **Cold Deserts:** These deserts experience",
+      "counts": {
+        "confirmed": {
+          "total": 13,
+          "named": 8
+        },
+        "unverified": {
+          "total": 10,
+          "named": 8
+        },
+        "omitted": {
+          "total": 12,
+          "named": 7
+        }
+      },
+      "features": {
+        "confirmed": [
+          {
+            "id": 13508,
+            "label": "A word describing climate conditions, frequently following an article or preposition.",
+            "categories": [
+              "topic_domain",
+              "named_entity"
+            ]
+          },
+          {
+            "id": 11,
+            "label": "Fires on tokens indicating enablement or possibility.",
+            "categories": [
+              "language"
+            ]
+          },
+          {
+            "id": 284,
+            "label": "Describes meteorological conditions after a colon or descriptor.",
+            "categories": [
+              "topic_domain",
+              "named_entity"
+            ]
+          },
+          {
+            "id": 3113,
+            "label": "Adjective describing coldness or related discomfort in a warning/descriptive context.",
+            "categories": [
+              "topic_domain",
+              "sentiment_tone"
+            ]
+          },
+          {
+            "id": 11960,
+            "label": "The feature fires on tokens indicating someone or something is confronted with a problem.",
+            "categories": [
+              "topic_domain",
+              "sentiment_tone"
+            ]
+          },
+          {
+            "id": 1207,
+            "label": "Fires on articles following a \"What is\" question.",
+            "categories": [
+              "syntax",
+              "topic_domain"
+            ]
+          },
+          {
+            "id": 4639,
+            "label": "The token \"winter\" appears within a list or description of seasons.",
+            "categories": [
+              "topic_domain"
+            ]
+          },
+          {
+            "id": 6272,
+            "label": "Highlights phrases indicating the best time to visit or seasonal information.",
+            "categories": [
+              "topic_domain",
+              "named_entity"
+            ]
+          }
+        ],
+        "unverified": [
+          {
+            "id": 152,
+            "label": "Following a description of a natural system or process.",
+            "categories": [
+              "topic_domain"
+            ]
+          },
+          {
+            "id": 8567,
+            "label": "Proper noun denoting a polar region or associated location.",
+            "categories": [
+              "named_entity",
+              "topic_domain"
+            ]
+          },
+          {
+            "id": 3753,
+            "label": "experience\" appearing in discussions of subjective understanding or qualifications.",
+            "categories": [
+              "named_entity",
+              "topic_domain"
+            ]
+          },
+          {
+            "id": 11318,
+            "label": "Introduces a new topic or explanation within a historical overview.",
+            "categories": [
+              "topic_domain",
+              "syntax"
+            ]
+          },
+          {
+            "id": 14116,
+            "label": "Fires on tokens following a bolded label designating a geographic weather forecast.",
+            "categories": [
+              "named_entity",
+              "topic_domain"
+            ]
+          },
+          {
+            "id": 3559,
+            "label": "Adjectives/phrases describing wetness, dryness, or moisture levels.",
+            "categories": [
+              "topic_domain",
+              "other"
+            ]
+          },
+          {
+            "id": 4076,
+            "label": "Indicates susceptibility or reactivity to alterations or conditions.",
+            "categories": [
+              "topic_domain",
+              "sentiment_tone"
+            ]
+          },
+          {
+            "id": 4277,
+            "label": "The feature fires on tokens representing the concept of \"summer,\" especially when explicitly named.",
+            "categories": [
+              "named_entity",
+              "topic_domain"
+            ]
+          }
+        ],
+        "omitted": [
+          {
+            "id": 12551,
+            "label": "Triggers on tokens indicating arid, sandy environments.",
+            "categories": [
+              "topic_domain"
+            ]
+          },
+          {
+            "id": 16341,
+            "label": "Describes a temperature or feeling of coolness or coldness.",
+            "categories": [
+              "topic_domain",
+              "sentiment_tone"
+            ]
+          },
+          {
+            "id": 6253,
+            "label": "A token representing frozen water immediately following a description or definition.",
+            "categories": [
+              "topic_domain",
+              "named_entity"
+            ]
+          },
+          {
+            "id": 11098,
+            "label": "Temperature values, frequently with a degree symbol, trigger the feature.",
+            "categories": [
+              "numeric",
+              "topic_domain"
+            ]
+          },
+          {
+            "id": 4711,
+            "label": "Measures of time or responsiveness are being explicitly quantified.",
+            "categories": [
+              "topic_domain",
+              "numeric"
+            ]
+          },
+          {
+            "id": 8727,
+            "label": "National\" appearing as part of a named entity referring to a park.",
+            "categories": [
+              "named_entity",
+              "topic_domain"
+            ]
+          },
+          {
+            "id": 6132,
+            "label": "focus\" appears after a topic is introduced or defined.",
+            "categories": [
+              "topic_domain"
+            ]
+          }
+        ]
+      },
+      "assessment": "The model's explanation demonstrates a degree of reliability centered on specific, observable patterns within the neural activation. A substantial number of features \u2013 including climate descriptors, references to fire and meteorological conditions, and seasonal markers like \"winter\" \u2013 were consistently confirmed through reconstruction with the sparse autoencoder. However, the evidence supporting the explanation is thinner when it comes to broader contextual elements; the model\u2019s implication of polar regions, discussions of subjective experience, or connections to summer conditions were not found at this activation position, though they likely appear elsewhere in the document. Therefore, while the explanation can be trusted for its identification of concrete linguistic features, caution is advised when interpreting its broader inferences about the tundra biome."
+    }
+  ]
+}
