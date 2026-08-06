@@ -146,6 +146,28 @@ python src/trust_report.py --parquet acts.parquet --av <av> --ar <ar> \
 Models: `google/gemma-3-12b-it`, `kitft/nla-gemma3-12b-L32-{av,ar}`,
 `google/gemma-scope-2-12b-it`.
 
+### Hardware
+
+Three 12B models are involved, but never more than two at once — `trust_report.py`
+releases the AV and AR before loading the writer.
+
+| stage | models resident | VRAM |
+|---|---|---|
+| `roundtrip.py` | AV + AR | **~48 GB** |
+| `trust_report.py` | AV + AR, then writer alone | **~48 GB** peak |
+| everything else | one base model | **~24 GB** |
+
+So **48 GB is the binding requirement** — an A6000, L40S or A40 is enough; an
+80 GB A100 is not needed. If you only want to run labelling, judging or
+descriptions against already-computed feature sets, 24 GB suffices.
+
+**Storage: ~150 GB.** Roughly 24 GB each for the base model, AV and AR; ~2.6 GB
+for the two SAE variants (weights plus their exemplar stores); the rest is the
+HuggingFace datasets cache for oasst1/LMSYS and working space.
+
+`transformers` must be `<5`: 5.x tokenizes the CJK injection marker differently
+and the NLA config assertion fails at startup.
+
 ---
 
 ## Scope, honestly

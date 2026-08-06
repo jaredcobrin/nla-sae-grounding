@@ -54,6 +54,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import gc
 import json
 import os
 import re
@@ -352,6 +353,17 @@ def main() -> None:
         print(f"  act {i}: FVE {rec['fve']:+.3f}  confirmed {len(sets['confirmed']):>3}"
               f"  unverified {len(sets['unverified']):>3}"
               f"  omitted {len(sets['omitted']):>3}")
+
+    # ---- free the AV and AR before loading the writer ----
+    # They are only needed for the round-trip loop above. Holding all three
+    # 12B models at once costs ~72GB and forces an 80GB+ card; releasing these
+    # two brings the peak down to ~48GB, which fits an A6000/L40S/A40. The
+    # feature sets and explanations are already extracted into `reports`.
+    del av, critic
+    gc.collect()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+    print("[mem] released AV and AR; peak from here is the writer model alone")
 
     # ---- label anything this run has never seen ----
     from transformers import AutoModelForCausalLM, AutoTokenizer
