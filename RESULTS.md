@@ -60,9 +60,9 @@ Raw artefacts for every table are in [`results/`](.).
 
 ## 1. Four reconstruction scores
 
-Four FVE numbers, all on the same 50 activations. **B is the NLA's own round-trip
-score**: activation → AV writes an explanation → AR rebuilds an activation from
-that text. It is the number the NLA paper reports for its own system.
+Four FVE numbers on the same 50 activations. **B is the NLA's own round-trip
+score** — activation → AV writes an explanation → AR rebuilds an activation from
+that text — and is the number the paper reports for its own system.
 
 | | what is being reconstructed, from what | SAE used | FVE |
 |---|---|---|---|
@@ -71,74 +71,42 @@ that text. It is the number the NLA paper reports for its own system.
 | **C** | the AR's output, from **the SAE's features** | `l0_big` | 0.700 |
 | **D** | the activation, from the SAE's reading of the AR's output | `l0_big` | 0.494 |
 
-**B does not involve the SAE at all** — it is activation → AV → text → AR →
-activation, scored directly. So B is fixed no matter which SAE is chosen; only
-A, C and D would move.
-
-`l0_big` is the variant selected for reconstruction fidelity (~120 active
-features against `l0_small`'s ~21), so **A is the SAE at its strongest**, which
-makes B > A the conservative form of that comparison. Re-running A at `l0_small`
-would be expected to score lower and widen the gap — *expected*, not measured;
-these are separately trained dictionaries, and the check is item 0 in
-[FUTURE_WORK.md](FUTURE_WORK.md).
-
 ### B > A, by 0.152
 
-The NLA round trip reconstructs an activation **better than this SAE does** —
-measured on the corpus that SAE was fine-tuned on.
+The NLA round trip reconstructs an activation better than this SAE does, measured
+on the corpus the SAE was fine-tuned on. B does not involve the SAE at all, so it
+is fixed whichever variant is chosen; `l0_big` is the SAE at its strongest, which
+makes this the conservative form of the comparison.
 
-Both are lossy compressions of the same vector, so the comparison is fair in that
-sense, but they were built for different purposes: the SAE is optimised for sparse
-*decomposition*, the NLA for *reconstruction*. This says the NLA reconstructs
-better. It does not say English is a better representation than a feature basis.
+### C > A, by 0.113
 
-### C > A: the SAE reads the AR's output better than a real activation, by 0.113
+The same SAE reconstructs the AR's output better than it reconstructs a real
+activation. How many dictionary features each vector needs points the same way:
 
-Same SAE, same dictionary, two different inputs. It reconstructs the AR's output
-to 0.700 and a real activation to only 0.587.
-
-**L0 — how many dictionary features actually switch on** — points the same way,
-and is a genuinely separate quantity: a count, not a reconstruction score.
-
-| | features used (L0), `l0_big` | reconstruction (cosine), `l0_big` |
+| | features on (L0) | reconstruction (cosine) |
 |---|---|---|
 | real activation | 119.9 | 0.99424 |
 | AR output | **101.3** | **0.99581** |
 
-**Fewer features, better fit.** These normally trade off — more dictionary
-entries means more of the vector captured — so the AR's output using ~19 fewer
-features *and* landing closer is the notable part.
+**Fewer features, better fit** — and those normally trade off. No mechanism is
+claimed. What matters downstream is only the fact of it: **the two sides of every
+feature comparison in this file are not read by the SAE with equal fidelity.**
 
-> **Only the L0 column is independent evidence.** The cosine column is the FVE
-> above restated: `FVE = 1 − mean(MSE)/rawvar` and `MSE = 2(1−cos)`, so cosine is
-> fixed once FVE is known. Both values here reproduce to five decimals from the
-> FVE column. It is shown because cosine is the stable quantity when `rawvar`
-> amplifies FVE, not because it corroborates anything. An earlier version of this
-> file called the whole table "a second, independent measurement" — that was
-> wrong for one of its two columns.
+### Caveats on the above
 
-No mechanism is claimed. What matters downstream is only the fact of it: **the
-two sides of every feature comparison in this file are not read by the SAE with
-equal fidelity** — it captures more of the AR's output than of the original.
+- **The cosine column is not separate evidence.** `FVE = 1 − 2(1−cos)/rawvar`, so
+  cosine is fixed once FVE is known; both values reproduce from the FVE column.
+  Only **L0** is an independent quantity. Cosine is shown because it is the
+  stable one — see the `rawvar` note below.
+- **C > A is measured on `l0_big` only.** §4 and the tool run on `l0_small`, where
+  `refeature.py` saves feature sets without reconstruction scores. Treat the
+  transfer as plausible, not measured ([FUTURE_WORK.md](FUTURE_WORK.md) item 0).
+- **`rawvar` is tiny, so FVE magnifies small cosine gaps.** The multiplier is
+  `2/rawvar` and depends on which activations were sampled — **71.7× for the n=50
+  rollouts** (0.001 of cosine = 0.072 FVE), 65.0× for the n=10 run below. The
+  C > A gap is 0.0016 in cosine.
 
-That asymmetry is part of why the tool calls its third bucket `UNVERIFIED` rather
-than "invented": a feature the SAE fails to find in the original may still be
-there.
-
-**But note the boundary.** This is measured on `l0_big`; the tool and §4 run on
-`l0_small`, where it has not been measured — `refeature.py` writes feature sets
-without reconstruction scores. The `UNVERIFIED` name does not depend on it: the
-bucket is *by construction* "the AR produced it and we did not find it in the
-original", which is unchecked rather than false, and an SAE is incomplete in any
-case. Measuring the asymmetry at `l0_small` is one of the cheap open items in
-[FUTURE_WORK.md](FUTURE_WORK.md) — the saved vectors are enough, no GPU needed.
-
-*(In cosine the gap is 0.0016. FVE magnifies it because Gemma's `rawvar` is
-0.0279 — see the note at the end of this section.)*
-
-### Side note: it holds on three corpora, and the SAE does best on its home turf
-
-An earlier n=10 pass, same pipeline:
+### The same comparison on three corpora (n=10, earlier pass)
 
 | | FineWeb | **Rollouts** | WildChat |
 |---|---|---|---|
@@ -147,23 +115,8 @@ An earlier n=10 pass, same pipeline:
 | gap B−A | +0.278 | **+0.184** | +0.255 |
 | gap C−A | +0.157 | **+0.105** | +0.172 |
 
-Rollouts is the Gemma-generated corpus the SAE was fine-tuned on, and it is where
-the SAE performs best — +0.108 over FineWeb, closing about a third of the gap to
-the NLA. **The ordering never flips on any corpus**, and both gaps keep their sign
-everywhere. This is why the main results use rollouts: it is the setting most
-favourable to the SAE, so it is the conservative place to run the comparison.
-
-> **Read cosine, not FVE, for small differences.** `FVE = 1 − 2(1−cos)/rawvar`,
-> and Gemma's `rawvar` is tiny, so FVE magnifies small cosine gaps:
->
-> | run | `rawvar` | multiplier | 0.001 of cosine moves FVE by |
-> |---|---:|---:|---:|
-> | n=50 rollouts (the main results) | 0.0279 | **71.7×** | **0.072** |
-> | n=10 three-corpus (the table above) | 0.0308 | 65.0× | 0.065 |
->
-> The two runs sample different activations, so they have different `rawvar` and
-> are not interchangeable. An earlier version of this file quoted `rawvar` 0.0279
-> alongside the 65× multiplier — those belong to different runs.
+Both gaps keep their sign on every corpus. Rollouts is where the SAE does best —
+it was fine-tuned on that distribution — which is why the main results use it.
 
 ---
 
