@@ -91,7 +91,14 @@ def main() -> None:
             fo = F_o[k]
             sh += len(fo & fr); lo += len(fo - fr); md += len(fr - fo)
             jj.append(jac(fo, fr))
-            cc.append(jac(F_o[(k + 1) % len(F_o)], fr))     # mismatched control
+            # Mismatched control: this AR feature set against a DIFFERENT
+            # activation. Pair HALFWAY across the set, not with the neighbour --
+            # stage-0 samples ~10 positions per document and writes them
+            # adjacently, so `k+1` often lands on another position of the SAME
+            # document. That is not a mismatched pair, and it inflated this
+            # control to 0.040 where roundtrip.py's half-offset gave 0.026.
+            # Same pairing rule as roundtrip.py:317 so the two files agree.
+            cc.append(jac(F_o[(k + len(F_o) // 2) % len(F_o)], fr))
             runs.append({"act": k, "run": i,
                           "shared_features": sorted(fo & fr),
                           "lost_features": sorted(fo - fr),

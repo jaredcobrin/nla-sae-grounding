@@ -51,13 +51,23 @@ Same vectors, re-encoded under both sparsities:
 
 | SAE | features/activation | shared | lost | made | **kept** | Jaccard | control |
 |---|---|---|---|---|---|---|---|
-| `l0_small` | ~21 | 14.1 | 5.8 | 5.1 | **71%** | 0.576 | 0.016 |
+| `l0_small` | ~21 | 14.1 | 5.8 | 5.1 | **71%** | 0.576 | 0.009 |
 | `l0_big` | ~120 | 68.5 | 51.4 | 32.8 | **57%** | 0.450 | 0.026 |
 
 The control is the same reconstruction's features scored against a **different**
-activation — 0.016–0.026 against 0.45–0.58 matched, a 20–35× separation. Without
-it the raw overlap would be uninterpretable, since many features fire on almost
-any text.
+activation — 0.009–0.026 against 0.45–0.58 matched, a **17–65× separation**.
+Without it the raw overlap would be uninterpretable, since many features fire on
+almost any text.
+
+> **The control was itself wrong once, and the fix is why these two rows now
+> agree.** `refeature.py` paired each activation with its *neighbour*, but stage-0
+> samples ~10 positions per document and writes them adjacently — so the
+> "mismatched" pair was often another position of the **same document**. That is
+> not a mismatch, and it inflated the `l0_big` control to 0.040 where
+> `roundtrip.py`, which pairs halfway across the set, gave 0.026. Both scripts now
+> use the half-offset and independently produce 0.0263. The error was
+> conservative — it made the result look weaker — but the two files disagreeing
+> was the signal that something was wrong.
 
 **The round trip keeps the gist and drops the detail.** That is what you would
 expect from squeezing an activation through two sentences of English.

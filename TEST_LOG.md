@@ -239,7 +239,13 @@ phase 3   SAE only    encode both ends
 
 The FVE is still computed and printed, now as a **one-shot health check** that
 warns and continues. Both AV/AR scripts now follow the same one-model-at-a-time
-shape — see the measured peak in the table at the end.
+shape.
+
+**Measured peak: 23,393 MiB.** Polled once a second across a full run, on an
+otherwise idle card. Two earlier attempts at this number were thrown away: one
+poller only spanned part of the run (peak 9.5 GB, below a single model's
+weights — obviously not a whole run), and one spanned two overlapping jobs and
+read 42.3 GB. A memory number is only as good as the window it was sampled over.
 
 **What removing the gate exposes.** Session-2 run, no gate:
 
@@ -261,7 +267,7 @@ Full chain on 6 activations from this layout.
 
 | stage | result |
 |---|---|
-| `roundtrip.py` | **pass** — `untagged 0/12`, `CJK 0/12`, SAE `L0 128.8` / `recon cos 0.9943`, health check 0.7610 |
+| `roundtrip.py` | **pass** — peak **23,393 MiB**, `untagged 0/6`, `CJK 0/6`, SAE `L0 136.0` / `recon cos 0.9937`, health check 0.7416 |
 | `refeature.py` | **pass** — seconds, no GPU |
 | `judge_explanations.py` | **pass** — 1015 judgements in 1.6 min |
 | `describe_buckets.py` | **pass** — 36 summaries in 0.6 min |
@@ -307,6 +313,37 @@ Treat every session-2 number as a smoke test at n=6. `RESULTS.md` is the n=50 ru
 
 Re-run after the strip: identical behaviour, 12/12 files compile, no dead imports
 remain.
+
+## 7. The walk-through found a bug in a control
+
+Cross-checking every published number against its artefact turned up a real one.
+`RESULTS.md` §2 puts `l0_small` and `l0_big` side by side, but their control
+columns came out of two scripts that paired the control **differently**:
+
+```
+roundtrip.py:317   j = (i + len(V) // 2) % len(V)     halfway across the set
+refeature.py:94    (k + 1) % len(F_o)                 the NEXT activation
+```
+
+Stage-0 samples ~10 positions per document and writes them adjacently, so
+`k + 1` frequently landed on **another position of the same document**. That is
+not a mismatched pair. It inflated the `l0_big` control to **0.040** where
+`roundtrip.py` gave **0.026** — and the disagreement between two files that
+should have matched is what exposed it.
+
+`refeature.py` now uses the same half-offset. Regenerated on the same saved
+vectors (no GPU, seconds):
+
+| | before | after | `roundtrip.py` |
+|---|---|---|---|
+| `l0_small` control | 0.0159 | **0.0089** | — |
+| `l0_big` control | 0.0396 | **0.0263** | **0.0263** ✓ |
+
+The two independent paths now agree to four decimals. The error was
+**conservative** — a too-high control makes the result look weaker, so no claim
+was inflated — but a control that quietly stops being a control is exactly the
+failure this repo is supposed to catch. `RESULTS.md` §2 is updated: the
+separation is 17–65×, not the 20–35× previously stated.
 
 **Not changed, and why:** `extract_activations.py` keeps its `wildchat` arm. It
 looks out of place in a Gemma-only repo, but it produces the third column of the
