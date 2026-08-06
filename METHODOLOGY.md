@@ -280,7 +280,7 @@ self-consistency       89.2%    across 5 sampled explanations of one activation
 
 ## 6. Describing the buckets blind
 
-`src/05_describe_buckets.py` hands a model **only the feature labels** for
+`src/describe_buckets.py` hands a model **only the feature labels** for
 shared / lost / made and asks what they collectively say. It never sees the AV
 explanation, so agreement between the two is evidence rather than an echo.
 
