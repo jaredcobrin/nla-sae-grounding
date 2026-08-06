@@ -60,21 +60,32 @@ better. It does not say English is a better representation than a feature basis.
 Same SAE, same dictionary, two different inputs. It reconstructs the AR's output
 to 0.700 and a real activation to only 0.587.
 
-A second, independent measurement points the same way — how many dictionary
-features each vector needs:
+**L0 — how many dictionary features actually switch on** — points the same way,
+and is a genuinely separate quantity: a count, not a reconstruction score.
 
-| | features used (L0) | SAE reconstruction (cosine) |
+| | features used (L0) | reconstruction (cosine) |
 |---|---|---|
 | real activation | 119.9 | 0.99424 |
 | AR output | **101.3** | **0.99581** |
 
-**Fewer features, better fit.** No mechanism is claimed for this. What matters
-downstream is only the fact of it: **the two sides of every feature comparison in
-this file are not read by the SAE with equal fidelity.** It captures more of the
-AR's output than of the original.
+**Fewer features, better fit.** These normally trade off — more dictionary
+entries means more of the vector captured — so the AR's output using ~19 fewer
+features *and* landing closer is the notable part.
+
+> **Only the L0 column is independent evidence.** The cosine column is the FVE
+> above restated: `FVE = 1 − mean(MSE)/rawvar` and `MSE = 2(1−cos)`, so cosine is
+> fixed once FVE is known. Both values here reproduce to five decimals from the
+> FVE column. It is shown because cosine is the stable quantity when `rawvar`
+> amplifies FVE, not because it corroborates anything. An earlier version of this
+> file called the whole table "a second, independent measurement" — that was
+> wrong for one of its two columns.
+
+No mechanism is claimed. What matters downstream is only the fact of it: **the
+two sides of every feature comparison in this file are not read by the SAE with
+equal fidelity** — it captures more of the AR's output than of the original.
 
 That asymmetry is why the tool calls its third bucket `UNVERIFIED` rather than
-"invented" — a feature the SAE fails to find in the original may still be there.
+"invented": a feature the SAE fails to find in the original may still be there.
 
 *(In cosine the gap is 0.0016. FVE magnifies it because Gemma's `rawvar` is
 0.0279 — see the note at the end of this section.)*
