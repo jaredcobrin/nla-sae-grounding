@@ -158,25 +158,41 @@ because those appear only in the AR's output.
 `lost` cannot be separated — that interval includes zero and includes `lost`
 being higher.
 
-### Conveyance against survival
+### Does being mentioned make a latent survive?
 
-The bucket rates above are P(conveyed | outcome). The same pairs, conditioned the
-other way:
+Every latent genuinely in the activation falls into one of four boxes — mentioned
+in the explanation or not, survived the round trip or not:
 
-| latents in the activation | survived | lost | total |
+| | survived | lost | **total** |
 |---|---:|---:|---:|
-| **conveyed** | 845 | 198 | 1043 |
-| **not conveyed** | 995 | 432 | 1427 |
+| **mentioned** | 845 | 198 | **1,043** |
+| **not mentioned** | 995 | 432 | **1,427** |
+| **total** | **1,840** | **630** | 2,470 |
+
+This table answers two different questions depending on which way you read it.
+
+**Down the columns** — *of the latents that survived, how many were mentioned?*
+845/1840 = **46%**. That is the `shared` row in the table above.
+
+**Across the rows** — *of the latents that were mentioned, how many survived?*
+845/1043 = **81%**, against 995/1427 = **70%** for unmentioned ones.
+
+Only the second speaks to whether mentioning a latent helps it survive. (The
+distinction is the one between "90% of Harvard students had tutors" and "90% of
+tutored students get into Harvard" — same table, different claim.)
 
 | | |
 |---|---|
-| P(survives \| conveyed) | **81.0%** |
-| P(survives \| not conveyed) | **69.7%** |
+| mentioned → survived | **81.0%** |
+| not mentioned → survived | **69.7%** |
 | difference | +11.3 pts, +6.4σ, odds ratio **1.85** |
 
-**995 latents (40% of the total, and 54% of everything that survived) were not
-conveyed and survived anyway.** 198 (8%) were conveyed and lost anyway. No
-mechanism for either is established here.
+So being mentioned is associated with surviving, but is not required.
+
+**The largest box is "not mentioned, survived": 995 latents** — 40% of the total,
+and **54% of everything that survived**. The AR reconstructed them without the
+explanation visibly saying so. In the other corner, 198 (8%) were mentioned and
+lost anyway. No mechanism for either is established here.
 
 > For the tool: `trust_report.py` marks a latent CONFIRMED when it is in the
 > activation and in the AR's reconstruction. For **54%** of those, the explanation
