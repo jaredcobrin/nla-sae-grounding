@@ -194,10 +194,35 @@ and the NLA config assertion fails at startup.
 
 ---
 
+## Credit — what is mine and what is not
+
+**The NLA itself is not mine.** The verbalizer, the reconstructor, the injection
+mechanism and the training code are
+[`kitft/natural_language_autoencoders`](https://github.com/kitft/natural_language_autoencoders)
+(Copyright 2026 Anthropic PBC, Apache-2.0), the code companion to
+[the NLA paper](https://transformer-circuits.pub/2026/nla/) by Fraser-Taliente,
+Kantamneni, Ong et al. The SAE is Google's Gemma Scope 2. I wrote none of that.
+
+| | |
+|---|---|
+| **Not redistributed here** | `nla/` and `nla_inference.py` — required at runtime, but you clone them yourself and point `NLA_REPO` at them |
+| **Derived and modified** | `src/nla_av.py` — calls upstream's injection primitives and follows its recipe; adds the Gemma embed-scale fix. Change notice in its docstring, per Apache-2.0 §4(b) |
+| **Mine** | the other 11 files in `src/`, everything in `results/` and `scripts/`, and all the documentation |
+
+**The finding that NLA explanations confabulate is also not mine** — the paper
+documents it. What is mine is the question of whether those claims correspond to
+active SAE features, the pipeline that measures it, and the controls.
+
+This repo is Apache-2.0 to match upstream. Full breakdown in [NOTICE](NOTICE).
+
+---
+
 ## Layout
 
 ```
 README.md          this file
+LICENSE            Apache-2.0
+NOTICE             attribution — what is upstream, what is derived, what is mine
 TEST_LOG.md        what was actually run against real weights, and what broke
 METHODOLOGY.md     how each measurement works, and what broke on the way there
 RESULTS.md         every number, with its control and its caveats

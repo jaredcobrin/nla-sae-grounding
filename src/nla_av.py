@@ -1,5 +1,17 @@
 """Run a released NLA verbalizer: activation in, explanation text out.
 
+ATTRIBUTION (Apache-2.0 section 4(b) -- this file is MODIFIED derived work)
+    Derived from `NLAClient` in `nla_inference.py` of
+    kitft/natural_language_autoencoders, Copyright 2026 Anthropic PBC,
+    licensed under the Apache License 2.0. It CALLS that project's
+    `inject_at_marked_positions`, `normalize_activation`, `resolve_embed_scale`
+    and `load_nla_config` rather than copying them, and follows the same
+    injection recipe as `NLAClient._build_embeds`.
+
+    Changed here: the Gemma-3 embed-scale fix described below; a
+    single-activation `generate()` in place of the batch and SGLang paths; and a
+    locally-defined explanation regex. See NOTICE at the repo root.
+
 Vendored rather than imported because this fork modified it, and because the
 injection path is the least forgiving code in the stack.
 
