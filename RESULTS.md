@@ -152,7 +152,7 @@ The other 50% are **counted in every total but never named**. A report resting o
 
 ---
 
-## 4. The explanation tracks the activation — and about 43% of it gets through
+## 4. The explanation tracks the activation — and about 39% of it gets through
 
 Judged **against the explanation text**. One question, asked once per (feature,
 explanation) pair: *does this explanation cover this feature?*
@@ -172,8 +172,25 @@ covers a feature you cannot describe.
 present in the original activation. `made` is excluded from it precisely because
 those features are *not* in the original — they appear only in the AR's output.
 
-Corrected for the judge's measured 5.7% false-positive floor:
-**~43% of what is in the activation reaches the explanation.**
+### Correcting for the judge's own error rate
+
+The judge is not perfect. Measured against features that **provably did not fire**
+in the activation — where the correct answer is always "not covered" — it
+still said "covered" **5.7%** of the time. Those are false positives, and some of
+the 42% above are exactly that kind of mistake.
+
+Removing them, with the formula the script itself prints:
+
+$$\frac{0.422 - 0.057}{1 - 0.057} = \mathbf{38.7\%}$$
+
+**So about 39% of what is in the activation reaches the explanation** — a little
+under two-fifths, not "about half".
+
+> An earlier version of this file said "~43%" and called it corrected. It was
+> not: correcting *lowers* the number, and 43% is above the raw 42.2%. The raw
+> rate had been rounded the wrong way and mislabelled. The direction of a
+> correction is worth checking — it is the kind of error that survives review
+> because it looks like it has already been through one.
 
 ### The one comparison that matters here
 
