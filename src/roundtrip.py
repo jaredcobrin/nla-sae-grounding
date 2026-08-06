@@ -45,6 +45,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import gc
 import json
 import os
 import re
@@ -65,7 +66,7 @@ sys.path.insert(0, str(_HERE))
 _UP = os.environ.get("NLA_REPO") or str(_HERE.parent.parent)
 sys.path.insert(0, _UP)
 
-from nla_av import ThinkingAV                                    # noqa: E402
+from nla_av import AVRunner                                    # noqa: E402
 from sampling import FAILED_EXTRACTION_MSE, load_vectors          # noqa: E402
 from nla.schema import load_predict_mean_baselines                    # noqa: E402
 from nla_inference import NLACritic                                   # noqa: E402
@@ -122,9 +123,10 @@ def main() -> None:
     ap.add_argument("--n", type=int, default=10, help="activations")
     ap.add_argument("--runs", type=int, default=5, help="AV samples per activation")
     ap.add_argument("--seed", type=int, default=0, help="starting seed for the gate")
-    ap.add_argument("--max-seed-tries", type=int, default=25)
-    ap.add_argument("--gate-lo", type=float, default=0.73)
-    ap.add_argument("--gate-hi", type=float, default=0.77)
+    ap.add_argument("--health-lo", type=float, default=0.65,
+                    help="warn below this FVE. NOT a filter -- nothing is "
+                         "rejected or resampled. The paper reports ~0.752.")
+    ap.add_argument("--health-hi", type=float, default=0.85)
     ap.add_argument("--temperature", type=float, default=1.0)
     ap.add_argument("--explanation-max-tokens", type=int, default=200)
     ap.add_argument("--device", default="cuda")
@@ -138,48 +140,53 @@ def main() -> None:
     print("=" * 76)
 
     P = load_sae()
-    av = ThinkingAV(args.av, device=args.device, prompt_style="metacognitive")
-    critic = NLACritic(args.ar, device=args.device)
-    _, rawvar = load_predict_mean_baselines(args.parquet, critic.mse_scale)
-    print(f"[cfg] rawvar={rawvar:.4f}  mse_scale={critic.mse_scale:.4f} "
+    # THE AV AND AR ARE NEVER RESIDENT TOGETHER. The AV is loaded here, used for
+    # every explanation in stage 2a, then released before the AR is loaded in
+    # 2b. Peak is one 12B model, so this fits a 24GB card. rawvar needs the AR's
+    # mse_scale, which is read from its config without loading weights.
+    av = AVRunner(args.av, device=args.device)
+    critic = None
+    # mse_scale is sqrt(d_model) by definition (3840 -> 61.9677; Qwen's 3584 ->
+    # 59.87). Computing it here rather than reading it off the AR lets the AR
+    # stay unloaded until stage 2b, which is what keeps the two 12B models from
+    # ever being resident together. It is ASSERTED against the real value once
+    # the AR loads, so the assumption cannot drift silently.
+    import pyarrow.parquet as _pq
+    _d = len(_pq.ParquetFile(args.parquet).read(
+        columns=["activation_vector"]).column(0)[0])
+    mse_scale = float(np.sqrt(_d))
+    _, rawvar = load_predict_mean_baselines(args.parquet, mse_scale)
+    print(f"[cfg] d_model={_d}  rawvar={rawvar:.4f}  mse_scale={mse_scale:.4f} "
           f"injection_scale={av.cfg.injection_scale}  embed_scale={av.embed_scale:.4f}")
 
     def gen(v, seed):
         torch.manual_seed(seed)
-        _r, _t, e, _c = av.generate(v, use_thinking=False, temperature=args.temperature,
-                                    thinking_max_tokens=64,
+        e = av.generate(v, temperature=args.temperature,
                                     explanation_max_tokens=args.explanation_max_tokens,
                                     do_sample=True)
         return e
 
-    # ---------------- Stage 0: sample + FVE gate ----------------
-    # The gate SELECTS ACTIVATIONS ON THE OUTCOME METRIC, so the chosen 10 are
-    # easier than average by construction. Every seed tried is logged so the
-    # selection is visible rather than hidden.
-    print("\n--- Stage 0: FVE gate (target "
-          f"[{args.gate_lo}, {args.gate_hi}]) ---")
-    gate_log, chosen = [], None
-    for t in range(args.max_seed_tries):
-        seed = args.seed + t
-        V, row_idx, _ = load_vectors(args.parquet, args.n, seed)
-        mses = []
-        for i, v in enumerate(V):
-            e = gen(v, seed * 1000 + i)
-            mses.append(FAILED_EXTRACTION_MSE if e is None else critic.score(e, v)[0])
-        f = fve_of(mses, rawvar)
-        gate_log.append({"seed": seed, "fve": f})
-        ok = args.gate_lo <= f <= args.gate_hi
-        print(f"  seed {seed:>3}: FVE={f:.4f}  {'PASS' if ok else 'reject'}")
-        if ok:
-            chosen = (seed, V, row_idx); break
-    if chosen is None:
-        print(f"\nNo seed in {args.max_seed_tries} tries hit the gate. "
-              f"Best: {max(g['fve'] for g in gate_log):.4f}. Stopping.")
-        (out_dir / "feature_overlap_gate_failed.json").write_text(
-            json.dumps({"gate_log": gate_log}, indent=2))
-        return
-    seed, V, row_idx = chosen
-    print(f"  -> using seed {seed}, rows {list(map(int, row_idx))}")
+    # ---------------- Stage 0: sample + FVE health check ----------------
+    # THIS IS A DIAGNOSTIC, NOT A FILTER.
+    #
+    # The NLA paper reports FVE ~0.752 for these checkpoints. If this run
+    # produces 0.45, something is broken -- wrong layer, failed injection,
+    # mis-loaded weights -- and every downstream number would inherit it. So the
+    # FVE is computed once, up front, and reported.
+    #
+    # An earlier version RESAMPLED until the FVE landed in [0.73, 0.77]. That
+    # turned a health check into selection on the outcome metric: activations
+    # were being chosen partly because they scored well on the thing being
+    # measured. It never actually rejected a sample in practice (the n=50 run
+    # accepted seed 0 at FVE 0.7394 on the first try), but the code could, and a
+    # tool nobody should have to caveat is better than a caveat.
+    #
+    # Removing the search also removes the only place the AV and AR had to be
+    # resident at the same time, which is what forced a 48GB card.
+    print("\n--- Stage 0: sample ---")
+    seed = args.seed
+    V, row_idx, _ = load_vectors(args.parquet, args.n, seed)
+    print(f"  seed {seed}, rows {list(map(int, row_idx))}")
 
     # SOURCE TEXT, carried through to the results. An earlier run stored only the
     # parquet row index; the parquet then died with its pod and the rollout
@@ -197,28 +204,74 @@ def main() -> None:
     V_sae = sae_decode(A_orig, P)
     F_orig = [set((A_orig[i] > 0).nonzero().flatten().tolist()) for i in range(len(V))]
     sae_cos = [cos_of(V_sae[i], V[i]) for i in range(len(V))]
-    sae_mse = [norm_mse(V_sae[i], V[i], critic.mse_scale) for i in range(len(V))]
+    sae_mse = [norm_mse(V_sae[i], V[i], mse_scale) for i in range(len(V))]
     print(f"  L0 mean {np.mean([len(f) for f in F_orig]):.1f}   "
           f"recon cos {np.mean(sae_cos):.4f}   FVE {fve_of(sae_mse, rawvar):.4f}")
 
     # ---------------- Stage 2: original -> AV -> AR ----------------
-    print(f"\n--- Stage 2: AV->AR, {args.runs} runs per activation ---")
-    runs, v_ar_list = [], []
+    # PHASE 2a -- verbalize. AV only; the AR is released first.
+    # Keeping both resident costs ~48GB and does not fit a 46GB card. The AV
+    # never needs the AR's output, and explanations are just strings, so
+    # splitting the loop in two costs nothing but a model reload.
+    print(f"\n--- Stage 2a: AV -> explanations, {args.runs} runs per activation ---")
+    plan = []
     for i in range(len(V)):
         for r in range(args.runs):
             e = gen(V[i], seed * 1000 + i * 100 + r)
-            if e is None:
-                mse, cos, v_ar = FAILED_EXTRACTION_MSE, 0.0, torch.zeros(V.shape[1])
-            else:
-                mse, cos = critic.score(e, V[i])
-                v_ar = critic.reconstruct(e)          # AR's predicted activation
-            v_ar_list.append(v_ar.float())
-            runs.append({"act": i, "run": r, "row": int(row_idx[i]),
-                         "explanation": e, "mse": mse, "cos": cos,
-                         "cjk": bool(e and _CJK.search(e)), "untagged": e is None})
-        print(f"  act {i}: cos " +
-              " ".join(f"{x['cos']:.3f}" for x in runs[-args.runs:]))
+            plan.append({"act": i, "run": r, "row": int(row_idx[i]), "explanation": e,
+                          "cjk": bool(e and _CJK.search(e)), "untagged": e is None})
+        done = sum(1 for x in plan if x["act"] == i and not x["untagged"])
+        print(f"  act {i}: {done}/{args.runs} explanations")
+    del av
+    gc.collect()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+    print(f"  {sum(1 for x in plan if not x['untagged'])}/{len(plan)} extracted; AV released")
+
+    # PHASE 2b -- reconstruct. AR only.
+    print("\n--- Stage 2b: explanations -> AR reconstructions ---")
+    critic = NLACritic(args.ar, device=args.device)
+    assert abs(critic.mse_scale - mse_scale) < 1e-3, (
+        f"mse_scale assumption wrong: computed sqrt(d_model)={mse_scale:.4f} but "
+        f"the AR reports {critic.mse_scale:.4f}. Every FVE above stage 2b used "
+        f"the computed value and is invalid.")
+    runs, v_ar_list = [], []
+    for rec in plan:
+        e = rec["explanation"]
+        if e is None:
+            mse, cos, v_ar = FAILED_EXTRACTION_MSE, 0.0, torch.zeros(V.shape[1])
+        else:
+            mse, cos = critic.score(e, V[rec["act"]])
+            v_ar = critic.reconstruct(e)
+        v_ar_list.append(v_ar.float())
+        runs.append({**rec, "mse": mse, "cos": cos})
     V_ar = torch.stack(v_ar_list)
+    print(f"  {len(runs)} reconstructions")
+
+    # ---- FVE health check. A DIAGNOSTIC, NOT A FILTER. ----
+    # The paper reports ~0.752 for these checkpoints. A number far below that
+    # means something is broken -- wrong layer, failed injection, mismatched
+    # checkpoints -- and every downstream result would inherit it.
+    #
+    # An earlier version RESAMPLED until the FVE landed in [0.73, 0.77], which
+    # turned a health check into selection on the outcome metric. It never
+    # actually rejected a sample (the n=50 run took seed 0 at 0.7394 first try),
+    # but the code could, and that is a caveat nobody should have to write.
+    #
+    # It is computed from the stage-2 work rather than a separate pass, which
+    # also means the AV and AR never have to be resident together.
+    health_fve = fve_of([r["mse"] for r in runs], rawvar)
+    gate_log = [{"seed": seed, "fve": health_fve, "note": "health check, not a filter"}]
+    print(f"\n  FVE health check: {health_fve:.4f}")
+    if not (args.health_lo <= health_fve <= args.health_hi):
+        print(f"  !! WARNING: outside the expected band "
+              f"[{args.health_lo}, {args.health_hi}]. The paper reports ~0.752.")
+        print(f"     Check: layer index (--layer-index L is hidden_states[L+1]);")
+        print(f"     injection (grep the explanations for CJK); that the AV/AR")
+        print(f"     checkpoints match the extraction model.")
+        print(f"     Continuing -- this is a diagnostic, not a gate.")
+    else:
+        print(f"  within the expected band; AV/AR look healthy")
     n_untagged = sum(r["untagged"] for r in runs)
     n_cjk = sum(r["cjk"] for r in runs)
     print(f"  FVE over all {len(runs)} runs: {fve_of([r['mse'] for r in runs], rawvar):.4f}"
@@ -238,8 +291,8 @@ def main() -> None:
     #   B  AR       vs orig    per RUN         (rec["mse"], from the critic)
     #   C  SAE(AR)  vs AR      per RUN
     #   D  SAE(AR)  vs orig    per RUN
-    mse_C = [norm_mse(V_ar_sae[k], V_ar[k], critic.mse_scale) for k in range(len(V_ar))]
-    mse_D = [norm_mse(V_ar_sae[k], V[runs[k]["act"]], critic.mse_scale)
+    mse_C = [norm_mse(V_ar_sae[k], V_ar[k], mse_scale) for k in range(len(V_ar))]
+    mse_D = [norm_mse(V_ar_sae[k], V[runs[k]["act"]], mse_scale)
              for k in range(len(V_ar))]
     print(f"  L0 mean {np.mean([len(f) for f in F_ar]):.1f}   "
           f"recon cos {np.mean(ar_sae_cos):.4f}")

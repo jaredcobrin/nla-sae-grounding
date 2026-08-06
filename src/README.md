@@ -27,6 +27,12 @@ fork modified them:
   `√hidden_size`. Multiplying again made every token embedding 62× too large and
   produced repetition loops even with no injection. Invisible on Qwen, whose
   scale is 1.0.
+
+  It began as the AV wrapper for a separate `<thinking>`-scratchpad experiment
+  that stays in the previous repo. All of that was removed here — 438 → 199
+  lines — and the result verified by re-running the same seed and diffing:
+  identical FVE to four decimals and identical feature counts on all five
+  activations.
 - **`sampling.py`** holds `load_vectors`, the seeded row sampler. Hand-rolled
   selection was tried twice and was wrong both times: rows `0..n` gave several
   positions of a **single document**, and first-row-per-document

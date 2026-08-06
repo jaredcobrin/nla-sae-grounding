@@ -157,19 +157,19 @@ AR before loading the writer. Batch sizes auto-size to the card.
 
 | stage | resident | measured peak |
 |---|---|---|
-| `trust_report.py` | one model at a time | **28.9 GB** on a 46 GB card |
-| labelling / judging / describing / classifying | one base model | ~24 GB + batch |
-| `roundtrip.py` | **AV + AR together** | **~48 GB — needs a bigger card** |
+| `roundtrip.py` | one model at a time | **23.4 GB** |
+| `trust_report.py` | one model at a time | **23.7 GB** |
+| labelling / judging / describing / classifying | one base model | ~24 GB |
 
-Two findings worth knowing before renting anything:
+Two things testing changed:
 
-- **the memory peak is batch, not weights.** Model weights are ~23 GB; a
-  hardcoded scoring batch of 64 over ~2000-token prompts took peak to 98.7% of a
-  46 GB card. It now auto-sizes, and peak fell to 62.8%.
-- **`roundtrip.py` still needs ~48 GB**, because it interleaves the AV and AR
-  inside a seed-search gate and has not been restructured. Everything else fits
-  24 GB. The round-trip outputs are already in `results/`, so the rest of the
-  pipeline can be run without it.
+- **the memory peak was batch, not weights.** Model weights are ~23 GB, but a
+  hardcoded scoring batch of 64 over ~2000-token prompts pushed peak to 98.7% of
+  a 46 GB card. Batches now auto-size to the device.
+- **no two 12B models are ever resident together.** Both `roundtrip.py` and
+  `trust_report.py` run in phases, releasing the AV before loading the AR. This
+  needed the FVE gate to go — see [METHODOLOGY.md](METHODOLOGY.md) — which was
+  worth doing on its own merits.
 
 `transformers` must be `<5`: 5.x tokenizes the CJK injection marker differently
 and the NLA config assertion fails at startup.

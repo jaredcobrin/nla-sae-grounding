@@ -77,7 +77,7 @@ sys.path.insert(0, str(_HERE))
 _UP = os.environ.get("NLA_REPO") or str(_HERE.parent.parent)
 sys.path.insert(0, _UP)
 
-from nla_av import ThinkingAV                                    # noqa: E402
+from nla_av import AVRunner                                    # noqa: E402
 from sampling import load_vectors                                 # noqa: E402
 from nla.schema import load_predict_mean_baselines                    # noqa: E402
 from nla_inference import NLACritic                                   # noqa: E402
@@ -351,12 +351,11 @@ def main() -> None:
     # Nothing is lost by doing this: the AV never needs the AR's output, and
     # the explanations are just text.
     print("\n[phase 1/3] verbalizing with the AV")
-    av = ThinkingAV(a.av, device=a.device, prompt_style="metacognitive")
+    av = AVRunner(a.av, device=a.device)
     expls = []
     for i in range(len(V)):
         torch.manual_seed(a.seed * 1000 + i)
-        _r, _t, e, _c = av.generate(V[i], use_thinking=False, temperature=1.0,
-                                    thinking_max_tokens=64,
+        e = av.generate(V[i], temperature=1.0,
                                     explanation_max_tokens=200, do_sample=True)
         if e and _CJK.search(e):
             print(f"  act {i}: WARNING — CJK in output, injection may have failed")
@@ -521,7 +520,7 @@ def main() -> None:
                "explanation left out rather than whether what it said holds up. The "
                "counts and lists above are computed; only this paragraph is generated.*",
                "",
-               r.get("assessment", "(not generated)"), "",
+               r.get("assessment") or "*(skipped: --no-prose)*", "",
                "## Source text", "", "```", " ".join(r["source_text"].split())[-1200:], "```", "",
                "---", "",
                "**Unverified is not false.** On 50 Gemma rollout activations, 65-68% of "
