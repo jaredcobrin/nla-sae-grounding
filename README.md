@@ -74,9 +74,13 @@ explanation more often than latents it loses or adds.**
 | **made** — only in the reconstruction | 562 | 35% |
 | **lost** — in the activation, gone from the reconstruction | 630 | 31% |
 
-`shared` is **8.1×** the judge's measured 5.7% false-positive floor, and beats
-`made` by +4.6σ and `lost` by +6.4σ. **`made` vs `lost` is not distinguishable**
-(+3.6 points, 95% CI [−1.7, +9.0]).
+`shared` is **8.1×** the judge's measured 5.7% false-positive floor.
+
+Compared **per activation across the 50 activations** — not by pooling the 3,032
+pairs, which would count one activation's latents as dozens of independent
+observations — `shared` beats `lost` by **+11.2 points** (t = 2.56,
+CI [+2.6, +19.7]) and `made` by **+12.6 points** (t = 2.42, CI [+2.4, +22.9]).
+**`made` vs `lost` is not distinguishable** (t = 0.17).
 
 **This is a correlation between an SAE's reading of an activation and text an
 independent model wrote about it.** What it implies about the AV's behaviour is

@@ -366,3 +366,26 @@ generation-time judgement is used instead.
   tried is recorded
 - **Runs are not independent**: 50 activations × 5 sampled explanations. Effective
   n is nearer 50 than 250
+
+---
+
+## 9. Clustering: the unit of analysis is the activation
+
+Latent-level counts are large — 3,032 (latent, explanation) pairs in §4 — but
+they come from **50 activations**, at a median of 60 pairs each. They are not
+independent observations. One activation with an unusually clear explanation
+contributes 60 correlated "successes".
+
+Pooling them inflates significance by roughly 2.5× here:
+
+| shared vs lost, conveyance | difference | statistic |
+|---|---:|---|
+| pooled over 3,032 pairs | +14.5 pts | z = 6.4 |
+| **per activation, across 43 activations** | **+11.2 pts** | **t = 2.56** |
+
+Both say the effect is real. Only the second says how confident to be about it.
+Every comparison in `RESULTS.md` §4 is reported the second way — compute the
+quantity within each activation, then compare those 50 numbers.
+
+The same applies to the two SAE rows in §2: they are the same 250 pairs read by
+two dictionaries, so no significance test is quoted on them at all.

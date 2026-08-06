@@ -148,22 +148,34 @@ because those appear only in the AR's output.
 
 ### Separations
 
-| comparison | difference | 95% CI | |
-|---|---:|---|---|
-| shared vs lost | +14.5 pts | [+10.2, +18.8] | +6.4σ |
-| shared vs made | +10.9 pts | [+6.3, +15.4] | +4.6σ |
-| made vs lost | +3.6 pts | [−1.7, +9.0] | p = 0.18 |
+**The unit of analysis is the activation, not the pair.** The 3,032 pairs come
+from 50 activations (median 60 pairs each), so they are not independent draws —
+pooling them treats one activation's latents as 60 separate observations.
+Everything below is therefore computed **per activation and then compared across
+activations**, which is a much smaller n and a much weaker claim.
 
-`shared` at 45.9% is **8.1×** the judge's 5.7% false-positive floor. `made` and
-`lost` cannot be separated — that interval includes zero and includes `lost`
-being higher.
+| comparison | difference | 95% CI | | |
+|---|---:|---|---|---|
+| shared vs lost | +11.2 pts | [+2.6, +19.7] | t = 2.56 | 43 activations |
+| shared vs made | +12.6 pts | [+2.4, +22.9] | t = 2.42 | 48 activations |
+| made vs lost | +1.1 pts | [−11.1, +13.3] | t = 0.17 | 43 activations |
+
+`shared` beats both other buckets; `made` and `lost` cannot be separated. In 28
+of 43 activations `shared` exceeds `lost` individually.
+
+`shared` at 45.9% is **8.1×** the judge's 5.7% false-positive floor.
+
+> **Pooling would have overstated this by roughly 2.5×.** Treating all 3,032
+> pairs as independent gives shared vs lost at 6.4σ rather than t = 2.56. The
+> pooled figures are wrong in the direction of looking more impressive, which is
+> the direction that matters.
 
 ### Does being mentioned make a latent survive?
 
 Every latent genuinely in the activation falls into one of four boxes — mentioned
-in the explanation or not, survived the round trip or not:
+in the explanation or not, and `shared` or `lost`:
 
-| | survived | lost | **total** |
+| | `shared` | `lost` | **total** |
 |---|---:|---:|---:|
 | **mentioned** | 845 | 198 | **1,043** |
 | **not mentioned** | 995 | 432 | **1,427** |
@@ -171,28 +183,27 @@ in the explanation or not, survived the round trip or not:
 
 This table answers two different questions depending on which way you read it.
 
-**Down the columns** — *of the latents that survived, how many were mentioned?*
+**Down the columns** — *of the `shared` latents, how many were mentioned?*
 845/1840 = **46%**. That is the `shared` row in the table above.
 
-**Across the rows** — *of the latents that were mentioned, how many survived?*
+**Across the rows** — *of the mentioned latents, how many are `shared`?*
 845/1043 = **81%**, against 995/1427 = **70%** for unmentioned ones.
 
-Only the second speaks to whether mentioning a latent helps it survive. (The
-distinction is the one between "90% of Harvard students had tutors" and "90% of
-tutored students get into Harvard" — same table, different claim.)
+Only the second speaks to whether mentioning a latent helps it survive the round
+trip. (The distinction is the one between "90% of Harvard students had tutors"
+and "90% of tutored students get into Harvard" — same table, different claim.)
 
-| | |
-|---|---|
-| mentioned → survived | **81.0%** |
-| not mentioned → survived | **69.7%** |
-| difference | +11.3 pts, +6.4σ, odds ratio **1.85** |
+Computed per activation and compared across activations, as above: **+7.5 points,
+t = 2.18, 95% CI [+0.7, +14.2]** over 48 activations. The pooled figures — 81.0%
+vs 69.7%, odds ratio 1.85 — are in the table for reference but overstate the
+confidence.
 
-So being mentioned is associated with surviving, but is not required.
+So being mentioned is associated with being `shared`, but is not required.
 
-**The largest box is "not mentioned, survived": 995 latents** — 40% of the total,
-and **54% of everything that survived**. The AR reconstructed them without the
+**The largest box is "not mentioned, `shared`": 995 latents** — 40% of the total,
+and **54% of all `shared` latents**. The AR reconstructed them without the
 explanation visibly saying so. In the other corner, 198 (8%) were mentioned and
-lost anyway. No mechanism for either is established here.
+`lost` anyway. No mechanism for either is established here.
 
 > For the tool: `trust_report.py` marks a latent CONFIRMED when it is in the
 > activation and in the AR's reconstruction. For **54%** of those, the explanation
