@@ -192,13 +192,55 @@ under two-fifths, not "about half".
 > correction is worth checking — it is the kind of error that survives review
 > because it looks like it has already been through one.
 
-### The one comparison that matters here
+### Does being mentioned actually make a feature survive?
 
-**Features the explanation mentions survive the round trip; features it does not
-mention do not — 46% vs 31%.**
+The table above reports `shared` 46% against `lost` 31%, and it is tempting to
+read that as *"mentioned features survive, unmentioned ones don't."* **That
+reading conditions the wrong way round.** 46% is the share of *survivors* that
+were mentioned; the claim needs the share of *mentioned features* that survived.
+Both come from the same 2×2, and they are not the same number:
 
-The explanation is the *only* channel between AV and AR. A feature the text never
-carries has nothing to be rebuilt from, and this is the direct evidence of that.
+| features genuinely in the activation | survived | lost | total |
+|---|---:|---:|---:|
+| **conveyed** by the explanation | 845 | 198 | 1043 |
+| **not conveyed** | 995 | 432 | 1427 |
+
+| | |
+|---|---|
+| P(survives \| conveyed) | **81.0%** |
+| P(survives \| not conveyed) | **69.7%** |
+| difference | **+11.3 points**, +6.4σ, odds ratio **1.85** |
+
+**Being mentioned nearly doubles the odds of survival — but it is not required.**
+
+### The two cells that complicate the story
+
+**995 features — 40% of everything in the activation, and 54% of everything that
+survived — were never conveyed by the explanation and survived anyway.**
+
+That is the largest cell in the table, and it contradicts a claim this file used
+to make ("a feature the text never carries has nothing to be rebuilt from").
+Something *does* rebuild them. The AR sees only text, so it is not reading them
+off the explanation — it is **inferring them from the explanation's general
+subject**. Told a passage is about PC hardware, it emits an activation carrying
+the features a PC-hardware activation usually carries, including specific ones
+the text never named. That is pattern completion from the AR's prior.
+
+This is the confound the whole project exists to expose, now with a size on it:
+**the AR trains on the AV's own rollouts, so it is very good at filling in.** More
+than half of what "survives the round trip" survives because the AR is a good
+guesser, not because the explanation carried it.
+
+**198 features — 8% — were conveyed and lost anyway.** The text said it and the
+AR still failed to rebuild it. Smaller, but it rules out the tidy picture in
+which the explanation is the only thing that matters.
+
+> **What this costs the tool.** `trust_report.py` marks a feature CONFIRMED when
+> it is in the activation and in the AR's reconstruction. That is still exactly
+> what it says it is — the README already states the explanation text is never
+> read. But this table puts a number on the gap: for **54%** of CONFIRMED
+> features, the explanation did not visibly convey them. CONFIRMED means *the
+> round trip preserved it*, not *the explanation said it*.
 
 Against the judge's measured **5.7% false-positive floor**, `shared` at 46% is
 **8.1× the floor**. The separations:
@@ -336,6 +378,12 @@ about legal notices.
   attempts are in [INCONCLUSIVE.md](INCONCLUSIVE.md). An activation at one token
   position is not a claim about the whole document, so that comparison was
   measuring the wrong thing.
+- **Surviving the round trip is not evidence the explanation carried it.** 54% of
+  surviving features were never visibly conveyed by the text (§4); the AR infers
+  them from the passage's subject. Every "kept" and "confirmed" number in this
+  repo therefore measures *the AR's prior plus the explanation*, not the
+  explanation alone. Separating the two would need an AR trained independently of
+  the AV — which the released checkpoints do not provide.
 - **"Invented" features are measured on a vector already closer to the SAE's
   dictionary than a real activation** (§1, C > A), so the two sides are not quite
   like-for-like.
