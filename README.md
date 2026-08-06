@@ -39,29 +39,29 @@ WildChat) in an earlier n=10 pass.
 | `l0_small` | ~21 (coarse) | **71%** |
 | `l0_big` | ~120 (fine-grained) | **57%** |
 
-**3. The AV conveys about 43% of what is in the activation, and what it mentions
-is what survives.**
+**3. The AV's explanation tracks what is really in the activation — it is not
+free-associating.**
 
-| | features | clearly conveyed by the explanation |
-|---|---|---|
-| survived the round trip | 1840 | **46%** |
-| destroyed by the round trip | 630 | **31%** |
+| bucket | features | conveyed by the explanation | |
+|---|---|---|---|
+| **shared** — in the activation *and* the reconstruction | 1840 | **46%** | **8.1×** the judge's false-positive floor |
+| **lost** — in the activation, gone from the reconstruction | 630 | **31%** | shared beats this by **+6.4σ** |
+| **made** — only in the reconstruction | 562 | **35%** | shared beats this by **+4.6σ** |
 
-The explanation is the only channel between AV and AR, so a feature it never
-mentions has nothing to be rebuilt from.
+Features the explanation mentions are the ones that survive the round trip. The
+explanation is the only channel between AV and AR, so a feature the text never
+carries has nothing to be rebuilt from — and this is the direct measurement of
+that. The judge behind it was chosen by a bake-off and has a measured 5.7%
+false-positive rate.
 
-**4. "Invented" features are mostly not invented.** Of features present in the
-reconstruction but absent from the original activation, **65–68% are genuinely in
-the source document** — just not at the sampled token position (control: 25–30%).
-The AR reconstructs *document-level context*, not *position-specific state*.
-
-**5. A negative result that kills a plausible story.** Confirmed, lost and
-invented features have **statistically identical composition** across
-grammar/content × generic/specific (every difference < 1.3σ). The round trip does
-not preferentially destroy "specifics" or preserve "themes". It is indiscriminate
-with respect to feature type.
+**4. The same thing, with no language model anywhere in the measurement.**
+Feature overlap between the original activation and the reconstruction is
+**65× its mismatched control** (`l0_small`; 17× at `l0_big`). This is integer set
+arithmetic on SAE feature IDs — no judge, no labels, nothing to calibrate.
 
 Full numbers, controls and caveats: **[RESULTS.md](RESULTS.md)**.
+Two experiments that produced good-looking numbers and **did not meet the bar**
+are written up in **[INCONCLUSIVE.md](INCONCLUSIVE.md)**.
 
 ---
 

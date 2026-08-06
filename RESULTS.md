@@ -8,29 +8,27 @@ Raw artefacts for every table are in [`results/`](.).
 
 > ### Read this before the tables
 >
-> Three sections below report shared / lost / made counts, and **the numbers look
-> like they disagree.** They do not — each counts a different population, for a
-> stated reason.
+> **Two sections report shared / lost / made counts, and the numbers look like
+> they disagree.** They do not — each counts a different population:
 >
 > | § | one row = | which features | shared / lost / made |
 > |---|---|---|---|
 > | **2** | one of 250 (activation × explanation) pairs | **all** of them | means **14.1 / 5.8 / 5.1** |
 > | **4** | the same 250 pairs | only those with a **validated label** | **1840 / 630 / 562** |
-> | **6** | **one** explanation per activation — 50 pairs | validated label | **366 / 128 / 113** |
 >
-> - §4 drops unlabelled features because it asks *"does the explanation cover this
->   feature?"* — unanswerable if you cannot say what the feature detects. That
->   removes ~50%, exactly the label coverage in §3.
-> - §6 uses one explanation per activation because a feature can be `shared` under
->   one sampled explanation and `lost` under another. Mixing them would put the
->   same feature in two buckets of one table
->   ([`classify_features.py:145`](../src/classify_features.py#L145)).
-> - §2 reports **means**, §4 and §6 report **totals**. 14.1 × 250 = 3529, of which
->   1840 carry a label.
+> §4 drops unlabelled features because it asks *"does the explanation cover this
+> feature?"* — unanswerable if you cannot say what the feature detects. That
+> removes ~50%, exactly the label coverage in §3. And §2 reports **means** where
+> §4 reports **totals**: 14.1 × 250 = 3529, of which 1840 carry a label.
 >
-> **And the word "present" means two different things.** In §4 it is *"the
-> explanation conveys this feature"*. In §5–6 it is *"this feature is really in the
-> source document"* — a different judge answering a different question.
+> ### Two experiments are deliberately not here
+>
+> A source-document presence check and a bucket-composition analysis were run,
+> produced publishable-looking numbers, and **did not meet the bar**. They are in
+> [INCONCLUSIVE.md](INCONCLUSIVE.md) with their full numbers and the reasons —
+> chiefly that both judged features against the **whole document**, when an
+> activation sampled at one token position is not a claim about the whole
+> document.
 
 ---
 
@@ -67,8 +65,10 @@ features each vector needs:
 | AR output | **101.3** | **0.99581** |
 
 **Fewer features, better fit.** Whatever the reason, the two sides of every
-feature comparison below are not being read by the SAE with equal fidelity, and
-§5 returns to what that costs.
+feature comparison below are **not read by the SAE with equal fidelity** — it
+sees more of the AR's output than of the original. That is the main reason the
+tool calls its third bucket `UNVERIFIED` rather than "invented": a feature the
+SAE fails to find in the original may still be there.
 
 *(In cosine the gap is 0.0016. FVE magnifies it because Gemma's `rawvar` is
 0.0279 — see the note at the end of this section.)*
@@ -152,27 +152,21 @@ The other 50% are **counted in every total but never named**. A report resting o
 
 ---
 
-# Part I — Does the *explanation* convey the activation?
+## 4. The explanation tracks the activation — and about 43% of it gets through
 
-Everything in this part is judged **against the explanation text**. One question,
-asked once per (feature, explanation) pair: *does this explanation cover this
-feature?*
+Judged **against the explanation text**. One question, asked once per (feature,
+explanation) pair: *does this explanation cover this feature?*
 
 **Population: 3,032 pairs** — the 250 activation × explanation pairs, restricted
 to features carrying a validated label, because you cannot ask whether a text
 covers a feature you cannot describe.
 
----
-
-## 4. About 43% of what is in the activation reaches the text
-
-```
-bucket        n     conveyed   not conveyed   unknown
-shared     1840       46%          50%          4%
-lost        630       31%          66%          3%
-made        562       35%          60%          5%
-REAL       2470       42%          54%          4%
-```
+| bucket | n | **conveyed** | not conveyed | unknown | mean label AUC |
+|---|---:|---:|---:|---:|---:|
+| **shared** | 1840 | **46%** | 50% | 4% | 0.872 |
+| **lost** | 630 | **31%** | 66% | 3% | 0.856 |
+| **made** | 562 | **35%** | 60% | 5% | 0.858 |
+| **REAL** | 2470 | 42% | 54% | 4% | — |
 
 **`REAL` is `shared` + `lost` = 1840 + 630.** Those are the features genuinely
 present in the original activation. `made` is excluded from it precisely because
@@ -189,11 +183,40 @@ mention do not — 46% vs 31%.**
 The explanation is the *only* channel between AV and AR. A feature the text never
 carries has nothing to be rebuilt from, and this is the direct evidence of that.
 
-> **These rates look low, and Part II explains why they are not a bug.** Only 46%
-> of `shared` features are conveyed here — but **80% of those same features are
-> genuinely in the source document**. The features are real; the two-sentence
-> explanation simply does not carry most of them. See
-> [the side-by-side table in Part II](#the-two-parts-side-by-side--read-this-it-is-the-whole-story).
+Against the judge's measured **5.7% false-positive floor**, `shared` at 46% is
+**8.1× the floor**. The separations:
+
+| | |
+|---|---|
+| shared vs lost | **+6.4σ** |
+| shared vs made | **+4.6σ** |
+| made vs lost | +1.3σ — not distinguishable |
+
+**This is the core evidence that the AV is not free-associating.** If the
+explanation were unrelated to the activation's contents, features in the
+activation would be conveyed at roughly the false-positive floor and all three
+buckets would look alike. They do not.
+
+### Is that gap just better labels? No.
+
+`shared` features do carry slightly better labels — mean AUC **0.872** against
+**0.856** for `lost`, which at these sample sizes is **+5.0σ**. Real, so it has to
+be ruled out as the cause.
+
+Holding label quality fixed by comparing only within matched AUC bands:
+
+| label AUC band | shared conveyed | lost conveyed | gap |
+|---|---:|---:|---:|
+| 0.756–0.82 | 38% (n=507) | 23% (n=213) | **+15** |
+| 0.82–0.86 | 44% (n=300) | 32% (n=105) | **+12** |
+| 0.86–0.90 | 43% (n=334) | 35% (n=116) | **+8** |
+| 0.90–1.00 | 54% (n=683) | 36% (n=187) | **+18** |
+
+**The gap holds in every band**, and the weighted within-band gap is **+14.0
+points** against a raw gap of +14.5. Label quality accounts for roughly **half a
+point** of it. The 0.016 AUC difference is simply far too small to move a
+15-point conveyance gap — and every bucket sits well above the 0.756 validation
+threshold anyway.
 
 ### By category
 
@@ -244,148 +267,14 @@ instead is in [METHODOLOGY.md](METHODOLOGY.md).
 
 ---
 
-# Part II — Are the features really in the *source document*?
+## 5. Qualitative: blind descriptions
 
-**Different question, different judge, and this is where the word "present"
-changes meaning.** Part I asked whether the *explanation* covers a feature.
-Part II asks whether the feature is genuinely in the **source text at all** —
-comparing each feature's label against the document the activation came from.
+A model is given **only the feature labels** for a bucket and asked to describe
+what they collectively point at — it never sees the AV's explanation. So when its
+summary and the explanation agree, that agreement is evidence rather than an echo.
 
-**Population: 607 (feature, activation) pairs.** One explanation per activation
-rather than five, because a feature can land in `shared` under one sampled
-explanation and `lost` under another; mixing them would put one feature in two
-rows of the same table.
-
-**Every number in Part II is a gap against a control** — the same feature judged
-against a *different* document. Feature labels are often generic enough to sound
-plausible about any text, so the raw rate alone means nothing.
-
-### The two parts side by side — read this, it is the whole story
-
-The same three buckets, under both questions:
-
-| bucket | **really in the document** (Part II) | **conveyed by the explanation** (Part I) |
-|---|---:|---:|
-| shared | **80%** | **46%** |
-| lost | 73% | 31% |
-| made | 78% | 35% |
-
-**These do not contradict each other.** A `shared` feature is very likely to be
-genuinely about the source document — 80% — but the AV's two-sentence explanation
-only carries about half of them. **The gap between 80% and 46% is the
-bottleneck**: most of what the SAE finds in an activation is real, and most of it
-still does not reach the text.
-
-Every bucket shows the same shape — high on "really there", far lower on
-"conveyed". Whatever the round trip is losing, it is not losing it because the
-features were spurious.
-
-> ⚠ **One coincidence worth flagging.** The number **46%** appears in both parts
-> for `shared` and means entirely different things: in Part I it is the *result*
-> (46% conveyed by the explanation); in Part II's table below it is the *control*
-> (46% of labels sound right about an unrelated document). Same number, same
-> bucket, unrelated quantities.
-
----
-
-## 5. "Invented" features are mostly not invented
-
-```
-judged present in its OWN document        77.8%
-judged present in a DIFFERENT document    47.8%   <- control
-gap                                       +30.0
-```
-
-The control lands near 50%, which is the point: half the time a label sounds
-right about a document it has nothing to do with. Only the gap carries signal.
-
-| bucket | own | control | gap |
-|---|---:|---:|---:|
-| shared | 80% | 46% | **+34** |
-| lost | 73% | 46% | **+27** |
-| made | 78% | 56% | **+22** |
-
-**`made` has a real gap too.** If those features were invented, they would sit at
-the control. They do not.
-
-Narrowing to **content-bearing** features, where the judgement is most meaningful:
-
-| | own | control |
-|---|---:|---:|
-| made · content · specific | 65% | 30% |
-| made · content · generic | 68% | 25% |
-
-**Two-thirds of "invented" content features are genuinely in the source
-document** — just not at the sampled token position. The AR is reconstructing
-**document-level context**, not **position-specific state**.
-
-"Made up" is therefore the wrong name. The tool calls them **UNVERIFIED**, which
-means *not checked* — not *false*.
-
-> **The §1 caveat lands here.** C > A means the SAE reads the AR's output more
-> faithfully than a real activation (0.700 vs 0.587). So a feature counted as
-> "invented" may have been in the original all along and simply invisible to the
-> SAE there. The instrument is more sensitive on one side of the subtraction than
-> the other, which inflates this bucket. That is a second, independent reason to
-> read "invented" as *unverified*.
-
----
-
-## 6. A negative result: the round trip is indiscriminate by feature type
-
-Same 607 pairs. If the round trip destroyed *specifics* and kept *themes*, the
-three buckets would have visibly different composition. Here is the composition:
-
-| bucket | n | content+specific | content+generic | grammar+specific | grammar+generic |
-|---|---:|---:|---:|---:|---:|
-| shared | 366 | 22% ±4 | 24% ±4 | 16% ±4 | 37% ±5 |
-| lost | 128 | 23% ±7 | 26% ±8 | 20% ±7 | 31% ±8 |
-| made | 113 | 18% ±7 | 25% ±8 | 17% ±7 | 41% ±9 |
-
-Differences against `shared`, in sigma:
-
-| cell | lost | made |
-|---|---:|---:|
-| content+specific | 0.2 | −1.1 |
-| content+generic | 0.5 | 0.2 |
-| grammar+specific | 0.8 | 0.1 |
-| grammar+generic | −1.3 | 0.6 |
-
-**Every difference is under 1.3σ.** The plausible story — "themes survive,
-specifics are lost" — is not there. Hand-picked examples supporting it are easy to
-find (`Nginx`, `"tomato"`, temperature values all appear in `lost`), and that is
-exactly why the aggregate matters.
-
-### What *does* differ
-
-Lost **content+specific** features are less accurate about the text than shared
-ones: **57% vs 80%**, a 24-point gap at **2.4σ**.
-
-So some of what we call "destroyed by the round trip" is the **SAE having fired
-spuriously in the first place** — the feature was never really about the
-document, and the AR simply did not reproduce the error. That is a materially
-different explanation for "loss", and it partly undercuts the headline.
-
-### Label quality is not the confound
-
-Mean label AUC by cell runs 0.82–0.89 — every cell well above the 0.756
-threshold, and the shared/lost/made spread inside any row is within error bars.
-Two real effects:
-
-- **content** labels beat **grammar** labels: 0.877 vs 0.854 (**4.1σ**)
-- **specific** beats **generic**: 0.876 vs 0.858 (**3.0σ**)
-
-Both make sense — "mentions of CPU components" gives a scorer something
-checkable; "a noun following a preposition" does not.
-
----
-
-## 7. Qualitative: blind descriptions
-
-Still Part II's population. A model is given **only the feature labels** for a
-bucket and asked to describe the document — it never sees the AV's explanation.
-So when its summary and the explanation agree, that agreement is evidence rather
-than an echo.
+This is qualitative and read by eye. It is here because it is legible, not
+because it is a measurement.
 
 **Activation 0** — AV said *"PC build review… Intel Core i7-14700"*
 
@@ -422,8 +311,14 @@ about legal notices.
   would show it.
 - **SAE incompleteness.** A claim can be true and have no corresponding feature.
   Absence of a feature is weak evidence — a limitation the NLA paper itself names.
-- **Some "lost" features were spurious** (§6), so the loss rate overstates what
-  the bottleneck destroys.
+- **Some "lost" features may be SAE misfires** rather than things the bottleneck
+  destroyed. The experiment that tried to measure this did not meet the bar —
+  [INCONCLUSIVE.md](INCONCLUSIVE.md), Test 2 — so the size of the effect is
+  unknown, not zero.
+- **Nothing here checks whether a feature is "true" of the source text.** The two
+  attempts are in [INCONCLUSIVE.md](INCONCLUSIVE.md). An activation at one token
+  position is not a claim about the whole document, so that comparison was
+  measuring the wrong thing.
 - **"Invented" features are measured on a vector already closer to the SAE's
   dictionary than a real activation** (§1, C > A), so the two sides are not quite
   like-for-like.

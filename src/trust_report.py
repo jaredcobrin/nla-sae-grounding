@@ -17,19 +17,29 @@ The buckets are set arithmetic on SAE feature sets:
 So the explanation enters only THROUGH THE AR'S RECONSTRUCTION OF IT. Saying
 "the explanation implies X" would attribute to the text what belongs to the AR,
 and that distinction is the whole premise of this project: the AR trains on the
-AV's own rollouts, and 65-68% of UNVERIFIED content features turn out to be
-present in the wider document rather than stated in the explanation. The AR
-fills in context. Wording that blurs this hides the confound the SAE exists to
-expose.
+AV's own rollouts, so it fills in context the explanation never stated. Wording
+that blurs this hides the confound the SAE exists to expose.
 
 For a check that DOES read the explanation, see judge_explanations.py, which
 shows the text to a model and asks whether it covers each feature.
 
-UNVERIFIED IS NOT "FALSE" AND THE REPORT MUST NEVER SAY IT IS. Measured on 50
-Gemma rollout activations, 65-68% of unverified CONTENT features are genuinely
-present in the source document, just not at the sampled token position (control
-25-30%). The reconstructor largely rebuilds document-level context rather than
-position-specific state. Unverified means "not checked", never "refuted".
+UNVERIFIED IS NOT "FALSE" AND THE REPORT MUST NEVER SAY IT IS. It means the
+feature is in the AR's reconstruction and was not found in the original -- which
+is by construction "not checked", not "refuted". Two further reasons not to read
+it as "invented":
+
+  * The SAE reconstructs the AR's output BETTER than a real activation (FVE 0.700
+    vs 0.587, and it needs fewer features to do it: L0 101 vs 120). The two sides
+    of the subtraction are not read with equal sensitivity, so a feature may be
+    present in the original and simply invisible to the SAE there.
+  * An SAE is incomplete. Absence of a feature is weak evidence of absence of the
+    thing -- a limitation the NLA paper names about its own method.
+
+An earlier version cited "65-68% of unverified content features are genuinely in
+the source document". THAT CLAIM IS WITHDRAWN -- see INCONCLUSIVE.md. It came
+from a plain yes/no judge that had never been through the matcher bake-off, and
+it compared features against the WHOLE DOCUMENT when an activation sampled at one
+token position is not a claim about the whole document.
 
 WHY THE NUMBERS ARE COMPUTED AND ONLY THE PROSE IS GENERATED
 Feature sets, counts and coverage come from vector arithmetic and integer set
@@ -522,10 +532,13 @@ def main() -> None:
                r.get("assessment") or "*(skipped: --no-prose)*", "",
                "## Source text", "", "```", " ".join(r["source_text"].split())[-1200:], "```", "",
                "---", "",
-               "**Unverified is not false.** On 50 Gemma rollout activations, 65-68% of "
-               "unverified content features were genuinely present in the source document, "
-               "just not at this token position (control 25-30%). Treat unverified as "
-               "*not checked*, never as *refuted*.", ""]
+               "**Unverified is not false.** A feature lands here when the AR's "
+               "reconstruction contains it and the original activation does not appear to. "
+               "Two reasons that is weaker than it sounds: the SAE reconstructs the AR's "
+               "output better than a real activation (FVE 0.700 vs 0.587), so it reads the "
+               "two sides with unequal sensitivity; and an SAE is incomplete, so a missing "
+               "feature is weak evidence. Treat unverified as *not checked*, never as "
+               "*refuted*.", ""]
         (out / f"activation_{r['index']:03d}.md").write_text("\n".join(md))
 
     (out / "summary.json").write_text(json.dumps(
