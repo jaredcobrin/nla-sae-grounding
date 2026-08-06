@@ -153,9 +153,17 @@ the NLA. **The ordering never flips on any corpus**, and both gaps keep their si
 everywhere. This is why the main results use rollouts: it is the setting most
 favourable to the SAE, so it is the conservative place to run the comparison.
 
-> **Read cosine, not FVE, for small differences.** Gemma's `rawvar` is 0.0279, so
-> `FVE ≈ 1 − 65×(1−cos)`: 0.001 of cosine moves FVE by 0.065. Large-looking FVE
-> gaps here can be small cosine gaps.
+> **Read cosine, not FVE, for small differences.** `FVE = 1 − 2(1−cos)/rawvar`,
+> and Gemma's `rawvar` is tiny, so FVE magnifies small cosine gaps:
+>
+> | run | `rawvar` | multiplier | 0.001 of cosine moves FVE by |
+> |---|---:|---:|---:|
+> | n=50 rollouts (the main results) | 0.0279 | **71.7×** | **0.072** |
+> | n=10 three-corpus (the table above) | 0.0308 | 65.0× | 0.065 |
+>
+> The two runs sample different activations, so they have different `rawvar` and
+> are not interchangeable. An earlier version of this file quoted `rawvar` 0.0279
+> alongside the 65× multiplier — those belong to different runs.
 
 ---
 

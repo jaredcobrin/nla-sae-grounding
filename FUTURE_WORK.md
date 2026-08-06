@@ -20,6 +20,15 @@ Having `v_orig_sae` matters: it lets the SAE's own reconstruction error be
 subtracted out, so an effect can be attributed to the AR rather than to SAE
 lossiness.
 
+`feature_overlap.json` also carries **per-feature activation strengths** for the
+50 original activations (`stage1.strengths`, feature ID → strength, `l0_big`),
+plus `sae_cos` and `sae_fve` per activation. The AR outputs' strengths are *not*
+stored, but `v_ar` is in the `.npz`, so they are one encode away — no GPU.
+
+**What is NOT on disk anywhere:** reconstruction quality under `l0_small`.
+`refeature.py` writes only `F_orig`, in this repo and in every earlier run. Hence
+item 0.
+
 ---
 
 ## 0. The cheap one: does C > A hold at `l0_small`?
@@ -31,8 +40,12 @@ sets without reconstruction scores. The caveat is currently carried across that
 boundary untested.
 
 Encode and decode `v_orig` and `v_ar` under `l0_small`, report cosine and L0 for
-each. Minutes of CPU, and it either confirms a caveat the file leans on or
-removes it.
+each. Minutes of CPU once the SAE weights are downloaded, and it either confirms
+a caveat the file leans on or removes it.
+
+Checked before writing this: **no artefact in this repo or in any earlier run
+carries it.** `refeature.py` has only ever written `F_orig`, so there is no
+shortcut — it has to be computed.
 
 ---
 

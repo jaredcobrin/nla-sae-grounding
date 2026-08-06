@@ -34,12 +34,20 @@ activation directly and was trained without ever seeing the NLA.
 parallel (mean pairwise cosine 0.967 vs Qwen's 0.30). That makes
 
 ```
-FVE ≈ 1 − 65 × (1 − cos)
+FVE = 1 − 2(1 − cos) / rawvar
 ```
 
-so **0.001 of cosine moves FVE by 0.065**. Every FVE number in this repo is
-reported with its cosine, and negative FVE values mean "worse than predicting the
-mean vector", not a collapsed reconstruction.
+**The multiplier depends on `rawvar`, which depends on which activations were
+sampled** — so it is not a fixed constant of the model:
+
+| run | `rawvar` | multiplier | 0.001 of cosine moves FVE by |
+|---|---:|---:|---:|
+| n=50 rollouts (the main results) | 0.0279 | **71.7×** | **0.072** |
+| n=10 three-corpus | 0.0308 | 65.0× | 0.065 |
+
+Every FVE number in this repo is reported with its cosine, and negative FVE
+values mean "worse than predicting the mean vector", not a collapsed
+reconstruction.
 
 ---
 
