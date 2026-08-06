@@ -21,6 +21,32 @@ Raw artefacts for every table are in [`results/`](.).
 > removes ~50%, exactly the label coverage in §3. And §2 reports **means** where
 > §4 reports **totals**: 14.1 × 250 = 3529, of which 1840 carry a label.
 >
+> ### Which SAE produced which number
+>
+> **Two different SAEs are used in this file**, and it matters — they are
+> separately trained dictionaries, not two settings of one knob.
+>
+> | § | what | SAE | features/activation |
+> |---|---|---|---|
+> | **1** | the four FVE scores, and L0 119.9 / 101.3 | **`l0_big`** | ~120 |
+> | **2** | the kept/lost/made counts | **both**, side by side | ~21 and ~120 |
+> | **3** | labelling | `l0_small` | ~21 |
+> | **4** | conveyed rates, the 2×2, the AUC stratification | **`l0_small`** | ~21 |
+> | **5** | blind descriptions | `l0_small` | ~21 |
+> | — | `trust_report.py`, the tool | `l0_small` | ~21 |
+>
+> `l0_big` is used where **reconstruction fidelity** is the question, because it
+> reconstructs better. `l0_small` is used everywhere a feature has to be *named*,
+> because at ~120 features per activation the labels are not reliable — the
+> measured label-vs-wrong-label AUC gap is **+0.092 at `l0_small` against +0.008
+> at `l0_big`**. Full reasoning in [METHODOLOGY.md](METHODOLOGY.md).
+>
+> **Consequence, stated plainly:** §1's C > A asymmetry is measured on `l0_big`
+> only. §4 runs on `l0_small`. The artefact `refeature.py` writes for `l0_small`
+> contains feature sets but **no reconstruction scores**, so whether that
+> asymmetry holds at `l0_small` is **not established here**. Where §4 and the tool
+> invoke it, treat it as a plausible transfer, not a measured one.
+>
 > ### Two experiments are deliberately not here
 >
 > A source-document presence check and a bucket-composition analysis were run,
@@ -38,12 +64,23 @@ Four FVE numbers, all on the same 50 activations. **B is the NLA's own round-tri
 score**: activation → AV writes an explanation → AR rebuilds an activation from
 that text. It is the number the NLA paper reports for its own system.
 
-| | what is being reconstructed, from what | FVE |
-|---|---|---|
-| **A** | the activation, from **the SAE's features** | 0.587 |
-| **B** | the activation, from **two sentences of English** — *this is the NLA* | **0.739** |
-| **C** | the AR's output, from **the SAE's features** | 0.700 |
-| **D** | the activation, from the SAE's reading of the AR's output | 0.494 |
+| | what is being reconstructed, from what | SAE used | FVE |
+|---|---|---|---|
+| **A** | the activation, from **the SAE's features** | `l0_big` | 0.587 |
+| **B** | the activation, from **two sentences of English** — *this is the NLA* | **none** | **0.739** |
+| **C** | the AR's output, from **the SAE's features** | `l0_big` | 0.700 |
+| **D** | the activation, from the SAE's reading of the AR's output | `l0_big` | 0.494 |
+
+**B does not involve the SAE at all** — it is activation → AV → text → AR →
+activation, scored directly. So B is fixed no matter which SAE is chosen; only
+A, C and D would move.
+
+`l0_big` is the variant selected for reconstruction fidelity (~120 active
+features against `l0_small`'s ~21), so **A is the SAE at its strongest**, which
+makes B > A the conservative form of that comparison. Re-running A at `l0_small`
+would be expected to score lower and widen the gap — *expected*, not measured;
+these are separately trained dictionaries, and the check is item 0 in
+[FUTURE_WORK.md](FUTURE_WORK.md).
 
 ### B > A, by 0.152
 
@@ -84,8 +121,17 @@ No mechanism is claimed. What matters downstream is only the fact of it: **the
 two sides of every feature comparison in this file are not read by the SAE with
 equal fidelity** — it captures more of the AR's output than of the original.
 
-That asymmetry is why the tool calls its third bucket `UNVERIFIED` rather than
-"invented": a feature the SAE fails to find in the original may still be there.
+That asymmetry is part of why the tool calls its third bucket `UNVERIFIED` rather
+than "invented": a feature the SAE fails to find in the original may still be
+there.
+
+**But note the boundary.** This is measured on `l0_big`; the tool and §4 run on
+`l0_small`, where it has not been measured — `refeature.py` writes feature sets
+without reconstruction scores. The `UNVERIFIED` name does not depend on it: the
+bucket is *by construction* "the AR produced it and we did not find it in the
+original", which is unchecked rather than false, and an SAE is incomplete in any
+case. Measuring the asymmetry at `l0_small` is one of the cheap open items in
+[FUTURE_WORK.md](FUTURE_WORK.md) — the saved vectors are enough, no GPU needed.
 
 *(In cosine the gap is 0.0016. FVE magnifies it because Gemma's `rawvar` is
 0.0279 — see the note at the end of this section.)*

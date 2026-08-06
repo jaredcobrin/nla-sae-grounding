@@ -230,9 +230,11 @@ This repo is Apache-2.0 to match upstream. Full breakdown in [NOTICE](NOTICE).
 README.md          this file
 LICENSE            Apache-2.0
 NOTICE             attribution — what is upstream, what is derived, what is mine
-TEST_LOG.md        what was actually run against real weights, and what broke
-METHODOLOGY.md     how each measurement works, and what broke on the way there
 RESULTS.md         every number, with its control and its caveats
+INCONCLUSIVE.md    experiments that produced numbers and did not meet the bar
+FUTURE_WORK.md     what the saved vectors make answerable next
+METHODOLOGY.md     how each measurement works, and what broke on the way there
+TEST_LOG.md        what was actually run against real weights, and what broke
 src/               the pipeline, one file per stage (see src/README.md)
 scripts/           run_pipeline.sh — the documented order
 results/           every artefact the numbers come from (see results/README.md)
