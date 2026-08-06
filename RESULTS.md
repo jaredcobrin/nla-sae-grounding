@@ -87,6 +87,19 @@ dictionary changes.
 | **made** | 8,202 | 32.8 | 21.5% |
 | *total* | *38,177* | *152.7* | |
 
+**Against the control.** Many latents fire on almost any text, so the counts
+above mean nothing until you know what two *unrelated* vectors would share. Same
+measurement, scoring each reconstruction against a **different** activation:
+
+| Jaccard | `l0_small` | `l0_big` |
+|---|---:|---:|
+| matched — reconstruction vs its own activation | **0.576** | **0.450** |
+| mismatched control — vs a different activation | 0.009 | 0.026 |
+| ratio | **65×** | **17×** |
+
+Unrelated pairs share essentially nothing. Integer set arithmetic on latent IDs —
+no judge, no labels, nothing to calibrate.
+
 `l0_big` is used for the reconstruction scores in §1; `l0_small` for labelling
 and everything downstream of it, because labels generated at `l0_big` fail
 validation.
