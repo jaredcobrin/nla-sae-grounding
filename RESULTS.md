@@ -189,6 +189,12 @@ mention do not — 46% vs 31%.**
 The explanation is the *only* channel between AV and AR. A feature the text never
 carries has nothing to be rebuilt from, and this is the direct evidence of that.
 
+> **These rates look low, and Part II explains why they are not a bug.** Only 46%
+> of `shared` features are conveyed here — but **80% of those same features are
+> genuinely in the source document**. The features are real; the two-sentence
+> explanation simply does not carry most of them. See
+> [the side-by-side table in Part II](#the-two-parts-side-by-side--read-this-it-is-the-whole-story).
+
 ### By category
 
 Same 3,032 pairs, cut by what kind of thing the feature detects:
@@ -253,6 +259,32 @@ rows of the same table.
 **Every number in Part II is a gap against a control** — the same feature judged
 against a *different* document. Feature labels are often generic enough to sound
 plausible about any text, so the raw rate alone means nothing.
+
+### The two parts side by side — read this, it is the whole story
+
+The same three buckets, under both questions:
+
+| bucket | **really in the document** (Part II) | **conveyed by the explanation** (Part I) |
+|---|---:|---:|
+| shared | **80%** | **46%** |
+| lost | 73% | 31% |
+| made | 78% | 35% |
+
+**These do not contradict each other.** A `shared` feature is very likely to be
+genuinely about the source document — 80% — but the AV's two-sentence explanation
+only carries about half of them. **The gap between 80% and 46% is the
+bottleneck**: most of what the SAE finds in an activation is real, and most of it
+still does not reach the text.
+
+Every bucket shows the same shape — high on "really there", far lower on
+"conveyed". Whatever the round trip is losing, it is not losing it because the
+features were spurious.
+
+> ⚠ **One coincidence worth flagging.** The number **46%** appears in both parts
+> for `shared` and means entirely different things: in Part I it is the *result*
+> (46% conveyed by the explanation); in Part II's table below it is the *control*
+> (46% of labels sound right about an unrelated document). Same number, same
+> bucket, unrelated quantities.
 
 ---
 
