@@ -35,14 +35,14 @@ fine-tuned on*. The ordering held on all three corpora tried in an earlier n=10
 pass. Both are lossy compressions of the same vector, but they were built for
 different jobs — sparse decomposition versus reconstruction — so this is a
 statement about reconstruction, not about English being a better representation
-than a feature basis.
+than a latent basis.
 
-**2. The round trip preserves most features, far above its control.**
+**2. The round trip preserves most latents, far above its control.**
 
 **Tested on 50 activations × 5 explanations = 250 (activation, explanation)
 pairs**, the same vectors read by both SAEs — only the dictionary changes.
 
-| | `l0_small` (~21 features/activation) | | | `l0_big` (~120 features/activation) | | |
+| | `l0_small` (~21 latents/activation) | | | `l0_big` (~120 latents/activation) | | |
 |---|---:|---:|---:|---:|---:|---:|
 | | **total** | **mean/pair** | **share** | **total** | **mean/pair** | **share** |
 | **shared** | 3,529 | 14.1 | 56.5% | 17,125 | 68.5 | 44.9% |
@@ -55,20 +55,20 @@ pairs**, the same vectors read by both SAEs — only the dictionary changes.
 | **kept** = shared/(shared+lost) | **71.0%** | **57.1%** |
 | Jaccard vs mismatched control | 0.576 vs 0.009 — **65×** | 0.450 vs 0.026 — **17×** |
 
-Integer set arithmetic on SAE feature IDs. No judge, no labels, nothing to
+Integer set arithmetic on SAE latent IDs. No judge, no labels, nothing to
 calibrate — which is why this is the most robust number here.
 
 The 14-point difference in kept rate is close to a straight trade between
 `shared` and `lost`. **The `made` share barely moves — 20.5% vs 21.5%** — so
 about a fifth of what the AR produces is absent from the original under either
 dictionary. These are separately trained dictionaries, not two settings of a
-granularity knob, so nothing here supports reading the gap as "coarse features
+granularity knob, so nothing here supports reading the gap as "coarse latents
 survive, fine-grained ones don't".
 
-**3. The main finding: features the round trip keeps are conveyed by the
-explanation more often than features it loses or adds.**
+**3. The main finding: latents the round trip keeps are conveyed by the
+explanation more often than latents it loses or adds.**
 
-| bucket | features | conveyed by the explanation |
+| bucket | latents | conveyed by the explanation |
 |---|---|---|
 | **shared** — in the activation *and* the reconstruction | 1840 | **46%** |
 | **made** — only in the reconstruction | 562 | 35% |
@@ -101,7 +101,7 @@ actually evidenced by:
 | **UNVERIFIED** | **the AR produces it** from the explanation, but it is not in the activation here |
 | **OMITTED** | in the real activation, but **the AR does not recover it** |
 
-These are set operations on SAE feature sets — `F_orig ∩ F_ar`, `F_ar \ F_orig`,
+These are set operations on SAE latent sets — `F_orig ∩ F_ar`, `F_ar \ F_orig`,
 `F_orig \ F_ar`, where `F_ar = SAE(AR(explanation))`. **The explanation text is
 never read.** It enters only through the AR's reconstruction of it, and that
 distinction matters: the AR trains on the AV's own rollouts and demonstrably
@@ -109,7 +109,7 @@ fills in context the explanation never stated (result 4). Saying "the explanatio
 implies X" would attribute to the text what belongs to the AR.
 
 For a check that *does* read the explanation, `src/judge_explanations.py` shows
-the text to a model and asks whether it covers each feature — that is where the
+the text to a model and asks whether it covers each latent — that is where the
 46% / 31% figures in result 3 come from.
 
 **UNVERIFIED does not mean false** — see result 4. It means *not checked*.
@@ -127,7 +127,7 @@ was caught only by a control:
 - an auto-interp scorer where a **deliberately wrong label scored 0.557 against a
   correct label's 0.604** — near-blind, and its "33% of labels are reliable" meant
   nothing
-- a claim-matcher that judged **78% of features present in activations they never
+- a claim-matcher that judged **78% of latents present in activations they never
   fired in**
 - a "90% of claims survive" figure that was **49%** once the bucketing rule stopped
   counting a claim as surviving when most of its support was destroyed
@@ -207,14 +207,14 @@ and the NLA config assertion fails at startup.
 - **Gemma only.** The SAE was fine-tuned on Gemma-generated chat; on FineWeb the
   same pipeline measured a 7-point effect where Gemma rollouts gave 25. The tool
   refuses other corpora unless overridden.
-- **~50% of features have a validated label.** The rest are counted but unnamed.
+- **~50% of latents have a validated label.** The rest are counted but unnamed.
   That is the validation bar working, not a bug.
 - **The SAE is not complete.** A claim can be true and have no corresponding
-  feature. Absence of a feature is weak evidence.
+  feature. Absence of a latent is weak evidence.
 - **The confabulation finding is not new.** The NLA paper already documents
   explanations with "verifiably false claims about the context" that are
   "typically thematically faithful". What is new here is checking whether those
-  claims correspond to SAE features, and how much of an explanation is evidenced.
+  claims correspond to SAE latents, and how much of an explanation is evidenced.
 - The prior-art check was **not exhaustive**.
 
 ---
@@ -236,7 +236,7 @@ Kantamneni, Ong et al. The SAE is Google's Gemma Scope 2. I wrote none of that.
 
 **The finding that NLA explanations confabulate is also not mine** — the paper
 documents it. What is mine is the question of whether those claims correspond to
-active SAE features, the pipeline that measures it, and the controls.
+active SAE latents, the pipeline that measures it, and the controls.
 
 This repo is Apache-2.0 to match upstream. Full breakdown in [NOTICE](NOTICE).
 

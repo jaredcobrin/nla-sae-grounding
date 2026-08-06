@@ -1,7 +1,7 @@
 # Future work
 
 Everything in [RESULTS.md](RESULTS.md) is **correlational**. It measures which
-features co-occur with which text, never whether any of it is load-bearing. The
+latents co-occur with which text, never whether any of it is load-bearing. The
 proposals here are ordered by how much they change that, and the last one is
 causal.
 
@@ -20,8 +20,8 @@ Having `v_orig_sae` matters: it lets the SAE's own reconstruction error be
 subtracted out, so an effect can be attributed to the AR rather than to SAE
 lossiness.
 
-`feature_overlap.json` also carries **per-feature activation strengths** for the
-50 original activations (`stage1.strengths`, feature ID → strength, `l0_big`),
+`feature_overlap.json` also carries **per-latent activation strengths** for the
+50 original activations (`stage1.strengths`, latent ID → strength, `l0_big`),
 plus `sae_cos` and `sae_fve` per activation. The AR outputs' strengths are *not*
 stored, but `v_ar` is in the `.npz`, so they are one encode away — no GPU.
 
@@ -35,7 +35,7 @@ item 0.
 
 `RESULTS.md` §1 measures the SAE reconstructing the AR's output better than a
 real activation (FVE 0.700 vs 0.587, L0 101 vs 120) — but **only at `l0_big`**.
-Section 4, and the tool, run on `l0_small`, where `refeature.py` writes feature
+Section 4, and the tool, run on `l0_small`, where `refeature.py` writes latent
 sets without reconstruction scores. The caveat is currently carried across that
 boundary untested.
 
@@ -51,7 +51,7 @@ shortcut — it has to be computed.
 
 ## 1. Give each bucket a direction
 
-**The idea.** A feature is currently just an integer ID. But the SAE
+**The idea.** A latent is currently just an integer ID. But the SAE
 reconstruction is a *linear* sum of decoder vectors weighted by activation
 strength, so each bucket can be turned back into a direction in activation space:
 
@@ -67,7 +67,7 @@ rather than a heuristic.
 **What it buys.** Every bucket comparison in this repo is a *count*. Directions
 let you ask geometric questions instead:
 
-- How large is `d_lost` relative to `d_shared`? Losing 5 marginal features is not
+- How large is `d_lost` relative to `d_shared`? Losing 5 marginal latents is not
   the same as losing 5 strong ones, and counts cannot tell them apart.
 - What is the angle between `d_made` and `d_shared`? If they are near-orthogonal,
   the AR is adding something unrelated; if aligned, it is over-expressing a theme
@@ -77,8 +77,8 @@ let you ask geometric questions instead:
   component of `d_made` over all 250 runs and see how much variance it carries.
 
 **Watch out for.** Decoder vectors are **not orthogonal**, so these directions
-are not independent components and their norms are not additive. And feature
-strengths are not comparable across features without normalisation — a feature
+are not independent components and their norms are not additive. And latent
+strengths are not comparable across latents without normalisation — a latent
 with a naturally large activation scale will dominate any raw sum.
 
 ---
@@ -121,7 +121,7 @@ is where three separate measurements in this project went wrong.
 forward pass, and see what changes in the generated text.
 
 **Why this is the most valuable item here.** Everything in `RESULTS.md` is
-correlational — it establishes that certain features co-occur with certain text.
+correlational — it establishes that certain latents co-occur with certain text.
 Steering asks whether the direction *does* anything. If adding `d_made` makes the
 model produce the content the AV confabulated, that is evidence the AR's addition
 is a real, functional direction rather than a reconstruction artefact. If nothing
@@ -151,7 +151,7 @@ interpreting anything.
 ## 4. Fixing what is in INCONCLUSIVE.md
 
 Both discarded experiments in [INCONCLUSIVE.md](INCONCLUSIVE.md) failed for the
-same reason: they judged features against the **whole source document**, when an
+same reason: they judged latents against the **whole source document**, when an
 activation sampled at one token position is not a claim about the whole document.
 
 The repair is the same for both — compare against the **local context window**
@@ -167,7 +167,7 @@ instrument that cannot detect the effect.
 
 Stated as open questions rather than limitations, because each is answerable:
 
-- **Prior versus channel.** 54% of features the round trip preserves were never
+- **Prior versus channel.** 54% of latents the round trip preserves were never
   visibly conveyed by the explanation (§4). Separating "the AR inferred it" from
   "the judge under-detected it" would need an AR trained independently of the AV,
   which the released checkpoints do not provide — or a judge validated against

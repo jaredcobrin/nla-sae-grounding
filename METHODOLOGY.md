@@ -27,6 +27,18 @@ constraint the objective enforces.
 So a third, independent reader is needed. A sparse autoencoder reads the
 activation directly and was trained without ever seeing the NLA.
 
+### A note on "latent" vs "feature"
+
+These docs say **latent** for a dimension of the SAE — the actual object, index
+*i* in the encoder output. "Feature" is reserved for the thing a latent might
+correspond to in the model. The distinction matters here because calling a latent
+a feature assumes the interpretability claim this repo is trying to test, and
+Gemma Scope uses "latent" for the same reason.
+
+**The code and the JSON keys still say `feature`** (`shared_features`,
+`feature_overlap.json`, `label_features.py`). Renaming them would invalidate every
+shipped artefact for no gain, so they are left alone; read them as latents.
+
 ### A metric footgun specific to Gemma
 
 `rawvar` on Gemma-3-12B layer 32 is **0.0279**, against Qwen's 0.7363. Dimension
@@ -85,17 +97,17 @@ Gemma Scope 2 ships two sparsities for layer 32 at width 16k. They are used for
 
 | | `l0_big` | `l0_small` |
 |---|---|---|
-| active features per activation | ~120 | ~21 |
+| active latents per activation | ~120 | ~21 |
 | token purity of top-40 exemplars | 0.17 | 0.24 |
 | label vs **wrong-label** AUC gap | **+0.008** | **+0.092** |
-| used for | reconstruction fidelity | feature semantics |
+| used for | reconstruction fidelity | latent semantics |
 
 **Reconstruction fidelity uses `l0_big`** because it is the strongest SAE
 available. "The AR beats the SAE" is a harder claim to make against a better SAE,
 so using the weaker one would flatter the result.
 
-**Anything about what a feature *means* uses `l0_small`**, because `l0_big`'s
-features are polysemantic to the point that **a correct label cannot be told
+**Anything about what a latent *means* uses `l0_small`**, because `l0_big`'s
+latents are polysemantic to the point that **a correct label cannot be told
 apart from a wrong one** (+0.008 is statistically nothing). No category table can
 be built on labels like that.
 
@@ -114,7 +126,7 @@ itself.
 
 ---
 
-## 4. Labelling features, and the control that rebuilt it
+## 4. Labelling latents, and the control that rebuilt it
 
 A generated label is a **hypothesis**, not a measurement. The auto-interp
 literature (Bills et al. 2023; EleutherAI/Neuronpedia) is built around generating
@@ -123,7 +135,7 @@ an explanation and then **scoring it on held-out data**.
 ### What the first version got wrong
 
 It reported "0.596 balanced accuracy, 33% of labels reliable". Then the control:
-score each label against a **different feature's** data.
+score each label against a **different latent's** data.
 
 ```
 matched  (feature's own label)   0.604
@@ -134,9 +146,9 @@ gap                              +0.047   (n=24, not significant)
 A deliberately wrong label scored almost as well as the right one. The
 reliability figure measured nothing. Three causes, all fixable:
 
-1. **Negatives were adversarial.** Drawn from other features' *top* exemplars —
+1. **Negatives were adversarial.** Drawn from other latents' *top* exemplars —
    maximally-activating tokens — while positives came from ranks 120–300 and were
-   weak. Negatives often looked *more* feature-like than positives. Fixed with
+   weak. Negatives often looked *more* latent-like than positives. Fixed with
    uniformly random positions, the EleutherAI fuzzing standard.
 2. **Argmax Yes/No discarded the signal.** One bit per item. Replaced with
    `logP(Yes) − logP(No)` scored by AUC.
@@ -147,12 +159,12 @@ reliability figure measured nothing. Three causes, all fixable:
 - **Generate** three candidate labels from whole exemplar *passages* (grouped by
   source sequence, so the contrast between firing and non-firing tokens in the
   same text is visible) with activation strengths quantised 0–10, plus negatives,
-  plus the feature's promoted tokens read from its decoder direction
+  plus the latent's promoted tokens read from its decoder direction
 - **Select** the winner on held-out ranks 40–120
 - **Report** it on ranks 120–300 — a **disjoint** band, so the published score
   never sees the data that chose the label. Without this split, best-of-N inflates
   the reported number by roughly the spread of the candidates
-- **Calibrate**: every feature is *also* scored with a wrong label, and the
+- **Calibrate**: every latent is *also* scored with a wrong label, and the
   threshold is the **95th percentile of that pooled null** — a measured 5%
   false-positive rate rather than a number picked by feel
 
@@ -186,17 +198,17 @@ AUC        n
 Why the kept labels average 0.873 rather than 0.95+, deliberately:
 
 - **the test band is hard on purpose.** Scoring happens on ranks 120-300, which
-  activate the feature *more weakly* than the top exemplars the generator saw.
+  activate the latent *more weakly* than the top exemplars the generator saw.
   Scoring on those top exemplars would return a much higher number and would be
   measuring memorisation
 - **the scorer is Gemma-3-12B**, not a frontier model; the auto-interp literature
   typically uses GPT-4-class scorers
-- **some features are genuinely polysemantic** even at `l0_small`’s L0≈21
+- **some latents are genuinely polysemantic** even at `l0_small`’s L0≈21
 
 **"Validated" means "beats a wrong label at a measured 5% false-positive rate."
 It does not mean "correct."** About 40% of kept labels sit in the marginal band
 just above threshold, where a label is genuinely predictive but vague about
-*what* the feature detects.
+*what* the latent detects.
 
 ### What did *not* help
 
@@ -207,9 +219,9 @@ should not be credited as one.
 
 ---
 
-## 5. Judging whether an explanation covers a feature
+## 5. Judging whether an explanation covers a latent
 
-For each feature in an activation, ask whether the AV's explanation covers it.
+For each latent in an activation, ask whether the AV's explanation covers it.
 Answer on a four-point scale: `CLEARLY / PROBABLY / UNCLEAR / NO`.
 
 ### Two nulls, because the failure has two directions
@@ -220,11 +232,11 @@ null_expl   this feature      vs N UNRELATED explanations
 null_feat   this explanation  vs N features that did NOT fire in it
 ```
 
-`null_expl` catches a feature so generic it matches any text. `null_feat` catches
+`null_expl` catches a latent so generic it matches any text. `null_feat` catches
 an explanation so broad that anything matches it. A single control cannot tell
 those apart.
 
-`null_feat` also gives **clean ground truth**: those features provably did not
+`null_feat` also gives **clean ground truth**: those latents provably did not
 fire, so every "present" is an error. That is the false-positive rate.
 
 ### The verdict is three-way, never two
@@ -241,8 +253,8 @@ failure into evidence that the AV does not understand something.
 ### The prompt was chosen by a measured bake-off, not by taste
 
 An earlier prompt asked whether the explanation "plausibly" contained the
-feature, with a binary Yes/No. It said **YES to 411 of 476 pairs**, including
-**78% of features that provably did not fire**, and of its 411 yeses only 54%
+latent, with a binary Yes/No. It said **YES to 411 of 476 pairs**, including
+**78% of latents that provably did not fire**, and of its 411 yeses only 54%
 were real against a 50% base rate. The two-null rule correctly returned `UNKNOWN`
 for 96% of pairs — a measurement that refused itself.
 
@@ -260,7 +272,7 @@ calibration, not capability**, and four prompt changes fixed it:
 
 1. "plausibly" removed — it invited yes
 2. the **base rate is stated**: an explanation is one or two sentences while the
-   activation holds ~20 features, so most are genuinely not covered
+   activation holds ~20 latents, so most are genuinely not covered
 3. uncertainty gets its own answer, so a coin-flip is not forced into "yes"
 4. the observed failure modes are named and banned ("same broad topic", "a
    grammatical pattern found in all writing")
@@ -270,7 +282,7 @@ true for real pairs and false for the non-firing controls, and would bias exactl
 the pairs that measure the false-positive rate. Both conditions are worded
 identically.
 
-Variant C is kept as a **diagnostic only**. It needs known-absent features mixed
+Variant C is kept as a **diagnostic only**. It needs known-absent latents mixed
 in, both to make ranking meaningful and to supply ground truth, and no such set
 exists in real use. It answers "is there any signal here at all", not "is this
 claim covered".
@@ -288,17 +300,17 @@ self-consistency       89.2%    across 5 sampled explanations of one activation
 
 ## 6. Describing the buckets blind
 
-`src/describe_buckets.py` hands a model **only the feature labels** for
+`src/describe_buckets.py` hands a model **only the latent labels** for
 shared / lost / made and asks what they collectively say. It never sees the AV
 explanation, so agreement between the two is evidence rather than an echo.
 
 Every bucket also gets a **control summary built from a different activation's
-features**. Given twenty labels a language model will manufacture a coherent
+latents**. Given twenty labels a language model will manufacture a coherent
 story out of anything, including a pile of grammatical patterns.
 
-**Known limitation, measured:** with 2–3 labelled features the model over-reaches
+**Known limitation, measured:** with 2–3 labelled latents the model over-reaches
 about 10% of the time — one run produced *"a legal document or agreement"* from a
-single feature about legal notices. It hedges appropriately 50% of the time on
+single latent about legal notices. It hedges appropriately 50% of the time on
 thin buckets vs 16% on full ones, but individual thin-bucket summaries should not
 be trusted. Aggregate across activations instead.
 
@@ -313,21 +325,21 @@ unit was a 3-word fragment, so the matcher had only surface form to judge and
 matched *"Reflective, relatable tone"* to *"Adjectives modifying terms related to
 AI systems"* in an unrelated activation, purely because "relatable" is an
 adjective. Mismatched-activation control ran at 54%. Replaced by the
-feature → whole-explanation direction.
+latent → whole-explanation direction.
 
 **Splitting labels into "trigger" and "content" fields so grounding could match
 only on subject matter.** Rejected: it puts a fresh, unvalidated LLM judgement in
-the critical path. Non-discriminating features are removed by measurement
+the critical path. Non-discriminating latents are removed by measurement
 instead.
 
 **Category-level matching.** Too coarse to test anything: `topic_domain` appears
 in 99% of activations, `syntax` 93%, and the category-level control Jaccard
-between two *different* activations is 0.591 against 0.013–0.029 at feature
+between two *different* activations is 0.591 against 0.013–0.029 at latent
 level. Categories are for reporting, not testing.
 
 **A local-FDR confidence score per label.** Built, then dropped — for the label
 axis it was redundant with the AUC bins already available, and it introduced a
-monotonicity bug that rated a feature scoring **AUC 0.172 (below chance)** as 98%
+monotonicity bug that rated a latent scoring **AUC 0.172 (below chance)** as 98%
 likely to be real. The bug was a sweep in the wrong direction; the lesson is that
 an unvalidated transform in the critical path produces confident, plausible
 output.

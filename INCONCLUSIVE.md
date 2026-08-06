@@ -10,7 +10,7 @@ Both share a root cause worth stating once:
 > **An activation is not a summary of its document.** These activations are
 > sampled at one token position. What the model represents *there* is not
 > obliged to correspond to the document as a whole. Both experiments below judge
-> features against **the whole source text**, so they ask a question the
+> latents against **the whole source text**, so they ask a question the
 > activation was never making a claim about. No amount of prompt engineering
 > fixes a question that is aimed at the wrong object.
 
@@ -19,14 +19,14 @@ prints its own control. Nothing in `RESULTS.md` depends on it.
 
 ---
 
-## Test 1 — is the feature actually in the source document?
+## Test 1 — is the latent actually in the source document?
 
-**The question.** For each feature, show a model the source document and the
-feature's label, and ask whether what the feature responds to is really in the
+**The question.** For each latent, show a model the source document and the
+latent's label, and ask whether what the latent responds to is really in the
 text. Run it twice: once against the activation's **own** document, once against
 a **different** one as a control.
 
-**What it found** (607 feature–activation pairs):
+**What it found** (607 latent–activation pairs):
 
 ```
 judged present in its OWN document        77.8%
@@ -40,7 +40,7 @@ gap                                       +30.0
 | lost | 73% | 46% | +27 |
 | made | 78% | 56% | +22 |
 
-Narrowed to content-bearing features in the `made` bucket:
+Narrowed to content-bearing latents in the `made` bucket:
 
 | | own | control |
 |---|---:|---:|
@@ -48,12 +48,12 @@ Narrowed to content-bearing features in the `made` bucket:
 | made · content · generic | 68% | 25% |
 
 **The headline it produced, which is now withdrawn:** *"two-thirds of 'invented'
-features are genuinely in the source document — the AR reconstructs
+latents are genuinely in the source document — the AR reconstructs
 document-level context, not position-specific state."*
 
 ### Why it does not count
 
-**1. The question is aimed at the wrong object.** See the note above. A feature
+**1. The question is aimed at the wrong object.** See the note above. A latent
 firing at token 300 is about the model's state at token 300. Asking whether it is
 "in the document" tests something else entirely, and a positive answer would not
 mean what the headline claimed it meant.
@@ -69,7 +69,7 @@ excerpt does not contain it...
 
 In the matcher bake-off ([METHODOLOGY.md](METHODOLOGY.md)) the plain-yes/no
 variant scored a **78.3% false-positive rate** — it said yes to four out of five
-features that provably were not present. It was replaced by the graded
+latents that provably were not present. It was replaced by the graded
 `CLEARLY`/`PROBABLY`/`UNCLEAR`/`NO` scheme, which scored 5.7%. **This prompt never
 went through that bake-off**, and "be strict" is not a substitute for measuring
 whether a prompt is strict.
@@ -95,14 +95,14 @@ That guard working is the one genuinely good outcome here. But a +30 that become
 Drop the document comparison entirely and compare against **the local context the
 activation was actually taken from** — a window of tokens around the sampled
 position, not the whole text. Then put that prompt through the same bake-off the
-matcher went through: candidate wordings, measured FPR against features that
+matcher went through: candidate wordings, measured FPR against latents that
 never fired, and a graded output rather than yes/no.
 
 ---
 
 ## Test 2 — does the round trip destroy specifics and keep themes?
 
-**The question.** Classify every feature on two axes — `GRAMMAR` vs `CONTENT`,
+**The question.** Classify every latent on two axes — `GRAMMAR` vs `CONTENT`,
 and `GENERIC` vs `SPECIFIC` — then compare the composition of the `shared`,
 `lost` and `made` buckets. If the round trip preserved themes and destroyed
 details, `lost` should be visibly richer in content+specific features.
@@ -129,9 +129,9 @@ survive and specifics are lost, does not appear in the aggregate, even though
 hand-picked examples supporting it are easy to find (`Nginx`, `"tomato"`,
 temperature values all sit in `lost`).
 
-A secondary finding: lost content+specific features scored 57% on the accuracy
+A secondary finding: lost content+specific latents scored 57% on the accuracy
 axis against shared's 80%, a 24-point gap at 2.4σ — suggesting some "lost"
-features were **SAE misfires** the AR simply did not reproduce.
+latents were **SAE misfires** the AR simply did not reproduce.
 
 ### Why it does not count
 
@@ -157,7 +157,7 @@ reliable than its input.
 
 ### What it would take to make this real
 
-Build a positive control first: hand-label a few hundred features on both axes,
+Build a positive control first: hand-label a few hundred latents on both axes,
 and measure the classifier against that ground truth. If it recovers hand labels
 well, the null becomes meaningful. Until then this is an untested instrument
 returning "no effect", which is not a finding.
@@ -172,7 +172,7 @@ Two things survive and are used in `RESULTS.md`:
   That naming no longer rests on Test 1 — it rests on the construction (the
   bucket *is* "the AR produced it and we did not find it in the original") and on
   §1's C > A, which shows the SAE reads the AR's output more faithfully than a
-  real activation, so a feature may be present and simply invisible to the SAE.
+  real activation, so a latent may be present and simply invisible to the SAE.
   That is an argument from the measurement setup, not from an LLM's opinion.
 - **The guard that killed Test 1.** `classify_features.py` still refuses to print
   its results when its control stops separating. It fired on a real run. That
