@@ -148,22 +148,28 @@ Models: `google/gemma-3-12b-it`, `kitft/nla-gemma3-12b-L32-{av,ar}`,
 
 ### Hardware
 
-Three 12B models are involved, but never more than two at once — `trust_report.py`
-releases the AV and AR before loading the writer.
+**24 GB VRAM, 150 GB storage** — measured, not estimated. See
+[TEST_LOG.md](TEST_LOG.md) for the run this comes from.
 
-| stage | models resident | VRAM |
+Three 12B models are involved but **never more than one at a time**:
+`trust_report.py` runs in phases, releasing the AV before loading the AR and the
+AR before loading the writer. Batch sizes auto-size to the card.
+
+| stage | resident | measured peak |
 |---|---|---|
-| `roundtrip.py` | AV + AR | **~48 GB** |
-| `trust_report.py` | AV + AR, then writer alone | **~48 GB** peak |
-| everything else | one base model | **~24 GB** |
+| `trust_report.py` | one model at a time | **28.9 GB** on a 46 GB card |
+| labelling / judging / describing / classifying | one base model | ~24 GB + batch |
+| `roundtrip.py` | **AV + AR together** | **~48 GB — needs a bigger card** |
 
-So **48 GB is the binding requirement** — an A6000, L40S or A40 is enough; an
-80 GB A100 is not needed. If you only want to run labelling, judging or
-descriptions against already-computed feature sets, 24 GB suffices.
+Two findings worth knowing before renting anything:
 
-**Storage: ~150 GB.** Roughly 24 GB each for the base model, AV and AR; ~2.6 GB
-for the two SAE variants (weights plus their exemplar stores); the rest is the
-HuggingFace datasets cache for oasst1/LMSYS and working space.
+- **the memory peak is batch, not weights.** Model weights are ~23 GB; a
+  hardcoded scoring batch of 64 over ~2000-token prompts took peak to 98.7% of a
+  46 GB card. It now auto-sizes, and peak fell to 62.8%.
+- **`roundtrip.py` still needs ~48 GB**, because it interleaves the AV and AR
+  inside a seed-search gate and has not been restructured. Everything else fits
+  24 GB. The round-trip outputs are already in `results/`, so the rest of the
+  pipeline can be run without it.
 
 `transformers` must be `<5`: 5.x tokenizes the CJK injection marker differently
 and the NLA config assertion fails at startup.

@@ -287,13 +287,29 @@ def batch_gen(model, tok, prompts, max_new, temp=0.0):
     return [tok.decode(r[enc["input_ids"].shape[1]:], skip_special_tokens=True) for r in g]
 
 
+def _auto_score_batch() -> int:
+    """Scoring batch that fits the card.
+
+    MEASURED: this is the peak-memory step of the whole pipeline, not the model
+    weights. Scoring prompts run ~2000 tokens and bs=64 means 64 of them
+    resident at once. On a 46GB L40S the run peaked at 45,481 MiB -- 98.7% of
+    the card -- while the model itself is only ~23GB. A 40GB card OOMs here.
+    """
+    if not torch.cuda.is_available():
+        return 8
+    gb = torch.cuda.get_device_properties(0).total_memory / 1024 ** 3
+    return 64 if gb >= 70 else 24 if gb >= 44 else 12 if gb >= 30 else 6
+
+
 @torch.no_grad()
-def _margins(model, tok, prompts, yes_ids, no_ids, bs=64):
+def _margins(model, tok, prompts, yes_ids, no_ids, bs=None):
     """logP(Yes) - logP(No) at the first generated position.
 
     A single forward pass, no generation and no parsing. Continuous, so AUC can
     use the model's confidence; argmax Yes/No discarded that and cost ~0.03 of
     discriminative gap."""
+    if bs is None:
+        bs = _auto_score_batch()
     out = []
     for i in range(0, len(prompts), bs):
         texts = [tok.apply_chat_template([{"role": "user", "content": p}], tokenize=False,

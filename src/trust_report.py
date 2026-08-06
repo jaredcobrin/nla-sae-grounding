@@ -134,7 +134,21 @@ def sae_encode(V, P):
     return torch.where(pre > P["threshold"], pre, torch.zeros_like(pre))
 
 
-def label_missing(need, cache, model, tok, sae_variant, seed=0, batch=6):
+def _auto_label_batch() -> int:
+    """Pick a labelling batch size that fits the card.
+
+    MEASURED, not guessed: on a 46GB L40S with batch=6 the peak was 45,481 MiB
+    -- 98.7% of the card. Model weights are only ~23GB; the rest is KV cache for
+    batch x N_CAND (=3) concurrent ~2000-token generations. So the binding
+    constraint is the batch, not the model, and a 40GB card OOMs at the default.
+    """
+    if not torch.cuda.is_available():
+        return 2
+    gb = torch.cuda.get_device_properties(0).total_memory / 1024 ** 3
+    return 6 if gb >= 70 else 3 if gb >= 44 else 2 if gb >= 30 else 1
+
+
+def label_missing(need, cache, model, tok, sae_variant, seed=0, batch=None):
     """Label features this run needs but the cache has never seen.
 
     WHY THIS HAS TO EXIST: an activation the tool has not run before fires
@@ -158,6 +172,11 @@ def label_missing(need, cache, model, tok, sae_variant, seed=0, batch=6):
     import label_features as LF
     if not need:
         return cache, 0
+    if batch is None:
+        batch = _auto_label_batch()
+        gb = (torch.cuda.get_device_properties(0).total_memory / 1024 ** 3
+              if torch.cuda.is_available() else 0)
+        print(f"[label] batch={batch} (auto, for a {gb:.0f}GB card)")
     print(f"[label] {len(need)} features in this run have never been labelled")
     X = load_file(str(sae_variant_dir(sae_variant)
                        / "examples.safetensors"))
@@ -292,6 +311,10 @@ def main() -> None:
                          "AV: the AV is fine-tuned to emit explanations in one fixed "
                          "format ('Final token X opens a clause requiring Y') and "
                          "reproduces that format instead of assessing anything.")
+    ap.add_argument("--label-batch", type=int, default=None,
+                    help="labelling batch size. Default auto-sizes to the card: "
+                         "the peak is KV cache for batch x 3 concurrent long "
+                         "generations, not model weights. Lower it if you OOM.")
     ap.add_argument("--no-label", action="store_true",
                     help="do not label unseen features; they are counted but unnamed")
     ap.add_argument("--no-prose", action="store_true",
@@ -311,9 +334,6 @@ def main() -> None:
 
     P = load_file(str(sae_variant_dir(SAE_VARIANT)
                        / "params.safetensors"))
-    av = ThinkingAV(a.av, device=a.device, prompt_style="metacognitive")
-    critic = NLACritic(a.ar, device=a.device)
-    _, rawvar = load_predict_mean_baselines(a.parquet, critic.mse_scale)
 
     V, row_idx, _ = load_vectors(a.parquet, a.n, a.seed)
     import pyarrow.parquet as pq
@@ -322,20 +342,56 @@ def main() -> None:
     print(f"[data] {len(V)} activations from {a.parquet}")
 
     A_orig = sae_encode(V, P)
-    reports = []
+
+    # ---- PHASE 1: verbalize. AV only. ----
+    # THREE 12B MODELS ARE INVOLVED AND NONE OF THEM OVERLAP.
+    # Holding the AV and AR together needs ~48GB, which does not fit a 46GB
+    # L40S -- and holding all three needs ~72GB. Running them in phases keeps
+    # the peak at ONE model (~24GB), so the whole tool fits a 24GB card.
+    # Nothing is lost by doing this: the AV never needs the AR's output, and
+    # the explanations are just text.
+    print("\n[phase 1/3] verbalizing with the AV")
+    av = ThinkingAV(a.av, device=a.device, prompt_style="metacognitive")
+    expls = []
     for i in range(len(V)):
         torch.manual_seed(a.seed * 1000 + i)
-        _r, _t, expl, _c = av.generate(V[i], use_thinking=False, temperature=1.0,
-                                       thinking_max_tokens=64,
-                                       explanation_max_tokens=200, do_sample=True)
-        if not expl:
-            print(f"  act {i}: AV produced no explanation, skipping")
-            continue
-        if _CJK.search(expl):
+        _r, _t, e, _c = av.generate(V[i], use_thinking=False, temperature=1.0,
+                                    thinking_max_tokens=64,
+                                    explanation_max_tokens=200, do_sample=True)
+        if e and _CJK.search(e):
             print(f"  act {i}: WARNING — CJK in output, injection may have failed")
+        if not e:
+            print(f"  act {i}: AV produced no explanation")
+        expls.append(e)
+    del av
+    gc.collect()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+    print(f"  {sum(1 for e in expls if e)}/{len(expls)} explanations; AV released")
 
-        v_ar = critic.reconstruct(expl).float()
-        mse, cos = critic.score(expl, V[i])
+    # ---- PHASE 2: reconstruct. AR only. ----
+    print("\n[phase 2/3] reconstructing with the AR")
+    critic = NLACritic(a.ar, device=a.device)
+    _, rawvar = load_predict_mean_baselines(a.parquet, critic.mse_scale)
+    recon = []
+    for i, e in enumerate(expls):
+        if not e:
+            recon.append(None)
+            continue
+        v_ar = critic.reconstruct(e).float()
+        mse, cos = critic.score(e, V[i])
+        recon.append((v_ar, mse, cos))
+    del critic
+    gc.collect()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+    print(f"  {sum(1 for r in recon if r)} reconstructions; AR released")
+    reports = []
+    for i in range(len(V)):
+        expl = expls[i]
+        if not expl or recon[i] is None:
+            continue
+        v_ar, mse, cos = recon[i]
         A_ar = sae_encode(v_ar.unsqueeze(0), P)[0]
 
         F_o = set(torch.nonzero(A_orig[i]).flatten().tolist())
@@ -354,18 +410,8 @@ def main() -> None:
               f"  unverified {len(sets['unverified']):>3}"
               f"  omitted {len(sets['omitted']):>3}")
 
-    # ---- free the AV and AR before loading the writer ----
-    # They are only needed for the round-trip loop above. Holding all three
-    # 12B models at once costs ~72GB and forces an 80GB+ card; releasing these
-    # two brings the peak down to ~48GB, which fits an A6000/L40S/A40. The
-    # feature sets and explanations are already extracted into `reports`.
-    del av, critic
-    gc.collect()
-    if torch.cuda.is_available():
-        torch.cuda.empty_cache()
-    print("[mem] released AV and AR; peak from here is the writer model alone")
-
-    # ---- label anything this run has never seen ----
+    # ---- PHASE 3: label unseen features + write prose. Base model only. ----
+    print("\n[phase 3/3] labelling and writing")
     from transformers import AutoModelForCausalLM, AutoTokenizer
     wtok = AutoTokenizer.from_pretrained(a.writer)
     wtok.padding_side = "left"
@@ -378,7 +424,7 @@ def main() -> None:
     missing = {f for f in fired if str(f) not in CACHE}
     if missing and not a.no_label:
         CACHE, n_new = label_missing(missing, CACHE, wmodel, wtok, SAE_VARIANT,
-                                      seed=a.seed)
+                                      seed=a.seed, batch=a.label_batch)
         Path(a.labels).write_text(json.dumps(CACHE, indent=2))
         print(f"[labels] cache updated and written back to {a.labels}")
     elif missing:
