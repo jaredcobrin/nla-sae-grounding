@@ -1,55 +1,65 @@
-# Trust report — activation 0 (parquet row 20)
+# Trust report — activation 0 (parquet row 288)
 
-Reconstruction FVE `+0.505` · cosine `0.9931`
+Reconstruction FVE `+0.715` · cosine `0.9960`
 
 ## The explanation under review
 
-> Scripted comedy structure: joke format with dialogue is established, following a classic setup-punchline pattern for a sitcom scene. The phrase "Jerry, we've got a little awkward silence here" signals a routine of deflecting the awkward moment, implying a transition to introducing the guest. Final token "JERRY" opens a dialogue beat label ("JERRY: ..."), immediately requiring a dialogue tag or continuation like " (nervously clears throat)" or "Okay, back to the joke." or " : " to the host's voice, likely "Trying to redirect the conversation" or " (to the audience) ... So, the joke."
+> Character description establishing a structured prompt format — "a charming, intelligent, slightly awkward scholar" signals a persona descriptor. The phrase "describes as eccentric but charming, a little quirky" sets up a list of adjectives or tone traits, implying a playful, mild personality. Final token "quirky" ends a descriptor list ("slightly odd, intellectually curious and a little quirky"), immediately expecting continuation like "but endearing" or "academic, gentle" or "with a touch of intelligence" — or "ly, inviting curiosity" or "but cozy/nerdy" or "maybe more techy, not intimidating" — the positive contrast framing the unusual vibe.
 
 ## Verdict
 
 | | features | named |
 |---|---:|---:|
-| **CONFIRMED** — in the activation *and* recoverable from the explanation | 12 | 6 |
-| **UNVERIFIED** — implied by the explanation, not found in the activation here | 6 | 3 |
-| **OMITTED** — in the activation, not carried by the explanation | 6 | 3 |
+| **CONFIRMED** — in the activation, and the AR recovers it | 15 | 12 |
+| **UNVERIFIED** — the AR produces it, but it is not in the activation here | 4 | 2 |
+| **OMITTED** — in the activation, but the AR does not recover it | 9 | 6 |
 
-*12 of 24 features (50%) have a validated label and can be named. The rest are counted only.*
+*These are set operations on SAE feature sets — the explanation text is never read. It enters only through the AR's reconstruction of it.*
+
+*20 of 28 features (71%) have a validated label and can be named. The rest are counted only.*
 
 ### Confirmed
 
-- `f474` Fires on tokens labeling features or attributes, often after a colon.
-- `f85` Fires on named characters or roles introduced in a scene.
-- `f1719` Triggers on words associated with humor and jokes, often after introductory phrases.
-- `f379` Character name appearing mid-sentence, often with descriptive context.
-- `f6235` The feature fires on tokens starting with "J" within lists or technical documentation.
-- `f9133` Introduces a shift in thought or explanation within a sentence.
-- *(plus 6 further features that could not be named)*
+- `f63` Adjectives and adverbs describing qualities following a qualifying phrase.
+- `f1461` Adjectives following the phrase "Option [number]" indicating a style choice.
+- `f204` Introduces or describes a trait/characteristic using adjectives or related phrases.
+- `f6510` Adjective describing something unusual following a colon or dash.
+- `f1200` Numeric identifier followed by a vertical bar and a number.
+- `f999` Fires on a "Q" token often introduced as a label for questions or quality metrics.
+- `f609` Fires on words immediately following a double asterisk (**) denoting bolding.
+- `f7282` Adjective describing a tangible quality following a noun.
+- `f2246` Adverbs or adjectives indicating a negative condition or feeling.
+- `f7500` A noun describing a character's inherent traits.
+- `f543` Technical terms following a colon or within a list.
+- `f14050` Adjectives modifying a character name or descriptor.
+- *(plus 3 further features that could not be named)*
 
 ### Unverified
 
-- `f586` Responds with common conversational openers after a prompt or statement.
-- `f1924` Pronouns/interjections following a pause or transitional element.
-- `f963` Identifies parameter and return descriptions in function documentation.
-- *(plus 3 further features that could not be named)*
+- `f1736` Fires on adjectives describing content flagged as unacceptable.
+- `f1719` Triggers on words associated with humor and jokes, often after introductory phrases.
+- *(plus 2 further features that could not be named)*
 
 ### Omitted
 
-- `f170` Last name appearing within a citation or attributed role.
-- `f137` Initial letter of a capitalized proper noun in bold.
-- `f5220` Proper noun immediately following a preceding clause.
+- `f7495` Cur" preceding a word indicating selection or interest.
+- `f2688` Words indicating nuance, variation, or emphasis following a preceding phrase.
+- `f10086` Adjective describing a visual style following a colon or other separator.
+- `f1886` Pronouns/articles following descriptors of self-improvement/identity.
+- `f123` Nouns following a description of an acceptable/unacceptable or defining characteristic.
+- `f5077` Noun following a colon or dash introducing a list/explanation.
 - *(plus 3 further features that could not be named)*
 
 ## Assessment
 
 *Written by a language model from the CONFIRMED and UNVERIFIED lists only — omitted features are excluded, since they concern what the explanation left out rather than whether what it said holds up. The counts and lists above are computed; only this paragraph is generated.*
 
-The model’s explanation of this neural activation demonstrates a degree of reliability when it comes to identifying specific patterns. We can confidently rely on the explanation’s claims regarding the activation’s response to tokens labeling features, character names, humor-related words, and certain structural elements like shifts in thought—all of which were consistently confirmed through reconstruction. However, the evidence supporting the explanation’s claims about conversational openers and pronouns is thin, as these features were not observed at the activation’s position within the text. Therefore, while the model provides valuable insights into certain aspects of the activation, caution is advised when interpreting its assertions about the unverified features.
+Based on this analysis, the model's explanation demonstrates a degree of reliability when it comes to identifying specific linguistic patterns within the neural activation. We can confidently accept claims concerning adjectives modifying character traits, style choices indicated by "Option [number]," and the presence of technical terms or identifiers—all of which were consistently confirmed by the reconstructor. However, the evidence supporting claims related to humor or content flagged as unacceptable is notably thin, as these features were not found at the activation's position, though they may appear elsewhere in the document. Therefore, while the explanation provides valuable insights into certain aspects of the activation, caution should be exercised when interpreting its assertions regarding these unverified elements.
 
 ## Source text
 
 ```
- Okay, here's a script for the opening scene of a hypothetical Seinfeld reunion show, with Larry David playing himself. I've tried to capture the show's observational humor and Larry's specific brand of neurotic exasperation. I've included notes afterward on potential staging/tone. **Title: Seinfeld: Still Standing (Working Title)** **Scene:** A sparsely decorated studio set. It vaguely resembles Jerry's old apartment, but cleaner and with more ambient lighting. A small table is center stage with a pitcher of water and some glasses. Jerry Seinfeld, George Costanza, and Elaine Benes are seated, looking slightly awkward and over-rehearsed. A camera crew is present but unobtrusive. **(Opening Music – a slightly updated, more polished but still vaguely familiar Seinfeld theme plays briefly. It cuts as the scene begins)** **JERRY:** (Forcing a smile) So, welcome everyone! Welcome to… well, it’s a reunion. A Seinfeld reunion! Can you believe it? After all these years… **GEORGE:** (Grumbling) After all this wasted potential. Imagine what I could have accomplished if I hadn’t been stuck chasing women and… well, you know. **ELAINE:** (Rolling her eyes) Oh, George. Always the victim. **JERRY
+user If you had to imagine or create a personified version of yourself, what might you look like? model Okay, this is a fun thought experiment! If I were to personify myself, here's what I imagine: **Overall Vibe:** Calm, thoughtful, a little bit quirky
 ```
 
 ---

@@ -1,55 +1,51 @@
-# Trust report — activation 3 (parquet row 254)
+# Trust report — activation 3 (parquet row 387)
 
-Reconstruction FVE `+0.803` · cosine `0.9973`
+Reconstruction FVE `+0.662` · cosine `0.9953`
 
 ## The explanation under review
 
-> Structured form template format establishes checklist instructions, requiring practical advice for contacting a specific lender/agency. The phrase "Address: [Company Name] - " signals a parenthetical clarification about the Contact form, setting up a specific location lookup or mailing address for the Canadian Bank. Final token " - " follows a parenthetical opener "Address - (Postal Address -") requiring immediate guidance on finding the specific branch address; likely "Find the correct branch by researching)" or "REQUIRED: Look up the specific IRS contact address" or "This is critical; find it online." or "Ideally, specify the exact branch if you know it" to match the letter.
+> Established structure signals a prompt/role description, priming a creative writing output with a sample text snippet for a tarot/spell card. The phrase "I've included the text below, with some suggestions" sets up a practical instruction, implying the reader can choose/customize 3 options for the copy. Final sentence "This is formatted for you...There are 5 paragraphs." closes a setup instruction — next tokens likely "After the text" or "Choose the one that suits you" or "At the end are also options/notes" or "I'll list them at the end." or "Then, pick the ending" referencing the actual examples.
 
 ## Verdict
 
 | | features | named |
 |---|---:|---:|
-| **CONFIRMED** — in the activation *and* recoverable from the explanation | 19 | 5 |
-| **UNVERIFIED** — implied by the explanation, not found in the activation here | 6 | 2 |
-| **OMITTED** — in the activation, not carried by the explanation | 10 | 5 |
+| **CONFIRMED** — in the activation, and the AR recovers it | 8 | 3 |
+| **UNVERIFIED** — the AR produces it, but it is not in the activation here | 4 | 2 |
+| **OMITTED** — in the activation, but the AR does not recover it | 3 | 1 |
 
-*12 of 35 features (34%) have a validated label and can be named. The rest are counted only.*
+*These are set operations on SAE feature sets — the explanation text is never read. It enters only through the AR's reconstruction of it.*
+
+*6 of 15 features (40%) have a validated label and can be named. The rest are counted only.*
 
 ### Confirmed
 
-- `f26` Fires on list markers followed by a colon.
-- `f16` Starts sentences/clauses after punctuation, often introducing emphasis or explanation.
-- `f9012` Introduces a descriptive point or list item following a colon/asterisk.
-- `f2080` Relates to physical delivery of correspondence.
-- `f5452` Fires on tokens immediately following a label indicating contact information.
-- *(plus 14 further features that could not be named)*
+- `f4628` Fires on tokens following a period, signaling the start of a new clause or sentence.
+- `f297` Period followed by a space introducing a new section or important note.
+- `f4612` Triggered by "I've" followed by a verb indicating inclusion/explanation.
+- *(plus 5 further features that could not be named)*
 
 ### Unverified
 
-- `f5852` ** The feature fires on phrases initiating a request for detail or clarification.
-- `f648` Fires on a bolded title after a numbered section introduction.
-- *(plus 4 further features that could not be named)*
+- `f13567` Period after a stylistic declaration.
+- `f1953` Starts a new paragraph/section after a preceding text block.
+- *(plus 2 further features that could not be named)*
 
 ### Omitted
 
-- `f8310` Fires on a bracketed phrase denoting a specific detail or area.
-- `f11281` Fires on phrases introducing focused advice regarding niche selection.
-- `f13684` A clause ending with a parenthetical phrase or a clarifying statement.
-- `f9133` Introduces a shift in thought or explanation within a sentence.
-- `f10701` Comments suggesting modifications or optional steps trigger the feature.
-- *(plus 5 further features that could not be named)*
+- `f1498` Period following a clause introducing further detail or explanation.
+- *(plus 2 further features that could not be named)*
 
 ## Assessment
 
 *Written by a language model from the CONFIRMED and UNVERIFIED lists only — omitted features are excluded, since they concern what the explanation left out rather than whether what it said holds up. The counts and lists above are computed; only this paragraph is generated.*
 
-The model’s explanation demonstrates a degree of reliability regarding the activation’s function, as a substantial number of observed features—specifically, its tendency to fire on list markers, sentence beginnings after punctuation, and tokens related to physical correspondence—were confirmed through reconstruction. However, the evidence supporting the explanation’s claims about the activation’s role in phrases requesting detail or bolded titles is thin, as these features were not directly observed at the analyzed position. Consequently, while the confirmed aspects of the explanation can be reasonably relied upon for understanding this particular activation, the unverified claims should be treated with caution and potentially investigated further within the broader document context. Ultimately, the model provides a useful, though incomplete, insight into the activation’s behavior.
+The model's explanation demonstrates a degree of reliability regarding its identification of specific activation patterns. Our analysis confirms that the explanation accurately reflects the presence of features such as tokens following periods, periods introducing new sections, and triggers associated with phrases like "I've" followed by a verb. However, the evidence supporting other claims is thin; a reconstructor identified additional features—specifically, periods after stylistic declarations and paragraph starts following preceding text blocks—that were not found within the activation at the point of analysis. Therefore, while the explanation provides some useful insights, readers should approach the unverified aspects with caution, recognizing that these features may be present elsewhere in the broader document.
 
 ## Source text
 
 ```
-user Can you write me a formal letter for the canada immigration services in order to get a visa to work abroad from france? model Okay, here's a draft of a formal letter you can adapt for Canada Immigration Services. **Please read the IMPORTANT DISCLAIMERS at the very end of this response *before* using this letter.** I've included explanations and bracketed areas ([...]) where you *must* customize the content. I've also provided notes on optional sections. [Your Full Name] [Your Full Address in France] [Your Phone Number] [Your Email Address] [Date] Canada Immigration Services [Specific Office Address -
+user Two robots who have fallen in love with another. Soon, there is valentines day and one robots to write a humorous love letter and send it to the other. Can you help it write such a letter? model Okay, here's a humorous love letter, written from the perspective of a robot to another, with a few options for different tones (slightly more silly, slightly more sarcastic, a bit more earnest underneath the humor). I'll include explanations of the choices after each option to help you tailor it.
 ```
 
 ---

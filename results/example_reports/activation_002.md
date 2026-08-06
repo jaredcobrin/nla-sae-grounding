@@ -1,53 +1,59 @@
-# Trust report — activation 2 (parquet row 153)
+# Trust report — activation 2 (parquet row 340)
 
-Reconstruction FVE `+0.900` · cosine `0.9986`
+Reconstruction FVE `+0.801` · cosine `0.9972`
 
 ## The explanation under review
 
-> Structured NLP demo framing: explaining a sentiment analysis pipeline, establishing practical ML context with concrete examples. The sentence "sentiment analysis by identifying patterns of words/..." sets up a classic NLP definition — detecting sentiment from text, likely listing basic features like word combinations or vocabulary. Final token "words/": ends a noun phrase "patterns of words/..." requiring a noun completing the category of sentiment signals, likely "phrases" or "features" to name the unit of analysis, then probably "sentences" or "word categories" or "combinations." or "phrase chunks in the dataset" — a simple ML classifier example like "words or phrase types."
+> Structured advice framing: practical habit change guide establishing a practical, mindful pitch around vegetarian/sustainable lifestyle choices. The phrase "makes the lifestyle shift easier, framing it as a mindset change, which makes these changes easier" sets up a payoff statement about longterm commitment or sustainability. Final token "easier" ends a clause ("makes those changes easier...and that's key to making the tradeoff easier"), requiring a completion like "to maintain" or "long-term." — likely "to stick with." or "to adopt." or "over the long run. The emotional commitment..." or "or more permanent." referencing the behavioral habit or accepting the lifestyle.
 
 ## Verdict
 
 | | features | named |
 |---|---:|---:|
-| **CONFIRMED** — in the activation *and* recoverable from the explanation | 18 | 6 |
-| **UNVERIFIED** — implied by the explanation, not found in the activation here | 6 | 1 |
-| **OMITTED** — in the activation, not carried by the explanation | 7 | 3 |
+| **CONFIRMED** — in the activation, and the AR recovers it | 13 | 5 |
+| **UNVERIFIED** — the AR produces it, but it is not in the activation here | 6 | 5 |
+| **OMITTED** — in the activation, but the AR does not recover it | 9 | 4 |
 
-*10 of 31 features (32%) have a validated label and can be named. The rest are counted only.*
+*These are set operations on SAE feature sets — the explanation text is never read. It enters only through the AR's reconstruction of it.*
+
+*14 of 28 features (50%) have a validated label and can be named. The rest are counted only.*
 
 ### Confirmed
 
-- `f484` Conjunction following a clause or sentence.
-- `f121` Prepositions/conjunctions following a noun or noun phrase indicating enumeration or connection.
-- `f12812` Triggers on code import statements.
-- `f6579` The feature triggers on tokens associated with sentiment analysis or opinion evaluation.
-- `f2231` The feature triggers on tokens associated with customer reviews and feedback.
-- `f13244` Emotion-related words appearing as objects of prepositions or after descriptive adjectives.
-- *(plus 12 further features that could not be named)*
+- `f63` Adjectives and adverbs describing qualities following a qualifying phrase.
+- `f3910` Adjective describing ease follows a description of a tool or process.
+- `f3519` Difficult" follows a description of a barrier or obstacle.
+- `f10602` An adjective appearing before a noun indicating an elevated state.
+- `f1723` Preposition/conjunction within a discussion of food/nutrition.
+- *(plus 8 further features that could not be named)*
 
 ### Unverified
 
-- `f2854` Numerical value followed by an opening parenthesis.
-- *(plus 5 further features that could not be named)*
+- `f283` Second-person pronoun following a limitation or request.
+- `f33` Declining a request using a negative modal verb.
+- `f13029` Adjective describing a task as difficult/hard/impossible.
+- `f2768` Fires on tokens following a comparative adverb or adjective.
+- `f908` The feature fires on forms of "maintain/retain" indicating a need for ongoing preservation.
+- *(plus 1 further features that could not be named)*
 
 ### Omitted
 
-- `f851` Fires on modifiers following introductory phrases or conjunctions.
-- `f14056` Fires on keys in JSON or similar data structures.
-- `f11155` Preposition/conjunction following a noun referring to a collective.
-- *(plus 4 further features that could not be named)*
+- `f123` Nouns following a description of an acceptable/unacceptable or defining characteristic.
+- `f1443` Fires on a second-person pronoun/contraction appearing mid-list.
+- `f2688` Words indicating nuance, variation, or emphasis following a preceding phrase.
+- `f2216` Prepositions/conjunctions linking phrases discussing abstract topics.
+- *(plus 5 further features that could not be named)*
 
 ## Assessment
 
 *Written by a language model from the CONFIRMED and UNVERIFIED lists only — omitted features are excluded, since they concern what the explanation left out rather than whether what it said holds up. The counts and lists above are computed; only this paragraph is generated.*
 
-Overall, the model’s explanation demonstrates a degree of reliability when it comes to identifying specific linguistic features within the neural activation. A substantial number of claims—conjunctions, prepositions, code import triggers, and tokens related to sentiment analysis, customer feedback, and emotion—were confirmed through direct reconstruction and analysis, suggesting a genuine connection to the activation’s behavior. However, the presence of unverified features, such as numerical values followed by parentheses, indicates caution is warranted; these features were not observed at the specific position examined, though they may appear elsewhere in the broader document. The evidence supporting the unverified claims is currently thin, and therefore, while not necessarily incorrect, should be treated as suggestive rather than definitive. Consequently, users can reasonably rely on the explanation’s confirmed findings, but should approach the unverified elements with a degree of skepticism.
+Based on our analysis, the model's explanation demonstrates a degree of reliability regarding its description of qualities, ease, obstacles, elevated states, and discussions of food and nutrition within the activation—all of which were consistently recovered by a reconstructor. However, the explanation’s claims concerning second-person pronouns, declining requests, perceived task difficulty, and the need for ongoing preservation show considerably less consistency, as these features were not found in the activation at the described positions. Consequently, while the explanation provides some useful insights, reliance on its assertions about these unverified elements should be approached with caution, as the evidence supporting them is currently thin. Ultimately, the explanation’s value lies primarily in its identification of concrete linguistic patterns directly present in the activation.
 
 ## Source text
 
 ```
-user What is the minimum data size needed to train a model that understands human languages?? model Okay, this is a *huge* and incredibly complex question, with no single, definitive answer. The "minimum data size" to train a model that "understands human languages" depends *massively* on what you mean by "understands," the complexity of the language, the model architecture, and the desired level of performance. Here's a breakdown of factors and some ballpark estimates, broken into categories roughly proportional to complexity and ambition. **Please read the caveats at the very end!** **1. Simple Task: Sentiment Analysis / Basic Classification (e.g., spam detection, movie review positive/negative)** * **Understanding Level:** Can identify basic patterns and associations between words/
+user What can we do as individuals to address climate change? Provide some examples and how we can adapt our lifestyle to include those changes model Okay, let's break down what individuals can do to address climate change, both in terms of actions and lifestyle adaptations. It's easy to feel overwhelmed, but *every* action, however small, contributes to a larger shift. I'll organize this into categories (big impact, medium impact, smaller but still worthwhile), and give actionable examples with how to integrate them. I'll also include some notes on mindset shifts that make these changes easier
 ```
 
 ---
