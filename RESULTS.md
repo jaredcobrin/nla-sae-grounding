@@ -67,13 +67,20 @@ expect from squeezing an activation through two sentences of English.
 ## 3. Labelling, and how much of it to trust
 
 ```
-features labelled        1,624
-matched AUC              0.742
-wrong-label null         0.499        <- chance
-gap                      +0.243
-threshold (95th pct)     0.756
-validated                816 / 1,623  (50%)
+labels attempted         1,624
+  mean AUC over ALL      0.742        <- includes the half that get rejected
+  wrong-label null       0.499        <- chance
+  gap                    +0.243
+  threshold (95th pct)   0.756
+
+validated (kept)         816 / 1,623  (50%)
+  mean AUC               0.873
+  median                 0.875
 ```
+
+**0.742 is not the quality of the labels this repo uses.** It averages over every
+label the generator attempted, half of which fail validation and are thrown away.
+The ones actually used average **0.873**, and 19 features score a perfect 1.0.
 
 **"Validated" means "beats a wrong label at a measured 5% false-positive rate",
 not "correct".** Roughly 40% of kept labels sit just above threshold, where a

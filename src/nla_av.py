@@ -1,41 +1,40 @@
-"""Thinking-mode AV: a fresh, self-contained AV loader/injector for the
-thinking-mode project — deliberately NOT sharing code with the affine-map
-(W/b) project (experiments/affine_map.py, train_affine.py, local_av.py).
-That project's code and results stay untouched and independently showable;
-this is a new, separate line of experiments on the same released checkpoint.
+"""AV wrapper: activation in, explanation text out.
 
-Only genuinely general, pre-existing upstream-adjacent utilities are reused
-(nla_inference.py's NLAConfig/load_nla_config/normalize_activation/
-inject_at_marked_positions/resolve_embed_scale, nla.schema's NLACritic) —
-these predate the affine-map project and are shared infrastructure the
-original baseline_fve.py (SGLang) already depended on, not something
-introduced for it.
+WHAT THIS IS, AND WHY IT LOOKS OVERBUILT
+This file comes from a separate, completed experiment that gave the AV a
+<thinking> scratchpad. That experiment answered its question (it does not help)
+and is not part of this repo. **This repo only ever calls `generate` with
+`use_thinking=False`**, which is the original released-AV behaviour with an
+unmodified prompt. The thinking prompts, tag-seeding, and
+`compute_teacher_forced_log_probs` below are unused here.
 
-The idea: give the AV a private "thinking" scratchpad before its official
-explanation. Two design decisions, both argued through at length in
-conversation before writing this file — recorded here so the reasoning
-travels with the code, not just in RESEARCH_LOG.md:
+It is vendored whole, rather than trimmed, for one reason: the injection path is
+the hardest thing in this stack to debug, and a rewrite of it was attempted and
+found to contain two silent bugs -- a swapped argument order in
+`inject_at_marked_positions`, and multiplying the injected vector by
+`embed_scale` when `injection_scale` is already calibrated against scaled
+embeddings. Neither crashes. Both produce plausible-looking wrong text. Shipping
+working, over-general code beats shipping a clean rewrite that has never run.
 
-  - AR NEVER sees the thinking section, only the extracted <explanation>.
-    Letting AR score thinking too would hand the model a second, LESS
-    scrutinized channel to stash reconstruction-useful-but-meaningless
-    content in — worse than the existing filler problem, not better, since
-    a "private scratchpad" is expected to be messy and gets even less
-    human scrutiny than the official explanation already does.
-  - The opening <thinking> tag is SEEDED directly into the prompt (assistant
-    turn pre-filled with "<thinking>\n"), not left for the model to invent.
-    There is no SFT anywhere in this project (Tier 1/2 only) — the model has
-    to discover the two-tag structure through RL alone, which is a real,
-    additional cold-start burden on top of whatever RL is already trying to
-    teach. Seeding the opening tag removes "invent the tag vocabulary from
-    nothing" from that burden; the model only has to learn when to close it.
+THE TWO THINGS THAT MAKE THIS FILE NECESSARY AT ALL:
 
-`use_thinking=False` reproduces the ORIGINAL, unmodified prompt/behavior
-exactly (no addition, no seeding) — kept as a toggle on the SAME class so
-Tier 1's "does this help at all" comparison is a true paired comparison, one
-model, one file, not two separately-implemented paths that could subtly
-drift apart.
+1. THE GEMMA EMBED-SCALE TRAP. `get_input_embeddings()` returns the embedding
+   MODULE; calling it runs `Gemma3TextScaledWordEmbedding.forward()`, which
+   ALREADY multiplies by sqrt(hidden_size). The upstream recipe's
+   `embeds = embeds * embed_scale` applies when indexing the weight matrix, not
+   when calling the module. Doing both made every embedding 62x too large, and
+   the symptom was repetition loops -- not a crash. Invisible on Qwen, whose
+   embed_scale is 1.0.
+
+2. The injection hook scans for the marker token INSIDE the hook rather than
+   using a precomputed index, which is wrong by construction once samples are
+   reordered.
+
+DEBUGGING: if injection silently fails, the AV describes the literal CJK marker
+character and free-associates in Chinese. Grepping output for CJK is the loudest
+smoke test for the whole path, and the pipeline checks for it.
 """
+
 
 from __future__ import annotations
 
