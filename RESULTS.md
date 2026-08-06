@@ -32,7 +32,7 @@ Raw artefacts for every table are in [`results/`](.).
 
 ---
 
-## 1. Reconstruction — the headline
+## 1. Four reconstruction scores
 
 Four FVE numbers, all on the same 50 activations. **B is the NLA's own round-trip
 score**: activation → AV writes an explanation → AR rebuilds an activation from
@@ -45,11 +45,15 @@ that text. It is the number the NLA paper reports for its own system.
 | **C** | the AR's output, from **the SAE's features** | 0.700 |
 | **D** | the activation, from the SAE's reading of the AR's output | 0.494 |
 
-### B > A: the text bottleneck beats the SAE, by 0.152
+### B > A, by 0.152
 
-An activation survives being written into English and rebuilt **better than it
-survives a purpose-built 16,384-feature sparse autoencoder** — measured on the
-corpus that SAE was fine-tuned on.
+The NLA round trip reconstructs an activation **better than this SAE does** —
+measured on the corpus that SAE was fine-tuned on.
+
+Both are lossy compressions of the same vector, so the comparison is fair in that
+sense, but they were built for different purposes: the SAE is optimised for sparse
+*decomposition*, the NLA for *reconstruction*. This says the NLA reconstructs
+better. It does not say English is a better representation than a feature basis.
 
 ### C > A: the SAE reads the AR's output better than a real activation, by 0.113
 
@@ -64,11 +68,13 @@ features each vector needs:
 | real activation | 119.9 | 0.99424 |
 | AR output | **101.3** | **0.99581** |
 
-**Fewer features, better fit.** Whatever the reason, the two sides of every
-feature comparison below are **not read by the SAE with equal fidelity** — it
-sees more of the AR's output than of the original. That is the main reason the
-tool calls its third bucket `UNVERIFIED` rather than "invented": a feature the
-SAE fails to find in the original may still be there.
+**Fewer features, better fit.** No mechanism is claimed for this. What matters
+downstream is only the fact of it: **the two sides of every feature comparison in
+this file are not read by the SAE with equal fidelity.** It captures more of the
+AR's output than of the original.
+
+That asymmetry is why the tool calls its third bucket `UNVERIFIED` rather than
+"invented" — a feature the SAE fails to find in the original may still be there.
 
 *(In cosine the gap is 0.0016. FVE magnifies it because Gemma's `rawvar` is
 0.0279 — see the note at the end of this section.)*
@@ -96,7 +102,7 @@ favourable to the SAE, so it is the conservative place to run the comparison.
 
 ---
 
-## 2. Coarse features survive; fine-grained ones do not
+## 2. More features are kept at low sparsity than at high sparsity
 
 Same vectors, re-encoded under both sparsities:
 
@@ -120,8 +126,14 @@ almost any text.
 > conservative — it made the result look weaker — but the two files disagreeing
 > was the signal that something was wrong.
 
-**The round trip keeps the gist and drops the detail.** That is what you would
-expect from squeezing an activation through two sentences of English.
+**What is measured:** the round trip keeps 71% of features under an SAE that
+fires ~21 per activation, and 57% under one that fires ~120, both far above their
+mismatched controls.
+
+The natural reading is "coarse features survive, fine-grained ones don't", but
+these two SAEs differ in more than granularity — they are separately trained
+dictionaries with different thresholds and different reconstruction quality
+(§1: cos 0.9937 at `l0_big`). Nothing here isolates granularity as the cause.
 
 ---
 
@@ -152,7 +164,7 @@ The other 50% are **counted in every total but never named**. A report resting o
 
 ---
 
-## 4. The explanation tracks the activation — and about 39% of it gets through
+## 4. Shared features are conveyed by the explanation more often than lost or made ones
 
 Judged **against the explanation text**. One question, asked once per (feature,
 explanation) pair: *does this explanation cover this feature?*
@@ -192,13 +204,38 @@ under two-fifths, not "about half".
 > correction is worth checking — it is the kind of error that survives review
 > because it looks like it has already been through one.
 
-### Does being mentioned actually make a feature survive?
+### What is actually established
 
-The table above reports `shared` 46% against `lost` 31%, and it is tempting to
-read that as *"mentioned features survive, unmentioned ones don't."* **That
-reading conditions the wrong way round.** 46% is the share of *survivors* that
-were mentioned; the claim needs the share of *mentioned features* that survived.
-Both come from the same 2×2, and they are not the same number:
+Against the judge's measured **5.7% false-positive floor**, `shared` at 46% is
+**8.1× the floor**. The separations between buckets:
+
+| comparison | difference | 95% CI | verdict |
+|---|---:|---|---|
+| shared vs lost | +14.5 pts | [+10.2, +18.8] | **solid**, +6.4σ |
+| shared vs made | +10.9 pts | [+6.3, +15.4] | **solid**, +4.6σ |
+| made vs lost | +3.6 pts | **[−1.7, +9.0]** | **cannot be called**, p = 0.18 |
+
+**The result is this correlation: features shared between the activation and its
+reconstruction are conveyed by the explanation more often than features in either
+of the other two buckets.**
+
+`made` does sit above `lost` on the point estimate — 35.1% against 31.4% — but
+its interval includes zero *and* includes `lost` being higher. At p = 0.18 a gap
+that size turns up by chance about one run in five. **The ordering
+shared > made > lost is what these 50 activations happened to show; only the
+first step of it is established.**
+
+That is a correlation between an SAE's reading of an activation and the text an
+independent language model wrote about it. It is what the pipeline was built to
+measure. Anything beyond it — *why* the buckets differ, *what* the AV is doing —
+is not measured here.
+
+### One thing the same data rules out
+
+It is tempting to read `shared` 46% vs `lost` 31% as *"mentioned features
+survive, unmentioned ones don't."* **That conditions the wrong way round.** 46% is
+the share of *survivors* that were mentioned; that claim needs the share of
+*mentioned features* that survived. Same 2×2, different number:
 
 | features genuinely in the activation | survived | lost | total |
 |---|---:|---:|---:|
@@ -211,50 +248,27 @@ Both come from the same 2×2, and they are not the same number:
 | P(survives \| not conveyed) | **69.7%** |
 | difference | **+11.3 points**, +6.4σ, odds ratio **1.85** |
 
-**Being mentioned nearly doubles the odds of survival — but it is not required.**
+So being conveyed is associated with survival, but does not determine it. The two
+off-diagonal cells say so directly:
 
-### The two cells that complicate the story
+- **995 features (40%)** were not conveyed and survived anyway — the largest cell
+  in the table, and **54% of everything that survived**.
+- **198 features (8%)** were conveyed and lost anyway.
 
-**995 features — 40% of everything in the activation, and 54% of everything that
-survived — were never conveyed by the explanation and survived anyway.**
+**No mechanism is offered for either.** An earlier version of this file asserted
+that the explanation is the only channel between AV and AR, so an unmentioned
+feature "has nothing to be rebuilt from". The 995 cell falsifies that, and
+nothing here establishes what replaces it. The AR could be inferring those
+features from the passage's subject; the judge could be under-detecting what the
+explanation conveys; the SAE could be reading the two vectors differently (§1,
+C > A). This data cannot separate those.
 
-That is the largest cell in the table, and it contradicts a claim this file used
-to make ("a feature the text never carries has nothing to be rebuilt from").
-Something *does* rebuild them. The AR sees only text, so it is not reading them
-off the explanation — it is **inferring them from the explanation's general
-subject**. Told a passage is about PC hardware, it emits an activation carrying
-the features a PC-hardware activation usually carries, including specific ones
-the text never named. That is pattern completion from the AR's prior.
-
-This is the confound the whole project exists to expose, now with a size on it:
-**the AR trains on the AV's own rollouts, so it is very good at filling in.** More
-than half of what "survives the round trip" survives because the AR is a good
-guesser, not because the explanation carried it.
-
-**198 features — 8% — were conveyed and lost anyway.** The text said it and the
-AR still failed to rebuild it. Smaller, but it rules out the tidy picture in
-which the explanation is the only thing that matters.
-
-> **What this costs the tool.** `trust_report.py` marks a feature CONFIRMED when
-> it is in the activation and in the AR's reconstruction. That is still exactly
-> what it says it is — the README already states the explanation text is never
-> read. But this table puts a number on the gap: for **54%** of CONFIRMED
-> features, the explanation did not visibly convey them. CONFIRMED means *the
-> round trip preserved it*, not *the explanation said it*.
-
-Against the judge's measured **5.7% false-positive floor**, `shared` at 46% is
-**8.1× the floor**. The separations:
-
-| | |
-|---|---|
-| shared vs lost | **+6.4σ** |
-| shared vs made | **+4.6σ** |
-| made vs lost | +1.3σ — not distinguishable |
-
-**This is the core evidence that the AV is not free-associating.** If the
-explanation were unrelated to the activation's contents, features in the
-activation would be conveyed at roughly the false-positive floor and all three
-buckets would look alike. They do not.
+> **What this means for the tool.** `trust_report.py` marks a feature CONFIRMED
+> when it is in the activation and in the AR's reconstruction — exactly what it
+> says, and the README already states the explanation text is never read. This
+> table puts a number on the distance between those: for **54%** of CONFIRMED
+> features, the explanation did not visibly convey them. **CONFIRMED means the
+> round trip preserved it, not that the explanation said it.**
 
 ### Is that gap just better labels? No.
 

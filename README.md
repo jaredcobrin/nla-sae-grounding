@@ -18,53 +18,53 @@ This repo does that check, and ships a tool that runs it on demand.
 
 ---
 
-## The headline results
+## What was measured
 
-**1. Two sentences of English preserve an activation better than a 16,384-feature
-sparse autoencoder does.**
+These are measurements, not explanations of them. Where a reading is tempting but
+not established, that is said rather than implied.
+
+**1. The NLA round trip reconstructs an activation better than this SAE does.**
 
 | | FVE |
 |---|---|
 | SAE reconstruction vs original | **0.587** |
 | **AV → text → AR** reconstruction vs original | **0.739** |
 
-Measured on 50 Gemma-3-12B-IT layer-32 activations, on the corpus the SAE was
-*itself fine-tuned on*. Reproduced across three corpora (FineWeb, Gemma rollouts,
-WildChat) in an earlier n=10 pass.
+50 Gemma-3-12B-IT layer-32 activations, on the corpus the SAE was *itself
+fine-tuned on*. The ordering held on all three corpora tried in an earlier n=10
+pass. Both are lossy compressions of the same vector, but they were built for
+different jobs — sparse decomposition versus reconstruction — so this is a
+statement about reconstruction, not about English being a better representation
+than a feature basis.
 
-**2. The round trip keeps the gist and drops the detail.**
+**2. The round trip preserves most features, far above its control.**
 
-| SAE | features per activation | kept through the round trip |
-|---|---|---|
-| `l0_small` | ~21 (coarse) | **71%** |
-| `l0_big` | ~120 (fine-grained) | **57%** |
-
-**3. The AV's explanation tracks what is really in the activation — it is not
-free-associating.**
-
-| bucket | features | conveyed by the explanation | |
+| SAE | features per activation | kept | mismatched control |
 |---|---|---|---|
-| **shared** — in the activation *and* the reconstruction | 1840 | **46%** | **8.1×** the judge's false-positive floor |
-| **lost** — in the activation, gone from the reconstruction | 630 | **31%** | shared beats this by **+6.4σ** |
-| **made** — only in the reconstruction | 562 | **35%** | shared beats this by **+4.6σ** |
+| `l0_small` | ~21 | **71%** | 0.009 Jaccard vs 0.576 matched — **65×** |
+| `l0_big` | ~120 | **57%** | 0.026 vs 0.450 — **17×** |
 
-If the AV were free-associating, features really in the activation would be
-"conveyed" at about the judge's 5.7% error rate and all three buckets would look
-alike. They do not. The judge behind this was chosen by a measured bake-off; the
-prompt it replaced had a 78.3% false-positive rate.
+Integer set arithmetic on SAE feature IDs. No judge, no labels, nothing to
+calibrate — which is why this is the most robust number here.
 
-**But being mentioned is not what makes a feature survive.** Of features genuinely
-in the activation, being conveyed raises survival from **69.7% to 81.0%** — real
-(+6.4σ) but far from decisive. **54% of everything that survives the round trip
-was never visibly conveyed by the explanation at all.** The AR reconstructs it
-from the passage's general subject instead — pattern completion from a model
-trained on the AV's own rollouts. That is the confound this project exists to
-expose, and [RESULTS.md §4](RESULTS.md) puts a size on it.
+**3. The main finding: features the round trip keeps are conveyed by the
+explanation more often than features it loses or adds.**
 
-**4. The same thing, with no language model anywhere in the measurement.**
-Feature overlap between the original activation and the reconstruction is
-**65× its mismatched control** (`l0_small`; 17× at `l0_big`). This is integer set
-arithmetic on SAE feature IDs — no judge, no labels, nothing to calibrate.
+| bucket | features | conveyed by the explanation |
+|---|---|---|
+| **shared** — in the activation *and* the reconstruction | 1840 | **46%** |
+| **made** — only in the reconstruction | 562 | 35% |
+| **lost** — in the activation, gone from the reconstruction | 630 | 31% |
+
+`shared` is **8.1×** the judge's measured 5.7% false-positive floor, and beats
+`made` by +4.6σ and `lost` by +6.4σ. **`made` vs `lost` is not distinguishable**
+(+3.6 points, 95% CI [−1.7, +9.0]).
+
+**This is a correlation between an SAE's reading of an activation and text an
+independent model wrote about it.** What it implies about the AV's behaviour is
+not settled by this data — see [RESULTS.md §4](RESULTS.md), which also shows that
+**54% of everything the round trip preserves was never visibly conveyed by the
+explanation**, and offers no mechanism for it.
 
 Full numbers, controls and caveats: **[RESULTS.md](RESULTS.md)**.
 Two experiments that produced good-looking numbers and **did not meet the bar**
