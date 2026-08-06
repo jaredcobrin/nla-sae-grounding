@@ -192,6 +192,7 @@ and the NLA config assertion fails at startup.
 
 ```
 README.md          this file
+TEST_LOG.md        what was actually run against real weights, and what broke
 METHODOLOGY.md     how each measurement works, and what broke on the way there
 RESULTS.md         every number, with its control and its caveats
 src/               the pipeline, one file per stage (see src/README.md)
