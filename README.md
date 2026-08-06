@@ -39,13 +39,31 @@ than a feature basis.
 
 **2. The round trip preserves most features, far above its control.**
 
-| SAE | features per activation | kept | mismatched control |
-|---|---|---|---|
-| `l0_small` | ~21 | **71%** | 0.009 Jaccard vs 0.576 matched — **65×** |
-| `l0_big` | ~120 | **57%** | 0.026 vs 0.450 — **17×** |
+**Tested on 50 activations × 5 explanations = 250 (activation, explanation)
+pairs**, the same vectors read by both SAEs — only the dictionary changes.
+
+| | `l0_small` (~21 features/activation) | | | `l0_big` (~120 features/activation) | | |
+|---|---:|---:|---:|---:|---:|---:|
+| | **total** | **mean/pair** | **share** | **total** | **mean/pair** | **share** |
+| **shared** | 3,529 | 14.1 | 56.5% | 17,125 | 68.5 | 44.9% |
+| **lost** | 1,441 | 5.8 | 23.1% | 12,850 | 51.4 | 33.7% |
+| **made** | 1,280 | 5.1 | 20.5% | 8,202 | 32.8 | 21.5% |
+| *total* | *6,250* | *25.0* | | *38,177* | *152.7* | |
+
+| | `l0_small` | `l0_big` |
+|---|---:|---:|
+| **kept** = shared/(shared+lost) | **71.0%** | **57.1%** |
+| Jaccard vs mismatched control | 0.576 vs 0.009 — **65×** | 0.450 vs 0.026 — **17×** |
 
 Integer set arithmetic on SAE feature IDs. No judge, no labels, nothing to
 calibrate — which is why this is the most robust number here.
+
+The 14-point difference in kept rate is close to a straight trade between
+`shared` and `lost`. **The `made` share barely moves — 20.5% vs 21.5%** — so
+about a fifth of what the AR produces is absent from the original under either
+dictionary. These are separately trained dictionaries, not two settings of a
+granularity knob, so nothing here supports reading the gap as "coarse features
+survive, fine-grained ones don't".
 
 **3. The main finding: features the round trip keeps are conveyed by the
 explanation more often than features it loses or adds.**
