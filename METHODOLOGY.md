@@ -183,7 +183,7 @@ Why the kept labels average 0.873 rather than 0.95+, deliberately:
   measuring memorisation
 - **the scorer is Gemma-3-12B**, not a frontier model; the auto-interp literature
   typically uses GPT-4-class scorers
-- **some features are genuinely polysemantic** even at L0~21
+- **some features are genuinely polysemantic** even at `l0_small`’s L0≈21
 
 **"Validated" means "beats a wrong label at a measured 5% false-positive rate."
 It does not mean "correct."** About 40% of kept labels sit in the marginal band

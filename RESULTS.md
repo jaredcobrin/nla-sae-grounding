@@ -100,7 +100,7 @@ to 0.700 and a real activation to only 0.587.
 **L0 — how many dictionary features actually switch on** — points the same way,
 and is a genuinely separate quantity: a count, not a reconstruction score.
 
-| | features used (L0) | reconstruction (cosine) |
+| | features used (L0), `l0_big` | reconstruction (cosine), `l0_big` |
 |---|---|---|
 | real activation | 119.9 | 0.99424 |
 | AR output | **101.3** | **0.99581** |
@@ -159,19 +159,63 @@ favourable to the SAE, so it is the conservative place to run the comparison.
 
 ---
 
-## 2. More features are kept at low sparsity than at high sparsity
+## 2. Feature overlap under both SAEs
 
-Same vectors, re-encoded under both sparsities:
+**The same 50 activations × 5 explanations = 250 (activation, explanation)
+pairs**, re-encoded under each SAE. Identical vectors, identical pairs — only the
+dictionary changes.
 
-| SAE | features/activation | shared | lost | made | **kept** | Jaccard | control |
-|---|---|---|---|---|---|---|---|
-| `l0_small` | ~21 | 14.1 | 5.8 | 5.1 | **71%** | 0.576 | 0.009 |
-| `l0_big` | ~120 | 68.5 | 51.4 | 32.8 | **57%** | 0.450 | 0.026 |
+### `l0_small` — ~21 active features per activation
+
+| | total features | mean per pair | share of all |
+|---|---:|---:|---:|
+| **shared** | 3,529 | 14.1 | **56.5%** |
+| **lost** | 1,441 | 5.8 | 23.1% |
+| **made** | 1,280 | 5.1 | 20.5% |
+| *total* | *6,250* | *25.0* | |
+
+### `l0_big` — ~120 active features per activation
+
+| | total features | mean per pair | share of all |
+|---|---:|---:|---:|
+| **shared** | 17,125 | 68.5 | **44.9%** |
+| **lost** | 12,850 | 51.4 | 33.7% |
+| **made** | 8,202 | 32.8 | 21.5% |
+| *total* | *38,177* | *152.7* | |
+
+### Side by side
+
+| | `l0_small` | `l0_big` | difference |
+|---|---:|---:|---:|
+| features in the original (shared+lost) | 19.9/pair | 119.9/pair | |
+| features in the AR output (shared+made) | 19.2/pair | 101.3/pair | |
+| **kept** = shared / (shared+lost) | **71.0%** | **57.1%** | −13.9 pts |
+| shared, as a share of all features | 56.5% | 44.9% | −11.6 pts |
+| lost, as a share of all features | 23.1% | 33.7% | +10.6 pts |
+| **made, as a share of all features** | **20.5%** | **21.5%** | **+1.0 pt** |
+| Jaccard | 0.576 | 0.450 | |
+| mismatched control | 0.009 | 0.026 | |
+
+**What is actually here.** Moving to the denser dictionary drops the kept rate by
+about 14 points — from 71% to 57%. That is a real difference but not a dramatic
+one, and it is close to a straight trade: `shared` gives up 11.6 points of share
+and `lost` picks up 10.6.
+
+**The `made` share barely moves — 20.5% against 21.5%.** Roughly a fifth of the
+features found in the AR's output are absent from the original under *either*
+dictionary. That stability across two separately trained SAEs is arguably the
+more interesting number in this table.
 
 The control is the same reconstruction's features scored against a **different**
-activation — 0.009–0.026 against 0.45–0.58 matched, a **17–65× separation**.
-Without it the raw overlap would be uninterpretable, since many features fire on
-almost any text.
+activation — 0.009 and 0.026 against 0.576 and 0.450 matched, a **17–65×
+separation**. Without it the raw overlap would be uninterpretable, since many
+features fire on almost any text.
+
+> **Why no significance test on 71% vs 57%.** The two rows are the same 250 pairs
+> read by two dictionaries, and features within one activation are not independent
+> draws. A naive two-proportion test would treat 6,250 and 38,177 features as
+> independent observations and return a meaningless z. The honest unit here is 50
+> activations, not tens of thousands of features.
 
 > **The control was itself wrong once, and the fix is why these two rows now
 > agree.** `refeature.py` paired each activation with its *neighbour*, but stage-0
@@ -183,14 +227,11 @@ almost any text.
 > conservative — it made the result look weaker — but the two files disagreeing
 > was the signal that something was wrong.
 
-**What is measured:** the round trip keeps 71% of features under an SAE that
-fires ~21 per activation, and 57% under one that fires ~120, both far above their
-mismatched controls.
-
-The natural reading is "coarse features survive, fine-grained ones don't", but
-these two SAEs differ in more than granularity — they are separately trained
-dictionaries with different thresholds and different reconstruction quality
-(§1: cos 0.9937 at `l0_big`). Nothing here isolates granularity as the cause.
+**Do not read this as "coarse features survive, fine-grained ones don't".**
+`l0_small` and `l0_big` are **separately trained dictionaries** with different
+thresholds and different reconstruction quality, not two settings of a granularity
+knob. Nothing here isolates granularity as the cause of the 14-point gap, and the
+gap is modest enough that it needs no story attached to it.
 
 ---
 

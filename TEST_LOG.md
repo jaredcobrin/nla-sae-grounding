@@ -267,7 +267,7 @@ Full chain on 6 activations from this layout.
 
 | stage | result |
 |---|---|
-| `roundtrip.py` | **pass** — peak **23,393 MiB**, `untagged 0/6`, `CJK 0/6`, SAE `L0 136.0` / `recon cos 0.9937`, health check 0.7416 |
+| `roundtrip.py` | **pass** — peak **23,393 MiB**, `untagged 0/6`, `CJK 0/6`, SAE (`l0_big`) `L0 136.0` / `recon cos 0.9937`, health check 0.7416 |
 | `refeature.py` | **pass** — seconds, no GPU |
 | `judge_explanations.py` | **pass** — 1015 judgements in 1.6 min |
 | `describe_buckets.py` | **pass** — 36 summaries in 0.6 min |
