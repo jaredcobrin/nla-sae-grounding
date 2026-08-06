@@ -6,42 +6,93 @@ from Gemma itself — the corpus Gemma Scope 2's IT SAEs were fine-tuned on).
 
 Raw artefacts for every table are in [`results/`](.).
 
+> ### Read this before the tables
+>
+> Three sections below report shared / lost / made counts, and **the numbers look
+> like they disagree.** They do not — each counts a different population, for a
+> stated reason.
+>
+> | § | one row = | which features | shared / lost / made |
+> |---|---|---|---|
+> | **2** | one of 250 (activation × explanation) pairs | **all** of them | means **14.1 / 5.8 / 5.1** |
+> | **4** | the same 250 pairs | only those with a **validated label** | **1840 / 630 / 562** |
+> | **6** | **one** explanation per activation — 50 pairs | validated label | **366 / 128 / 113** |
+>
+> - §4 drops unlabelled features because it asks *"does the explanation cover this
+>   feature?"* — unanswerable if you cannot say what the feature detects. That
+>   removes ~50%, exactly the label coverage in §3.
+> - §6 uses one explanation per activation because a feature can be `shared` under
+>   one sampled explanation and `lost` under another. Mixing them would put the
+>   same feature in two buckets of one table
+>   ([`classify_features.py:145`](../src/classify_features.py#L145)).
+> - §2 reports **means**, §4 and §6 report **totals**. 14.1 × 250 = 3529, of which
+>   1840 carry a label.
+>
+> **And the word "present" means two different things.** In §4 it is *"the
+> explanation conveys this feature"*. In §5–6 it is *"this feature is really in the
+> source document"* — a different judge answering a different question.
+
 ---
 
-## 1. Reconstruction: the text bottleneck beats the SAE
+## 1. Reconstruction — the headline
 
-Four comparisons, all in FVE, all on the same 50 activations:
+Four FVE numbers, all on the same 50 activations. **B is the NLA's own round-trip
+score**: activation → AV writes an explanation → AR rebuilds an activation from
+that text. It is the number the NLA paper reports for its own system.
 
-| | what it measures | FVE |
+| | what is being reconstructed, from what | FVE |
 |---|---|---|
-| **A** SAE(orig) vs orig | how well the SAE represents the activation | 0.587 |
-| **B** AR(AV(orig)) vs orig | how well **two sentences of English** represent it | **0.739** |
-| **C** SAE(AR) vs AR | how well the SAE represents the AR's output | 0.700 |
-| **D** SAE(AR) vs orig | both lossy paths composed | 0.494 |
+| **A** | the activation, from **the SAE's features** | 0.587 |
+| **B** | the activation, from **two sentences of English** — *this is the NLA* | **0.739** |
+| **C** | the AR's output, from **the SAE's features** | 0.700 |
+| **D** | the activation, from the SAE's reading of the AR's output | 0.494 |
 
-**B > A by 0.152.** An activation survives being verbalised and reconstructed
-better than it survives a purpose-built 16,384-feature sparse autoencoder — on
-the corpus the SAE was fine-tuned on.
+### B > A: the text bottleneck beats the SAE, by 0.152
 
-An earlier n=10 pass reproduced this on three corpora:
+An activation survives being written into English and rebuilt **better than it
+survives a purpose-built 16,384-feature sparse autoencoder** — measured on the
+corpus that SAE was fine-tuned on.
 
-| | FineWeb | Rollouts | WildChat |
+### C > A: the SAE reads the AR's output better than a real activation, by 0.113
+
+Same SAE, same dictionary, two different inputs. It reconstructs the AR's output
+to 0.700 and a real activation to only 0.587.
+
+A second, independent measurement points the same way — how many dictionary
+features each vector needs:
+
+| | features used (L0) | SAE reconstruction (cosine) |
+|---|---|---|
+| real activation | 119.9 | 0.99424 |
+| AR output | **101.3** | **0.99581** |
+
+**Fewer features, better fit.** Whatever the reason, the two sides of every
+feature comparison below are not being read by the SAE with equal fidelity, and
+§5 returns to what that costs.
+
+*(In cosine the gap is 0.0016. FVE magnifies it because Gemma's `rawvar` is
+0.0279 — see the note at the end of this section.)*
+
+### Side note: it holds on three corpora, and the SAE does best on its home turf
+
+An earlier n=10 pass, same pipeline:
+
+| | FineWeb | **Rollouts** | WildChat |
 |---|---|---|---|
-| A · SAE vs orig | 0.4575 | 0.5652 | 0.4702 |
-| B · AR vs orig | **0.7355** | **0.7493** | **0.7251** |
-| gap B−A | +0.278 | +0.184 | +0.255 |
+| A · SAE | 0.4575 | **0.5652** | 0.4702 |
+| B · NLA | 0.7355 | **0.7493** | 0.7251 |
+| gap B−A | +0.278 | **+0.184** | +0.255 |
+| gap C−A | +0.157 | **+0.105** | +0.172 |
 
-The SAE gains +0.108 on its home distribution — closing about a third of the gap
-— but the ordering never flips.
+Rollouts is the Gemma-generated corpus the SAE was fine-tuned on, and it is where
+the SAE performs best — +0.108 over FineWeb, closing about a third of the gap to
+the NLA. **The ordering never flips on any corpus**, and both gaps keep their sign
+everywhere. This is why the main results use rollouts: it is the setting most
+favourable to the SAE, so it is the conservative place to run the comparison.
 
-**C > A on all three corpora** (+0.157/+0.105/+0.172). The AR does not emit an
-arbitrary vector; it emits one sitting *closer to the SAE's dictionary* than a
-real activation does. That is what a model trained to predict activations from
-text would do, and it is a caveat on every "invented feature" count below: they
-are measured on a vector that is already more SAE-friendly than the original.
-
-**Read cosine, not FVE, for small differences.** Gemma's `rawvar` is 0.0279, so
-`FVE ≈ 1 − 65×(1−cos)` and 0.001 of cosine moves FVE by 0.065.
+> **Read cosine, not FVE, for small differences.** Gemma's `rawvar` is 0.0279, so
+> `FVE ≈ 1 − 65×(1−cos)`: 0.001 of cosine moves FVE by 0.065. Large-looking FVE
+> gaps here can be small cosine gaps.
 
 ---
 
@@ -101,28 +152,48 @@ The other 50% are **counted in every total but never named**. A report resting o
 
 ---
 
-## 4. How much of the activation does the explanation convey?
+# Part I — Does the *explanation* convey the activation?
 
-Per feature, does the AV's explanation cover it?
+Everything in this part is judged **against the explanation text**. One question,
+asked once per (feature, explanation) pair: *does this explanation cover this
+feature?*
+
+**Population: 3,032 pairs** — the 250 activation × explanation pairs, restricted
+to features carrying a validated label, because you cannot ask whether a text
+covers a feature you cannot describe.
+
+---
+
+## 4. About 43% of what is in the activation reaches the text
 
 ```
-bucket        n     present   not present   unknown
-shared     1840       46%         50%          4%
-lost        630       31%         66%          3%
-made        562       35%         60%          5%
-ALL-real   2470       42%         54%          4%
+bucket        n     conveyed   not conveyed   unknown
+shared     1840       46%          50%          4%
+lost        630       31%          66%          3%
+made        562       35%          60%          5%
+REAL       2470       42%          54%          4%
 ```
 
-Corrected for the 5.7% false-positive floor: **~43% of what is in the activation
-is conveyed.**
+**`REAL` is `shared` + `lost` = 1840 + 630.** Those are the features genuinely
+present in the original activation. `made` is excluded from it precisely because
+those features are *not* in the original — they appear only in the AR's output.
 
-**Mentioned features survive; unmentioned ones do not — 46% vs 31%.** The
-explanation is the only channel between AV and AR, so a feature the text never
-carries has nothing to be rebuilt from.
+Corrected for the judge's measured 5.7% false-positive floor:
+**~43% of what is in the activation reaches the explanation.**
+
+### The one comparison that matters here
+
+**Features the explanation mentions survive the round trip; features it does not
+mention do not — 46% vs 31%.**
+
+The explanation is the *only* channel between AV and AR. A feature the text never
+carries has nothing to be rebuilt from, and this is the direct evidence of that.
 
 ### By category
 
-| category | n | clearly conveyed |
+Same 3,032 pairs, cut by what kind of thing the feature detects:
+
+| category | n | conveyed |
 |---|---|---|
 | code_technical | 360 | **66%** |
 | other | 40 | 52% |
@@ -138,63 +209,100 @@ carries has nothing to be rebuilt from.
 `code_technical` stands out. `syntax` is uniformly low, which is the expected
 null — a two-sentence summary describes what text is *about*, not its grammar.
 
-### The judge's own validation
+### Why the judge is trustworthy
 
-```
-false-positive rate    5.7%      (the earlier prompt scored 78.3% here)
-matcher AUC            0.807     vs unrelated explanations
-                       0.836     vs non-firing features
-self-consistency       89.2%     across 5 explanations of the same activation
-```
+The judge does not emit a bare yes/no — it grades `CLEARLY` / `PROBABLY` /
+`UNCLEAR` / `NO`. The tables above collapse `CLEARLY` + `PROBABLY` to "conveyed".
+Left uncollapsed, the grades separate:
 
-Grade reliability, against a 25% base rate:
-
-| grade | on real | on non-firing | % real |
+| grade | on real features | on features that never fired | % real |
 |---|---:|---:|---:|
 | CLEARLY | 1043 | 376 | **74%** |
 | PROBABLY | 324 | 147 | 69% |
 | UNCLEAR | 36 | 34 | 51% |
 | NO | 1629 | 8539 | **16%** |
 
-`NO` sitting *below* base rate means a "no" is real evidence of absence.
+Base rate is 25%. `CLEARLY` runs 3× above it, and **`NO` runs *below* it** — so a
+"no" from this judge is real evidence of absence, not just a shrug.
+
+```
+false-positive rate    5.7%      the prompt this replaced scored 78.3%
+matcher AUC            0.807     vs unrelated explanations
+                       0.836     vs features that never fired
+self-consistency       89.2%     across 5 explanations of one activation
+```
+
+The 78.3% is not a typo — the first prompt said "yes" to four out of five
+features that provably were not in the activation. How this one was chosen
+instead is in [METHODOLOGY.md](METHODOLOGY.md).
+
+---
+
+# Part II — Are the features really in the *source document*?
+
+**Different question, different judge, and this is where the word "present"
+changes meaning.** Part I asked whether the *explanation* covers a feature.
+Part II asks whether the feature is genuinely in the **source text at all** —
+comparing each feature's label against the document the activation came from.
+
+**Population: 607 (feature, activation) pairs.** One explanation per activation
+rather than five, because a feature can land in `shared` under one sampled
+explanation and `lost` under another; mixing them would put one feature in two
+rows of the same table.
+
+**Every number in Part II is a gap against a control** — the same feature judged
+against a *different* document. Feature labels are often generic enough to sound
+plausible about any text, so the raw rate alone means nothing.
 
 ---
 
 ## 5. "Invented" features are mostly not invented
 
-Every feature classified on three axes against **the source document**, which
-this run finally saves:
+```
+judged present in its OWN document        77.8%
+judged present in a DIFFERENT document    47.8%   <- control
+gap                                       +30.0
+```
 
-```
-judged present in its OWN text        77.8%
-judged present in a DIFFERENT text    47.8%    <- control
-gap                                   +30.0
-```
+The control lands near 50%, which is the point: half the time a label sounds
+right about a document it has nothing to do with. Only the gap carries signal.
 
 | bucket | own | control | gap |
 |---|---:|---:|---:|
-| shared | 80% | 46% | +34 |
-| lost | 73% | 46% | +27 |
-| made | 78% | 56% | +22 |
+| shared | 80% | 46% | **+34** |
+| lost | 73% | 46% | **+27** |
+| made | 78% | 56% | **+22** |
 
-Broken out, for features that are **content-bearing**:
+**`made` has a real gap too.** If those features were invented, they would sit at
+the control. They do not.
 
-| | present | control |
+Narrowing to **content-bearing** features, where the judgement is most meaningful:
+
+| | own | control |
 |---|---:|---:|
 | made · content · specific | 65% | 30% |
 | made · content · generic | 68% | 25% |
 
 **Two-thirds of "invented" content features are genuinely in the source
-document** — just not at the sampled token position. The AR reconstructs
+document** — just not at the sampled token position. The AR is reconstructing
 **document-level context**, not **position-specific state**.
 
-"Made up" is the wrong name for them. In the tool they are called **UNVERIFIED**.
+"Made up" is therefore the wrong name. The tool calls them **UNVERIFIED**, which
+means *not checked* — not *false*.
+
+> **The §1 caveat lands here.** C > A means the SAE reads the AR's output more
+> faithfully than a real activation (0.700 vs 0.587). So a feature counted as
+> "invented" may have been in the original all along and simply invisible to the
+> SAE there. The instrument is more sensitive on one side of the subtraction than
+> the other, which inflates this bucket. That is a second, independent reason to
+> read "invented" as *unverified*.
 
 ---
 
 ## 6. A negative result: the round trip is indiscriminate by feature type
 
-Composition of each bucket, grammar/content × generic/specific:
+Same 607 pairs. If the round trip destroyed *specifics* and kept *themes*, the
+three buckets would have visibly different composition. Here is the composition:
 
 | bucket | n | content+specific | content+generic | grammar+specific | grammar+generic |
 |---|---:|---:|---:|---:|---:|
@@ -242,7 +350,10 @@ checkable; "a noun following a preposition" does not.
 
 ## 7. Qualitative: blind descriptions
 
-A model given **only the feature labels**, never the explanation:
+Still Part II's population. A model is given **only the feature labels** for a
+bucket and asked to describe the document — it never sees the AV's explanation.
+So when its summary and the explanation agree, that agreement is evidence rather
+than an echo.
 
 **Activation 0** — AV said *"PC build review… Intel Core i7-14700"*
 
