@@ -39,6 +39,12 @@ fork modified them:
   systematically picked the **earliest, least-context** position in each —
   measured at FVE 0.64 against 0.76 for properly sampled rows.
 
+  It arrived carrying a 175-line standalone baseline-FVE CLI from the previous
+  project. That was removed — `roundtrip.py` computes the same number as its
+  startup health check, and two paths to one number is two things to keep in
+  agreement. 351 → 92 lines, and the file no longer needs the upstream `nla/`
+  package at all; that import existed only for the deleted CLI.
+
 `nla_inference.py` and the `nla/` package come from the upstream repo
 (`kitft/natural_language_autoencoders`). Set `NLA_REPO` to a clone, or place this
 repo inside one.
@@ -51,7 +57,11 @@ repo inside one.
 - **The numbers contain no model judgement.** Counts, feature sets and overlaps
   are vector arithmetic and integer set operations. Where a language model is
   used, its output is labelled as generated.
-- **Selection is logged, not hidden.** The FVE gate picks activations on the
-  outcome metric; every seed tried is recorded.
+- **Nothing is selected on the outcome metric.** An earlier version resampled
+  seeds until mean FVE landed in a band, which is selection on the very quantity
+  being reported. It is now a one-shot **health check**: it prints, warns if the
+  AV/AR look broken, and never rejects or resamples. The shipped
+  `results/feature_overlap.json` predates the change and its `gate_log` really
+  is a gate log — [`RESULTS.md`](../RESULTS.md) lists that as a limitation.
 - **Coverage is stated.** ~50% of features have a validated label. The rest are
   counted in every total and never named.

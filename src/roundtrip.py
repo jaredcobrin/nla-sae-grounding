@@ -71,7 +71,7 @@ from sampling import FAILED_EXTRACTION_MSE, load_vectors          # noqa: E402
 from nla.schema import load_predict_mean_baselines                    # noqa: E402
 from nla_inference import NLACritic                                   # noqa: E402
 
-from hf_paths import sae_variant_dir, L0_SMALL, L0_BIG  # noqa: E402
+from hf_paths import sae_variant_dir, L0_BIG  # noqa: E402
 
 # If injection silently fails the AV describes the literal marker char and
 # free-associates in CJK. CLAUDE.md calls this the loudest smoke test for the
@@ -122,7 +122,10 @@ def main() -> None:
     ap.add_argument("--parquet", default="acts_gemma_L32_test.parquet")
     ap.add_argument("--n", type=int, default=10, help="activations")
     ap.add_argument("--runs", type=int, default=5, help="AV samples per activation")
-    ap.add_argument("--seed", type=int, default=0, help="starting seed for the gate")
+    ap.add_argument("--seed", type=int, default=0,
+                    help="row-sampling seed. Used once -- there is no retry loop, "
+                         "because retrying until FVE looks good would select "
+                         "activations on the outcome metric")
     ap.add_argument("--health-lo", type=float, default=0.65,
                     help="warn below this FVE. NOT a filter -- nothing is "
                          "rejected or resampled. The paper reports ~0.752.")

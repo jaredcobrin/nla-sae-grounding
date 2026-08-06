@@ -59,7 +59,6 @@ import json
 import os
 import re
 import sys
-import time
 from pathlib import Path
 
 import numpy as np
@@ -82,7 +81,7 @@ from sampling import load_vectors                                 # noqa: E402
 from nla.schema import load_predict_mean_baselines                    # noqa: E402
 from nla_inference import NLACritic                                   # noqa: E402
 
-from hf_paths import sae_variant_dir, L0_SMALL, L0_BIG  # noqa: E402
+from hf_paths import sae_variant_dir, L0_SMALL  # noqa: E402
 SAE_VARIANT = L0_SMALL     # sparse enough to be labelable:
 # l0_big runs L0~129 with token purity 0.17 and its labels cannot be told from
 # wrong ones (AUC gap +0.008 vs l0_small's +0.092).

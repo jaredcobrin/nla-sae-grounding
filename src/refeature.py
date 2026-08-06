@@ -56,12 +56,12 @@ def main() -> None:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dirs", nargs="+", required=True)
     ap.add_argument("--labels", nargs="+", required=True, help="display name per dir")
-    ap.add_argument("--sae", default="l0_small")
+    ap.add_argument("--sae", default="l0_small", choices=["l0_small", "l0_big"])
     ap.add_argument("--out-name", default="feature_overlap_small.json")
     a = ap.parse_args()
     sys.stdout.reconfigure(line_buffering=True)
 
-    d = sae_variant_dir(f"layer_32_width_16k_{a.sae}")
+    d = sae_variant_dir(L0_SMALL if a.sae == "l0_small" else L0_BIG)
     P = load_file(str(d / "params.safetensors"))
     print(f"[sae] {a.sae}\n")
 

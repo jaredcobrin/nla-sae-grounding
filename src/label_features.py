@@ -347,7 +347,7 @@ def main() -> None:
     ap.add_argument("--batch", type=int, default=6)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--limit", type=int, default=None)
-    ap.add_argument("--sae", default="l0_small",
+    ap.add_argument("--sae", default="l0_small", choices=["l0_small", "l0_big"],
                     help="l0_small (L0~21) is labelable; l0_big (L0~129) is not — "
                          "measured label-vs-wrong-label AUC gap +0.092 vs +0.008")
     a = ap.parse_args()
@@ -373,7 +373,7 @@ def main() -> None:
         print("nothing to do")
         return
 
-    d = sae_variant_dir(f"layer_32_width_16k_{a.sae}")
+    d = sae_variant_dir(L0_SMALL if a.sae == "l0_small" else L0_BIG)
     X = load_file(str(d / "examples.safetensors"))
     tok = AutoTokenizer.from_pretrained(a.labeller)
     tok.padding_side = "left"

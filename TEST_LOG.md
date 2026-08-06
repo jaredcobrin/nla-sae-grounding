@@ -212,15 +212,118 @@ AR inside a seed-search gate, so splitting it is not a mechanical change. On a
 
 ---
 
+---
+
+# Session 2 — the rest of the pipeline, on a 24 GB card
+
+The first session tested `trust_report.py` only. This one ran **every remaining
+stage** end to end from this layout, then cleaned up what the walk-through turned
+up. Same machine as session 1 (L40S, 46,068 MiB).
+
+## 4. `roundtrip.py` did not fit, and the fix was not the obvious one
+
+`roundtrip.py` holds the AV and the AR at once — ~48 GB of weights. The first
+session listed this as the main known gap.
+
+**What it needed was not a memory trick.** The AV and AR were interleaved because
+an **FVE gate** resampled seeds until the mean landed in a band, which needs both
+models inside the retry loop. That gate had to go anyway: it selects activations
+on the very metric being reported. Removing it made the script sequential for
+free —
+
+```
+phase 1   AV only     verbalize every activation -> explanations
+phase 2   AR only     reconstruct from those explanations
+phase 3   SAE only    encode both ends
+```
+
+The FVE is still computed and printed, now as a **one-shot health check** that
+warns and continues. Both AV/AR scripts now follow the same one-model-at-a-time
+shape — see the measured peak in the table at the end.
+
+**What removing the gate exposes.** Session-2 run, no gate:
+
+```
+act 0: FVE +0.430   confirmed  5   unverified 2   omitted 5
+act 1: FVE +0.854   confirmed 21   unverified 5   omitted 6
+act 2: FVE +0.780   confirmed 14   unverified 2   omitted 7
+```
+
+`act 0` at 0.430 is the kind of activation the gate used to discard. The tool
+handles it correctly — it reports far fewer confirmed features, which is the
+honest answer for an activation the round trip barely preserved. This is why
+`RESULTS.md` lists the gate as a limitation on the n=50 numbers: those were
+produced by the gated code and are easier than average by construction.
+
+## 5. The four unrun stages: all pass
+
+Full chain on 6 activations from this layout.
+
+| stage | result |
+|---|---|
+| `roundtrip.py` | **pass** — `untagged 0/12`, `CJK 0/12`, SAE `L0 128.8` / `recon cos 0.9943`, health check 0.7610 |
+| `refeature.py` | **pass** — seconds, no GPU |
+| `judge_explanations.py` | **pass** — 1015 judgements in 1.6 min |
+| `describe_buckets.py` | **pass** — 36 summaries in 0.6 min |
+| `classify_features.py` | **pass**, and see below |
+
+**The judge revalidated itself on fresh data**, which is the check that matters:
+
+```
+false-positive rate    2.8%     (n=50 run: 5.7%; baseline prompt: 78.3%)
+matcher AUC            0.796    vs unrelated explanations
+                       0.814    vs non-firing features
+self-consistency       92.5%
+```
+
+**`classify_features.py` refused to report a result — correctly.** Its accuracy
+axis is own-text vs different-text, and at this n the control was too close:
+
+```
+judged present in its OWN text         65.8%
+judged present in a DIFFERENT text     60.3%   <- control
+gap                                    +5.5
+
+!! GAP TOO SMALL. The accuracy axis is not discriminating and must
+   not be reported. Everything below inherits it.
+```
+
+The n=50 run gave +30.0. The guard fired on a 6-activation smoke test and
+suppressed its own headline rather than printing a number built on a control that
+had stopped separating. **This is the single most reassuring thing in this log** —
+the controls are load-bearing, not decoration.
+
+Treat every session-2 number as a smoke test at n=6. `RESULTS.md` is the n=50 run.
+
+## 6. Dead code found by walking every file
+
+| file | found | done |
+|---|---|---|
+| `sampling.py` | 351 lines, **~46 used**. The rest was a standalone baseline-FVE CLI inherited from the previous project, plus the upstream `nla/` imports it alone needed | stripped to **92 lines**; the file now has no upstream dependency |
+| `label_features.py`, `refeature.py` | rebuilt the SAE path as `f"layer_32_width_16k_{arg}"` while importing the `L0_SMALL`/`L0_BIG` constants meant for it — layer and width duplicated in three places | derive from the constants; `--sae` now has `choices=` |
+| 7 files | unused imports (`defaultdict`, `json`, `time`, unused SAE constants) | removed |
+| `roundtrip.py` `--seed` | help text still said *"starting seed for the gate"* | rewritten to say why there is no retry loop |
+| `src/README.md` | still documented the FVE gate as a convention | rewritten |
+
+Re-run after the strip: identical behaviour, 12/12 files compile, no dead imports
+remain.
+
+**Not changed, and why:** `extract_activations.py` keeps its `wildchat` arm. It
+looks out of place in a Gemma-only repo, but it produces the third column of the
+corpus table in `RESULTS.md` §1, and the corpus check in `trust_report.py` warns
+rather than refuses.
+
+---
+
 ## What remains untested
 
-- **`roundtrip.py`, `judge_explanations.py`, `describe_buckets.py`,
-  `classify_features.py`, `refeature.py`, `extract_activations.py`** — none run
-  from this layout. They import cleanly and their inputs are already in
-  `results/`, but the full `run_pipeline.sh` has not been executed here.
-- **`roundtrip.py` on ≤48 GB** — expected to fail, see above.
 - **`extract_activations.py`** — needs oasst1 and LMSYS downloads and ~25 minutes
-  of generation; skipped because the corpus parquet already exists.
+  of generation; skipped in both sessions because the corpus parquet exists.
+- **`matcher_bakeoff.py`** — the diagnostic that chose the judge prompt. Its
+  output is already recorded in `METHODOLOGY.md`; not re-run.
 - **A cold clone on a machine with no HuggingFace cache** — `hf_paths.py` was
   exercised against a populated cache and, separately, against an empty one for
   its error message, but not through a real cold start.
+- **Anything at n=50 from this layout.** The published numbers come from the
+  original runs; this repo has reproduced the *pipeline*, at small n, not the
+  results.
