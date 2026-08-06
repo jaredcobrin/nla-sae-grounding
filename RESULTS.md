@@ -101,12 +101,16 @@ dictionary changes.
 | mismatched control | 0.009 | 0.026 | |
 | separation | 65× | 17× | |
 
-The kept rate falls 13.9 points on the denser dictionary, roughly a straight
-trade between `shared` and `lost`. The `made` share is nearly unchanged across
-the two dictionaries — 20.5% against 21.5%.
+**Kept rate** — the share of the original activation's features that survive into
+the reconstruction, `shared / (shared + lost)` — is **71.0%** under `l0_small`
+and **57.1%** under `l0_big`, a fall of 13.9 points on the denser dictionary.
+That fall is roughly a straight trade between `shared` and `lost`.
 
-No significance test is quoted on 71% vs 57%: both rows are the same 250 pairs
-read twice, and features within an activation are not independent draws.
+The **`made` share** is nearly unchanged across the two dictionaries — **20.5%**
+against **21.5%**.
+
+No significance test is quoted on those two kept rates: both are the same 250
+pairs read twice, and features within an activation are not independent draws.
 
 ---
 
