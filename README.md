@@ -84,9 +84,9 @@ CI [+2.6, +19.7]) and `made` by **+12.6 points** (t = 2.42, CI [+2.4, +22.9]).
 
 **This is a correlation between an SAE's reading of an activation and text an
 independent model wrote about it.** What it implies about the AV's behaviour is
-not settled by this data — see [RESULTS.md §4](RESULTS.md), which also shows that
-**54% of everything the round trip preserves was never visibly conveyed by the
-explanation**, and offers no mechanism for it.
+not settled by this data. Note also that the other **54%** of surviving latents
+were *not* visibly conveyed — the AR reconstructs those from context, so surviving
+the round trip is not by itself evidence the explanation carried them.
 
 Full numbers, controls and caveats: **[RESULTS.md](RESULTS.md)**.
 Two experiments that produced good-looking numbers and **did not meet the bar**

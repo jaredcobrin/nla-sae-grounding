@@ -134,37 +134,11 @@ cannot be separated from each other.
 0.856 — but the gap survives inside every matched label-quality band, so label
 quality is not what is producing it.)*
 
----
-
-## 4. But being mentioned is not what makes a latent survive
-
-Take every latent that was really in the activation, and sort it two ways at
-once — was it mentioned, and did it survive?
-
-| | `shared` | `lost` | **total** |
-|---|---:|---:|---:|
-| **mentioned** | 845 | 198 | **1,043** |
-| **not mentioned** | 995 | 432 | **1,427** |
-| **total** | **1,840** | **630** | 2,470 |
-
-Read this table down a column and you get §3's number: of the latents that
-survived, 46% were mentioned. Read it **across a row** and you get a different
-question — of the latents that were *mentioned*, 81% survived, against 70% of
-unmentioned ones. Only the row version says anything about whether mentioning
-helps, and per activation that gap is **+7.5 points, 95% CI [+0.7, +14.2]** — the
-weakest result in this file.
-
-**The biggest cell in that table is "never mentioned, survived anyway": 995
-latents, 54% of everything that survived.** The AR only ever sees the two
-sentences, so it is producing those latents without the text visibly saying so.
-198 latents went the other way — mentioned, and lost regardless.
-
-**Why that happens is not established here.**
-
 > **What this means for the tool.** `trust_report.py` marks a latent CONFIRMED
-> when it is in the activation *and* in the AR's rebuild. For 54% of those, the
-> explanation never visibly mentioned it. **CONFIRMED means the round trip
-> preserved it — not that the explanation said it.**
+> when it is in the activation *and* in the AR's rebuild. But 54% of `shared`
+> latents were never visibly mentioned in the explanation — the AR produced them
+> from context. **CONFIRMED means the round trip preserved it, not that the
+> explanation said it.**
 
 ---
 
@@ -181,7 +155,7 @@ sentences, so it is producing those latents without the text visibly saying so.
 - **An SAE does not have a latent for everything.** A claim can be true with no
   latent to match it, so a missing latent is weak evidence of absence — a limit
   the NLA paper notes about its own method.
-- **Nothing here separates "the AR was told" from "the AR guessed well"** (§4).
+- **Nothing here separates "the AR was told" from "the AR guessed well".**
   Doing so needs an AR trained independently of the AV, which the released
   checkpoints do not provide.
 - **The SAE reads the rebuild more clearly than the original** (§1, C > A), so

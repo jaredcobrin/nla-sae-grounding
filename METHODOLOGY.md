@@ -1,391 +1,323 @@
 # Methodology
 
-How each measurement works, why it is built that way, and what broke on the way
-there. The failures are documented because they are the reason the current
-design has the controls it has.
+How each number was produced, and what went wrong before it worked. The failures
+are here because they are the reason the current design has the controls it has —
+in three separate cases a measurement produced confident, plausible, **wrong**
+numbers, and each was caught only by running the identical procedure on
+deliberately mismatched data.
+
+If you only read one thing, read §4 and §5. Those are the two places where the
+first attempt was badly broken and looked fine.
 
 ---
 
-## 1. The question, and why FVE cannot answer it
+## 1. Why the paper's own metric cannot answer this
 
-The NLA paper measures reconstruction quality with **FVE**:
+The NLA paper measures quality with **FVE** — how close the AR's rebuild is to
+the original activation:
 
 ```
 FVE = 1 − mean(MSE) / rawvar        MSE = 2(1 − cos)
 ```
 
-after L2-normalising both vectors to `mse_scale = √d_model`.
+A high FVE means the AR rebuilt the activation well from the AV's text. **It does
+not mean the AV said anything true.** During reinforcement learning both models
+train on the same rollouts (`docs/design.md:97` upstream), so the AR is fitted to
+the AV's output distribution rather than being an independent judge. The system is
+an autoencoder with a text bottleneck, and its fixed point is *any* mutually
+consistent code. Natural-language meaning is a prior from initialisation and
+pre-training, not something the objective enforces.
 
-A high FVE means the AR rebuilt the activation well from the AV's text. It does
-**not** mean the AV said anything true. During RL both models train on the same
-rollouts (`docs/design.md:97` in the upstream repo), so the AR is fitted to the
-AV's output distribution rather than being an independent judge. The system is an
-autoencoder with a text bottleneck whose fixed point is *any* mutually consistent
-code — natural-language meaning is a prior from initialisation and SFT, not a
-constraint the objective enforces.
+So a third reader is needed, one with no stake in the pair. A sparse autoencoder
+reads the activation directly and was trained without ever seeing the NLA.
 
-So a third, independent reader is needed. A sparse autoencoder reads the
-activation directly and was trained without ever seeing the NLA.
+### "Latent", not "feature"
 
-### A note on "latent" vs "feature"
+A **latent** is a dimension of the SAE — index *i* in its encoder output, an
+object that definitely exists. A **feature** is the thing that latent might
+correspond to inside the model, which is a claim. Calling a latent a feature
+assumes what this repo is testing, so the docs say latent. Gemma Scope uses the
+same convention.
 
-These docs say **latent** for a dimension of the SAE — the actual object, index
-*i* in the encoder output. "Feature" is reserved for the thing a latent might
-correspond to in the model. The distinction matters here because calling a latent
-a feature assumes the interpretability claim this repo is trying to test, and
-Gemma Scope uses "latent" for the same reason.
+The code and JSON keys still say `feature` (`shared_features`,
+`feature_overlap.json`). Renaming them would invalidate every shipped artefact for
+no gain; read them as latents.
 
-**The code and the JSON keys still say `feature`** (`shared_features`,
-`feature_overlap.json`, `label_features.py`). Renaming them would invalidate every
-shipped artefact for no gain, so they are left alone; read them as latents.
+### A metric trap specific to Gemma
 
-### A metric footgun specific to Gemma
+Gemma's activations are unusually similar to one another — mean pairwise cosine
+**0.967**, against Qwen's 0.30, because dimension 2339 carries roughly 70,783 of
+the mean's magnitude. That makes `rawvar` tiny (**0.0279**, vs Qwen's 0.7363), and
+since `rawvar` is the denominator, **FVE massively amplifies small cosine
+differences**:
 
-`rawvar` on Gemma-3-12B layer 32 is **0.0279**, against Qwen's 0.7363. Dimension
-2339 holds roughly 70,783 of the mean's magnitude, so activations are nearly
-parallel (mean pairwise cosine 0.967 vs Qwen's 0.30). That makes
+| run | `rawvar` | so FVE = | 0.001 of cosine moves FVE by |
+|---|---:|---|---:|
+| n=50 rollouts (main results) | 0.0279 | 1 − **71.7**×(1−cos) | **0.072** |
+| n=10 three-corpus | 0.0308 | 1 − 65.0×(1−cos) | 0.065 |
 
-```
-FVE = 1 − 2(1 − cos) / rawvar
-```
-
-**The multiplier depends on `rawvar`, which depends on which activations were
-sampled** — so it is not a fixed constant of the model:
-
-| run | `rawvar` | multiplier | 0.001 of cosine moves FVE by |
-|---|---:|---:|---:|
-| n=50 rollouts (the main results) | 0.0279 | **71.7×** | **0.072** |
-| n=10 three-corpus | 0.0308 | 65.0× | 0.065 |
-
-Every FVE number in this repo is reported with its cosine, and negative FVE
-values mean "worse than predicting the mean vector", not a collapsed
+The multiplier depends on which activations were sampled, so it is not a constant
+of the model. Every FVE in this repo is reported with its cosine. A negative FVE
+means "worse than predicting the average activation", not a collapsed
 reconstruction.
 
 ---
 
-## 2. The corpus, and why it is Gemma-generated
+## 2. The corpus, and why Gemma had to write it
 
-Gemma Scope 2's instruction-tuned SAEs are fine-tuned on chat data: prompts from
-OpenAssistant/oasst1 and LMSYS-Chat-1M, with **responses generated by the
-corresponding Gemma model itself**. `src/extract_activations.py` reproduces
-that recipe exactly.
+Gemma Scope 2's instruction-tuned SAEs were fine-tuned on chat data: prompts from
+oasst1 and LMSYS-Chat-1M, with **responses generated by the Gemma model itself**.
+`src/extract_activations.py` reproduces that recipe exactly.
 
-This matters. An earlier pass ran on FineWeb, which is out-of-distribution for
-the SAE, and measured a **7-point** effect where Gemma rollouts gave **25**. The
-SAE's decomposition is simply worse on text it was not fitted to, and every
-downstream number inherits that.
+This is not a detail. An earlier pass ran on FineWeb, which is out-of-distribution
+for the SAE, and measured a **7-point** effect where Gemma rollouts gave **25**.
+The SAE simply decomposes unfamiliar text worse, and every downstream number
+inherits that.
 
-Details that are easy to get wrong and are handled explicitly:
+Four things that are easy to get wrong and are handled explicitly:
 
-- the chat template is applied, and positions are sampled **only inside the
-  assistant response** — `stage0_extract` has a raw-text path only and would
-  sample mid-prompt and inside chat control tokens
+- the chat template is applied and positions are sampled **only inside the
+  assistant's response** — the upstream extractor has a raw-text path only, and
+  would sample mid-prompt and inside chat control tokens
 - special tokens are masked
-- a **≥400-character response filter** with 3× oversampling: without it some
-  prompts elicit ~100-character replies, leaving too few response positions, and
-  the sampled positions become near-duplicates
-- generation is **seeded**. An earlier corpus was generated with `do_sample=True`
-  and no torch seed; when its parquet was lost the source text became
-  unrecoverable and no by-eye check against it was ever possible again
+- responses under **400 characters are rejected** (with 3× oversampling); without
+  this, short replies leave so few valid positions that the samples become
+  near-duplicates
+- generation is **seeded**. An earlier corpus was generated unseeded; when its
+  parquet was lost, the source text became unrecoverable and no by-eye check
+  against it was ever possible again
 
 ---
 
-## 3. Which SAE — and why the answer is "both"
+## 3. Why two SAEs
 
-Gemma Scope 2 ships two sparsities for layer 32 at width 16k. They are used for
-**different questions**, and in each case the choice is the conservative one.
+Gemma Scope 2 ships two sparsities for layer 32. They answer different questions,
+and in each case the choice is the conservative one.
 
 | | `l0_big` | `l0_small` |
 |---|---|---|
 | active latents per activation | ~120 | ~21 |
-| token purity of top-40 exemplars | 0.17 | 0.24 |
-| label vs **wrong-label** AUC gap | **+0.008** | **+0.092** |
-| used for | reconstruction fidelity | latent semantics |
+| can a correct label be told from a wrong one? | **+0.008 AUC** — no | **+0.092 AUC** — yes |
+| used for | reconstruction fidelity | anything about *meaning* |
 
-**Reconstruction fidelity uses `l0_big`** because it is the strongest SAE
-available. "The AR beats the SAE" is a harder claim to make against a better SAE,
-so using the weaker one would flatter the result.
+**Reconstruction uses `l0_big`** because it is the stronger SAE. "The NLA beats
+the SAE" is a harder claim to make against a better SAE, so using the weaker one
+would flatter the result.
 
-**Anything about what a latent *means* uses `l0_small`**, because `l0_big`'s
-latents are polysemantic to the point that **a correct label cannot be told
-apart from a wrong one** (+0.008 is statistically nothing). No category table can
-be built on labels like that.
+**Anything requiring a latent to be named uses `l0_small`**, because `l0_big`'s
+latents are polysemantic to the point that a correct label scores essentially the
+same as a deliberately wrong one. +0.008 is nothing. No table of meanings can be
+built on labels like that.
 
-Both are computed from the **same saved vectors** — `src/refeature.py`
-re-encodes the stored `.npz`, so this is not a choice of whichever SAE gave a
-nicer number. Re-encoding under `l0_big` reproduces the originally committed
-figures exactly (78/51/33 shared/lost/made, 60% kept, Jaccard 0.481), which
-validates the re-encode.
+Both come from the **same saved vectors** — `src/refeature.py` re-encodes the
+stored `.npz`, so this is not a matter of picking whichever SAE gave a nicer
+number.
 
-### One implementation detail worth stating
-
-Gemma Scope's JumpReLU decodes as `acts @ w_dec + b_dec`, and **`b_dec` is added
-on decode only**. Subtracting it from the input before encoding was measured at
-cosine 0.31 against the correct 0.99 — `‖b_dec‖ = 73,948` is comparable to `‖v‖`
-itself.
+> **One implementation trap.** Gemma Scope's JumpReLU decodes as
+> `acts @ w_dec + b_dec`, and `b_dec` is added **on decode only**. Subtracting it
+> from the input before encoding scored cosine 0.31 against the correct 0.99 —
+> `‖b_dec‖` is 73,948, comparable to the activation's own norm.
 
 ---
 
-## 4. Labelling latents, and the control that rebuilt it
+## 4. Labelling latents — and the control that rebuilt this stage
 
-A generated label is a **hypothesis**, not a measurement. The auto-interp
-literature (Bills et al. 2023; EleutherAI/Neuronpedia) is built around generating
-an explanation and then **scoring it on held-out data**.
+A generated label is a **hypothesis**, not a measurement. So each one is scored on
+data the generator never saw.
 
-### What the first version got wrong
+### The first version measured nothing, and said it was 33% reliable
 
 It reported "0.596 balanced accuracy, 33% of labels reliable". Then the control:
-score each label against a **different latent's** data.
+score each label against a **different latent's** data, where the right answer is
+always "no".
 
 ```
-matched  (feature's own label)   0.604
-shuffled (a DIFFERENT label)     0.557    <- the true null
-gap                              +0.047   (n=24, not significant)
+matched   (the latent's own label)   0.604
+shuffled  (a DIFFERENT label)        0.557    <- should have been ~0.50
+gap                                  +0.047   (not significant)
 ```
 
-A deliberately wrong label scored almost as well as the right one. The
-reliability figure measured nothing. Three causes, all fixable:
+**A deliberately wrong label scored almost as well as the right one.** The scorer
+was very nearly blind, and "33% reliable" meant nothing at all. Three causes:
 
-1. **Negatives were adversarial.** Drawn from other latents' *top* exemplars —
-   maximally-activating tokens — while positives came from ranks 120–300 and were
-   weak. Negatives often looked *more* latent-like than positives. Fixed with
-   uniformly random positions, the EleutherAI fuzzing standard.
-2. **Argmax Yes/No discarded the signal.** One bit per item. Replaced with
-   `logP(Yes) − logP(No)` scored by AUC.
+1. **The negatives were harder than the positives.** They were drawn from other
+   latents' *top* exemplars — maximally-activating tokens — while positives came
+   from weak ranks 120–300. Negatives often looked more latent-like than
+   positives. Fixed by drawing negatives from uniformly random positions.
+2. **Argmax Yes/No threw away the signal** — one bit per item. Replaced with
+   `logP(Yes) − logP(No)`, scored by AUC.
 3. **The SAE was too dense** — see §3.
 
-### What the current version does
+### What it does now
 
-- **Generate** three candidate labels from whole exemplar *passages* (grouped by
-  source sequence, so the contrast between firing and non-firing tokens in the
-  same text is visible) with activation strengths quantised 0–10, plus negatives,
-  plus the latent's promoted tokens read from its decoder direction
-- **Select** the winner on held-out ranks 40–120
-- **Report** it on ranks 120–300 — a **disjoint** band, so the published score
-  never sees the data that chose the label. Without this split, best-of-N inflates
-  the reported number by roughly the spread of the candidates
-- **Calibrate**: every latent is *also* scored with a wrong label, and the
-  threshold is the **95th percentile of that pooled null** — a measured 5%
-  false-positive rate rather than a number picked by feel
+- **Generate** three candidate labels from whole exemplar passages, so the
+  contrast between firing and non-firing tokens *in the same text* is visible
+- **Choose** the best on held-out ranks 40–120
+- **Score** it on ranks 120–300 — a **disjoint** band, so the reported number
+  never sees the data that picked the label. Skipping this split lets best-of-3
+  inflate the score by roughly the spread of the candidates
+- **Calibrate** by scoring every latent a second time with a *wrong* label, and
+  setting the threshold at the **95th percentile of that null** — a measured 5%
+  false-positive rate rather than a number chosen by feel
 
-### Result at n=50
+### The result, and how to read it
 
 ```
-labels attempted        1,624 features
-  mean AUC over ALL     0.742      <- includes the ~half that get rejected
-  wrong-label null      0.499      <- chance, as it should be
-  gap                   +0.243
-  threshold             0.756      (95th pct of the null)
+labels attempted        1,624
+  mean AUC over ALL     0.742     <- includes the half that get rejected
+  wrong-label null      0.499     <- chance, as it should be
+  threshold             0.756     (95th percentile of the null)
 
-validated (kept)        816 / 1,623  (50%)
+validated (kept)          816     (50%)
   mean AUC              0.873
-  median                0.875
 ```
 
-**Do not read 0.742 as label quality.** It is the mean over every label the
-generator attempted, half of which fail validation and are discarded. The labels
-actually used average **0.873**. The distribution is bimodal, not a blob:
+**0.742 is not the quality of the labels in use.** It averages over every attempt,
+half of which fail and are discarded. The distribution is bimodal, not a blob:
 
 ```
 AUC        n
-0.00-0.50  128   8% -- worse than chance
-0.50-0.76  686   rejected
-0.76-0.85  323   kept
-0.85-0.95  342   kept
-0.95-1.00  144   kept  (19 features score a perfect 1.0)
+0.00-0.50  128    worse than chance
+0.50-0.76  686    rejected
+0.76-0.85  323    kept
+0.85-0.95  342    kept
+0.95-1.00  144    kept   (19 latents score a perfect 1.0)
 ```
 
-Why the kept labels average 0.873 rather than 0.95+, deliberately:
-
-- **the test band is hard on purpose.** Scoring happens on ranks 120-300, which
-  activate the latent *more weakly* than the top exemplars the generator saw.
-  Scoring on those top exemplars would return a much higher number and would be
-  measuring memorisation
-- **the scorer is Gemma-3-12B**, not a frontier model; the auto-interp literature
-  typically uses GPT-4-class scorers
-- **some latents are genuinely polysemantic** even at `l0_small`’s L0≈21
+Kept labels average 0.873 rather than 0.95+, for three reasons that are all
+deliberate: the test band is **harder than the data the generator saw**; the
+scorer is Gemma-3-12B rather than a frontier model; and some latents are genuinely
+polysemantic even at ~21 active.
 
 **"Validated" means "beats a wrong label at a measured 5% false-positive rate."
-It does not mean "correct."** About 40% of kept labels sit in the marginal band
-just above threshold, where a label is genuinely predictive but vague about
-*what* the latent detects.
+It does not mean "correct."** About 40% of kept labels sit just above threshold,
+where a label is predictive but vague about *what* the latent detects.
 
-### What did *not* help
-
-Prompt engineering alone — reasoning-before-answering, whole passages, few-shot,
-best-of-3 — moved accuracy 0.596 → 0.609. Nothing. They are retained because they
-cost little and help once the SAE is sparse enough, but they were not the fix and
-should not be credited as one.
+**What did not help:** prompt engineering alone — reasoning-first, whole passages,
+few-shot, best-of-3 — moved accuracy 0.596 → 0.609. Nothing. The fix was the
+negatives, the scoring metric, and the sparser SAE.
 
 ---
 
 ## 5. Judging whether an explanation covers a latent
 
-For each latent in an activation, ask whether the AV's explanation covers it.
-Answer on a four-point scale: `CLEARLY / PROBABLY / UNCLEAR / NO`.
+For each latent, show a model the AV's explanation and the latent's label, and ask
+whether the explanation covers it: `CLEARLY / PROBABLY / UNCLEAR / NO`.
 
-### Two nulls, because the failure has two directions
+### The first prompt said yes to almost everything
+
+It asked whether the explanation "plausibly" contained the latent, as a binary
+Yes/No. It answered **YES to 411 of 476 pairs — including 78% of latents that
+provably did not fire in the activation.** Of its 411 yeses only 54% were real,
+against a 50% base rate. A "yes" carried no information whatsoever.
+
+Three variants were then run on **identical pairs**:
+
+| variant | false-positive rate | AUC |
+|---|---:|---:|
+| A — plain Yes/No | **0.783** | 0.744 |
+| **B — graded, strict** (in use) | **0.075** | 0.767 |
+| C — ranking (diagnostic only) | — | 0.707 |
+
+**AUC barely moved (+0.023, well within noise) while the false-positive rate moved
+by a factor of ten.** The model could always rank real above fake — it just would
+not say no. **The failure was calibration, not capability**, which is why prompt
+rewording fixed it and a better model would not have.
+
+Four changes did it: "plausibly" removed; the **base rate stated** in the prompt
+(an explanation is one or two sentences and an activation holds ~20 latents, so
+most are genuinely not covered); uncertainty given its own answer so a coin-flip
+is not forced into "yes"; and the observed failure modes named and banned.
+
+The prompt must **never state or imply that the latent was active** — that is true
+for real pairs and false for the controls, and would bias exactly the pairs that
+measure the false-positive rate. Both conditions are worded identically.
+
+### Two controls, because there are two ways to fail
 
 ```
-matched     this feature      vs its OWN explanation
-null_expl   this feature      vs N UNRELATED explanations
-null_feat   this explanation  vs N features that did NOT fire in it
+matched     this latent        vs its OWN explanation
+null_expl   this latent        vs unrelated explanations
+null_feat   this explanation   vs latents that did NOT fire in it
 ```
 
 `null_expl` catches a latent so generic it matches any text. `null_feat` catches
-an explanation so broad that anything matches it. A single control cannot tell
-those apart.
+an explanation so broad that anything matches it. **One control cannot tell those
+apart.** And `null_feat` gives clean ground truth — those latents provably did not
+fire, so every "covered" is an error, which is the false-positive rate.
 
-`null_feat` also gives **clean ground truth**: those latents provably did not
-fire, so every "present" is an error. That is the false-positive rate.
-
-### The verdict is three-way, never two
-
-```
-covered, both null rates ≤ 0.5   ->  PRESENT
-covered, either null rate > 0.5  ->  UNKNOWN
-not covered                      ->  NOT PRESENT
-```
-
-`UNKNOWN` is not a discard. Collapsing it into "absent" would convert matcher
-failure into evidence that the AV does not understand something.
-
-### The prompt was chosen by a measured bake-off, not by taste
-
-An earlier prompt asked whether the explanation "plausibly" contained the
-latent, with a binary Yes/No. It said **YES to 411 of 476 pairs**, including
-**78% of latents that provably did not fire**, and of its 411 yeses only 54%
-were real against a 50% base rate. The two-null rule correctly returned `UNKNOWN`
-for 96% of pairs — a measurement that refused itself.
-
-Three variants were then run on identical pairs:
-
-| variant | FPR | TPR | AUC |
-|---|---|---|---|
-| A — plain Yes/No | 0.783 | 0.945 | 0.744 |
-| **B — graded, strict** | **0.075** | 0.292 | 0.767 |
-| C — ranking (diagnostic only) | — | — | 0.707 |
-
-**AUC moved +0.023 — 0.74σ, statistically nothing.** The model could always rank
-real above fake; it just would not say no. FPR moved ~20σ. **The failure was
-calibration, not capability**, and four prompt changes fixed it:
-
-1. "plausibly" removed — it invited yes
-2. the **base rate is stated**: an explanation is one or two sentences while the
-   activation holds ~20 latents, so most are genuinely not covered
-3. uncertainty gets its own answer, so a coin-flip is not forced into "yes"
-4. the observed failure modes are named and banned ("same broad topic", "a
-   grammatical pattern found in all writing")
-
-The prompt must **never state or imply that the detector was active** — that is
-true for real pairs and false for the non-firing controls, and would bias exactly
-the pairs that measure the false-positive rate. Both conditions are worded
-identically.
-
-Variant C is kept as a **diagnostic only**. It needs known-absent latents mixed
-in, both to make ranking meaningful and to supply ground truth, and no such set
-exists in real use. It answers "is there any signal here at all", not "is this
-claim covered".
-
-### Validation at n=50
+The verdict is three-way, never two: if either null rate is high the answer is
+`UNKNOWN`, not "absent". Collapsing unknown into absent would turn a broken
+measurement into evidence about the AV.
 
 ```
-false-positive rate    5.7%     (baseline prompt: 78.3%)
+false-positive rate    5.7%     (the prompt it replaced: 78.3%)
 matcher AUC            0.807    vs unrelated explanations
-                       0.836    vs non-firing features
-self-consistency       89.2%    across 5 sampled explanations of one activation
+                       0.836    vs latents that never fired
+self-consistency      89.2%     across 5 explanations of one activation
 ```
 
 ---
 
-## 6. Describing the buckets blind
+## 6. Statistics
 
-`src/describe_buckets.py` hands a model **only the latent labels** for
-shared / lost / made and asks what they collectively say. It never sees the AV
-explanation, so agreement between the two is evidence rather than an echo.
+- **Every rate is reported against its own null**, produced by re-running the
+  identical procedure on mismatched data.
+- **Where the absolute level is not interpretable, only the gap is quoted.** A
+  permissive judge inflates both arms; the difference survives, the level does not.
+- **The unit of analysis is the activation, not the pair.** The 3,032
+  (latent, explanation) pairs come from only **50 activations**, median 60 each,
+  so they are not independent — one activation with a clear explanation
+  contributes 60 correlated successes. Pooling inflates confidence by ~2.5×:
 
-Every bucket also gets a **control summary built from a different activation's
-latents**. Given twenty labels a language model will manufacture a coherent
-story out of anything, including a pile of grammatical patterns.
+  | shared vs lost | difference | statistic |
+  |---|---:|---|
+  | pooled over 3,032 pairs | +14.5 pts | z = 6.4 |
+  | **per activation, across 43** | **+11.2 pts** | **t = 2.56** |
 
-**Known limitation, measured:** with 2–3 labelled latents the model over-reaches
-about 10% of the time — one run produced *"a legal document or agreement"* from a
-single latent about legal notices. It hedges appropriately 50% of the time on
-thin buckets vs 16% on full ones, but individual thin-bucket summaries should not
-be trusted. Aggregate across activations instead.
+  Both say the effect is real; only the second says how confident to be. Every
+  comparison in `RESULTS.md` §3 is computed the second way.
+- **No significance test is quoted on the two SAE rows** in `RESULTS.md` §2 —
+  they are the same 250 pairs read by two dictionaries, not independent samples.
+- **Selection on the outcome metric is logged.** The FVE gate chose activations
+  scoring 0.73–0.77, making them easier than average by construction. Every seed
+  tried is recorded, and the gate has since been removed from the code.
 
 ---
 
-## 7. What was tried and did not work
+## 7. Things that were tried and did not work
 
 Documented because the negative results shaped the design.
 
-**Extracting claims from the explanation and matching each to features.** The
-unit was a 3-word fragment, so the matcher had only surface form to judge and
+**Splitting the explanation into short claims and matching each to a latent.** The
+unit was a 3-word fragment, so the matcher had only surface form to go on — it
 matched *"Reflective, relatable tone"* to *"Adjectives modifying terms related to
 AI systems"* in an unrelated activation, purely because "relatable" is an
-adjective. Mismatched-activation control ran at 54%. Replaced by the
-latent → whole-explanation direction.
+adjective. The mismatched control ran at **54%**, i.e. a coin flip. Replaced by
+matching a latent against the whole explanation.
 
-**Splitting labels into "trigger" and "content" fields so grounding could match
-only on subject matter.** Rejected: it puts a fresh, unvalidated LLM judgement in
-the critical path. Non-discriminating latents are removed by measurement
-instead.
+**Splitting labels into "trigger" and "content" fields** so matching could use
+subject matter only. Rejected: it puts a fresh, unvalidated model judgement in the
+critical path. Non-discriminating latents are removed by measurement instead.
 
-**Category-level matching.** Too coarse to test anything: `topic_domain` appears
-in 99% of activations, `syntax` 93%, and the category-level control Jaccard
-between two *different* activations is 0.591 against 0.013–0.029 at latent
-level. Categories are for reporting, not testing.
+**Matching at the category level.** Far too coarse: `topic_domain` appears in 99%
+of activations and `syntax` in 93%, and the category-level control between two
+*different* activations scores 0.591 against 0.013–0.029 at latent level.
+Categories are for reporting, never for testing.
 
-**A local-FDR confidence score per label.** Built, then dropped — for the label
-axis it was redundant with the AUC bins already available, and it introduced a
-monotonicity bug that rated a latent scoring **AUC 0.172 (below chance)** as 98%
-likely to be real. The bug was a sweep in the wrong direction; the lesson is that
-an unvalidated transform in the critical path produces confident, plausible
-output.
+**A per-label confidence score (local FDR).** Built, then deleted. It was
+redundant with the AUC bands, and it carried a monotonicity bug that rated a latent
+scoring **AUC 0.172 — below chance** — as 98% likely to be real. An unvalidated
+transform in the critical path produces confident, plausible output.
 
 **Regex heuristics over label text.** Used three times, wrong three times — most
 clearly when a classifier called *"noun phrases denoting superhero characters"*
-grammatical because it contains the word "noun". The labeller's own
-generation-time judgement is used instead.
+grammatical, because the label contains the word "noun".
 
----
-
-## 8. Statistical practice used throughout
-
-- **Every rate is reported against its own null**, computed by re-running the
-  identical procedure on mismatched data
-- **Only gaps are quoted where the absolute level is not interpretable.** A
-  permissive matcher inflates both arms; the difference survives, the level does
-  not
-- **Significance is checked before a difference is called real.** Several
-  promising differences turned out to be under 1.3σ and are reported as null
-  results
-- **Selection on the outcome metric is logged.** The FVE gate picks activations
-  scoring 0.73–0.77, so they are easier than average by construction; every seed
-  tried is recorded
-- **Runs are not independent**: 50 activations × 5 sampled explanations. Effective
-  n is nearer 50 than 250
-
----
-
-## 9. Clustering: the unit of analysis is the activation
-
-Latent-level counts are large — 3,032 (latent, explanation) pairs in §4 — but
-they come from **50 activations**, at a median of 60 pairs each. They are not
-independent observations. One activation with an unusually clear explanation
-contributes 60 correlated "successes".
-
-Pooling them inflates significance by roughly 2.5× here:
-
-| shared vs lost, conveyance | difference | statistic |
-|---|---:|---|
-| pooled over 3,032 pairs | +14.5 pts | z = 6.4 |
-| **per activation, across 43 activations** | **+11.2 pts** | **t = 2.56** |
-
-Both say the effect is real. Only the second says how confident to be about it.
-Every comparison in `RESULTS.md` §4 is reported the second way — compute the
-quantity within each activation, then compare those 50 numbers.
-
-The same applies to the two SAE rows in §2: they are the same 250 pairs read by
-two dictionaries, so no significance test is quoted on them at all.
+**Describing each bucket blind.** `src/describe_buckets.py` shows a model only the
+latent labels and asks what they collectively describe, never showing it the AV's
+explanation, with a control built from a different activation's latents. It works,
+and it is legible — but it is qualitative and read by eye, so it is **not reported
+in `RESULTS.md`**. Its measured limit: with only 2–3 labelled latents the model
+over-reaches about 10% of the time, once producing *"a legal document or
+agreement"* from a single latent about legal notices.
