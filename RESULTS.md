@@ -148,11 +148,9 @@ because those appear only in the AR's output.
 
 ### Separations
 
-**The unit of analysis is the activation, not the pair.** The 3,032 pairs come
-from 50 activations (median 60 pairs each), so they are not independent draws —
-pooling them treats one activation's latents as 60 separate observations.
-Everything below is therefore computed **per activation and then compared across
-activations**, which is a much smaller n and a much weaker claim.
+Computed **per activation, then compared across activations** — the 3,032 pairs
+come from only 50 activations, so they are not independent draws
+([METHODOLOGY.md](METHODOLOGY.md) §9).
 
 | comparison | difference | 95% CI | | |
 |---|---:|---|---|---|
@@ -160,20 +158,12 @@ activations**, which is a much smaller n and a much weaker claim.
 | shared vs made | +12.6 pts | [+2.4, +22.9] | t = 2.42 | 48 activations |
 | made vs lost | +1.1 pts | [−11.1, +13.3] | t = 0.17 | 43 activations |
 
-`shared` beats both other buckets; `made` and `lost` cannot be separated. In 28
-of 43 activations `shared` exceeds `lost` individually.
-
+`shared` beats both other buckets; `made` and `lost` cannot be separated.
 `shared` at 45.9% is **8.1×** the judge's 5.7% false-positive floor.
 
-> **Pooling would have overstated this by roughly 2.5×.** Treating all 3,032
-> pairs as independent gives shared vs lost at 6.4σ rather than t = 2.56. The
-> pooled figures are wrong in the direction of looking more impressive, which is
-> the direction that matters.
+### Mention against outcome
 
-### Does being mentioned make a latent survive?
-
-Every latent genuinely in the activation falls into one of four boxes — mentioned
-in the explanation or not, and `shared` or `lost`:
+The same latents, split both ways:
 
 | | `shared` | `lost` | **total** |
 |---|---:|---:|---:|
@@ -181,24 +171,13 @@ in the explanation or not, and `shared` or `lost`:
 | **not mentioned** | 995 | 432 | **1,427** |
 | **total** | **1,840** | **630** | 2,470 |
 
-This table answers two different questions depending on which way you read it.
+Read down a column, 845/1840 = **46%** of `shared` latents were mentioned — the
+figure in the table above. Read across a row, 845/1043 = **81%** of mentioned
+latents are `shared`, against **70%** of unmentioned ones. Both are correct; only
+the row reading bears on whether mentioning helps.
 
-**Down the columns** — *of the `shared` latents, how many were mentioned?*
-845/1840 = **46%**. That is the `shared` row in the table above.
-
-**Across the rows** — *of the mentioned latents, how many are `shared`?*
-845/1043 = **81%**, against 995/1427 = **70%** for unmentioned ones.
-
-Only the second speaks to whether mentioning a latent helps it survive the round
-trip. (The distinction is the one between "90% of Harvard students had tutors"
-and "90% of tutored students get into Harvard" — same table, different claim.)
-
-Computed per activation and compared across activations, as above: **+7.5 points,
-t = 2.18, 95% CI [+0.7, +14.2]** over 48 activations. The pooled figures — 81.0%
-vs 69.7%, odds ratio 1.85 — are in the table for reference but overstate the
-confidence.
-
-So being mentioned is associated with being `shared`, but is not required.
+Per activation: **+7.5 points, t = 2.18, 95% CI [+0.7, +14.2]** over 48
+activations — the weakest result in this file.
 
 **The largest box is "not mentioned, `shared`": 995 latents** — 40% of the total,
 and **54% of all `shared` latents**. The AR reconstructed them without the
