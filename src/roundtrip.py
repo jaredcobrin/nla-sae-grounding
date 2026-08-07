@@ -297,6 +297,12 @@ def main() -> None:
     mse_C = [norm_mse(V_ar_sae[k], V_ar[k], mse_scale) for k in range(len(V_ar))]
     mse_D = [norm_mse(V_ar_sae[k], V[runs[k]["act"]], mse_scale)
              for k in range(len(V_ar))]
+    # Cosine for each comparison as well. It is recoverable from mse (they are
+    # related by mse = 2(1-cos) after normalisation), but Gemma's tiny rawvar
+    # means FVE magnifies cosine ~72x -- so cosine is the stable quantity to
+    # eyeball, and having it stored means nobody has to re-derive it by hand.
+    cos_C = [cos_of(V_ar_sae[k], V_ar[k]) for k in range(len(V_ar))]
+    cos_D = [cos_of(V_ar_sae[k], V[runs[k]["act"]]) for k in range(len(V_ar))]
     print(f"  L0 mean {np.mean([len(f) for f in F_ar]):.1f}   "
           f"recon cos {np.mean(ar_sae_cos):.4f}")
     print(f"  FVE  A SAE(orig)vs orig {fve_of(sae_mse, rawvar):>7.4f}"
@@ -333,6 +339,8 @@ def main() -> None:
             "mse_B_ar_vs_orig": rec["mse"], "fve_B": 1.0 - rec["mse"] / rawvar,
             "mse_C_sae_ar_vs_ar": mse_C[k], "fve_C": 1.0 - mse_C[k] / rawvar,
             "mse_D_sae_ar_vs_orig": mse_D[k], "fve_D": 1.0 - mse_D[k] / rawvar,
+            "cos_A_sae_orig_vs_orig": sae_cos[i], "cos_B_ar_vs_orig": rec["cos"],
+            "cos_C_sae_ar_vs_ar": cos_C[k], "cos_D_sae_ar_vs_orig": cos_D[k],
             "source_text": src_text[i],
         })
 

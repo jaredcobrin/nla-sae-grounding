@@ -21,7 +21,7 @@ explanations each, Gemma-generated rollouts.
 `feature_overlap_vectors.npz` (6.5 MB) holds all four vector families —
 `v_orig`, `v_orig_sae`, `v_ar`, `v_ar_sae` — and the corpus parquet (3 MB) holds
 the activations and source text. Both are excluded by `.gitignore` as binary
-artefacts; regenerate with `scripts/run_pipeline.sh`, or ask for them directly.
+artefacts; regenerate with `scripts/run_experiment.sh`, or ask for them directly.
 
 The `.npz` is what a later probe would need: fit a direction separating
 AR-reconstructed activations from real ones, with `v_orig_sae` available so the

@@ -351,8 +351,26 @@ def main() -> None:
     out = Path(a.out) if a.out else d / "summary.json"
     out.write_text(json.dumps(summary, indent=2))
     (d / "SUMMARY.md").write_text(render_md(summary))
+
+    # Per-example table. Everything the round trip recorded for each (activation,
+    # explanation) pair, one row each, so a reader can check any single case
+    # without parsing JSON -- and so a claim about "the outliers" can be checked.
+    cols = ["act", "run", "row", "fve_A", "fve_B", "fve_C", "fve_D",
+            "cos_A_sae_orig_vs_orig", "cos_B_ar_vs_orig",
+            "cos_C_sae_ar_vs_ar", "cos_D_sae_ar_vs_orig",
+            "n_orig", "n_ar", "n_shared", "n_lost", "n_invented",
+            "jaccard", "control_jaccard", "weighted_kept", "cjk", "untagged"]
+    lines = [",".join(cols)]
+    for r in ov["runs"]:
+        lines.append(",".join(
+            "" if r.get(c) is None else
+            (f"{r[c]:.6f}" if isinstance(r.get(c), float) else str(r.get(c)))
+            for c in cols))
+    (d / "per_example.csv").write_text("\n".join(lines) + "\n")
+
     print(f"wrote {out}")
     print(f"wrote {d / 'SUMMARY.md'}")
+    print(f"wrote {d / 'per_example.csv'}  ({len(ov['runs'])} rows)")
     print()
     print(render_md(summary))
 
