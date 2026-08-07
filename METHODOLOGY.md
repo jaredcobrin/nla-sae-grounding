@@ -56,11 +56,35 @@ from the **same saved vectors**, so neither was picked for giving a nicer number
 
 ## 3. Labelling latents
 
-Each generated label is scored on data the generator never saw.
+### How a label is scored
 
-**The first version measured nothing and reported 33% reliable.** The control —
-score each label against a *different* latent's data, where the answer is always
-"no":
+A label is a hypothesis, so it is tested like one — **as a 32-question quiz**:
+
+- **16 positives** — text snippets at positions where the latent *does* fire,
+  drawn from ranks 120–300 of its activation strengths
+- **16 negatives** — snippets from uniformly random positions, where it almost
+  certainly does not (at ~21 active latents out of 16,384, a random position has
+  a ~0.13% chance of firing this one)
+- shuffled together; for each, the scorer sees **only the label and the snippet**
+  and answers whether that snippet is one the latent fires on
+
+The score is `logP(Yes) − logP(No)`, and the label's grade is the **AUC** over the
+32 items: can it separate firing positions from non-firing ones? 0.5 is blind, 1.0
+is perfect.
+
+*Why 32 and not 8: an 8-item quiz quantises AUC into 9 possible values. At n=24
+the measured signal swung from +0.122 to +0.008 between two samples of latents —
+noise big enough to have produced either "this works" or "this is broken".*
+
+Three candidate labels are generated per latent, the best is picked on a
+**separate** band (ranks 40–120, 6+6 items), and only then is the winner scored on
+120–300. The bands are disjoint, so the reported number never sees the data that
+chose the label.
+
+### The first version measured nothing and reported 33% reliable
+
+The control: score each label against a **different latent's** quiz, where the
+right answer is always "no".
 
 ```
 matched   (own label)        0.604
@@ -68,14 +92,14 @@ shuffled  (a WRONG label)    0.557    <- should be ~0.50
 ```
 
 A deliberately wrong label scored almost as well as the right one. Causes: the
-negatives were drawn from other latents' *top* exemplars while positives came from
-weak ranks, so negatives looked more latent-like; argmax Yes/No threw away the
-signal; and the SAE was too dense.
+negatives were drawn from other latents' *top* exemplars while positives came
+from weak ranks, so negatives often looked **more** latent-like than positives
+(switching to random negatives alone moved the gap +0.047 → +0.078); argmax
+Yes/No threw away the signal; and the SAE was too dense.
 
-**Now:** generate 3 candidates, pick the best on ranks 40–120, score it on ranks
-120–300 — *disjoint*, so the reported number never sees the data that chose the
-label. Every latent is also scored with a **wrong** label; the threshold is the
-95th percentile of that null, i.e. a measured 5% false-positive rate.
+Every latent is now also scored with **2 wrong labels**, and the pass threshold is
+the 95th percentile of that pooled null — a measured 5% false-positive rate rather
+than a number chosen by feel.
 
 ```
 attempted     1,624      mean AUC 0.742   <- includes the half that get rejected
@@ -97,11 +121,39 @@ detect. Prompt engineering alone never fixed any of this (0.596 → 0.609).
 
 ## 4. Judging whether an explanation covers a latent
 
-**The first prompt said yes to almost everything** — asked whether the explanation
-"plausibly" contained the latent, and answered YES to 411 of 476 pairs, including
-**78% of latents that provably did not fire**.
+### What the matcher is shown
 
-Three variants on identical pairs:
+One latent, one explanation, one question. The prompt gives the model the AV's
+explanation (as "the DESCRIBER's summary") and the latent's validated label (as
+"what the DETECTOR responds to"), and asks whether the summary covers that thing.
+It answers with one word: `CLEARLY` / `PROBABLY` / `UNCLEAR` / `NO`.
+
+It is **never told whether the latent was actually active** — that would be true
+for real pairs and false for the controls, and would bias exactly the pairs that
+measure the error rate. Both conditions are worded identically.
+
+Each pair is judged **7 times**: once matched, plus **3 unrelated explanations**
+and **3 latents that never fired**.
+
+```
+matched     this latent       vs its OWN explanation
+null_expl   this latent       vs 3 unrelated explanations   -> catches a generic latent
+null_feat   this explanation  vs 3 latents that never fired -> catches a broad explanation
+```
+
+**Two controls, because there are two ways to fail**, and one control cannot tell
+them apart. `null_feat` also supplies clean ground truth: those latents provably
+did not fire, so every "covered" there is an error — that *is* the false-positive
+rate. Verdicts are three-way: if either null rate exceeds 0.5 the answer is
+`UNKNOWN`, not "absent".
+
+### The first prompt said yes to almost everything
+
+It asked whether the explanation "plausibly" contained the latent, as a binary
+Yes/No — and answered YES to **411 of 476 pairs**, including **78% of latents that
+provably did not fire**.
+
+Three variants, run on identical pairs:
 
 | variant | false-positive rate | AUC |
 |---|---:|---:|
@@ -109,26 +161,14 @@ Three variants on identical pairs:
 | **B — graded, strict** (in use) | **0.075** | 0.767 |
 | C — ranking (diagnostic only) | — | 0.707 |
 
-**AUC barely moved while FPR moved tenfold** — the model could always rank real
-above fake, it just would not say no. **Calibration, not capability**, which is
-why rewording fixed it and a bigger model would not have. The fixes: drop
-"plausibly", state the base rate (one or two sentences against ~20 latents, so
-most are genuinely not covered), give uncertainty its own answer, and name the
-observed failure modes so they can be banned. The prompt never states that the
-latent was active — that is false for the controls and would bias exactly the
-pairs measuring the false-positive rate.
-
-**Two controls, because there are two ways to fail:**
-
-```
-null_expl   this latent       vs unrelated explanations   -> catches a generic latent
-null_feat   this explanation  vs latents that never fired -> catches a broad explanation
-```
-
-One control cannot tell those apart. `null_feat` also gives clean ground truth:
-those latents provably did not fire, so every "covered" is an error — that *is*
-the false-positive rate. Verdicts are three-way; if either null is high the answer
-is `UNKNOWN`, not "absent".
+**AUC barely moved while the false-positive rate moved tenfold.** The model could
+always rank real above fake — it just would not say no. **Calibration, not
+capability**, which is why rewording fixed it and a bigger model would not have.
+Four changes did it: drop "plausibly"; state the base rate in the prompt (one or
+two sentences against ~20 latents, so `NO` is the ordinary answer); give
+uncertainty its own option; and name the observed failure modes so they can be
+banned — same broad topic, could plausibly contain it, grammatical patterns found
+in all writing.
 
 ```
 false-positive rate   5.7%    (the prompt it replaced: 78.3%)
