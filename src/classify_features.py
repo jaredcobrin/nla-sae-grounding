@@ -1,5 +1,23 @@
 """Classify every feature on three axes, then cross-tab by shared / lost / made.
 
+============================================================================
+THIS EXPERIMENT FAILED ITS OWN CONTROL. NOTHING IN RESULTS.md USES IT.
+Write-up: INCONCLUSIVE.md. Two reasons, either fatal on its own:
+
+  * It judges features against the WHOLE SOURCE DOCUMENT. An activation
+    sampled at one token position is not a claim about the whole document,
+    so the question is aimed at the wrong object -- no prompt fixes that.
+  * The PRESENT axis asks a plain yes/no, the exact prompt shape that scored
+    a 78.3% false-positive rate in the matcher bake-off before being
+    replaced. This one never went through that bake-off, and its own control
+    judged 47.8% of labels present in unrelated documents.
+
+Kept because INCONCLUSIVE.md states it still runs and still prints its
+control, and because the guard at the end -- which refuses to report when
+own-vs-control stops separating -- is a pattern worth keeping. It fired on a
+real run.
+============================================================================
+
 THE QUESTION
 Reading the labels by hand suggested that shared features name the document's
 subject, lost features name the SPECIFIC things inside it (Nginx, "tomato",
@@ -38,8 +56,8 @@ present in activations they never fired in.
 
 Usage:
     python src/classify_features.py \
-        --dir results/rollout50 \
-        --out results/rollout50/feature_classification.json
+        --dir results \
+        --out results/feature_classification.json
 """
 
 from __future__ import annotations

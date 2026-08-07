@@ -1,5 +1,11 @@
 """Say in English what the round trip kept, destroyed, and invented.
 
+NOT PART OF THE REPORTED EXPERIMENT. This works and it has a control, but its
+output is qualitative -- read by eye, not scored -- so RESULTS.md does not quote
+it. It is kept because it is the most legible thing in the repo: it turns a pile
+of latent labels into a paragraph, blind to the AV's explanation, so agreement
+between the two is evidence rather than an echo. See METHODOLOGY.md section 6.
+
 WHY THIS EXISTS
 Every previous stage asked a model to JUDGE ("does this explanation cover this
 feature?"), and three designs in a row had calibration problems — the first said

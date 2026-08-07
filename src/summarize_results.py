@@ -315,6 +315,60 @@ def render_md(s: dict) -> str:
     return "\n".join(L) + "\n"
 
 
+def render_by_bucket(ov: dict, sm: dict, lab: dict) -> str:
+    """Per-activation dump: the explanation, the source text, and every labelled
+    latent grouped by what the round trip did with it.
+
+    Nothing here is inferred. The labels are what each detector responds to, and
+    they are simply listed under the bucket the set arithmetic put them in. This
+    is the file to read when a number looks surprising and you want to see the
+    actual case behind it.
+
+    It used to be produced by hand, which meant it could not be regenerated with
+    the rest of the results. Now it comes out of the same run as everything else.
+    """
+    val = {int(k): v for k, v in lab.items()
+           if isinstance(v, dict) and v.get("reliable") and v.get("label")}
+    # one explanation per activation -- buckets differ per sampled explanation,
+    # so mixing them would put one latent in two buckets on the same page
+    first, seen = [], set()
+    for r in sm["runs"]:
+        if r["act"] not in seen:
+            seen.add(r["act"])
+            first.append(r)
+    expl = {}
+    for r in ov["runs"]:
+        expl.setdefault(r["act"], r)
+
+    L = ["# What each latent is about — shared vs lost vs made", "",
+         "Every validated latent label, grouped by what the round trip did with "
+         "it. **Nothing here is inferred by a model** — the labels are what each "
+         "detector responds to, listed under the bucket set arithmetic put them "
+         "in.", "",
+         f"Unlabelled latents are counted everywhere but cannot be shown: only "
+         f"{len(val):,} of {len(lab):,} earned a validated label.", ""]
+    for r in sorted(first, key=lambda x: x["act"]):
+        i = r["act"]
+        e = expl.get(i, {})
+        L += ["---", "", f"## Activation {i}", ""]
+        if e.get("explanation"):
+            L += [f"**AV said:** {' '.join(e['explanation'].split())[:600]}", ""]
+        if e.get("source_text"):
+            L += [f"**Source text (end):** …{' '.join(e['source_text'].split())[-600:]}", ""]
+        for name, key, gloss in (("SHARED", "shared_features", "survived"),
+                                 ("LOST", "lost_features", "destroyed"),
+                                 ("MADE", "invented_features", "invented")):
+            fs = r[key]
+            named = [f for f in fs if f in val]
+            L.append(f"### {name} — {gloss}  · {len(named)} labelled, "
+                     f"{len(fs) - len(named)} unlabelled")
+            L.append("")
+            for f in named:
+                L.append(f"- `f{f}` {val[f]['label']}")
+            L.append("")
+    return "\n".join(L) + "\n"
+
+
 # ---------------------------------------------------------------- entry point
 
 def main() -> None:
@@ -368,9 +422,12 @@ def main() -> None:
             for c in cols))
     (d / "per_example.csv").write_text("\n".join(lines) + "\n")
 
+    (d / "LATENTS_BY_BUCKET.md").write_text(render_by_bucket(ov, sm, lab))
+
     print(f"wrote {out}")
     print(f"wrote {d / 'SUMMARY.md'}")
     print(f"wrote {d / 'per_example.csv'}  ({len(ov['runs'])} rows)")
+    print(f"wrote {d / 'LATENTS_BY_BUCKET.md'}")
     print()
     print(render_md(summary))
 

@@ -81,8 +81,10 @@ cat <<EOF
 
 Done. Results in $OUT/
 
-  SUMMARY.md      every reported number, as tables      <- start here
-  summary.json    the same, machine-readable
+  SUMMARY.md            every reported number, as tables    <- start here
+  summary.json          the same, machine-readable
+  per_example.csv       one row per (activation, explanation)
+  LATENTS_BY_BUCKET.md  per activation: explanation, source text, labelled latents
 
 Check these before believing anything:
   1. validated label count in SUMMARY.md section 3. ~50% is expected; much lower

@@ -14,7 +14,7 @@ below is the CONSERVATIVE one:
   reconstruction fidelity ("does the AR beat the SAE?")  -> l0_big
       L0~129. The strongest SAE available, so "the AR reconstructs better" is
       the harder claim to make. Using a weaker SAE here would flatter our
-      result. This is why FEATURE_OVERLAP_RESULTS.md keeps l0_big.
+      result. RESULTS.md section 1 therefore reports l0_big.
 
   feature SEMANTICS ("what kind of thing is lost?")      -> l0_small
       L0~21. Measured on our own activations: token purity 0.24 vs 0.17, and
