@@ -1,0 +1,191 @@
+{
+  "meta": {
+    "n_activations": 50,
+    "n_pairs": 250,
+    "runs_per_activation": 5,
+    "source": "/Users/jaredcobrin/Jared Intelligence/NLA_PAPER_IMPROVEMENT_V2/results"
+  },
+  "reconstruction": {
+    "fve": {
+      "A_sae_orig_vs_orig": 0.5870135754903377,
+      "B_ar_vs_orig": 0.7394063576307888,
+      "C_sae_ar_vs_ar": 0.699570800908047,
+      "D_sae_ar_vs_orig": 0.494210370263094
+    },
+    "cos_implied": {
+      "A_sae_orig_vs_orig": 0.9942368752765469,
+      "B_ar_vs_orig": 0.99636347934464,
+      "C_sae_ar_vs_ar": 0.9958075838764198,
+      "D_sae_ar_vs_orig": 0.9929418292054907
+    },
+    "rawvar": 0.02790951170027256,
+    "fve_multiplier": 71.66015734988542,
+    "gap_B_minus_A": 0.15239278214045104,
+    "gap_C_minus_A": 0.1125572254177093,
+    "L0_orig": 119.9,
+    "L0_ar": 101.308,
+    "sae_used": "l0_big"
+  },
+  "overlap": {
+    "l0_small": {
+      "n_pairs": 250,
+      "n_activations": 50,
+      "totals": {
+        "shared": 3529,
+        "lost": 1441,
+        "made": 1280,
+        "all": 6250
+      },
+      "mean_per_pair": {
+        "shared": 14.116,
+        "lost": 5.764,
+        "made": 5.12
+      },
+      "share_of_all": {
+        "shared": 0.56464,
+        "lost": 0.23056,
+        "made": 0.2048
+      },
+      "kept": 0.7100603621730383,
+      "jaccard_matched": 0.5760507918855966,
+      "jaccard_control": 0.008899745769340271,
+      "separation_ratio": 64.72665700969777
+    },
+    "l0_big": {
+      "n_pairs": 250,
+      "n_activations": 50,
+      "totals": {
+        "shared": 17125,
+        "lost": 12850,
+        "made": 8202,
+        "all": 38177
+      },
+      "mean_per_pair": {
+        "shared": 68.5,
+        "lost": 51.4,
+        "made": 32.808
+      },
+      "share_of_all": {
+        "shared": 0.448568509835765,
+        "lost": 0.3365900935118003,
+        "made": 0.2148413966524347
+      },
+      "kept": 0.5713094245204337,
+      "jaccard_matched": 0.45007526266656234,
+      "jaccard_control": 0.026326533212384352,
+      "separation_ratio": 17.09588038180587
+    }
+  },
+  "labels": {
+    "attempted": 1624,
+    "validated": 816,
+    "validated_frac": 0.5024630541871922,
+    "mean_auc_all": 0.7415496957794209,
+    "mean_auc_validated": 0.8726902382046569,
+    "median_auc_validated": 0.875,
+    "mean_auc_wrong_label_null": 0.4993248902495379,
+    "n_perfect": 19
+  },
+  "conveyance": {
+    "n_pairs": 3032,
+    "n_activations": 50,
+    "by_bucket": {
+      "shared": {
+        "n": 1840,
+        "conveyed": 845,
+        "rate": 0.4592391304347826,
+        "mean_label_auc": 0.8718601392663043
+      },
+      "lost": {
+        "n": 630,
+        "conveyed": 198,
+        "rate": 0.3142857142857143,
+        "mean_label_auc": 0.8560980902777777
+      },
+      "made": {
+        "n": 562,
+        "conveyed": 197,
+        "rate": 0.3505338078291815,
+        "mean_label_auc": 0.8581621163256228
+      }
+    },
+    "real": {
+      "n": 2470,
+      "rate": 0.4222672064777328,
+      "rate_corrected_for_fpr": 0.3870223387520655,
+      "fpr_used": 0.057497801231310465
+    },
+    "shared_over_fpr_floor": 7.9870729071410755,
+    "comparisons": {
+      "shared_vs_lost": {
+        "clustered": {
+          "n": 43,
+          "mean": 0.11167584454660734,
+          "sd": 0.2862257473763059,
+          "se": 0.04364901726726792,
+          "t": 2.558496193918946,
+          "ci_low": 0.026123770702762214,
+          "ci_high": 0.19722791839045245,
+          "significant": true
+        },
+        "pooled_z": 6.357728487161336,
+        "inflation": 2.484947408666245
+      },
+      "shared_vs_made": {
+        "clustered": {
+          "n": 48,
+          "mean": 0.12649405096357222,
+          "sd": 0.36285743416922384,
+          "se": 0.052373959323764575,
+          "t": 2.4152088670939147,
+          "ci_low": 0.02384109068899365,
+          "ci_high": 0.2291470112381508,
+          "significant": true
+        },
+        "pooled_z": 4.551044335927055,
+        "inflation": 1.884327437652658
+      },
+      "made_vs_lost": {
+        "clustered": {
+          "n": 43,
+          "mean": 0.010812933015148208,
+          "sd": 0.40875140952909655,
+          "se": 0.06233400557462423,
+          "t": 0.17346764282945557,
+          "ci_low": -0.11136171791111527,
+          "ci_high": 0.1329875839414117,
+          "significant": false
+        },
+        "pooled_z": 1.3271928142185008,
+        "inflation": 7.6509531839510165
+      }
+    },
+    "mentioned_x_outcome": {
+      "mentioned_shared": 845,
+      "mentioned_lost": 198,
+      "unmentioned_shared": 995,
+      "unmentioned_lost": 432,
+      "p_shared_given_mentioned": 0.8101629913710451,
+      "p_shared_given_unmentioned": 0.6972669936930623,
+      "frac_of_shared_unmentioned": 0.5407608695652174
+    }
+  },
+  "judge": {
+    "false_positive_rate": 0.057497801231310465,
+    "matcher_auc_vs_null_expl": 0.8074279656690406,
+    "matcher_auc_vs_null_feat": 0.835713670858831,
+    "self_consistency": 0.8923036093418257,
+    "grades_on_real": {
+      "CLEARLY": 1043,
+      "NO": 1629,
+      "PROBABLY": 324,
+      "UNCLEAR": 36
+    },
+    "grades_on_nonfiring": {
+      "NO": 8539,
+      "PROBABLY": 147,
+      "CLEARLY": 376,
+      "UNCLEAR": 34
+    }
+  }
+}

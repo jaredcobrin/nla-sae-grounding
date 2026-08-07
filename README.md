@@ -1,266 +1,198 @@
 # Can you trust what a Natural Language Autoencoder says about an activation?
 
-A natural language autoencoder (NLA) reads one activation from a language model
+A natural language autoencoder (NLA) reads one activation out of a language model
 and writes a sentence or two about what it contains. The
-[NLA paper](https://transformer-circuits.pub/2026/nla/) names the obvious worry
-in its own limitations:
+[NLA paper](https://transformer-circuits.pub/2026/nla/) names the obvious worry in
+its own limitations:
 
 > **Excessive expressivity:** Because the AV is a full language model, it has the
 > capacity to make additional inferences beyond what is stored in an activation.
 
-The paper's own metric cannot settle this. During RL the reconstructor (AR) is
-trained on the verbalizer's (AV's) own rollouts, so it is not an independent
-judge of whether the AV invented something — the pair can agree on a code that
-neither the activation nor the language supports. A **sparse autoencoder reads
-the activation directly**, and is independent.
-
-This repo does that check, and ships a tool that runs it on demand.
+The paper's own metric cannot settle it. During RL the reconstructor (AR) trains
+on the verbalizer's (AV's) own rollouts, so it is not an independent judge of
+whether the AV invented something — the pair can agree on a code neither the
+activation nor the language supports. A **sparse autoencoder reads the activation
+directly**, and is independent.
 
 ---
 
-## What was measured
+## This repo does two things
 
-These are measurements, not explanations of them. Where a reading is tempting but
-not established, that is said rather than implied.
+**1. It reproduces the experiment.** One command runs corpus → round trip → SAE →
+labelling → judging → statistics, and writes every number in
+[RESULTS.md](RESULTS.md) to a file.
 
-**1. The NLA round trip reconstructs an activation better than this SAE does.**
+```bash
+bash scripts/run_experiment.sh          # ~2.5h, one 24GB GPU
+```
 
-| | FVE |
-|---|---|
-| SAE reconstruction vs original | **0.587** |
-| **AV → text → AR** reconstruction vs original | **0.739** |
+**2. It ships the tool as something you can point at your own text.**
+`src/trust_report.py` takes an activation and tells you which parts of its NLA
+explanation are actually evidenced.
 
-50 Gemma-3-12B-IT layer-32 activations, on the corpus the SAE was *itself
-fine-tuned on*. The ordering held on all three corpora tried in an earlier n=10
-pass. Both are lossy compressions of the same vector, but they were built for
-different jobs — sparse decomposition versus reconstruction — so this is a
-statement about reconstruction, not about English being a better representation
-than a latent basis.
+```bash
+# your own sentence, activation extracted for you
+python src/trust_report.py --text "The Ryzen 7600 idles at 45C." --av $AV --ar $AR
 
-**2. The round trip preserves most latents, far above its control.**
-
-**Tested on 50 activations × 5 explanations = 250 (activation, explanation)
-pairs**, the same vectors read by both SAEs — only the dictionary changes.
-
-| | `l0_small` (~21 latents/activation) | | | `l0_big` (~120 latents/activation) | | |
-|---|---:|---:|---:|---:|---:|---:|
-| | **total** | **mean/pair** | **share** | **total** | **mean/pair** | **share** |
-| **shared** | 3,529 | 14.1 | 56.5% | 17,125 | 68.5 | 44.9% |
-| **lost** | 1,441 | 5.8 | 23.1% | 12,850 | 51.4 | 33.7% |
-| **made** | 1,280 | 5.1 | 20.5% | 8,202 | 32.8 | 21.5% |
-| *total* | *6,250* | *25.0* | | *38,177* | *152.7* | |
-
-| | `l0_small` | `l0_big` |
-|---|---:|---:|
-| **kept** = shared/(shared+lost) | **71.0%** | **57.1%** |
-| Jaccard vs mismatched control | 0.576 vs 0.009 — **65×** | 0.450 vs 0.026 — **17×** |
-
-Integer set arithmetic on SAE latent IDs. No judge, no labels, nothing to
-calibrate — which is why this is the most robust number here.
-
-The 14-point difference in kept rate is close to a straight trade between
-`shared` and `lost`. **The `made` share barely moves — 20.5% vs 21.5%** — so
-about a fifth of what the AR produces is absent from the original under either
-dictionary. These are separately trained dictionaries, not two settings of a
-granularity knob, so nothing here supports reading the gap as "coarse latents
-survive, fine-grained ones don't".
-
-**3. The main finding: latents the round trip keeps are conveyed by the
-explanation more often than latents it loses or adds.**
-
-| bucket | latents | conveyed by the explanation |
-|---|---|---|
-| **shared** — in the activation *and* the reconstruction | 1840 | **46%** |
-| **made** — only in the reconstruction | 562 | 35% |
-| **lost** — in the activation, gone from the reconstruction | 630 | 31% |
-
-`shared` is **8.1×** the judge's measured 5.7% false-positive floor.
-
-Compared **per activation across the 50 activations** — not by pooling the 3,032
-pairs, which would count one activation's latents as dozens of independent
-observations — `shared` beats `lost` by **+11.2 points** (t = 2.56,
-CI [+2.6, +19.7]) and `made` by **+12.6 points** (t = 2.42, CI [+2.4, +22.9]).
-**`made` vs `lost` is not distinguishable** (t = 0.17).
-
-**This is a correlation between an SAE's reading of an activation and text an
-independent model wrote about it.** What it implies about the AV's behaviour is
-not settled by this data. Note also that the other **54%** of surviving latents
-were *not* visibly conveyed — the AR reconstructs those from context, so surviving
-the round trip is not by itself evidence the explanation carried them.
-
-Full numbers, controls and caveats: **[RESULTS.md](RESULTS.md)**.
-Two experiments that produced good-looking numbers and **did not meet the bar**
-are written up in **[INCONCLUSIVE.md](INCONCLUSIVE.md)**.
-
----
-
-## The tool
-
-`src/trust_report.py` takes an activation and returns what its explanation is
-actually evidenced by:
+# or an activation from a corpus you built
+python src/trust_report.py --parquet acts.parquet --n 5 --av $AV --ar $AR
+```
 
 | verdict | meaning |
 |---|---|
-| **CONFIRMED** | in the real activation, **and the AR recovers it** from the explanation |
-| **UNVERIFIED** | **the AR produces it** from the explanation, but it is not in the activation here |
-| **OMITTED** | in the real activation, but **the AR does not recover it** |
+| **CONFIRMED** | in the real activation, **and** the AR recovers it from the explanation |
+| **UNVERIFIED** | the AR produces it from the explanation, but it is not in the activation here |
+| **OMITTED** | in the real activation, but the AR does not recover it |
 
-These are set operations on SAE latent sets — `F_orig ∩ F_ar`, `F_ar \ F_orig`,
-`F_orig \ F_ar`, where `F_ar = SAE(AR(explanation))`. **The explanation text is
-never read.** It enters only through the AR's reconstruction of it, and that
-distinction matters: the AR trains on the AV's own rollouts and demonstrably
-fills in context the explanation never stated (result 4). Saying "the explanation
-implies X" would attribute to the text what belongs to the AR.
-
-For a check that *does* read the explanation, `src/judge_explanations.py` shows
-the text to a model and asks whether it covers each latent — that is where the
-46% / 31% figures in result 3 come from.
-
-**UNVERIFIED does not mean false** — see result 4. It means *not checked*.
+These are set operations on SAE latent sets, not readings of the text —
+`F_orig ∩ F_ar`, `F_ar \ F_orig`, `F_orig \ F_ar`. **The explanation is never
+read**; it enters only through the AR's reconstruction of it. **UNVERIFIED means
+*not checked*, never *false*** — 54% of even the CONFIRMED latents were not
+visibly stated in the explanation, so the AR fills in a great deal from context.
 
 Worked examples: [`results/example_reports/`](results/example_reports/).
 
 ---
 
-## Why you should believe any of this
+## The findings
 
-Every measurement in this repo is reported **against its own null**, because
-three separate designs here produced confident, plausible, wrong numbers and each
-was caught only by a control:
+**1. The NLA round trip reconstructs an activation better than the SAE does.**
+
+| | FVE |
+|---|---|
+| SAE reconstruction vs original | 0.587 |
+| **AV → text → AR** vs original | **0.739** |
+
+Measured on the corpus the SAE was itself fine-tuned on, using the stronger of
+its two variants — the conservative setting for this comparison.
+
+**2. Latent overlap survives the round trip, far above chance.**
+
+| Jaccard | `l0_small` | `l0_big` |
+|---|---:|---:|
+| rebuild vs its own activation | 0.576 | 0.450 |
+| rebuild vs an **unrelated** activation | 0.009 | 0.026 |
+| ratio | **65×** | **17×** |
+
+Integer set arithmetic on latent IDs. No judge, no labels, nothing to calibrate —
+the most robust number here.
+
+**3. The latents that survive are the ones the explanation talks about.**
+
+| bucket | latents | mentioned in the explanation |
+|---|---:|---:|
+| **shared** | 1,840 | **45.9%** |
+| made | 562 | 35.1% |
+| lost | 630 | 31.4% |
+
+`shared` is **8.0×** the judge's measured 5.75% false-positive rate. Compared per
+activation across the 50 (not by pooling the pairs, which would overstate
+confidence ~2.5×), `shared` beats `lost` by **+11.2 points** (t = 2.56) and `made`
+by **+12.6** (t = 2.42). `made` vs `lost` is not distinguishable.
+
+**This is a correlation between an SAE's reading of an activation and text an
+independent model wrote about it.** What it implies about the AV is not settled
+here.
+
+Full numbers and caveats: **[RESULTS.md](RESULTS.md)** · How it was measured:
+**[METHODOLOGY.md](METHODOLOGY.md)** · Experiments that failed their own controls:
+**[INCONCLUSIVE.md](INCONCLUSIVE.md)**
+
+---
+
+## Why you should believe any of it
+
+Every measurement is reported **against its own null**, because three designs here
+produced confident, plausible, wrong numbers, and each was caught only by a
+control:
 
 - an auto-interp scorer where a **deliberately wrong label scored 0.557 against a
   correct label's 0.604** — near-blind, and its "33% of labels are reliable" meant
   nothing
-- a claim-matcher that judged **78% of latents present in activations they never
-  fired in**
-- a "90% of claims survive" figure that was **49%** once the bucketing rule stopped
-  counting a claim as surviving when most of its support was destroyed
+- a matcher that judged **78% of latents present in activations they never fired
+  in**
+- a "90% of claims survive" figure that was **49%** once the bucketing rule
+  stopped counting a claim as surviving when most of its support was destroyed
 
-The methodology section documents each failure, what the control was, and what
-the fix changed. **[METHODOLOGY.md](METHODOLOGY.md)**
+Each failure, its control, and what the fix changed: **[METHODOLOGY.md](METHODOLOGY.md)**.
 
 ---
 
-## Running it
+## Setup
 
-**Requires Python ≥ 3.10** — the upstream `nla/` package uses `str | None`
-syntax. Also requires a clone of
-[`kitft/natural_language_autoencoders`](https://github.com/kitft/natural_language_autoencoders);
-point `NLA_REPO` at it.
+**Python ≥ 3.10.** Also needs a clone of
+[`kitft/natural_language_autoencoders`](https://github.com/kitft/natural_language_autoencoders)
+— point `NLA_REPO` at it. `transformers` must be `<5`; 5.x tokenizes the CJK
+injection marker differently and the NLA config assertion fails at startup.
 
 ```bash
 pip install -r requirements.txt
 export NLA_REPO=/path/to/natural_language_autoencoders
+export AV=$(huggingface-cli download kitft/nla-gemma3-12b-L32-av)
+export AR=$(huggingface-cli download kitft/nla-gemma3-12b-L32-ar)
 
-# fetch the two SAE variants (both are used, for different questions)
 python -c "from huggingface_hub import snapshot_download as d; \
   d('google/gemma-scope-2-12b-it', allow_patterns=[\
   'resid_post_all/layer_32_width_16k_l0_small/*',\
   'resid_post_all/layer_32_width_16k_l0_big/*'])"
-
-# 1. build a corpus: oasst1 + LMSYS prompts, responses generated by Gemma itself
-python src/extract_activations.py --arm rollout --n-docs 50 --out acts.parquet
-
-# 2. round trip + SAE on both ends
-python src/roundtrip.py --av <av> --ar <ar> --parquet acts.parquet --n 50 --out-dir results/
-
-# 3-5. labels, judging, descriptions
-bash scripts/run_pipeline.sh          # everything, ~2.5h on one 80GB GPU
-
-# the tool
-python src/trust_report.py --parquet acts.parquet --av <av> --ar <ar> \
-    --labels results/feature_labels.json --n 5 --out my_reports/
 ```
 
-Models: `google/gemma-3-12b-it`, `kitft/nla-gemma3-12b-L32-{av,ar}`,
-`google/gemma-scope-2-12b-it`.
-
-### Hardware
-
-**24 GB VRAM, 150 GB storage** — measured, not estimated. See
-[TEST_LOG.md](TEST_LOG.md) for the run this comes from.
-
-Three 12B models are involved but **never more than one at a time**:
-`trust_report.py` runs in phases, releasing the AV before loading the AR and the
-AR before loading the writer. Batch sizes auto-size to the card.
-
-| stage | resident | measured peak |
-|---|---|---|
-| `roundtrip.py` | one model at a time | **23.4 GB** |
-| `trust_report.py` | one model at a time | **23.7 GB** |
-| labelling / judging / describing / classifying | one base model | ~24 GB |
-
-Two things testing changed:
-
-- **the memory peak was batch, not weights.** Model weights are ~23 GB, but a
-  hardcoded scoring batch of 64 over ~2000-token prompts pushed peak to 98.7% of
-  a 46 GB card. Batches now auto-size to the device.
-- **no two 12B models are ever resident together.** Both `roundtrip.py` and
-  `trust_report.py` run in phases, releasing the AV before loading the AR. This
-  needed the FVE gate to go — see [METHODOLOGY.md](METHODOLOGY.md) — which was
-  worth doing on its own merits.
-
-`transformers` must be `<5`: 5.x tokenizes the CJK injection marker differently
-and the NLA config assertion fails at startup.
+Models: `google/gemma-3-12b-it` (gated), `kitft/nla-gemma3-12b-L32-{av,ar}`,
+`google/gemma-scope-2-12b-it`. **24 GB VRAM and 150 GB storage** — measured, not
+estimated ([TEST_LOG.md](TEST_LOG.md)). Three 12B models are involved but never
+more than one at a time; each script loads, uses and releases them in phases.
 
 ---
 
 ## Scope, honestly
 
-- **n = 50 activations**, one model, one layer. Every number here is from that.
-- **Gemma only.** The SAE was fine-tuned on Gemma-generated chat; on FineWeb the
-  same pipeline measured a 7-point effect where Gemma rollouts gave 25. The tool
-  refuses other corpora unless overridden.
+- **n = 50 activations**, one model, one layer, one corpus.
+- **These activations were selected on the outcome metric** — a gate chose ones
+  scoring FVE 0.73–0.77, so they are easier than average. Every seed is logged and
+  the gate has been removed from the code.
+- **Gemma only.** On FineWeb, out-of-distribution for the SAE, the same pipeline
+  measured a 7-point effect where these rollouts gave 25. The tool warns on other
+  corpora.
 - **~50% of latents have a validated label.** The rest are counted but unnamed.
-  That is the validation bar working, not a bug.
-- **The SAE is not complete.** A claim can be true and have no corresponding
-  feature. Absence of a latent is weak evidence.
-- **The confabulation finding is not new.** The NLA paper already documents
-  explanations with "verifiably false claims about the context" that are
-  "typically thematically faithful". What is new here is checking whether those
-  claims correspond to SAE latents, and how much of an explanation is evidenced.
+- **The SAE is incomplete** — a claim can be true with no latent to match it, so
+  absence is weak evidence.
+- **The confabulation finding is not new.** The NLA paper documents it. What is
+  new here is checking it against SAE latents.
 - The prior-art check was **not exhaustive**.
 
 ---
 
-## Credit — what is mine and what is not
+## Credit
 
-**The NLA itself is not mine.** The verbalizer, the reconstructor, the injection
-mechanism and the training code are
+**The NLA is not mine.** The verbalizer, reconstructor, injection mechanism and
+training code are
 [`kitft/natural_language_autoencoders`](https://github.com/kitft/natural_language_autoencoders)
-(Copyright 2026 Anthropic PBC, Apache-2.0), the code companion to
-[the NLA paper](https://transformer-circuits.pub/2026/nla/) by Fraser-Taliente,
-Kantamneni, Ong et al. The SAE is Google's Gemma Scope 2. I wrote none of that.
+(Copyright 2026 Anthropic PBC, Apache-2.0), the code companion to the NLA paper by
+Fraser-Taliente, Kantamneni, Ong et al. The SAE is Google's Gemma Scope 2.
 
 | | |
 |---|---|
-| **Not redistributed here** | `nla/` and `nla_inference.py` — required at runtime, but you clone them yourself and point `NLA_REPO` at them |
-| **Derived and modified** | `src/nla_av.py` — calls upstream's injection primitives and follows its recipe; adds the Gemma embed-scale fix. Change notice in its docstring, per Apache-2.0 §4(b) |
-| **Mine** | the other 11 files in `src/`, everything in `results/` and `scripts/`, and all the documentation |
+| **Not redistributed** | `nla/` and `nla_inference.py` — you clone them and point `NLA_REPO` at them |
+| **Derived and modified** | `src/nla_av.py` — calls upstream's injection primitives; adds the Gemma embed-scale fix. Change notice in its docstring, per Apache-2.0 §4(b) |
+| **Mine** | the rest of `src/`, `results/`, `scripts/`, and the documentation |
 
 **The finding that NLA explanations confabulate is also not mine** — the paper
-documents it. What is mine is the question of whether those claims correspond to
-active SAE latents, the pipeline that measures it, and the controls.
+documents it. Mine is the question of whether those claims correspond to active
+SAE latents, the pipeline that measures it, and the controls.
 
-This repo is Apache-2.0 to match upstream. Full breakdown in [NOTICE](NOTICE).
+Apache-2.0, to match upstream. Full breakdown in [NOTICE](NOTICE).
 
 ---
 
 ## Layout
 
 ```
-README.md          this file
-LICENSE            Apache-2.0
-NOTICE             attribution — what is upstream, what is derived, what is mine
-RESULTS.md         every number, with its control and its caveats
-INCONCLUSIVE.md    experiments that produced numbers and did not meet the bar
-FUTURE_WORK.md     what the saved vectors make answerable next
-METHODOLOGY.md     how each measurement works, and what broke on the way there
-TEST_LOG.md        what was actually run against real weights, and what broke
-src/               the pipeline, one file per stage (see src/README.md)
-scripts/           run_pipeline.sh — the documented order
-results/           every artefact the numbers come from (see results/README.md)
+RESULTS.md          every number, with its control and its caveats
+METHODOLOGY.md      how each measurement works, and what broke on the way there
+INCONCLUSIVE.md     experiments that produced numbers and failed their controls
+FUTURE_WORK.md      what the saved vectors make answerable next
+TEST_LOG.md         what was run against real weights, and what broke
+src/                one file per stage (see src/README.md)
+scripts/            run_experiment.sh — reproduce everything
+results/            every artefact the numbers come from (see results/README.md)
 ```
-
-Every script's docstring explains what it does, what went wrong in earlier
-versions, and why it is built the way it is.

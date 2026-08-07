@@ -110,8 +110,8 @@ counted in every total, just never named.
 | **made** | 562 | 35.1% |
 | **lost** | 630 | 31.4% |
 
-The judge itself makes mistakes 5.7% of the time (measured against latents that
-provably were *not* in the activation). `shared` at 45.9% is **8.1× that error
+The judge itself makes mistakes 5.75% of the time (measured against latents that
+provably were *not* in the activation). `shared` at 45.9% is **8.0× that error
 floor**, so it is not the judge's noise. The prompt this judge replaced scored
 78.3% — it said yes to almost anything.
 
