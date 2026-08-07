@@ -54,11 +54,13 @@ distribution text the same pipeline measured a 7-point effect where Gemma
 rollouts gave 25, so the tool refuses unfamiliar corpora unless overridden.
 
 Usage:
-    python src/trust_report.py \
-        --parquet acts_rollout50_L32.parquet \
-        --av <av_path> --ar <ar_path> \
-        --labels results/rollout50/feature_labels.json \
-        --n 10 --out reports/
+    # your own text -- the activation is taken at its LAST token
+    python src/trust_report.py --text "The Ryzen 7600 idles at 45C." \
+        --av <av_path> --ar <ar_path>
+
+    # or activations sampled from a corpus built by extract_activations.py
+    python src/trust_report.py --parquet acts_rollout50_L32.parquet \
+        --av <av_path> --ar <ar_path> --n 10 --out reports/
 """
 
 from __future__ import annotations
@@ -125,9 +127,11 @@ were NOT found in the activation at this position:
 Write one paragraph, 4-6 sentences, telling a reader what to rely on.
 
 Rules you must follow:
-- UNVERIFIED means NOT CHECKED, never false. Around two thirds of such features
-  are genuinely present in the wider document, just not at this position. Never
-  call an unverified claim wrong, invented, or a hallucination.
+- UNVERIFIED means NOT CHECKED, never false. It means the reconstructor produced
+  the feature and the sparse autoencoder did not find it in the activation --
+  which can happen because the feature is absent, OR because the autoencoder
+  cannot see it there. Never call an unverified claim wrong, invented, or a
+  hallucination.
 - Name concretely what is confirmed and what is not. Do not summarise the
   explanation back; assess it.
 - If a group is empty or rests on very few features, say the evidence is thin
@@ -285,6 +289,48 @@ def label_missing(need, cache, model, tok, sae_variant, seed=0, batch=None):
     return cache, len(todo)
 
 
+def activation_from_text(text: str, layer: int, device: str,
+                         base: str = "google/gemma-3-12b-it"):
+    """Extract one activation from the user's own text, at the LAST token.
+
+    The whole-corpus path samples random positions inside a generated assistant
+    response. Here the user supplies the text, so the position is fixed at the
+    final token -- that is the one they can actually reason about ("what was the
+    model representing when it had just read this?"), and it needs no sampling
+    rule to explain.
+
+    Loaded and released inside this function: the base model is a third 12B model
+    and must not be resident while the AV or AR is.
+
+    NOTE ON DISTRIBUTION: the SAE was fine-tuned on Gemma-generated chat. Text
+    from anywhere else is out-of-distribution for it, and the same pipeline
+    measured a 7-point effect on FineWeb where Gemma rollouts gave 25. The report
+    says so in its header when this path is used.
+    """
+    import gc
+    from transformers import AutoTokenizer
+    from nla.arch_adapters import resolve_text_model
+
+    tok = AutoTokenizer.from_pretrained(base)
+    model, _ = resolve_text_model(base, dtype=torch.bfloat16)
+    model = model.to(device).eval()
+    try:
+        # Chat-templated, because that is the shape the SAE and the NLA both saw.
+        conv = [{"role": "user", "content": text}]
+        ids = tok(tok.apply_chat_template(conv, tokenize=False),
+                  return_tensors="pt", add_special_tokens=False).input_ids.to(device)
+        with torch.no_grad():
+            hs = model(ids, output_hidden_states=True).hidden_states
+        # --layer-index L == hidden_states[L+1]; index 0 is the embedding output.
+        v = hs[layer + 1][0, -1].float().cpu()
+    finally:
+        del model
+        gc.collect()
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+    return v.unsqueeze(0), [0], [text]
+
+
 def check_corpus(parquet: str, force: bool) -> str | None:
     """The SAE was fine-tuned on Gemma-generated chat; other corpora degrade it."""
     side = Path(parquet + ".nla_meta.yaml")
@@ -308,10 +354,18 @@ def check_corpus(parquet: str, force: bool) -> str | None:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--parquet", required=True)
+    src = ap.add_mutually_exclusive_group(required=True)
+    src.add_argument("--parquet", help="a corpus built by extract_activations.py")
+    src.add_argument("--text", help="your own text; the activation is taken at its "
+                                    "LAST token. Out-of-distribution for the SAE "
+                                    "unless it reads like Gemma chat output")
     ap.add_argument("--av", required=True)
     ap.add_argument("--ar", required=True)
-    ap.add_argument("--labels", required=True, help="validated feature_labels.json")
+    ap.add_argument("--labels", default="results/feature_labels.json",
+                    help="validated labels; the shipped cache is the default")
+    ap.add_argument("--layer", type=int, default=32,
+                    help="--layer L == hidden_states[L+1]; 32 is what the NLA "
+                         "checkpoints and the SAE were both built for")
     ap.add_argument("--n", type=int, default=10, help="activations to report on")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--max-list", type=int, default=12, help="features shown per section")
@@ -330,12 +384,17 @@ def main() -> None:
                     help="skip the generated paragraph; the computed tables stand alone")
     ap.add_argument("--device", default="cuda")
     ap.add_argument("--i-know-what-im-doing", action="store_true")
-    ap.add_argument("--out", required=True)
+    ap.add_argument("--out", default="trust_reports",
+                    help="directory for the generated reports")
     a = ap.parse_args()
     sys.stdout.reconfigure(line_buffering=True)
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
 
-    warn = check_corpus(a.parquet, a.i_know_what_im_doing)
+    warn = (check_corpus(a.parquet, a.i_know_what_im_doing) if a.parquet else
+            "activation taken from user-supplied text at its last token. The SAE "
+            "was fine-tuned on Gemma-generated chat, so unless this text reads "
+            "like that, it is out-of-distribution and the latent sets are less "
+            "reliable than the numbers in RESULTS.md.")
 
     CACHE = json.loads(Path(a.labels).read_text())
     print(f"[labels] cache has {len(CACHE)} features, "
@@ -344,11 +403,17 @@ def main() -> None:
     P = load_file(str(sae_variant_dir(SAE_VARIANT)
                        / "params.safetensors"))
 
-    V, row_idx, _ = load_vectors(a.parquet, a.n, a.seed)
-    import pyarrow.parquet as pq
-    txt = pq.ParquetFile(a.parquet).read(
-        columns=["detokenized_text_truncated"]).column(0).to_pylist()
-    print(f"[data] {len(V)} activations from {a.parquet}")
+    if a.text:
+        # Phase 0: the base model, loaded and released before the AV appears.
+        print("\n[phase 0] extracting an activation from your text")
+        V, row_idx, txt = activation_from_text(a.text, a.layer, a.device)
+        print(f"[data] 1 activation at the last token of {len(a.text)} chars")
+    else:
+        V, row_idx, _ = load_vectors(a.parquet, a.n, a.seed)
+        import pyarrow.parquet as pq
+        txt = pq.ParquetFile(a.parquet).read(
+            columns=["detokenized_text_truncated"]).column(0).to_pylist()
+        print(f"[data] {len(V)} activations from {a.parquet}")
 
     A_orig = sae_encode(V, P)
 
