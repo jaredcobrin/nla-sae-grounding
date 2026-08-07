@@ -1,167 +1,109 @@
 # Results
 
-**50 Gemma-3-12B-IT layer-32 activations, 5 sampled explanations each** — 250
-(activation, explanation) pairs — on Gemma-generated rollouts (oasst1 + LMSYS
-prompts, responses from Gemma itself).
+**50 Gemma-3-12B-IT layer-32 activations × 5 sampled explanations = 250 pairs**,
+on Gemma-generated rollouts (oasst1 + LMSYS prompts, responses from Gemma itself
+— the distribution Gemma Scope 2's SAEs were fine-tuned on).
 
-How any of this was measured, and why: **[METHODOLOGY.md](METHODOLOGY.md)**.
-Raw artefacts: [`results/`](.). Experiments that did not meet the bar:
-[INCONCLUSIVE.md](INCONCLUSIVE.md).
+Method: **[METHODOLOGY.md](METHODOLOGY.md)** · Raw artefacts: [`results/`](.) ·
+Experiments that failed their own controls: **[INCONCLUSIVE.md](INCONCLUSIVE.md)**
 
-**Two SAEs are used.** `l0_big` (~120 active latents) for §1; `l0_small` (~21)
-for §3, §4, §5 and the tool; both in §2. They are separately trained
-dictionaries, and results do not automatically transfer between them.
-
----
-
-## 1. Four reconstruction scores
-
-**B is the NLA's own round-trip score** — activation → AV writes an explanation →
-AR rebuilds an activation from that text.
-
-| | what is reconstructed, from what | SAE | FVE |
-|---|---|---|---|
-| **A** | the activation, from **the SAE's latents** | `l0_big` | 0.587 |
-| **B** | the activation, from **two sentences of English** | none | **0.739** |
-| **C** | the AR's output, from **the SAE's latents** | `l0_big` | 0.700 |
-| **D** | the activation, from the SAE's reading of the AR's output | `l0_big` | 0.494 |
-
-**B > A by 0.152.** The NLA round trip reconstructs an activation better than
-this SAE does, on the corpus the SAE was fine-tuned on. B uses no SAE, so it is
-unchanged by the choice of variant.
-
-**C > A by 0.113.** The same SAE reconstructs the AR's output better than a real
-activation. Latent counts go the same way:
-
-| | latents on (L0) | reconstruction (cosine) |
-|---|---|---|
-| real activation | 119.9 | 0.99424 |
-| AR output | **101.3** | **0.99581** |
-
-Fewer latents and a closer fit, where the two normally trade off.
-
-Three things to note when reading the above:
-
-- Cosine is not separate evidence — `FVE = 1 − 2(1−cos)/rawvar`, so it is fixed
-  once FVE is known. Only **L0** is independent.
-- `rawvar` is 0.0279 here, so FVE magnifies cosine by **71.7×**: the C > A gap is
-  0.0016 in cosine.
-- C > A is measured on `l0_big` only. §4 and the tool use `l0_small`, where it has
-  not been measured ([FUTURE_WORK.md](FUTURE_WORK.md) item 0).
-
-### The same comparison on three corpora (n=10, earlier pass)
-
-| | FineWeb | **Rollouts** | WildChat |
-|---|---|---|---|
-| A · SAE | 0.4575 | **0.5652** | 0.4702 |
-| B · NLA | 0.7355 | **0.7493** | 0.7251 |
-| gap B−A | +0.278 | **+0.184** | +0.255 |
-| gap C−A | +0.157 | **+0.105** | +0.172 |
-
-Both gaps keep their sign on every corpus. The SAE scores highest on rollouts,
-the distribution it was fine-tuned on. (`rawvar` for this run is 0.0308, a 65.0×
-multiplier — different sample, different constant.)
+Two SAEs are used. `l0_big` (~120 active latents) for the reconstruction scores
+in §1; `l0_small` (~21) everywhere a latent has to be *named*, because labels
+generated at `l0_big` do not pass validation. They are separately trained
+dictionaries, so results do not automatically transfer between them.
 
 ---
 
-## 2. Latent overlap under both SAEs
+## 1. The NLA round trip reconstructs an activation better than the SAE does
 
-The same 250 pairs, re-encoded under each SAE. Identical vectors — only the
-dictionary changes.
+| | reconstructed from | SAE | FVE |
+|---|---|---|---|
+| **A** | the SAE's latents | `l0_big` | 0.587 |
+| **B** | **two sentences of English** (the NLA round trip) | none | **0.739** |
+| **C** | the SAE's latents, applied to the AR's output | `l0_big` | 0.700 |
+| **D** | the SAE's reading of the AR's output | `l0_big` | 0.494 |
 
-**`l0_small`** — ~21 active latents per activation
+**B > A by 0.152**, measured on the corpus the SAE was fine-tuned on. B involves
+no SAE, so it is unchanged by that choice; `l0_big` is the stronger variant, so
+this is the conservative form of the comparison. An earlier n=10 pass held the
+same ordering on FineWeb and WildChat as well.
 
-| | total | mean/pair | share |
-|---|---:|---:|---:|
-| **shared** | 3,529 | 14.1 | **56.5%** |
-| **lost** | 1,441 | 5.8 | 23.1% |
-| **made** | 1,280 | 5.1 | 20.5% |
-| *total* | *6,250* | *25.0* | |
+**C > A by 0.113** — the SAE reconstructs the AR's *output* better than a real
+activation, and needs fewer latents to do it (101.3 vs 119.9). **The two sides of
+every overlap count below are therefore not read with equal fidelity.**
 
-**`l0_big`** — ~120 active latents per activation
+> Gemma's `rawvar` is 0.0279, so `FVE = 1 − 71.7×(1−cos)` and FVE exaggerates
+> small differences: the C > A gap is 0.0016 in cosine. C > A is also measured at
+> `l0_big` only, not at the `l0_small` used from §3 onward.
 
-| | total | mean/pair | share |
-|---|---:|---:|---:|
-| **shared** | 17,125 | 68.5 | **44.9%** |
-| **lost** | 12,850 | 51.4 | 33.7% |
-| **made** | 8,202 | 32.8 | 21.5% |
-| *total* | *38,177* | *152.7* | |
+---
 
-**Against the control.** Many latents fire on almost any text, so the counts
-above mean nothing until you know what two *unrelated* vectors would share. Same
-measurement, scoring each reconstruction against a **different** activation:
+## 2. Latent overlap survives the round trip, far above its control
+
+The 250 pairs re-encoded under each SAE — identical vectors, only the dictionary
+changes.
+
+| | `l0_small` (~21/activation) | | `l0_big` (~120/activation) | |
+|---|---:|---:|---:|---:|
+| | **total** | **share** | **total** | **share** |
+| **shared** — in the activation *and* the reconstruction | 3,529 | 56.5% | 17,125 | 44.9% |
+| **lost** — in the activation, not the reconstruction | 1,441 | 23.1% | 12,850 | 33.7% |
+| **made** — in the reconstruction only | 1,280 | 20.5% | 8,202 | 21.5% |
+
+Many latents fire on almost any text, so those counts mean nothing until you know
+what two *unrelated* vectors share. Scoring each reconstruction against a
+**different** activation:
 
 | Jaccard | `l0_small` | `l0_big` |
 |---|---:|---:|
-| matched — reconstruction vs its own activation | **0.576** | **0.450** |
-| mismatched control — vs a different activation | 0.009 | 0.026 |
+| matched — against its own activation | **0.576** | **0.450** |
+| **mismatched control** | 0.009 | 0.026 |
 | ratio | **65×** | **17×** |
 
-Unrelated pairs share essentially nothing. Integer set arithmetic on latent IDs —
-no judge, no labels, nothing to calibrate.
-
-`l0_big` is used for the reconstruction scores in §1; `l0_small` for labelling
-and everything downstream of it, because labels generated at `l0_big` fail
-validation.
+**This is the most robust number here** — integer set arithmetic on latent IDs,
+with no language model anywhere in the measurement.
 
 ---
 
-## 3. Label coverage
+## 3. Latents the round trip keeps are the ones the explanation talks about
 
-```
-labels attempted    1,624
-  mean AUC            0.742     over all attempts, including rejects
-  wrong-label null    0.499     chance
-  threshold           0.756     95th percentile of the null
+3,032 (latent, explanation) pairs — the 250 pairs restricted to latents with a
+validated label, since a text cannot be checked against a latent nobody can
+describe. Half of all labels fail validation and are discarded; the unnamed half
+is **counted in every total but never named**.
 
-validated (kept)      816 / 1,624   (50%)
-  mean AUC            0.873
-  median              0.875
-```
+| bucket | n | **conveyed by the explanation** |
+|---|---:|---:|
+| **shared** | 1,840 | **45.9%** |
+| **made** | 562 | 35.1% |
+| **lost** | 630 | 31.4% |
 
-**0.742 is not the quality of the labels in use** — it averages over every
-attempt, half of which fail validation and are discarded. Those actually used
-average **0.873**.
+`shared` at 45.9% is **8.1×** the judge's measured 5.7% false-positive rate. That
+judge was selected by a bake-off; the prompt it replaced scored 78.3%.
 
-The unvalidated 50% are **counted in every total but never named**. A report
-resting on 4 of 15 latents says so.
+Compared **per activation and then across the 50 activations** — pooling the
+3,032 pairs would count one activation's latents as dozens of independent
+observations and overstate confidence by ~2.5× —
+
+| | difference | 95% CI | |
+|---|---:|---|---|
+| shared vs lost | +11.2 pts | [+2.6, +19.7] | t = 2.56 |
+| shared vs made | +12.6 pts | [+2.4, +22.9] | t = 2.42 |
+| made vs lost | +1.1 pts | [−11.1, +13.3] | not distinguishable |
+
+`shared` beats both other buckets. `made` and `lost` cannot be told apart.
+
+**This is the main result**, and it is a correlation between an SAE's reading of
+an activation and text an independent model wrote about it. It is not explained
+here.
+
+*(`shared` labels do score slightly higher than `lost` labels — 0.872 vs 0.856 —
+but the gap holds inside every matched label-quality band, +14.0 points weighted,
+so label quality is not what produces it.)*
 
 ---
 
-## 4. Conveyance: does the explanation cover each latent?
-
-**3,032 (latent, explanation) pairs** — the 250 pairs restricted to latents
-with a validated label. `CLEARLY` + `PROBABLY` are collapsed to "conveyed".
-
-| bucket | n | **conveyed** | not conveyed | unknown | mean label AUC |
-|---|---:|---:|---:|---:|---:|
-| **shared** | 1840 | **45.9%** | 50% | 4% | 0.872 |
-| **lost** | 630 | **31.4%** | 66% | 3% | 0.856 |
-| **made** | 562 | **35.1%** | 60% | 5% | 0.858 |
-| **REAL** = shared+lost | 2470 | 42.2% | 54% | 4% | — |
-
-`REAL` is the latents genuinely in the original activation; `made` is excluded
-because those appear only in the AR's output.
-
-**Corrected for the judge's 5.7% false-positive rate**, `(0.422 − 0.057)/0.943` =
-**38.7%** of what is in the activation reaches the explanation.
-
-### Separations
-
-Computed **per activation, then compared across activations** — the 3,032 pairs
-come from only 50 activations, so they are not independent draws
-([METHODOLOGY.md](METHODOLOGY.md) §9).
-
-| comparison | difference | 95% CI | | |
-|---|---:|---|---|---|
-| shared vs lost | +11.2 pts | [+2.6, +19.7] | t = 2.56 | 43 activations |
-| shared vs made | +12.6 pts | [+2.4, +22.9] | t = 2.42 | 48 activations |
-| made vs lost | +1.1 pts | [−11.1, +13.3] | t = 0.17 | 43 activations |
-
-`shared` beats both other buckets; `made` and `lost` cannot be separated.
-`shared` at 45.9% is **8.1×** the judge's 5.7% false-positive floor.
-
-### Mention against outcome
+## 4. But being mentioned is not what makes a latent survive
 
 The same latents, split both ways:
 
@@ -171,114 +113,41 @@ The same latents, split both ways:
 | **not mentioned** | 995 | 432 | **1,427** |
 | **total** | **1,840** | **630** | 2,470 |
 
-Read down a column, 845/1840 = **46%** of `shared` latents were mentioned — the
-figure in the table above. Read across a row, 845/1043 = **81%** of mentioned
-latents are `shared`, against **70%** of unmentioned ones. Both are correct; only
-the row reading bears on whether mentioning helps.
+Down a column, 46% of `shared` latents were mentioned — the figure above. Across a
+row, **81%** of mentioned latents are `shared`, against **70%** of unmentioned
+ones. Both are correct; only the row reading bears on whether mentioning helps.
+Per activation that gap is **+7.5 points, 95% CI [+0.7, +14.2]** — the weakest
+result in this file.
 
-Per activation: **+7.5 points, t = 2.18, 95% CI [+0.7, +14.2]** over 48
-activations — the weakest result in this file.
+**The largest cell is "not mentioned, yet `shared`": 995 latents — 54% of all
+`shared` latents.** The AR reconstructed them without the explanation visibly
+saying so. In the opposite corner, 198 were mentioned and lost anyway. **No
+mechanism for either is established here.**
 
-**The largest box is "not mentioned, `shared`": 995 latents** — 40% of the total,
-and **54% of all `shared` latents**. The AR reconstructed them without the
-explanation visibly saying so. In the other corner, 198 (8%) were mentioned and
-`lost` anyway. No mechanism for either is established here.
-
-> For the tool: `trust_report.py` marks a latent CONFIRMED when it is in the
-> activation and in the AR's reconstruction. For **54%** of those, the explanation
-> did not visibly convey it. CONFIRMED means the round trip preserved it, not that
-> the explanation said it.
-
-### Label quality is not the explanation for the gap
-
-`shared` labels score higher than `lost` labels — 0.872 vs 0.856, +5.0σ. Within
-matched AUC bands:
-
-| label AUC band | shared conveyed | lost conveyed | gap |
-|---|---:|---:|---:|
-| 0.756–0.82 | 38% (n=507) | 23% (n=213) | +15 |
-| 0.82–0.86 | 44% (n=300) | 32% (n=105) | +12 |
-| 0.86–0.90 | 43% (n=334) | 35% (n=116) | +8 |
-| 0.90–1.00 | 54% (n=683) | 36% (n=187) | +18 |
-
-Weighted within-band gap **+14.0 points** against a raw +14.5.
-
-### By category
-
-| category | n | conveyed |
-|---|---|---|
-| code_technical | 360 | **66%** |
-| other | 40 | 52% |
-| named_entity | 520 | 50% |
-| topic_domain | 1475 | 43% |
-| numeric | 120 | 42% |
-| language | 90 | 37% |
-| formatting | 95 | 37% |
-| syntax | 1110 | 36% |
-| sentiment_tone | 440 | 36% |
-| genre_register | 320 | 34% |
-
-### Judge validation
-
-| grade | on real latents | on latents that never fired | % real |
-|---|---:|---:|---:|
-| CLEARLY | 1043 | 376 | 74% |
-| PROBABLY | 324 | 147 | 69% |
-| UNCLEAR | 36 | 34 | 51% |
-| NO | 1629 | 8539 | 16% |
-
-Base rate 25%. `NO` falls below it.
-
-```
-false-positive rate    5.7%      the prompt this replaced scored 78.3%
-matcher AUC            0.807     vs unrelated explanations
-                       0.836     vs features that never fired
-self-consistency       89.2%     across 5 explanations of one activation
-```
-
----
-
-## 5. Blind descriptions (qualitative)
-
-A model given **only the latent labels** for a bucket, never the explanation.
-
-**Activation 0** — AV said *"PC build review… Intel Core i7-14700"*
-
-| | |
-|---|---|
-| shared, blind | "computer hardware, specifically models and specifications… CPU/GPU components" |
-| **control** | "technical document describing inventions or patents… manufacturing and lighting" |
-
-**Activation 1** — AV said *"PC hardware checklist… AMD Ryzen 5 7600"*
-
-| | |
-|---|---|
-| shared, blind | "computer hardware and technical specifications… model names, version numbers, motherboards" |
-| **control** | "programming, specifically Python… errors and debugging" |
-
-Read by eye, not scored. The buckets are thin — `shared` averages 7.3 labelled
-latents, `lost` 2.6, `made` 2.3 — and on 2–3 labels the describer over-reaches
-about 10% of the time.
+> **What this means for the tool.** `trust_report.py` marks a latent CONFIRMED
+> when it is in the activation *and* in the AR's reconstruction. For 54% of those,
+> the explanation did not visibly convey it. **CONFIRMED means the round trip
+> preserved it, not that the explanation said it.**
 
 ---
 
 ## Limitations
 
 - **n = 50 activations**, one model, one layer, one corpus. The 250 pairs are
-  50 × 5 sampled explanations, so effective n is nearer 50 than 250.
-- **The FVE gate selected on the outcome metric.** These activations were chosen
-  to score 0.73–0.77, so they are easier than average by construction. Every seed
-  tried is logged. The gate has since been removed from the code.
+  50 × 5 sampled explanations, so the effective n is 50.
+- **These activations were selected on the outcome metric.** An FVE gate chose
+  ones scoring 0.73–0.77, so they are easier than average by construction. Every
+  seed tried is logged; the gate has since been removed from the code.
 - **~50% label coverage.** The unnamed half may behave differently.
-- **SAE incompleteness.** A claim can be true with no corresponding latent;
-  absence of a latent is weak evidence.
-- **Surviving the round trip is not evidence the explanation carried it** — 54%
-  of survivors were not conveyed (§4). Every "kept" and "confirmed" number
-  measures the AR's prior plus the explanation, not the explanation alone.
-  Separating them needs an AR trained independently of the AV.
-- **The two sides of the latent comparison are read with unequal fidelity**
-  (§1, C > A), so "made" counts are not like-for-like.
-- **Nothing here checks whether a latent is true of the source text.** Both
-  attempts are in [INCONCLUSIVE.md](INCONCLUSIVE.md).
-- **The confabulation phenomenon is not a new finding** — the NLA paper documents
-  it. What is new here is checking it against SAE features.
+- **An SAE is incomplete.** A claim can be true with no corresponding latent, so
+  absence of a latent is weak evidence — a limitation the NLA paper names of its
+  own method.
+- **Every "kept" and "confirmed" number measures the AR's prior plus the
+  explanation, not the explanation alone** (§4). Separating them needs an AR
+  trained independently of the AV, which the released checkpoints do not provide.
+- **The two sides of the overlap counts are read with unequal fidelity** (§1,
+  C > A), so `made` counts are not like-for-like.
+- **Nothing here checks whether a latent is *true* of the source text.** Both
+  attempts failed their controls — [INCONCLUSIVE.md](INCONCLUSIVE.md).
+- **The confabulation phenomenon is not a new finding.** The NLA paper documents
+  it. What is new here is checking it against SAE latents.

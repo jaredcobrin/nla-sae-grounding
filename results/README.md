@@ -10,9 +10,9 @@ explanations each, Gemma-generated rollouts.
 | `feature_overlap_l0_small.json` | feature sets re-encoded at L0≈21 — used for anything about feature *meaning* |
 | `feature_overlap_l0_big.json` | feature sets re-encoded at L0≈120 — used for the reconstruction claim |
 | `feature_labels.json` | 1,624 labels, each with its **AUC** and the **wrong-label null scores** it was validated against. `reliable: true` means it beat the 95th percentile of that null |
-| `grounding.json` | per (feature, explanation): the grade (`CLEARLY`/`PROBABLY`/`UNCLEAR`/`NO`), the verdict, **both null rates**, and the label's AUC |
-| `feature_classification.json` | per feature: grammar-vs-content, generic-vs-specific, and whether it is actually present in the source text, **with a control on a different document** |
-| `bucket_descriptions.json` | blind English summaries of shared/lost/made, plus a control summary from a different activation |
+| `grounding.json` | per (latent, explanation): the grade (`CLEARLY`/`PROBABLY`/`UNCLEAR`/`NO`), the verdict, **both null rates**, the label's AUC, and the latent's `categories`. Conveyance by category (`code_technical` 66%, `syntax` 36%, …) is one `groupby` away and is deliberately not repeated in `RESULTS.md` |
+| `feature_classification.json` | per latent: grammar-vs-content, generic-vs-specific, and whether it is actually present in the source text, with a control on a different document. **This experiment failed its own control — see [INCONCLUSIVE.md](../INCONCLUSIVE.md). Nothing in `RESULTS.md` uses it** |
+| `bucket_descriptions.json` | blind English summaries of shared/lost/made, plus a control summary from a different activation. Qualitative; not reported in `RESULTS.md` |
 | `FEATURES_BY_BUCKET.md` | readable: every validated label grouped by bucket, per activation, with the AV explanation and source text. No model inference anywhere |
 | `example_reports/` | six worked trust reports from `src/trust_report.py` |
 
