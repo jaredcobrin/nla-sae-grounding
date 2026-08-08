@@ -85,7 +85,21 @@ PAGE = """<!doctype html>
   button[disabled] { opacity:.5; cursor:default }
   .note { max-width:1180px; margin:0 auto; padding:0 24px 20px;
           color:var(--mut); font-size:12.5px }
-  .warn { color:var(--un); font-weight:600 }
+  .warn { color:var(--un); font-weight:600; margin-bottom:10px }
+  .bucket h3 .n { float:right; font-weight:700; color:var(--mut) }
+  .bucket h4 { font-size:12px; margin:10px 0 2px; color:var(--mut);
+               text-transform:uppercase; letter-spacing:.05em }
+  .why { color:var(--mut); font-size:12.5px; margin:2px 0 6px }
+  table { border-collapse:collapse; width:100%; font-size:13px; margin-top:6px }
+  th { text-align:left; font-weight:600; color:var(--mut); font-size:11.5px;
+       text-transform:uppercase; letter-spacing:.05em; padding:2px 6px 4px 0 }
+  td { padding:3px 6px 3px 0; border-top:1px solid var(--line) }
+  td.num { text-align:right; font:12px ui-monospace,Menlo,monospace }
+  .grade { font-size:10.5px; font-weight:700; letter-spacing:.04em;
+           padding:1px 5px; border-radius:4px; margin-left:4px }
+  .gCLEARLY  { background:var(--ok); color:#fff }
+  .gPROBABLY { background:var(--un); color:#fff }
+  .gUNCLEAR, .gNO { background:var(--line); color:var(--mut) }
 </style>
 <header>
   <h1>NLA trust report</h1>
@@ -94,7 +108,7 @@ PAGE = """<!doctype html>
 </header>
 <main>
   <div class="col"><h2>Conversation</h2><div id="chat"></div></div>
-  <div class="col"><h2>What the activation supports</h2><div id="rep"></div></div>
+  <div class="col"><h2>Trust report</h2><div id="rep"></div></div>
 </main>
 <form id="f">
   <textarea id="q" placeholder="Ask Gemma something…" autofocus></textarea>
@@ -112,14 +126,55 @@ const f = document.getElementById('f'), q = document.getElementById('q'),
       b = document.getElementById('b');
 const esc = s => s.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 
-function bucket(cls, title, n, items) {
+function bucket(cls, title, why, n, items) {
   const named = items.length, unnamed = n - named;
-  let h = `<div class="bucket ${cls}"><h3>${title} — ${n}</h3>`;
+  let h = `<section class="bucket ${cls}">
+    <h3>${title} <span class="n">${n}</span></h3>
+    <p class="why">${why}</p>`;
   if (named) h += '<ul>' + items.map(i =>
       `<li><code>f${i.id}</code> ${esc(i.label)}</li>`).join('') + '</ul>';
-  if (unnamed) h += `<div class="meta">${named} named, ${unnamed} counted but
-      unlabelled</div>`;
-  return h + '</div>';
+  else h += '<p class="why">none with a validated label</p>';
+  if (unnamed) h += `<p class="why">${named} named · ${unnamed} counted but
+      unlabelled (about half of all latents have no validated label)</p>`;
+  return h + '</section>';
+}
+
+const FVE_ROWS = [
+  ['A_sae_orig_vs_orig', 'A', 'the SAE rebuilding the original activation'],
+  ['B_ar_vs_orig',       'B', 'the NLA round trip — activation → text → activation'],
+  ['C_sae_ar_vs_ar',     'C', "the SAE rebuilding the AR's output"],
+  ['D_sae_ar_vs_orig',   'D', 'both lossy steps chained'],
+];
+
+function fveTable(f) {
+  if (!f || !Object.keys(f).length) return '';
+  return `<section class="bucket">
+    <h3>Reconstruction</h3>
+    <p class="why">How close each rebuild is to its target. FVE uses the corpus
+       <code>rawvar</code> (0.0279) — a property of the activation distribution,
+       which one turn cannot produce, so it is borrowed.</p>
+    <table><tr><th></th><th>what is rebuilt</th><th>FVE</th><th>cos</th></tr>
+    ${FVE_ROWS.map(([k, lab, why]) => f[k] ? `<tr>
+      <td><b>${lab}</b></td><td>${why}</td>
+      <td class="num">${f[k].fve.toFixed(3)}</td>
+      <td class="num">${f[k].cos.toFixed(5)}</td></tr>` : '').join('')}
+    </table></section>`;
+}
+
+function matchTable(cov, unc) {
+  const n = cov.length + unc.length;
+  if (!n) return '';
+  const row = i => `<li><code>f${i.id}</code> ${esc(i.label)}
+      <span class="grade g${i.grade}">${i.grade}</span></li>`;
+  return `<section class="bucket">
+    <h3>Does the explanation actually say it? <span class="n">${cov.length}/${n}</span></h3>
+    <p class="why">The only model judgement on this page — everything above is set
+       arithmetic. Asked of every latent really in the activation (shared + lost).
+       This judge was picked by a measured bake-off; its false-positive rate is
+       5.75%, against 78.3% for the plain yes/no wording it replaced.</p>
+    ${cov.length ? '<h4>Stated in the explanation</h4><ul>' + cov.map(row).join('') + '</ul>' : ''}
+    ${unc.length ? '<h4>Not stated</h4><ul>' + unc.map(row).join('') + '</ul>' : ''}
+  </section>`;
 }
 
 function render(t) {
@@ -130,12 +185,16 @@ function render(t) {
     `<div class="turn">
        ${t.failed ? `<div class="warn">${esc(t.failed)}</div>` : ''}
        ${t.cjk ? '<div class="warn">CJK in the explanation — the injection may have failed. Do not trust this turn.</div>' : ''}
-       <p class="expl">${esc(t.explanation)}</p>
-       ${bucket('ok','CONFIRMED',t.n_confirmed,t.confirmed)}
-       ${bucket('un','UNVERIFIED',t.n_unverified,t.unverified)}
-       ${bucket('om','OMITTED',t.n_omitted,t.omitted)}
-       <div class="meta">cos ${t.cos==null?'—':t.cos.toFixed(4)} ·
-         token ${t.position} of ${t.n_context} · turn ${t.turn}</div>
+       <section class="bucket">
+         <h3>What the NLA says the activation contained</h3>
+         <p class="expl">${esc(t.explanation)}</p>
+       </section>
+       ${bucket('ok','SHARED', 'in the original activation <b>and</b> in the AR&rsquo;s reconstruction — the round trip kept these', t.n_confirmed, t.confirmed)}
+       ${bucket('om','LOST', 'in the original activation, <b>not</b> in the AR&rsquo;s reconstruction — the round trip destroyed these', t.n_omitted, t.omitted)}
+       ${bucket('un','MADE', 'in the AR&rsquo;s reconstruction only, <b>not</b> found in the original — unverified, which is not the same as false', t.n_unverified, t.unverified)}
+       ${fveTable(t.fve)}
+       ${matchTable(t.covered, t.uncovered)}
+       <div class="meta">token ${t.position} of ${t.n_context} · turn ${t.turn}</div>
      </div>`);
   window.scrollTo(0, document.body.scrollHeight);
 }
@@ -187,7 +246,8 @@ class Handler(BaseHTTPRequestHandler):
                     "n_unverified": t.n_unverified, "n_omitted": t.n_omitted,
                     "cos": t.cos, "position": t.position,
                     "n_context": t.n_context, "cjk": t.cjk,
-                    "failed": t.failed,
+                    "failed": t.failed, "fve": t.fve,
+                    "covered": t.covered, "uncovered": t.uncovered,
                     "turn": len(SESSION.turns),
                 }
             except Exception as e:                       # surfaced in the page

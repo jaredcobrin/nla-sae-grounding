@@ -59,7 +59,14 @@ sys.path.insert(0, str(_HERE))
 sys.path.insert(0, str(_HERE.parent / "src"))
 
 import trust_report as TR                                          # noqa: E402
+import judge_explanations as JE                                    # noqa: E402
 from hf_paths import sae_variant_dir, L0_SMALL                     # noqa: E402
+
+# FVE = 1 - mean(MSE)/rawvar, and `rawvar` is a property of the ACTIVATION
+# DISTRIBUTION, not of any one example -- a single conversation turn cannot
+# produce it. This is the value measured over the 50-activation corpus, borrowed
+# so all four comparisons can be shown. The page says it is borrowed.
+CORPUS_RAWVAR = 0.02790951170027256
 
 
 @dataclass
@@ -74,15 +81,17 @@ class Turn:
     n_confirmed: int = 0           # totals INCLUDE latents with no validated
     n_unverified: int = 0          # label; the lists above name only the ones
     n_omitted: int = 0             # that have one. ~half do.
-    # cos only, no FVE: FVE needs `rawvar` over a corpus of activations, and a
-    # single conversation turn has no corpus to compute it against. Cosine is
-    # also the stable quantity here -- Gemma's tiny rawvar makes FVE magnify it
-    # ~72x, so a per-turn FVE would swing wildly for no added information.
+    # The AR's own cosine for comparison B. Read cosine over FVE when comparing
+    # turns: Gemma's tiny rawvar makes FVE magnify a cosine difference ~72x, so
+    # FVE swings hard on differences that are barely there.
     cos: float | None = None
     position: int | None = None    # token index the activation came from
     n_context: int | None = None   # conversation length in tokens at that point
     cjk: bool = False              # injection-failure smell
     failed: str = ""               # set when the AV emitted no usable explanation
+    fve: dict = field(default_factory=dict)      # all four comparisons, A-D
+    covered: list = field(default_factory=list)  # latents the explanation states
+    uncovered: list = field(default_factory=list)
 
 
 class Session:
@@ -131,6 +140,44 @@ class Session:
         if self._ar is None:
             self._ar = TR.NLACritic(self.ar_path, device=self.device)
         return self._ar
+
+    def _sae_decode(self, acts):
+        """b_dec is added on DECODE only -- subtracting it from the input before
+        encoding was measured at cos 0.31 against the correct 0.99."""
+        return acts @ self.sae["w_dec"] + self.sae["b_dec"]
+
+    def _judge_covered(self, expl: str, latents: list[dict]) -> tuple[list, list]:
+        """For each named latent, does the explanation actually state it?
+
+        This is the ONLY part of a turn that involves a model judging anything --
+        the buckets above are set arithmetic. It reuses the graded prompt from
+        judge_explanations.py, which was chosen by a measured bake-off: the plain
+        Yes/No wording it replaced scored a 78.3% false-positive rate, this one
+        5.75%.
+
+        The experiment runs seven judgements per latent (1 matched + 3 unrelated
+        explanations + 3 non-firing latents) to MEASURE that false-positive rate.
+        Here only the matched judgement is run -- the rate is already known, and
+        re-establishing it per turn would cost 7x for nothing.
+
+        The judge is `gemma-3-12b-it`, the same model as the base, so no
+        additional weights are loaded.
+        """
+        if not latents:
+            return [], []
+        model, tok = self._load_base()
+        opt_ids = [tok.encode(o, add_special_tokens=False)[0] for o in JE.OPTS]
+        prompts = [JE._PROMPT.format(expl=expl, content=l["label"]) for l in latents]
+        scores = JE.judge(model, tok, prompts, opt_ids, bs=12, log_every=10**9)
+        covered, uncovered = [], []
+        for l, s in zip(latents, scores):
+            grade = JE.OPTS[int(max(range(len(s)), key=lambda i: s[i]))]
+            row = dict(l, grade=grade)
+            # CLEARLY and PROBABLY are "covered"; the experiment collapses them
+            # the same way. NO sits BELOW the 25% base rate on known-absent
+            # latents, so a "no" here is real evidence, not a shrug.
+            (covered if grade in ("CLEARLY", "PROBABLY") else uncovered).append(row)
+        return covered, uncovered
 
     def _release(self, *names):
         if not self.phase:
@@ -194,18 +241,36 @@ class Session:
 
         ar = self._load_ar()
         v_ar = ar.reconstruct(expl).float().cpu()
-        _, cos = ar.score(expl, v)
+        mse_B, cos = ar.score(expl, v)
         t.cos = float(cos)
         self._release("_ar")
 
         # --- set arithmetic on the two latent sets ---------------------------
         # No model judgement anywhere in this part: the buckets are exactly
         # F_orig & F_ar, F_ar - F_orig, F_orig - F_ar.
-        F_orig = set(TR.sae_encode(V, self.sae)[0].nonzero().flatten().tolist())
-        F_ar = set(TR.sae_encode(v_ar.unsqueeze(0), self.sae)[0]
-                   .nonzero().flatten().tolist())
+        A_orig = TR.sae_encode(V, self.sae)
+        A_ar = TR.sae_encode(v_ar.unsqueeze(0), self.sae)
+        F_orig = set(A_orig[0].nonzero().flatten().tolist())
+        F_ar = set(A_ar[0].nonzero().flatten().tolist())
         conf, unver, omit = F_orig & F_ar, F_ar - F_orig, F_orig - F_ar
         t.n_confirmed, t.n_unverified, t.n_omitted = len(conf), len(unver), len(omit)
+
+        # --- the four reconstruction comparisons -----------------------------
+        #   A  the SAE rebuilding the original activation
+        #   B  the NLA round trip: activation -> text -> activation
+        #   C  the SAE rebuilding the AR's output
+        #   D  both lossy steps chained
+        # mse is 2(1-cos) after normalisation, matching the AR's own scorer.
+        V_sae = self._sae_decode(A_orig)
+        V_ar_sae = self._sae_decode(A_ar)
+        m = lambda a, b: float(2.0 * (1.0 - torch.nn.functional.cosine_similarity(
+            a.flatten(), b.flatten(), dim=0)))
+        for k, mse in (("A_sae_orig_vs_orig", m(V_sae, V)),
+                       ("B_ar_vs_orig", float(mse_B)),
+                       ("C_sae_ar_vs_ar", m(V_ar_sae, v_ar)),
+                       ("D_sae_ar_vs_orig", m(V_ar_sae, V))):
+            t.fve[k] = {"fve": 1.0 - mse / CORPUS_RAWVAR,
+                        "cos": 1.0 - mse / 2.0}
 
         def named(fs):
             out = []
@@ -216,5 +281,14 @@ class Session:
             return out
 
         t.confirmed, t.unverified, t.omitted = named(conf), named(unver), named(omit)
+
+        # --- does the explanation actually STATE these? ----------------------
+        # Judged over every latent genuinely in the activation -- shared + lost.
+        # `made` is excluded: those are not in the original, so asking whether
+        # the text covers them answers a different question.
+        t.covered, t.uncovered = self._judge_covered(
+            expl, t.confirmed + t.omitted)
+        self._release("_base", "_tok")
+
         self.turns.append(t)
         return t

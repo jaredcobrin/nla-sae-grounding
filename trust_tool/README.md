@@ -22,15 +22,34 @@ python trust_tool/trust_report.py --parquet acts.parquet --av $AV --ar $AR --n 5
 
 ## What you get per turn
 
-| verdict | meaning |
-|---|---|
-| **CONFIRMED** | in the activation, **and** the AR recovers it from the explanation |
-| **UNVERIFIED** | the AR produces it from the explanation; the SAE did not find it in the activation |
-| **OMITTED** | in the activation; the AR does not recover it |
+**1. The AV's explanation** — what the NLA says that activation contained.
 
-These are set operations on SAE latent sets — `F_orig ∩ F_ar`, `F_ar \ F_orig`,
-`F_orig \ F_ar`. **The explanation text is never read**; it enters only through
-the AR's reconstruction of it. No model judgement anywhere in the counts.
+**2. Three latent buckets**, each with its total and every latent that has a
+validated label:
+
+| | |
+|---|---|
+| **SHARED** | in the original activation **and** in the AR's reconstruction — the round trip kept these |
+| **LOST** | in the original activation, **not** in the reconstruction — the round trip destroyed these |
+| **MADE** | in the reconstruction only, not found in the original |
+
+These are set operations on SAE latent sets — `F_orig ∩ F_ar`, `F_orig \ F_ar`,
+`F_ar \ F_orig`. **The explanation text is never read** for them; it enters only
+through the AR's reconstruction of it. No model judgement in the counts.
+
+**3. All four reconstruction comparisons** — A (the SAE rebuilding the original),
+B (the NLA round trip), C (the SAE rebuilding the AR's output), D (both chained),
+each as FVE and cosine. FVE uses the corpus `rawvar` (0.0279), which is a property
+of the activation distribution rather than of one turn, so it is borrowed and the
+page says so.
+
+**4. Does the explanation actually say it?** Every latent genuinely in the
+activation — shared + lost — put to the graded matcher, which returns
+`CLEARLY` / `PROBABLY` / `UNCLEAR` / `NO`. **This is the only model judgement on
+the page.** The prompt was chosen by a measured bake-off: 5.75% false-positive
+rate, against 78.3% for the plain yes/no wording it replaced. The experiment runs
+seven judgements per latent to *measure* that rate; here only the matched one is
+run, since the rate is already known.
 
 **UNVERIFIED means *not checked*, never *false*.** A latent lands there when the
 SAE did not find it in the activation, which can mean it is absent — or that the
