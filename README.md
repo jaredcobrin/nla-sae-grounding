@@ -92,15 +92,26 @@ Needed for both sections below.
 marker differently and the NLA config assertion fails at startup.
 
 ```bash
-git clone <this repo> && cd NLA_PAPER_IMPROVEMENT_V2
+git clone https://github.com/jaredcobrin/nla-sae-grounding.git
+cd nla-sae-grounding
 pip install -r requirements.txt
 
 # the upstream NLA code, which this repo uses but does not vendor
 git clone https://github.com/kitft/natural_language_autoencoders.git ../nla_upstream
 export NLA_REPO=$(cd ../nla_upstream && pwd)
 
-# models (~63 GB). gemma-3-12b-it is gated -- accept the licence on HuggingFace
-# and `huggingface-cli login` first.
+# PUT THE MODEL CACHE ON YOUR BIG DISK BEFORE DOWNLOADING ANYTHING.
+# On a rented GPU box the boot disk is typically ~20GB while the persistent
+# volume is mounted elsewhere, and these models are ~63GB. Without this the
+# download dies part-way with no space left. Change the path to suit your box.
+export HF_HOME=/workspace/hf
+export HF_HUB_CACHE=$HF_HOME/hub
+
+# gemma-3-12b-it is gated: accept the licence on its HuggingFace page first,
+# then authenticate. A token with read access is enough.
+huggingface-cli login
+
+# models, ~63GB and about 20 minutes
 export AV=$(huggingface-cli download kitft/nla-gemma3-12b-L32-av)
 export AR=$(huggingface-cli download kitft/nla-gemma3-12b-L32-ar)
 huggingface-cli download google/gemma-3-12b-it
@@ -111,7 +122,11 @@ python -c "from huggingface_hub import snapshot_download as d; \
   'resid_post_all/layer_32_width_16k_l0_big/*'])"
 ```
 
-**Hardware: 150 GB storage, and**
+**Keep `NLA_REPO`, `HF_HOME`, `HF_HUB_CACHE`, `AV` and `AR` exported** in any
+shell you run this from — the scripts read all five. Putting them in a file you
+can `source` saves re-deriving `AV`/`AR` later.
+
+**Hardware: 150 GB of storage on the disk `HF_HOME` points at, and**
 
 | | VRAM | |
 |---|---|---|
