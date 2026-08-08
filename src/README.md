@@ -13,11 +13,9 @@ are the point, not decoration.
 | 5 | `judge_explanations.py` | per latent, does the explanation cover it? Graded, against two nulls | yes |
 | 6 | `summarize_results.py` | **every number in `RESULTS.md`** → `summary.json` + `SUMMARY.md` | no |
 
-**The tool**, separate from the experiment:
-
-| | | |
-|---|---|---|
-| `trust_report.py` | one activation → what its explanation is evidenced by. Takes `--text` (your own sentence) or `--parquet` | yes |
+**The tool lives in [`../trust_tool/`](../trust_tool/)** — a chat window that
+reports on every turn, plus the original command-line version over a stored
+corpus. It imports `nla_av`, `sampling` and `hf_paths` from here.
 
 **Not part of the experiment**, kept for reference:
 

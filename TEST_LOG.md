@@ -139,7 +139,7 @@ cd /workspace/NLA_V2 && . /workspace/env.sh
 AV=$(ls -d /workspace/hf/hub/models--kitft--nla-gemma3-12b-L32-av/snapshots/*)
 AR=$(ls -d /workspace/hf/hub/models--kitft--nla-gemma3-12b-L32-ar/snapshots/*)
 
-python3 src/trust_report.py \
+python3 src/trust_report.py \   # now trust_tool/trust_report.py
     --parquet /workspace/acts_rollout50_L32.parquet \
     --av $AV --ar $AR \
     --labels /workspace/labels_cache.json \

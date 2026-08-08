@@ -26,31 +26,32 @@ labelling → judging → statistics, and writes every number in
 bash scripts/run_experiment.sh          # ~2.5h, one 24GB GPU
 ```
 
-**2. It ships the tool as something you can point at your own text.**
-`src/trust_report.py` takes an activation and tells you which parts of its NLA
-explanation are actually evidenced.
+**2. It ships a tool you can talk to.** [`trust_tool/`](trust_tool/) opens a chat
+window: you converse with Gemma, and after every turn you see what the NLA says
+the model was representing — and which parts of that the SAE corroborates.
 
 ```bash
-# your own sentence, activation extracted for you
-python src/trust_report.py --text "The Ryzen 7600 idles at 45C." --av $AV --ar $AR
-
-# or an activation from a corpus you built
-python src/trust_report.py --parquet acts.parquet --n 5 --av $AV --ar $AR
+python trust_tool/app.py --av $AV --ar $AR      # then open localhost:8000
 ```
 
 | verdict | meaning |
 |---|---|
-| **CONFIRMED** | in the real activation, **and** the AR recovers it from the explanation |
-| **UNVERIFIED** | the AR produces it from the explanation, but it is not in the activation here |
-| **OMITTED** | in the real activation, but the AR does not recover it |
+| **CONFIRMED** | in the activation, **and** the AR recovers it from the explanation |
+| **UNVERIFIED** | the AR produces it from the explanation; the SAE did not find it in the activation |
+| **OMITTED** | in the activation; the AR does not recover it |
 
 These are set operations on SAE latent sets, not readings of the text —
 `F_orig ∩ F_ar`, `F_ar \ F_orig`, `F_orig \ F_ar`. **The explanation is never
 read**; it enters only through the AR's reconstruction of it. **UNVERIFIED means
-*not checked*, never *false*** — 54% of even the CONFIRMED latents were not
-visibly stated in the explanation, so the AR fills in a great deal from context.
+*not checked*, never *false*.**
 
-Worked examples: [`results/example_reports/`](results/example_reports/).
+**You converse rather than paste text on purpose.** The SAE is fine-tuned on chat
+whose assistant turns Gemma wrote itself, so having Gemma write the conversation
+keeps the input in-distribution — on FineWeb the same pipeline measured a 7-point
+effect where these rollouts gave 25. You still choose the subject.
+
+Details and caveats: [`trust_tool/README.md`](trust_tool/README.md). Worked
+command-line examples: [`results/example_reports/`](results/example_reports/).
 
 ---
 
@@ -138,9 +139,13 @@ python -c "from huggingface_hub import snapshot_download as d; \
 ```
 
 Models: `google/gemma-3-12b-it` (gated), `kitft/nla-gemma3-12b-L32-{av,ar}`,
-`google/gemma-scope-2-12b-it`. **24 GB VRAM and 150 GB storage** — measured, not
-estimated ([TEST_LOG.md](TEST_LOG.md)). Three 12B models are involved but never
-more than one at a time; each script loads, uses and releases them in phases.
+`google/gemma-scope-2-12b-it`. **150 GB storage.**
+
+| | VRAM | |
+|---|---|---|
+| the experiment (`run_experiment.sh`) | **24 GB** | measured ([TEST_LOG.md](TEST_LOG.md)) — every stage loads, uses and releases one 12B model at a time |
+| the chat tool, responsive | ~72 GB | all three models resident, so a turn is fast |
+| the chat tool, `--phase` | **24 GB** | loads and releases per turn; costs a minute or two per reply |
 
 ---
 
@@ -174,7 +179,7 @@ Fraser-Taliente, Kantamneni, Ong et al. The SAE is Google's Gemma Scope 2.
 |---|---|
 | **Not redistributed** | `nla/` and `nla_inference.py` — you clone them and point `NLA_REPO` at them |
 | **Derived and modified** | `src/nla_av.py` — calls upstream's injection primitives; adds the Gemma embed-scale fix. Change notice in its docstring, per Apache-2.0 §4(b) |
-| **Mine** | the rest of `src/`, `results/`, `scripts/`, and the documentation |
+| **Mine** | the rest of `src/`, all of `trust_tool/`, `results/`, `scripts/`, and the documentation |
 
 **The finding that NLA explanations confabulate is also not mine** — the paper
 documents it. Mine is the question of whether those claims correspond to active
@@ -192,7 +197,8 @@ METHODOLOGY.md      how each measurement works, and what broke on the way there
 INCONCLUSIVE.md     experiments that produced numbers and failed their controls
 FUTURE_WORK.md      what the saved vectors make answerable next
 TEST_LOG.md         what was run against real weights, and what broke
-src/                one file per stage (see src/README.md)
+src/                the experiment, one file per stage (see src/README.md)
+trust_tool/         the chat tool (see trust_tool/README.md)
 scripts/            run_experiment.sh — reproduce everything
 results/            every artefact the numbers come from (see results/README.md)
 ```

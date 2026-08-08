@@ -53,13 +53,12 @@ GEMMA ONLY. The SAE was fine-tuned on Gemma-generated chat. On out-of-
 distribution text the same pipeline measured a 7-point effect where Gemma
 rollouts gave 25, so the tool refuses unfamiliar corpora unless overridden.
 
-Usage:
-    # your own text -- the activation is taken at its LAST token
-    python src/trust_report.py --text "The Ryzen 7600 idles at 45C." \
-        --av <av_path> --ar <ar_path>
+TO ANALYSE TEXT OF YOUR OWN, use trust_tool/app.py instead. It has Gemma write
+the conversation, which keeps the input inside the distribution the SAE was
+fine-tuned on; pasted text is not. This file reads a stored corpus only.
 
-    # or activations sampled from a corpus built by extract_activations.py
-    python src/trust_report.py --parquet acts_rollout50_L32.parquet \
+Usage:
+    python trust_tool/trust_report.py --parquet acts_rollout50_L32.parquet \
         --av <av_path> --ar <ar_path> --n 10 --out reports/
 """
 
@@ -79,7 +78,8 @@ import yaml
 from safetensors.torch import load_file
 
 _HERE = Path(__file__).resolve().parent
-sys.path.insert(0, str(_HERE))
+_SRC = _HERE.parent / "src"          # nla_av, sampling, hf_paths live in src/
+sys.path.insert(0, str(_SRC))
 # nla_inference.py and the nla/ package come from the upstream NLA repo
 # (kitft/natural_language_autoencoders). Point NLA_REPO at a clone of it, or
 # place this repo inside one. nla_av.py and sampling.py are vendored here
@@ -289,48 +289,6 @@ def label_missing(need, cache, model, tok, sae_variant, seed=0, batch=None):
     return cache, len(todo)
 
 
-def activation_from_text(text: str, layer: int, device: str,
-                         base: str = "google/gemma-3-12b-it"):
-    """Extract one activation from the user's own text, at the LAST token.
-
-    The whole-corpus path samples random positions inside a generated assistant
-    response. Here the user supplies the text, so the position is fixed at the
-    final token -- that is the one they can actually reason about ("what was the
-    model representing when it had just read this?"), and it needs no sampling
-    rule to explain.
-
-    Loaded and released inside this function: the base model is a third 12B model
-    and must not be resident while the AV or AR is.
-
-    NOTE ON DISTRIBUTION: the SAE was fine-tuned on Gemma-generated chat. Text
-    from anywhere else is out-of-distribution for it, and the same pipeline
-    measured a 7-point effect on FineWeb where Gemma rollouts gave 25. The report
-    says so in its header when this path is used.
-    """
-    import gc
-    from transformers import AutoTokenizer
-    from nla.arch_adapters import resolve_text_model
-
-    tok = AutoTokenizer.from_pretrained(base)
-    model, _ = resolve_text_model(base, dtype=torch.bfloat16)
-    model = model.to(device).eval()
-    try:
-        # Chat-templated, because that is the shape the SAE and the NLA both saw.
-        conv = [{"role": "user", "content": text}]
-        ids = tok(tok.apply_chat_template(conv, tokenize=False),
-                  return_tensors="pt", add_special_tokens=False).input_ids.to(device)
-        with torch.no_grad():
-            hs = model(ids, output_hidden_states=True).hidden_states
-        # --layer-index L == hidden_states[L+1]; index 0 is the embedding output.
-        v = hs[layer + 1][0, -1].float().cpu()
-    finally:
-        del model
-        gc.collect()
-        if torch.cuda.is_available():
-            torch.cuda.empty_cache()
-    return v.unsqueeze(0), [0], [text]
-
-
 def check_corpus(parquet: str, force: bool) -> str | None:
     """The SAE was fine-tuned on Gemma-generated chat; other corpora degrade it."""
     side = Path(parquet + ".nla_meta.yaml")
@@ -354,11 +312,11 @@ def check_corpus(parquet: str, force: bool) -> str | None:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    src = ap.add_mutually_exclusive_group(required=True)
-    src.add_argument("--parquet", help="a corpus built by extract_activations.py")
-    src.add_argument("--text", help="your own text; the activation is taken at its "
-                                    "LAST token. Out-of-distribution for the SAE "
-                                    "unless it reads like Gemma chat output")
+    ap.add_argument("--parquet", required=True,
+                    help="a corpus built by extract_activations.py. To analyse "
+                         "something you choose, use trust_tool/app.py -- it has "
+                         "Gemma write the text, which keeps it in the "
+                         "distribution the SAE was fitted to")
     ap.add_argument("--av", required=True)
     ap.add_argument("--ar", required=True)
     ap.add_argument("--labels", default="results/feature_labels.json",
@@ -390,11 +348,7 @@ def main() -> None:
     sys.stdout.reconfigure(line_buffering=True)
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
 
-    warn = (check_corpus(a.parquet, a.i_know_what_im_doing) if a.parquet else
-            "activation taken from user-supplied text at its last token. The SAE "
-            "was fine-tuned on Gemma-generated chat, so unless this text reads "
-            "like that, it is out-of-distribution and the latent sets are less "
-            "reliable than the numbers in RESULTS.md.")
+    warn = check_corpus(a.parquet, a.i_know_what_im_doing)
 
     CACHE = json.loads(Path(a.labels).read_text())
     print(f"[labels] cache has {len(CACHE)} features, "
@@ -403,17 +357,11 @@ def main() -> None:
     P = load_file(str(sae_variant_dir(SAE_VARIANT)
                        / "params.safetensors"))
 
-    if a.text:
-        # Phase 0: the base model, loaded and released before the AV appears.
-        print("\n[phase 0] extracting an activation from your text")
-        V, row_idx, txt = activation_from_text(a.text, a.layer, a.device)
-        print(f"[data] 1 activation at the last token of {len(a.text)} chars")
-    else:
-        V, row_idx, _ = load_vectors(a.parquet, a.n, a.seed)
-        import pyarrow.parquet as pq
-        txt = pq.ParquetFile(a.parquet).read(
-            columns=["detokenized_text_truncated"]).column(0).to_pylist()
-        print(f"[data] {len(V)} activations from {a.parquet}")
+    V, row_idx, _ = load_vectors(a.parquet, a.n, a.seed)
+    import pyarrow.parquet as pq
+    txt = pq.ParquetFile(a.parquet).read(
+        columns=["detokenized_text_truncated"]).column(0).to_pylist()
+    print(f"[data] {len(V)} activations from {a.parquet}")
 
     A_orig = sae_encode(V, P)
 
