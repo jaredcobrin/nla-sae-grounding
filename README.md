@@ -109,12 +109,15 @@ export HF_HUB_CACHE=$HF_HOME/hub
 
 # gemma-3-12b-it is gated: accept the licence on its HuggingFace page first,
 # then authenticate. A token with read access is enough.
-huggingface-cli login
+hf auth login
 
-# models, ~63GB and about 20 minutes
-export AV=$(huggingface-cli download kitft/nla-gemma3-12b-L32-av)
-export AR=$(huggingface-cli download kitft/nla-gemma3-12b-L32-ar)
-huggingface-cli download google/gemma-3-12b-it
+# models, ~63GB and about 20 minutes.
+# Use `hf`, not `huggingface-cli`: the old command prints a deprecation warning
+# to STDOUT, so $(...) captures the warning along with the path and AV/AR end up
+# holding two lines of junk.
+export AV=$(hf download kitft/nla-gemma3-12b-L32-av)
+export AR=$(hf download kitft/nla-gemma3-12b-L32-ar)
+hf download google/gemma-3-12b-it
 
 python -c "from huggingface_hub import snapshot_download as d; \
   d('google/gemma-scope-2-12b-it', allow_patterns=[\
