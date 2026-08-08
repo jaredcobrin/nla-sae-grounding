@@ -90,12 +90,12 @@ returning "no effect", which is not a finding.
 
 ## What survived
 
-**The `UNVERIFIED` name.** The tool does not call its third bucket "invented", and
-that no longer rests on Test 1. It rests on the construction — the bucket *is*
-"the AR produced it and we did not find it in the original", which is unchecked
-rather than false — and on `RESULTS.md` §1's C > A, where the SAE reads the AR's
-output more faithfully than a real activation, so a latent may be present and
-simply invisible to the SAE. That is an argument from the measurement setup, not
+**Refusing to call the third bucket "invented".** The tool names it `MADE` and
+says plainly that made is not the same as false. That no longer rests on Test 1.
+It rests on the construction — the bucket *is* "the AR produced it and we did not
+find it in the original", which is unchecked rather than refuted — and on
+`RESULTS.md` §1's C > A, where the SAE reads the AR's output more faithfully than
+a real activation, so a latent may be present and simply invisible to the SAE. That is an argument from the measurement setup, not
 from a model's opinion.
 
 **The guard that killed Test 1.** `classify_features.py` still refuses to print

@@ -51,9 +51,9 @@ rate, against 78.3% for the plain yes/no wording it replaced. The experiment run
 seven judgements per latent to *measure* that rate; here only the matched one is
 run, since the rate is already known.
 
-**UNVERIFIED means *not checked*, never *false*.** A latent lands there when the
-SAE did not find it in the activation, which can mean it is absent — or that the
-SAE cannot see it there. An SAE does not have a latent for everything.
+**`MADE` means *not checked*, never *false*.** A latent lands there when the SAE
+did not find it in the activation, which can mean it is absent — or that the SAE
+cannot see it there. An SAE does not have a latent for everything.
 
 **The counts include latents with no validated label.** Only labelled ones can be
 named, and about half of all latents have one. A report showing "4 named of 15"

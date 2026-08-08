@@ -26,6 +26,14 @@ four errors reached an earlier write-up.
 | `feature_labels.json` | 1,624 labels, each with its **AUC** and the **wrong-label null scores** it was validated against. `reliable: true` means it beat the 95th percentile of that null |
 | `grounding.json` | per (latent, explanation): the grade, the verdict, **both null rates**, the label's AUC, and the latent's categories |
 
+## Stale, pending a rerun
+
+`example_reports/` was generated before two changes and has not been regenerated:
+the buckets are named CONFIRMED / UNVERIFIED / OMITTED rather than
+SHARED / LOST / MADE, and the footer still quotes the withdrawn "65-68% are
+genuinely in the source document" claim ([INCONCLUSIVE.md](../INCONCLUSIVE.md)).
+Both are fixed in the code; the six files need a GPU to rebuild.
+
 ## Kept but not used by any reported number
 
 | file | |

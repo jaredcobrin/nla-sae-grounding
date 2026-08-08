@@ -34,16 +34,33 @@ the model was representing — and which parts of that the SAE corroborates.
 python trust_tool/app.py --av $AV --ar $AR      # then open localhost:8000
 ```
 
-| verdict | meaning |
-|---|---|
-| **CONFIRMED** | in the activation, **and** the AR recovers it from the explanation |
-| **UNVERIFIED** | the AR produces it from the explanation; the SAE did not find it in the activation |
-| **OMITTED** | in the activation; the AR does not recover it |
+Each turn reports, in order:
 
-These are set operations on SAE latent sets, not readings of the text —
-`F_orig ∩ F_ar`, `F_ar \ F_orig`, `F_orig \ F_ar`. **The explanation is never
-read**; it enters only through the AR's reconstruction of it. **UNVERIFIED means
-*not checked*, never *false*.**
+**1. The AV's explanation** — what the NLA says that activation contained.
+
+**2. Three latent buckets**, each with its total and every latent that has a
+validated label:
+
+| | |
+|---|---|
+| **SHARED** | in the original activation **and** in the AR's reconstruction — the round trip kept these |
+| **LOST** | in the original, **not** in the reconstruction |
+| **MADE** | in the reconstruction only, not found in the original |
+
+Set operations on SAE latent sets — `F_orig ∩ F_ar`, `F_orig \ F_ar`,
+`F_ar \ F_orig`. **The explanation is never read** for these; it enters only
+through the AR's reconstruction of it.
+
+**3. All four reconstruction comparisons** (A–D), as FVE and cosine.
+
+**4. Does the explanation actually say it?** Every latent genuinely in the
+activation, put to the graded matcher — `CLEARLY` / `PROBABLY` / `UNCLEAR` / `NO`.
+**The only model judgement on the page.**
+
+Sections 2 and 4 answer different questions, and the gap between them is the
+point: **54% of SHARED latents are never stated in the explanation** — the AR
+reconstructs them from context. A latent marked SHARED but `NO` survived on the
+AR's inference, not on anything the AV wrote.
 
 **You converse rather than paste text on purpose.** The SAE is fine-tuned on chat
 whose assistant turns Gemma wrote itself, so having Gemma write the conversation

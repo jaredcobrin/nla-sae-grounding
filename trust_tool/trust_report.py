@@ -3,16 +3,16 @@
 Runs one activation through the NLA round trip, reads both ends with a sparse
 autoencoder, and reports what the explanation is actually evidenced by.
 
-  CONFIRMED   in the real activation, AND the AR recovers it from the explanation
-  UNVERIFIED  the AR produces it from the explanation, but it is NOT in the
-              real activation at this position
-  OMITTED     in the real activation, but the AR does not recover it
+  SHARED   in the real activation, AND the AR recovers it from the explanation
+  LOST     in the real activation, but the AR does not recover it
+  MADE     the AR produces it from the explanation, but it is NOT in the
+           real activation at this position
 
 NOTE ON WHAT THESE ACTUALLY MEASURE. The explanation text is never read here.
 The buckets are set arithmetic on SAE feature sets:
 
-    CONFIRMED = F_orig & F_ar     UNVERIFIED = F_ar - F_orig
-    OMITTED   = F_orig - F_ar     where F_ar = SAE(AR(explanation))
+    SHARED = F_orig & F_ar     LOST = F_orig - F_ar
+    MADE   = F_ar - F_orig     where F_ar = SAE(AR(explanation))
 
 So the explanation enters only THROUGH THE AR'S RECONSTRUCTION OF IT. Saying
 "the explanation implies X" would attribute to the text what belongs to the AR,
@@ -23,9 +23,9 @@ that blurs this hides the confound the SAE exists to expose.
 For a check that DOES read the explanation, see judge_explanations.py, which
 shows the text to a model and asks whether it covers each feature.
 
-UNVERIFIED IS NOT "FALSE" AND THE REPORT MUST NEVER SAY IT IS. It means the
-feature is in the AR's reconstruction and was not found in the original -- which
-is by construction "not checked", not "refuted". Two further reasons not to read
+MADE IS NOT "FALSE" AND THE REPORT MUST NEVER SAY IT IS. It means the latent is
+in the AR's reconstruction and was not found in the original -- which is by
+construction "not checked", not "refuted". Two further reasons not to read
 it as "invented":
 
   * The SAE reconstructs the AR's output BETTER than a real activation (FVE 0.700
@@ -35,8 +35,8 @@ it as "invented":
   * An SAE is incomplete. Absence of a feature is weak evidence of absence of the
     thing -- a limitation the NLA paper names about its own method.
 
-An earlier version cited "65-68% of unverified content features are genuinely in
-the source document". THAT CLAIM IS WITHDRAWN -- see INCONCLUSIVE.md. It came
+An earlier version claimed 65-68% of MADE content latents were genuinely in
+the source document. THAT CLAIM IS WITHDRAWN -- see INCONCLUSIVE.md. It came
 from a plain yes/no judge that had never been through the matcher bake-off, and
 it compared features against the WHOLE DOCUMENT when an activation sampled at one
 token position is not a claim about the whole document.
@@ -102,7 +102,7 @@ SAE_VARIANT = L0_SMALL     # sparse enough to be labelable:
 # associates in CJK. Loudest smoke test for the whole injection path.
 _CJK = re.compile(r"[　-鿿豈-﫿＀-￯]")
 
-# ONLY CONFIRMED AND UNVERIFIED GO IN. Omitted features are things the
+# ONLY SHARED AND MADE GO IN. Lost latents are things the
 # explanation never said, so they say nothing about whether what it DID say can
 # be trusted -- a different question, and including them invites the model to
 # grade the explanation on coverage instead of on reliability. They stay in the
@@ -116,23 +116,23 @@ THE EXPLANATION UNDER REVIEW:
 Independently, a sparse autoencoder read the activation directly. Every claim
 the explanation makes falls into one of two groups.
 
-CONFIRMED — the activation really contains these, and a reconstructor reading
-the explanation recovers them:
-{confirmed}
+SHARED — the activation really contains these, and a reconstructor reading the
+explanation recovers them:
+{shared}
 
-UNVERIFIED — a reconstructor reading the explanation produces these, but they
-were NOT found in the activation at this position:
-{unverified}
+MADE — a reconstructor reading the explanation produces these, but they were NOT
+found in the activation at this position:
+{made}
 
 Write one paragraph, 4-6 sentences, telling a reader what to rely on.
 
 Rules you must follow:
-- UNVERIFIED means NOT CHECKED, never false. It means the reconstructor produced
+- MADE means NOT CHECKED, never false. It means the reconstructor produced
   the feature and the sparse autoencoder did not find it in the activation --
   which can happen because the feature is absent, OR because the autoencoder
-  cannot see it there. Never call an unverified claim wrong, invented, or a
+  cannot see it there. Never call a MADE latent wrong, invented, or a
   hallucination.
-- Name concretely what is confirmed and what is not. Do not summarise the
+- Name concretely what is shared and what is not. Do not summarise the
   explanation back; assess it.
 - If a group is empty or rests on very few features, say the evidence is thin
   rather than drawing a conclusion from it.
@@ -417,19 +417,19 @@ def main() -> None:
 
         F_o = set(torch.nonzero(A_orig[i]).flatten().tolist())
         F_a = set(torch.nonzero(A_ar).flatten().tolist())
-        sets = {"confirmed": F_o & F_a, "unverified": F_a - F_o, "omitted": F_o - F_a}
+        sets = {"shared": F_o & F_a, "made": F_a - F_o, "lost": F_o - F_a}
         # strengths are kept so features can be ranked once labels exist; naming
         # happens after the on-demand labelling pass below
-        strength = {k: {f: float(A_ar[f] if k == "unverified" else A_orig[i][f])
+        strength = {k: {f: float(A_ar[f] if k == "made" else A_orig[i][f])
                         for f in s_} for k, s_ in sets.items()}
         rec = {"index": i, "row": int(row_idx[i]), "explanation": expl,
                "fve": 1.0 - mse / rawvar, "cos": cos,
                "source_text": (txt[int(row_idx[i])] or "")[-1500:],
                "_sets": sets, "_strength": strength}
         reports.append(rec)
-        print(f"  act {i}: FVE {rec['fve']:+.3f}  confirmed {len(sets['confirmed']):>3}"
-              f"  unverified {len(sets['unverified']):>3}"
-              f"  omitted {len(sets['omitted']):>3}")
+        print(f"  act {i}: FVE {rec['fve']:+.3f}  shared {len(sets['shared']):>3}"
+              f"  lost {len(sets['lost']):>3}"
+              f"  made {len(sets['made']):>3}")
 
     # ---- PHASE 3: label unseen features + write prose. Base model only. ----
     print("\n[phase 3/3] labelling and writing")
@@ -481,10 +481,10 @@ def main() -> None:
     else:
         print(f"\n[prose] writing closing paragraphs with {a.writer}")
 
-        # confirmed + unverified only -- see the note on _PROSE
+        # shared + made only -- see the note on _PROSE
         prompts = [_PROSE.format(expl=r["explanation"],
-                                  confirmed=render("confirmed", r),
-                                  unverified=render("unverified", r)) for r in reports]
+                                  shared=render("shared", r),
+                                  made=render("made", r)) for r in reports]
         # A SEPARATE BASE MODEL, never the AV. The AV is fine-tuned to one output
         # format and, asked to assess, simply reproduces it -- the first version of
         # this script used av.model and every assessment came back as
@@ -516,19 +516,18 @@ def main() -> None:
                "## The explanation under review", "", "> " + " ".join(r["explanation"].split()), "",
                "## Verdict", "",
                "| | features | named |", "|---|---:|---:|",
-               f"| **CONFIRMED** — in the activation, and the AR recovers it "
-               f"| {c['confirmed']['total']} | {c['confirmed']['named']} |",
-               f"| **UNVERIFIED** — the AR produces it, but it is not in the activation here "
-               f"| {c['unverified']['total']} | {c['unverified']['named']} |",
-               f"| **OMITTED** — in the activation, but the AR does not recover it "
-               f"| {c['omitted']['total']} | {c['omitted']['named']} |", "",
+               f"| **SHARED** — in the activation **and** in the AR's reconstruction "
+               f"| {c['shared']['total']} | {c['shared']['named']} |",
+               f"| **LOST** — in the activation, not in the reconstruction "
+               f"| {c['lost']['total']} | {c['lost']['named']} |",
+               f"| **MADE** — in the reconstruction only, not found in the activation "
+               f"| {c['made']['total']} | {c['made']['named']} |", "",
                "*These are set operations on SAE feature sets — the explanation text "
                "is never read. It enters only through the AR's reconstruction of it.*", ""]
         md += [
                f"*{named} of {tot} features ({100*named//max(1,tot)}%) have a validated label "
                f"and can be named. The rest are counted only.*", ""]
-        for k, title in (("confirmed", "Confirmed"), ("unverified", "Unverified"),
-                          ("omitted", "Omitted")):
+        for k, title in (("shared", "Shared"), ("lost", "Lost"), ("made", "Made")):
             md += [f"### {title}", ""]
             md += ([f"- `f{x['id']}` {x['label']}" for x in r["features"][k]]
                    or ["- *(none with a validated label)*"])
@@ -537,8 +536,8 @@ def main() -> None:
                 md += [f"- *(plus {extra} further features that could not be named)*"]
             md += [""]
         md += ["## Assessment", "",
-               "*Written by a language model from the CONFIRMED and UNVERIFIED lists "
-               "only — omitted features are excluded, since they concern what the "
+               "*Written by a language model from the SHARED and MADE lists "
+               "only — lost latents are excluded, since they concern what the "
                "explanation left out rather than whether what it said holds up. The "
                "counts and lists above are computed; only this paragraph is generated.*",
                "",
@@ -550,19 +549,19 @@ def main() -> None:
                "Two reasons that is weaker than it sounds: the SAE reconstructs the AR's "
                "output better than a real activation (FVE 0.700 vs 0.587), so it reads the "
                "two sides with unequal sensitivity; and an SAE is incomplete, so a missing "
-               "feature is weak evidence. Treat unverified as *not checked*, never as "
+               "latent is weak evidence. Treat MADE as *not checked*, never as "
                "*refuted*.", ""]
         (out / f"activation_{r['index']:03d}.md").write_text("\n".join(md))
 
     (out / "summary.json").write_text(json.dumps(
         {"config": vars(a), "corpus_warning": warn, "reports": reports}, indent=2))
     tot = {k: sum(r["counts"][k]["total"] for r in reports)
-           for k in ("confirmed", "unverified", "omitted")}
+           for k in ("shared", "made", "lost")}
     n = sum(tot.values())
     print(f"\nwrote {len(reports)} reports to {out}/")
-    print(f"  overall: confirmed {100*tot['confirmed']//max(1,n)}%  "
-          f"unverified {100*tot['unverified']//max(1,n)}%  "
-          f"omitted {100*tot['omitted']//max(1,n)}%")
+    print(f"  overall: shared {100*tot['shared']//max(1,n)}%  "
+          f"lost {100*tot['lost']//max(1,n)}%  "
+          f"made {100*tot['made']//max(1,n)}%")
 
 
 if __name__ == "__main__":

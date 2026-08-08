@@ -134,11 +134,10 @@ cannot be separated from each other.
 0.856 — but the gap survives inside every matched label-quality band, so label
 quality is not what is producing it.)*
 
-> **What this means for the tool.** `trust_report.py` marks a latent CONFIRMED
-> when it is in the activation *and* in the AR's rebuild. But 54% of `shared`
-> latents were never visibly mentioned in the explanation — the AR produced them
-> from context. **CONFIRMED means the round trip preserved it, not that the
-> explanation said it.**
+> **What this means for the tool.** The tool marks a latent `SHARED` when it is in
+> the activation *and* in the AR's rebuild. But 54% of `shared` latents were never
+> visibly mentioned in the explanation — the AR produced them from context.
+> **`SHARED` means the round trip preserved it, not that the explanation said it.**
 
 ---
 

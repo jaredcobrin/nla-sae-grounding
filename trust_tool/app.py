@@ -16,9 +16,9 @@ WHAT THE PAGE SHOWS PER TURN
   taken at the last token of your message (i.e. what the model was representing
   when it had finished reading you, with the whole conversation behind it).
 
-  CONFIRMED   in the activation AND recovered by the AR from the explanation
-  UNVERIFIED  the AR produced it; the SAE did not find it in the activation
-  OMITTED     in the activation; the AR did not recover it
+  SHARED   in the activation AND recovered by the AR from the explanation
+  LOST     in the activation; the AR did not recover it
+  MADE     the AR produced it; the SAE did not find it in the activation
 
   The counts include latents with no validated label. Only labelled ones can be
   NAMED, and about half of all latents have one -- so a report showing "4 of 15"
