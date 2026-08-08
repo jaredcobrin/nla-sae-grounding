@@ -14,61 +14,8 @@ whether the AV invented something — the pair can agree on a code neither the
 activation nor the language supports. A **sparse autoencoder reads the activation
 directly**, and is independent.
 
----
-
-## This repo does two things
-
-**1. It reproduces the experiment.** One command runs corpus → round trip → SAE →
-labelling → judging → statistics, and writes every number in
-[RESULTS.md](RESULTS.md) to a file.
-
-```bash
-bash scripts/run_experiment.sh          # ~2.5h, one 24GB GPU
-```
-
-**2. It ships a tool you can talk to.** [`trust_tool/`](trust_tool/) opens a chat
-window: you converse with Gemma, and after every turn you see what the NLA says
-the model was representing — and which parts of that the SAE corroborates.
-
-```bash
-python trust_tool/app.py --av $AV --ar $AR      # then open localhost:8000
-```
-
-Each turn reports, in order:
-
-**1. The AV's explanation** — what the NLA says that activation contained.
-
-**2. Three latent buckets**, each with its total and every latent that has a
-validated label:
-
-| | |
-|---|---|
-| **SHARED** | in the original activation **and** in the AR's reconstruction — the round trip kept these |
-| **LOST** | in the original, **not** in the reconstruction |
-| **MADE** | in the reconstruction only, not found in the original |
-
-Set operations on SAE latent sets — `F_orig ∩ F_ar`, `F_orig \ F_ar`,
-`F_ar \ F_orig`. **The explanation is never read** for these; it enters only
-through the AR's reconstruction of it.
-
-**3. All four reconstruction comparisons** (A–D), as FVE and cosine.
-
-**4. Does the explanation actually say it?** Every latent genuinely in the
-activation, put to the graded matcher — `CLEARLY` / `PROBABLY` / `UNCLEAR` / `NO`.
-**The only model judgement on the page.**
-
-Sections 2 and 4 answer different questions, and the gap between them is the
-point: **54% of SHARED latents are never stated in the explanation** — the AR
-reconstructs them from context. A latent marked SHARED but `NO` survived on the
-AR's inference, not on anything the AV wrote.
-
-**You converse rather than paste text on purpose.** The SAE is fine-tuned on chat
-whose assistant turns Gemma wrote itself, so having Gemma write the conversation
-keeps the input in-distribution — on FineWeb the same pipeline measured a 7-point
-effect where these rollouts gave 25. You still choose the subject.
-
-Details and caveats: [`trust_tool/README.md`](trust_tool/README.md). Worked
-command-line examples: [`results/example_reports/`](results/example_reports/).
+This repo does two things: it **reproduces the experiment**, and it ships a
+**tool you can talk to**. Setup is shared; then pick a section.
 
 ---
 
@@ -132,22 +79,31 @@ control:
 - a "90% of claims survive" figure that was **49%** once the bucketing rule
   stopped counting a claim as surviving when most of its support was destroyed
 
-Each failure, its control, and what the fix changed: **[METHODOLOGY.md](METHODOLOGY.md)**.
+Each failure, its control, and what the fix changed:
+**[METHODOLOGY.md](METHODOLOGY.md)**.
 
 ---
 
-## Setup
+# Setup
 
-**Python ≥ 3.10.** Also needs a clone of
-[`kitft/natural_language_autoencoders`](https://github.com/kitft/natural_language_autoencoders)
-— point `NLA_REPO` at it. `transformers` must be `<5`; 5.x tokenizes the CJK
-injection marker differently and the NLA config assertion fails at startup.
+Needed for both sections below.
+
+**Python ≥ 3.10.** `transformers` must be `<5` — 5.x tokenizes the CJK injection
+marker differently and the NLA config assertion fails at startup.
 
 ```bash
+git clone <this repo> && cd NLA_PAPER_IMPROVEMENT_V2
 pip install -r requirements.txt
-export NLA_REPO=/path/to/natural_language_autoencoders
+
+# the upstream NLA code, which this repo uses but does not vendor
+git clone https://github.com/kitft/natural_language_autoencoders.git ../nla_upstream
+export NLA_REPO=$(cd ../nla_upstream && pwd)
+
+# models (~63 GB). gemma-3-12b-it is gated -- accept the licence on HuggingFace
+# and `huggingface-cli login` first.
 export AV=$(huggingface-cli download kitft/nla-gemma3-12b-L32-av)
 export AR=$(huggingface-cli download kitft/nla-gemma3-12b-L32-ar)
+huggingface-cli download google/gemma-3-12b-it
 
 python -c "from huggingface_hub import snapshot_download as d; \
   d('google/gemma-scope-2-12b-it', allow_patterns=[\
@@ -155,14 +111,125 @@ python -c "from huggingface_hub import snapshot_download as d; \
   'resid_post_all/layer_32_width_16k_l0_big/*'])"
 ```
 
-Models: `google/gemma-3-12b-it` (gated), `kitft/nla-gemma3-12b-L32-{av,ar}`,
-`google/gemma-scope-2-12b-it`. **150 GB storage.**
+**Hardware: 150 GB storage, and**
 
 | | VRAM | |
 |---|---|---|
-| the experiment (`run_experiment.sh`) | **24 GB** | measured ([TEST_LOG.md](TEST_LOG.md)) — every stage loads, uses and releases one 12B model at a time |
-| the chat tool, responsive | ~72 GB | all three models resident, so a turn is fast |
-| the chat tool, `--phase` | **24 GB** | loads and releases per turn; costs a minute or two per reply |
+| the experiment | **24 GB** | measured ([TEST_LOG.md](TEST_LOG.md)); one 12B model resident at a time |
+| the tool, responsive | ~72 GB | all three models resident, so a turn is fast |
+| the tool, `--phase` | **24 GB** | loads and releases per turn; a minute or two per reply |
+
+---
+
+# 1. Reproduce the experiment
+
+One command: corpus → round trip → SAE → labelling → judging → every number.
+
+```bash
+bash scripts/run_experiment.sh          # ~2.5h on one 24GB GPU
+```
+
+Results land in `results/`:
+
+| | |
+|---|---|
+| **`SUMMARY.md`** | **every number quoted in [RESULTS.md](RESULTS.md)**, as tables |
+| `summary.json` | the same, machine-readable |
+| `per_example.csv` | one row per (activation, explanation): FVE and cosine for all four comparisons, latent counts, Jaccard and its control |
+| `LATENTS_BY_BUCKET.md` | per activation: the AV's explanation, the source text, and every labelled latent grouped shared / lost / made |
+
+**Quote from `SUMMARY.md`, never from a hand-computed figure.** Computing them
+by hand is how four errors reached an earlier write-up — a correction applied in
+the wrong direction, a backwards conditional, a constant borrowed from the wrong
+run, and significance pooled over non-independent pairs.
+
+Three things to check before believing any of it, in this order:
+
+1. **validated label count** in `SUMMARY.md` §3. ~50% is expected; much lower
+   means the labeller is failing, not that the latents are hard.
+2. **the judge's false-positive rate** in §5. Under ~10%. An earlier prompt
+   scored 78% and made every downstream number void.
+3. **the control rows** in §2. If a control sits near its matched number, that
+   measurement is not discriminating and must not be quoted.
+
+Stages, if you want to run them individually — see [`src/README.md`](src/README.md).
+
+---
+
+# 2. Run the trust tool
+
+Talk to Gemma. After every turn, see what the NLA says the model was
+representing, and which parts of that the SAE corroborates.
+
+```bash
+python trust_tool/app.py --av $AV --ar $AR      # then open localhost:8000
+```
+
+Add `--phase` on a card that cannot hold three 12B models at once. For the
+command-line version over a stored corpus instead of a conversation:
+
+```bash
+python trust_tool/trust_report.py --parquet acts.parquet --av $AV --ar $AR --n 5
+```
+
+### What each turn reports
+
+**1. The AV's explanation** — what the NLA says that activation contained.
+
+**2. Three latent buckets**, each with its total and every latent that has a
+validated label:
+
+| | |
+|---|---|
+| **SHARED** | in the original activation **and** in the AR's reconstruction — the round trip kept these |
+| **LOST** | in the original, **not** in the reconstruction |
+| **MADE** | in the reconstruction only, not found in the original |
+
+Set operations on SAE latent sets — `F_orig ∩ F_ar`, `F_orig \ F_ar`,
+`F_ar \ F_orig`. **The explanation is never read** for these; it enters only
+through the AR's reconstruction of it. **`MADE` means *not checked*, never
+*false*** — a latent lands there when the SAE did not find it in the activation,
+which can mean it is absent, or that the SAE cannot see it there.
+
+**3. All four reconstruction comparisons** (A–D), as FVE and cosine. FVE uses the
+corpus `rawvar` (0.0279) — a property of the activation distribution, which one
+turn cannot produce, so it is borrowed and the page says so.
+
+**4. Does the explanation actually say it?** Every latent genuinely in the
+activation, put to the graded matcher — `CLEARLY` / `PROBABLY` / `UNCLEAR` / `NO`.
+**The only model judgement on the page.** Its prompt was chosen by a measured
+bake-off: 5.75% false-positive rate, against 78.3% for the plain yes/no wording it
+replaced.
+
+Sections 2 and 4 answer different questions, and the gap between them is the
+point: **54% of SHARED latents are never stated in the explanation** — the AR
+reconstructs them from context. A latent marked SHARED but `NO` survived on the
+AR's inference, not on anything the AV wrote.
+
+### Where the activation comes from
+
+**The last token of your message** — the end of the conversation as it stands just
+before Gemma starts generating. So the report answers: *what was the model
+representing when it had finished reading you?*
+
+On turn 3 that activation encodes turns 1 and 2, because the whole conversation is
+re-fed each time. Nothing is truncated: an activation already encodes every token
+before it, so a conversation simply runs until the context window fills.
+
+### Why you converse instead of pasting text
+
+The Gemma Scope 2 SAEs are fine-tuned on chat whose assistant turns were
+**generated by Gemma itself** — from their paper, *"we take open-source datasets
+of user prompts and generate responses from the corresponding Gemma models."*
+Pasted text is off that distribution: on FineWeb this same pipeline measured a
+**7-point** effect where these rollouts gave **25**. Having Gemma write the
+conversation keeps the input in-distribution. You still choose the subject.
+
+**Two caveats.** The position is a turn boundary, where the experiment samples
+*inside* a generated response — same "activation at the end of this context"
+structure, different region, and the numbers above were not measured at turn
+boundaries. And past turn 2 you are in a multi-turn context shape the experiment
+never covered.
 
 ---
 
@@ -172,9 +239,7 @@ Models: `google/gemma-3-12b-it` (gated), `kitft/nla-gemma3-12b-L32-{av,ar}`,
 - **These activations were selected on the outcome metric** — a gate chose ones
   scoring FVE 0.73–0.77, so they are easier than average. Every seed is logged and
   the gate has been removed from the code.
-- **Gemma only.** On FineWeb, out-of-distribution for the SAE, the same pipeline
-  measured a 7-point effect where these rollouts gave 25. The tool warns on other
-  corpora.
+- **Gemma only.** The tool warns on other corpora.
 - **~50% of latents have a validated label.** The rest are counted but unnamed.
 - **The SAE is incomplete** — a claim can be true with no latent to match it, so
   absence is weak evidence.
@@ -209,13 +274,14 @@ Apache-2.0, to match upstream. Full breakdown in [NOTICE](NOTICE).
 ## Layout
 
 ```
+README.md           this file — findings, setup, and how to run both halves
 RESULTS.md          every number, with its control and its caveats
 METHODOLOGY.md      how each measurement works, and what broke on the way there
 INCONCLUSIVE.md     experiments that produced numbers and failed their controls
 FUTURE_WORK.md      what the saved vectors make answerable next
 TEST_LOG.md         what was run against real weights, and what broke
 src/                the experiment, one file per stage (see src/README.md)
-trust_tool/         the chat tool (see trust_tool/README.md)
+trust_tool/         the chat tool: app.py, session.py, trust_report.py
 scripts/            run_experiment.sh — reproduce everything
 results/            every artefact the numbers come from (see results/README.md)
 ```
