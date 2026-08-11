@@ -359,10 +359,21 @@ def render_by_bucket(ov: dict, sm: dict, lab: dict) -> str:
         i = r["act"]
         e = expl.get(i, {})
         L += ["---", "", f"## Activation {i}", ""]
-        if e.get("explanation"):
-            L += [f"**AV said:** {' '.join(e['explanation'].split())[:600]}", ""]
+        if e.get("prompt"):
+            L += ["**The prompt Gemma was given:**", "",
+                  "> " + " ".join(e["prompt"].split()), ""]
+        if e.get("response"):
+            L += ["<details><summary><b>Gemma's full response</b> "
+                  f"(the activation is at token {e.get('activation_token_index','?')})"
+                  "</summary>", "",
+                  "> " + " ".join(e["response"].split()).replace("\n", " "), "",
+                  "</details>", ""]
         if e.get("source_text"):
-            L += [f"**Source text (end):** …{' '.join(e['source_text'].split())[-600:]}", ""]
+            L += [f"**Context the activation encodes (its last 600 chars):** "
+                  f"…{' '.join(e['source_text'].split())[-600:]}", ""]
+        if e.get("explanation"):
+            L += [f"**What the AV said about it:** "
+                  f"{' '.join(e['explanation'].split())}", ""]
         for name, key, gloss in (("SHARED", "shared_features", "survived"),
                                  ("LOST", "lost_features", "destroyed"),
                                  ("MADE", "invented_features", "invented")):

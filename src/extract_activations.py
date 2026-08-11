@@ -223,8 +223,21 @@ def main() -> None:
         for p in rng.choice(cand, a.positions_per_doc, replace=False):
             rows.append({
                 "n_raw_tokens": int(ids.shape[1]),
+                # Context the activation actually encodes: everything up to and
+                # including its token. Capped, because it is what gets shown.
                 "detokenized_text_truncated": tok.decode(ids[0, :int(p) + 1],
                                                           skip_special_tokens=True)[-2000:],
+                # THE WHOLE CONVERSATION, UNCUT. The line above stops at the
+                # activation and keeps only its last 2000 characters, so on its
+                # own it loses the prompt and everything Gemma wrote afterwards.
+                # Storing the full text costs a few MB across the corpus and is
+                # the difference between being able to re-examine a case later
+                # and not. An earlier corpus was generated unseeded and then
+                # lost, and its text was unrecoverable.
+                "prompt": conv[0]["content"],
+                "response": conv[1]["content"],
+                "activation_token_index": int(p),
+                "response_start_index": int(n_prefix),
                 "activation_vector": H[int(p)].float().cpu().numpy().tolist(),
                 "activation_layer": a.layer_index,
                 "doc_id": srcs[k],

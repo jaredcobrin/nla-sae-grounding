@@ -196,11 +196,22 @@ def main() -> None:
     # responses were generated unseeded, so the text behind those results is gone
     # for good and no by-eye check against it is possible. Never again.
     import pyarrow.parquet as _pq
-    _tbl = _pq.ParquetFile(args.parquet).read(
-        columns=["detokenized_text_truncated", "doc_id"])
+    _cols = set(_pq.ParquetFile(args.parquet).schema_arrow.names)
+    _want = ["detokenized_text_truncated", "doc_id"] + [
+        c for c in ("prompt", "response", "activation_token_index")
+        if c in _cols]
+    _tbl = _pq.ParquetFile(args.parquet).read(columns=_want)
     _txt = _tbl.column("detokenized_text_truncated").to_pylist()
     _docs = _tbl.column("doc_id").to_pylist()
     src_text = [_txt[int(r)][-1200:] for r in row_idx]
+    # The FULL prompt and response, uncut, carried into the results so a reader
+    # can see the whole conversation an activation came from rather than the
+    # 1200 characters before its token. Older corpora lack these columns.
+    _get = lambda c: (_tbl.column(c).to_pylist() if c in _want else None)
+    _p, _r, _pos = _get("prompt"), _get("response"), _get("activation_token_index")
+    src_prompt = [_p[int(i)] for i in row_idx] if _p else None
+    src_response = [_r[int(i)] for i in row_idx] if _r else None
+    src_pos = [_pos[int(i)] for i in row_idx] if _pos else None
     # DOC ID PER ACTIVATION, carried through so the independence of the sample is
     # checkable from the results alone. An earlier run had 50 activations drawn
     # from only 30 conversations -- invisible in every artefact, and it narrowed
@@ -354,6 +365,9 @@ def main() -> None:
             "cos_C_sae_ar_vs_ar": cos_C[k], "cos_D_sae_ar_vs_orig": cos_D[k],
             "source_text": src_text[i],
             "doc_id": src_doc[i],
+            **({"prompt": src_prompt[i]} if src_prompt else {}),
+            **({"response": src_response[i]} if src_response else {}),
+            **({"activation_token_index": src_pos[i]} if src_pos else {}),
         })
 
     def m(key): return float(np.mean([r[key] for r in runs]))

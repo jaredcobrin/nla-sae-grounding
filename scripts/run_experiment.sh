@@ -5,7 +5,7 @@
 #   export AV=... AR=...          # the nla-gemma3-12b-L32-{av,ar} snapshot dirs
 #   bash scripts/run_experiment.sh
 #
-# ~2.5h on one 24GB GPU. Each stage writes its output before the next starts, so
+# ~4-5h on one 24GB GPU at the default N_DOCS=120. Each stage writes its output before the next starts, so
 # a failure part-way does not cost the stages already done, and re-running skips
 # the corpus if the parquet exists.
 #
@@ -21,7 +21,7 @@ AR="${AR:?set AR to the nla-gemma3-12b-L32-ar snapshot directory}"
 # samples. Two activations from one Gemma response share nearly all their
 # context and are one cluster, not two observations -- an earlier run drew 50
 # activations from only 30 conversations and every interval was too narrow.
-N_DOCS="${N_DOCS:-50}"
+N_DOCS="${N_DOCS:-120}"
 RUNS="${RUNS:-5}"
 PARQUET="${PARQUET:-acts_rollout${N_DOCS}_L32.parquet}"
 OUT="${OUT:-results}"
