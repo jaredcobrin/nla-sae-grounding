@@ -126,8 +126,18 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--arm", required=True, choices=["rollout", "wildchat"])
-    ap.add_argument("--n-docs", type=int, default=10)
-    ap.add_argument("--positions-per-doc", type=int, default=10)
+    ap.add_argument("--n-docs", type=int, default=10,
+                    help="conversations to generate. ONE ACTIVATION EACH by "
+                         "default, so this is also the number of independent "
+                         "samples the experiment ends up with")
+    ap.add_argument("--positions-per-doc", type=int, default=1,
+                    help="activations taken from each conversation. LEAVE AT 1. "
+                         "Two positions in one Gemma response share nearly all "
+                         "their context -- an earlier run sampled 10 apiece and "
+                         "two of them landed one token apart, which is not two "
+                         "measurements of anything. Raising this inflates the "
+                         "row count without adding independent samples, and "
+                         "every downstream confidence interval silently narrows")
     ap.add_argument("--layer-index", type=int, default=32)
     ap.add_argument("--max-new-tokens", type=int, default=400, help="rollout arm only")
     ap.add_argument("--min-response-chars", type=int, default=400,

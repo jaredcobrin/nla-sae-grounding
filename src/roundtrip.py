@@ -196,10 +196,21 @@ def main() -> None:
     # responses were generated unseeded, so the text behind those results is gone
     # for good and no by-eye check against it is possible. Never again.
     import pyarrow.parquet as _pq
-    _txt = _pq.ParquetFile(args.parquet).read(
-        columns=["detokenized_text_truncated"]).column(0).to_pylist()
+    _tbl = _pq.ParquetFile(args.parquet).read(
+        columns=["detokenized_text_truncated", "doc_id"])
+    _txt = _tbl.column("detokenized_text_truncated").to_pylist()
+    _docs = _tbl.column("doc_id").to_pylist()
     src_text = [_txt[int(r)][-1200:] for r in row_idx]
+    # DOC ID PER ACTIVATION, carried through so the independence of the sample is
+    # checkable from the results alone. An earlier run had 50 activations drawn
+    # from only 30 conversations -- invisible in every artefact, and it narrowed
+    # every confidence interval downstream.
+    src_doc = [_docs[int(r)] for r in row_idx]
+    n_docs = len(set(src_doc))
     print(f"  -> carried {len(src_text)} source texts into the results")
+    print(f"  -> {len(V)} activations from {n_docs} distinct conversations"
+          + ("" if n_docs == len(V) else
+             f"   !! NOT INDEPENDENT: {len(V) - n_docs} share a conversation"))
 
     # ---------------- Stage 1: original -> SAE ----------------
     print("\n--- Stage 1: original activations through the SAE ---")
@@ -342,6 +353,7 @@ def main() -> None:
             "cos_A_sae_orig_vs_orig": sae_cos[i], "cos_B_ar_vs_orig": rec["cos"],
             "cos_C_sae_ar_vs_ar": cos_C[k], "cos_D_sae_ar_vs_orig": cos_D[k],
             "source_text": src_text[i],
+            "doc_id": src_doc[i],
         })
 
     def m(key): return float(np.mean([r[key] for r in runs]))
@@ -367,6 +379,8 @@ def main() -> None:
         "config": vars(args), "seed_used": seed, "rawvar": rawvar,
         "gate_log": gate_log,
         "source_text": src_text,
+        "doc_id": src_doc,
+        "n_documents": n_docs,
         "stage1": {"F_orig": [sorted(f) for f in F_orig],
                     "strengths": [{int(j): float(A_orig[i][j]) for j in sorted(F_orig[i])}
                                    for i in range(len(V))],

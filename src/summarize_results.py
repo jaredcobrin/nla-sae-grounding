@@ -238,6 +238,14 @@ def render_md(s: dict) -> str:
          f"- {s['meta']['n_activations']} activations x "
          f"{s['meta']['runs_per_activation']} explanations = "
          f"{s['meta']['n_pairs']} pairs",
+         (f"- **{s['meta']['n_documents']} distinct conversations** — "
+          + ("one activation each, so the activations are independent samples"
+             if s["meta"]["independent"] else
+             f"**{s['meta']['n_activations'] - s['meta']['n_documents']} "
+             f"activations share a conversation with another, so they are NOT "
+             f"independent and every interval below is too narrow**")
+          if s["meta"]["n_documents"] else
+          "- *(no doc_id in this run — independence unverifiable)*"),
          "",
          "## 1. Reconstruction (SAE: l0_big)", "",
          "| | FVE | implied cosine |", "|---|---:|---:|"]
@@ -388,9 +396,18 @@ def main() -> None:
     fpr = float((gr.get("validation") or {}).get("false_positive_rate", 0.057))
 
     n_acts = len({r["act"] for r in ov["runs"]})
+    # HOW MANY INDEPENDENT SAMPLES IS THIS REALLY? Two activations from the same
+    # Gemma conversation share nearly all their context, so they are one cluster,
+    # not two observations. An earlier run had 50 activations from 30
+    # conversations and nothing in any artefact said so, while every confidence
+    # interval below was computed as if all 50 were independent.
+    docs = {r.get("doc_id") for r in ov["runs"] if r.get("doc_id")}
+    n_docs = len(docs) or None
     summary = {
         "meta": {
             "n_activations": n_acts,
+            "n_documents": n_docs,
+            "independent": (n_docs == n_acts) if n_docs else None,
             "n_pairs": len(ov["runs"]),
             "runs_per_activation": len(ov["runs"]) // max(n_acts, 1),
             "source": str(d.resolve()),

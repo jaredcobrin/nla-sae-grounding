@@ -147,6 +147,17 @@ One command: corpus → round trip → SAE → labelling → judging → every n
 bash scripts/run_experiment.sh          # ~2.5h on one 24GB GPU
 ```
 
+**One activation per conversation.** `N_DOCS` (default 50) is therefore both the
+number of Gemma conversations generated and the number of *independent* samples
+the statistics get. Two activations from one response share nearly all their
+context — they are one cluster, not two observations — so taking several per
+conversation inflates the row count while narrowing every confidence interval.
+Raise it for more power:
+
+```bash
+N_DOCS=120 bash scripts/run_experiment.sh    # ~4-5h, and enough n to settle §3
+```
+
 Results land in `results/`:
 
 | | |
@@ -161,13 +172,16 @@ by hand is how four errors reached an earlier write-up — a correction applied 
 the wrong direction, a backwards conditional, a constant borrowed from the wrong
 run, and significance pooled over non-independent pairs.
 
-Three things to check before believing any of it, in this order:
+Four things to check before believing any of it, in this order:
 
-1. **validated label count** in `SUMMARY.md` §3. ~50% is expected; much lower
-   means the labeller is failing, not that the latents are hard.
-2. **the judge's false-positive rate** in §5. Under ~10%. An earlier prompt
+1. **the conversation count** at the top of `SUMMARY.md`. It must equal the
+   activation count. If it does not, the activations are not independent samples
+   and every confidence interval below is too narrow.
+2. **validated label count** in §3. ~50% is expected; much lower means the
+   labeller is failing, not that the latents are hard.
+3. **the judge's false-positive rate** in §5. Under ~10%. An earlier prompt
    scored 78% and made every downstream number void.
-3. **the control rows** in §2. If a control sits near its matched number, that
+4. **the control rows** in §2. If a control sits near its matched number, that
    measurement is not discriminating and must not be quoted.
 
 Stages, if you want to run them individually — see [`src/README.md`](src/README.md).
@@ -253,7 +267,9 @@ never covered.
 
 ## Scope, honestly
 
-- **n = 50 activations**, one model, one layer, one corpus.
+- **n = 50 activations from 50 separate conversations**, one model, one
+  layer, one corpus. `SUMMARY.md` states the conversation count, and it
+  must equal the activation count or the intervals are too narrow.
 - **These activations were selected on the outcome metric** — a gate chose ones
   scoring FVE 0.73–0.77, so they are easier than average. Every seed is logged and
   the gate has been removed from the code.

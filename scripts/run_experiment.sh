@@ -17,6 +17,10 @@ set -euo pipefail
 : "${NLA_REPO:?set NLA_REPO to a clone of kitft/natural_language_autoencoders}"
 AV="${AV:?set AV to the nla-gemma3-12b-L32-av snapshot directory}"
 AR="${AR:?set AR to the nla-gemma3-12b-L32-ar snapshot directory}"
+# ONE ACTIVATION PER CONVERSATION, so N_DOCS is also the number of independent
+# samples. Two activations from one Gemma response share nearly all their
+# context and are one cluster, not two observations -- an earlier run drew 50
+# activations from only 30 conversations and every interval was too narrow.
 N_DOCS="${N_DOCS:-50}"
 RUNS="${RUNS:-5}"
 PARQUET="${PARQUET:-acts_rollout${N_DOCS}_L32.parquet}"
@@ -37,7 +41,7 @@ if [ -f "$PARQUET" ]; then
   echo "    $PARQUET exists, skipping (delete it to rebuild)"
 else
   python "$SRC/extract_activations.py" --arm rollout \
-      --n-docs "$N_DOCS" --positions-per-doc 10 --seed 42 --out "$PARQUET"
+      --n-docs "$N_DOCS" --positions-per-doc 1 --seed 42 --out "$PARQUET"
 fi
 
 # ---- 2. round trip -----------------------------------------------------------
@@ -87,11 +91,14 @@ Done. Results in $OUT/
   LATENTS_BY_BUCKET.md  per activation: explanation, source text, labelled latents
 
 Check these before believing anything:
-  1. validated label count in SUMMARY.md section 3. ~50% is expected; much lower
+  1. the conversation count at the top of SUMMARY.md. It must equal the
+     activation count, or the activations are not independent samples and every
+     confidence interval is too narrow
+  2. validated label count in SUMMARY.md section 3. ~50% is expected; much lower
      means the labeller is failing, not that the latents are hard
-  2. the judge's false-positive rate in section 5. Under ~10%. An earlier prompt
+  3. the judge's false-positive rate in section 5. Under ~10%. An earlier prompt
      scored 78% and made every downstream number void
-  3. the control rows in section 2. If a control sits near its matched number,
+  4. the control rows in section 2. If a control sits near its matched number,
      that measurement is not discriminating and must not be quoted
 
 Not part of the experiment, kept for reference:

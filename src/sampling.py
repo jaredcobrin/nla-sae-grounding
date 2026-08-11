@@ -46,22 +46,43 @@ FAILED_EXTRACTION_MSE = 2.0
 
 
 def load_vectors(
-    parquet_path: str, n: int, seed: int, pool_cap: int = 50_000
+    parquet_path: str, n: int, seed: int, pool_cap: int = 50_000,
+    one_per_doc: bool = True,
 ) -> tuple[torch.Tensor, list[int], list[int | None]]:
-    """Read up to `pool_cap` rows, then random-sample `n` of them.
+    """Sample `n` activations, AT MOST ONE PER CONVERSATION.
 
-    Random-sampling rather than head-slicing matters: extraction writes rows
-    grouped by document, so the first n rows come from only a handful of docs
-    and are not representative. Seeded, so the same `seed` selects the same rows.
+    WHY ONE PER CONVERSATION
+    Two activations from the same Gemma response share nearly all their context.
+    A run that sampled 10 positions per conversation produced pairs one token
+    apart:
+
+        row 4  ...tied to specific motherboard sockets and RAM types (DDR4 vs. DDR5). If
+        row 5  ...tied to specific motherboard sockets and RAM types (DDR4 vs. DDR5
+
+    Those are two different activations, but they are not two independent
+    measurements of anything. Drawing 50 rows at random from that parquet gave 50
+    activations spread over only 30 conversations, with one conversation
+    contributing four -- so every confidence interval downstream was computed as
+    if there were 50 independent samples when there were 30 clusters.
+
+    Grouping by `doc_id` and taking one row from each fixes it at the source.
+    Pass one_per_doc=False only to reproduce an older run.
+
+    Random-sampling rather than head-slicing also matters: extraction writes rows
+    grouped by document, so the first n rows come from a handful of documents.
+    Seeded, so the same `seed` selects the same rows.
 
     Returns (vectors [n, d] float32, chosen row indices, n_raw_tokens or Nones).
     """
     pf = pq.ParquetFile(parquet_path)
     cols = set(pf.schema_arrow.names)
-    want = [ACTIVATION_COLUMN] + (["n_raw_tokens"] if "n_raw_tokens" in cols else [])
+    want = ([ACTIVATION_COLUMN]
+            + (["n_raw_tokens"] if "n_raw_tokens" in cols else [])
+            + (["doc_id"] if "doc_id" in cols else []))
 
     chunks: list[np.ndarray] = []
     positions: list[int | None] = []
+    doc_ids: list[str | None] = []
     total = 0
     for batch in pf.iter_batches(batch_size=8192, columns=want):
         col = batch.column(ACTIVATION_COLUMN)
@@ -69,22 +90,42 @@ def load_vectors(
         # extraction writes) and variable-length ListArray.
         flat = col.flatten().to_numpy(zero_copy_only=False).astype(np.float32)
         chunks.append(flat.reshape(len(col), -1))
-        if "n_raw_tokens" in want:
-            positions.extend(batch.column("n_raw_tokens").to_pylist())
-        else:
-            positions.extend([None] * len(col))
+        positions.extend(batch.column("n_raw_tokens").to_pylist()
+                         if "n_raw_tokens" in want else [None] * len(col))
+        doc_ids.extend(batch.column("doc_id").to_pylist()
+                       if "doc_id" in want else [None] * len(col))
         total += len(col)
         if total >= pool_cap:
             break
 
     pool = np.concatenate(chunks, axis=0)
     assert len(pool) > 0, f"no rows in {parquet_path!r}"
-    if n > len(pool):
-        print(f"[warn] requested n={n} but parquet has {len(pool)} rows — using all")
-        n = len(pool)
+    rng = np.random.default_rng(seed)
 
-    idx = np.random.default_rng(seed).choice(len(pool), size=n, replace=False)
-    idx.sort()          # keep parquet order for readable logs
+    if one_per_doc and any(d is not None for d in doc_ids):
+        by_doc: dict[str, list[int]] = {}
+        for i, d in enumerate(doc_ids):
+            by_doc.setdefault(d, []).append(i)
+        # one row per conversation, chosen at random within it, then n
+        # conversations chosen at random
+        candidates = [int(rng.choice(v)) for v in by_doc.values()]
+        if n > len(candidates):
+            raise SystemExit(
+                f"asked for {n} activations but the corpus has only "
+                f"{len(candidates)} conversations, and this samples at most one "
+                f"activation per conversation so they are independent.\n"
+                f"Rebuild the corpus with --n-docs {n} (see README), or ask for "
+                f"fewer with --n {len(candidates)}.")
+        idx = np.array(sorted(rng.choice(candidates, size=n, replace=False)))
+        print(f"[sample] {n} activations from {n} distinct conversations "
+              f"({len(by_doc)} available)")
+    else:
+        if n > len(pool):
+            print(f"[warn] requested n={n} but parquet has {len(pool)} rows — using all")
+            n = len(pool)
+        idx = np.sort(rng.choice(len(pool), size=n, replace=False))
+        print(f"[sample] {n} rows, NOT constrained to one per conversation")
+
     return (
         torch.from_numpy(pool[idx]),
         idx.tolist(),

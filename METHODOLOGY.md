@@ -184,6 +184,12 @@ self-consistency     89.2%    across 5 explanations of one activation
 - **Every rate has its own null**, from re-running the procedure on mismatched data.
 - **Only gaps are quoted where the level is not interpretable** — a permissive
   judge inflates both arms; the difference survives, the level does not.
+- **One activation per conversation.** Two activations sampled from the same
+  Gemma response share nearly all their context; a run that took 10 apiece
+  produced pairs one token apart. Sampling 50 rows from such a corpus gave 50
+  activations spread over 30 conversations, and every interval was computed as
+  if all 50 were independent. `load_vectors` now takes at most one row per
+  `doc_id`, and `SUMMARY.md` prints the conversation count so this cannot hide.
 - **The unit is the activation, not the pair.** 3,032 pairs come from **50
   activations**, so pooling inflates confidence ~2.5×: shared vs lost is `z = 6.4`
   pooled but **`t = 2.56`** per activation, which is what is reported. For the same
