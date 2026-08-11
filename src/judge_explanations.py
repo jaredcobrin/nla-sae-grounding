@@ -272,6 +272,10 @@ def main() -> None:
             verdict = "present"
         rows.append({"unit": i, "corpus": u["corpus"], "act": u["act"], "feature": f,
                      "bucket": bucket, "verdict": verdict, "grade": d["grade"],
+                     # The label itself, not just its id. Without it every reader
+                     # has to join this file against feature_labels.json by hand
+                     # to find out what any row is actually about.
+                     "label": usable[f]["label"],
                      "matched": d["matched"], "null_expl_rate": ne, "null_feat_rate": nf,
                      "label_auc": usable[f].get("auc"), "categories": usable[f]["categories"]})
 

@@ -323,7 +323,7 @@ def render_md(s: dict) -> str:
     return "\n".join(L) + "\n"
 
 
-def render_by_bucket(ov: dict, sm: dict, lab: dict) -> str:
+def render_by_bucket(ov: dict, sm: dict, lab: dict, gr: list | None = None) -> str:
     """Per-activation dump: the explanation, the source text, and every labelled
     latent grouped by what the round trip did with it.
 
@@ -331,6 +331,12 @@ def render_by_bucket(ov: dict, sm: dict, lab: dict) -> str:
     they are simply listed under the bucket the set arithmetic put them in. This
     is the file to read when a number looks surprising and you want to see the
     actual case behind it.
+
+    Each latent also carries the matcher's verdict -- whether the AV's
+    explanation actually STATES that latent. Bucket and verdict answer different
+    questions, and the interesting rows are the ones where they disagree: a
+    SHARED latent the explanation never mentioned survived on the AR's inference
+    rather than on anything the AV wrote.
 
     It used to be produced by hand, which meant it could not be regenerated with
     the rest of the results. Now it comes out of the same run as everything else.
@@ -347,6 +353,9 @@ def render_by_bucket(ov: dict, sm: dict, lab: dict) -> str:
     expl = {}
     for r in ov["runs"]:
         expl.setdefault(r["act"], r)
+    # (activation, latent) -> the matcher's grade, so bucket and verdict appear
+    # side by side instead of in two files joined by hand
+    verdict = {(g["act"], g["feature"]): g for g in (gr or [])}
 
     L = ["# What each latent is about — shared vs lost vs made", "",
          "Every validated latent label, grouped by what the round trip did with "
@@ -382,8 +391,29 @@ def render_by_bucket(ov: dict, sm: dict, lab: dict) -> str:
             L.append(f"### {name} — {gloss}  · {len(named)} labelled, "
                      f"{len(fs) - len(named)} unlabelled")
             L.append("")
+            # THREE verdicts, not two. `unknown` means one of the two controls
+            # fired -- the same latent also matched unrelated explanations, or
+            # this explanation also matched latents that never fired -- so the
+            # measurement refused itself. Rendering that as "not stated" would
+            # turn a failed measurement into evidence about the AV.
+            tally = {"present": 0, "not_present": 0, "unknown": 0}
             for f in named:
-                L.append(f"- `f{f}` {val[f]['label']}")
+                v = verdict.get((i, f))
+                vd = v.get("verdict") if v else None
+                if vd in tally:
+                    tally[vd] += 1
+                tag = {"present": f"  **[stated — {v['grade'] if v else ''}]**",
+                       "not_present": "  *[not stated]*",
+                       "unknown": "  *[controls fired — cannot tell]*"}.get(vd, "")
+                L.append(f"- `f{f}` {val[f]['label']}{tag}")
+            if named and verdict:
+                bits = [f"{tally['present']} stated",
+                        f"{tally['not_present']} not stated"]
+                if tally["unknown"]:
+                    bits.append(f"{tally['unknown']} undecidable")
+                L.append("")
+                L.append(f"*Of {len(named)} named {name.lower()} latents: "
+                         + ", ".join(bits) + ".*")
             L.append("")
     return "\n".join(L) + "\n"
 
@@ -450,7 +480,8 @@ def main() -> None:
             for c in cols))
     (d / "per_example.csv").write_text("\n".join(lines) + "\n")
 
-    (d / "LATENTS_BY_BUCKET.md").write_text(render_by_bucket(ov, sm, lab))
+    (d / "LATENTS_BY_BUCKET.md").write_text(
+        render_by_bucket(ov, sm, lab, gr.get("rows")))
 
     print(f"wrote {out}")
     print(f"wrote {d / 'SUMMARY.md'}")
