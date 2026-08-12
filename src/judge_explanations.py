@@ -219,8 +219,12 @@ def main() -> None:
     prompts, key = [], []
     for i, u in enumerate(units):
         own = u["shared"] | u["lost"] | u["made"]
-        # controls must come from a different ACTIVATION: the 5 runs of one
-        # activation share a feature set, so "different run" is not enough.
+        # Controls must come from a different ACTIVATION, not merely a different
+        # unit: when more than one explanation is sampled per activation they
+        # share a feature set, so "different unit" would draw a null from the
+        # same activation. Keying on (corpus, act) holds under any RUNS, and
+        # since the corpus now yields one activation per conversation, a
+        # different activation is also a different conversation.
         others = [j for j, w in enumerate(units)
                   if (w["corpus"], w["act"]) != (u["corpus"], u["act"])]
         absent = sorted(usable.keys() - own)     # ground truth for the FPR

@@ -103,11 +103,29 @@ def reconstruction(ov: dict) -> dict:
             "trimmed_mean_5pct": st.mean(b[max(1, len(b) // 20):
                                            len(b) - max(1, len(b) // 20)]),
         }
+    # THE CONTROL FOR ROW B. Every other section reports its measurement against
+    # a null; section 1 used to be the exception, and an FVE with nothing beside
+    # it gives no way to tell "the round trip preserved this activation" from
+    # "any activation from this corpus scores about this well". The control is
+    # the AR's reconstruction scored against a DIFFERENT activation, offset half
+    # the set away, the same mismatch the latent-overlap control uses.
+    # Absent from artefacts written before roundtrip.py computed it.
+    ctl = [r["fve_B_control_wrong_expl"] for r in ov.get("runs", [])
+           if r.get("fve_B_control_wrong_expl") is not None]
+    control = None
+    if ctl:
+        control = {
+            "fve_B_control": st.mean(ctl),
+            "gap_B_minus_control": fve["B_ar_vs_orig"] - st.mean(ctl),
+            "n": len(ctl),
+        }
+
     return {
         "fve": fve,
         "cos_implied": cos,
         "rawvar": rawvar,
         "fve_multiplier": 2 / rawvar,        # 0.001 of cosine moves FVE by this/1000
+        "mismatched_control": control,
         "fve_B_distribution": dist,
         "gap_B_minus_A": fve["B_ar_vs_orig"] - fve["A_sae_orig_vs_orig"],
         "gap_C_minus_A": fve["C_sae_ar_vs_ar"] - fve["A_sae_orig_vs_orig"],
@@ -300,8 +318,19 @@ def render_md(s: dict) -> str:
              "D_sae_ar_vs_orig": "D  SAE(AR) vs original"}
     for k, nm in names.items():
         L.append(f"| {nm} | {r['fve'][k]:.4f} | {r['cos_implied'][k]:.5f} |")
+    if r.get("mismatched_control"):
+        mc = r["mismatched_control"]
+        L.append(f"| *B control — AR vs a DIFFERENT activation* | "
+                 f"*{mc['fve_B_control']:.4f}* | |")
     L += ["",
-          f"- **B - A = {r['gap_B_minus_A']:+.4f}**",
+          f"- **B - A = {r['gap_B_minus_A']:+.4f}**",]
+    if r.get("mismatched_control"):
+        mc = r["mismatched_control"]
+        L += [f"- **B - control = {mc['gap_B_minus_control']:+.4f}** — row B is "
+              f"scored against the activation it came from; the control scores the "
+              f"same reconstruction against an unrelated one. If these were close, "
+              f"row B would be measuring the corpus rather than the round trip."]
+    L += [
           f"- **C - A = {r['gap_C_minus_A']:+.4f}**",
           f"- L0: original {r['L0_orig']:.1f}, AR output {r['L0_ar']:.1f}",
           f"- `rawvar` {r['rawvar']:.4f}, so FVE = 1 - "
