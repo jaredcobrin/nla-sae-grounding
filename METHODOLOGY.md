@@ -40,6 +40,40 @@ FVE here is reported with its cosine.
 fine-tuned. Not cosmetic: an earlier pass on FineWeb, out-of-distribution for the
 SAE, measured a **7-point** effect where Gemma rollouts gave **25**.
 
+Activations are sampled from **Gemma Scope's own corpus** — the `tokens` array
+inside `examples.safetensors`, 236,783 finished Gemma chat conversations shipped
+with the SAE. It is the same corpus the SAE's published feature exemplars index
+into: `seq_ids` and `positions` address rows of this exact array, which is how
+each latent gets its label in §3.
+
+Earlier runs reproduced Gemma Scope's recipe instead, sampling oasst1 + LMSYS
+prompts and generating responses with Gemma. That path still exists
+(`--arm rollout`), but it costs ~400 decode steps per conversation — hours per
+run — and is not bit-reproducible, since the responses depend on sampling
+temperature and model version. Using the shipped corpus makes stage 1 one
+forward pass per conversation, and makes the text identical for anyone
+re-running.
+
+> **Stated limitation: this corpus may be in-sample for the SAE.** Google
+> documents neither where the text came from nor whether the SAE was trained on
+> it. If it was, the SAE's own reconstruction score in §1 is flattering to the
+> SAE — which makes §1's claim (the NLA round trip beats the SAE) *harder* to
+> win, not easier: the SAE is scored on home ground while the NLA is scored away,
+> since the AV and AR were trained on WildChat + Ultra-FineWeb. For §2 and §3 it
+> is neutral, because those compare buckets and matched-vs-null *within* one
+> corpus, so a corpus-level effect moves the measurement and its null together.
+> What it cannot support is any claim about how Gemma Scope SAEs reconstruct
+> activations **in general**. No such claim is made here.
+>
+> The related worry — that a label derived from Gemma Scope's corpus might not
+> describe how a latent behaves in ours — was checked back when the two corpora
+> were different, and came back negative. Of the 1,142 latents that fired across
+> an earlier run's activations, **none** was absent from Gemma Scope's corpus and
+> **none** fell in its rarest 10%; the median sat at the **91st percentile** of
+> all 16,384 latents by firing frequency. The latents this experiment touches are
+> the well-characterised ones. Drawing both sides from one corpus removes the
+> question rather than answering it.
+
 **Two SAEs, each the conservative choice for its job:**
 
 | | `l0_big` (~120 latents) | `l0_small` (~21) |

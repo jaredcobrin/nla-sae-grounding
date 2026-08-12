@@ -197,6 +197,26 @@ that drop out of a bucket comparison by having no latents in one of the buckets.
 N_DOCS=50 bash scripts/run_experiment.sh     # faster, underpowered
 ```
 
+**Where the conversations come from.** By default they are sampled from Gemma
+Scope's own corpus — the `tokens` array inside the `examples.safetensors` the
+setup step already downloads, holding 236,783 finished Gemma chats. It is the
+same corpus the SAE's published feature exemplars point into, so it is Gemma
+Scope's actual data rather than our reconstruction of their recipe, and the text
+is identical for anyone re-running.
+
+The alternative regenerates that corpus locally — sampling oasst1 + LMSYS
+prompts and having Gemma write each response — which is ~400 decode steps per
+conversation and adds roughly three hours:
+
+```bash
+ARM=rollout bash scripts/run_experiment.sh   # regenerate instead of sampling
+```
+
+Both write a parquet named for the arm, so switching cannot silently reuse the
+other one's activations. `METHODOLOGY.md` §2 records the one caveat: the shipped
+corpus may be in-sample for the SAE, which makes finding 1 harder to win rather
+than easier.
+
 Results land in `results/`:
 
 | | |
