@@ -39,7 +39,7 @@ samples only inside it, with special tokens masked as the paper specifies.
 Output schema matches stage0 exactly, so downstream scripts need no changes.
 
 Usage:
-    python src/extract_activations.py --arm rollout \
+    python src/extract_activations.py --arm saecorpus \
         --n-docs 10 --positions-per-doc 10 --out acts_gemma_rollout_L32.parquet
 """
 
@@ -70,9 +70,19 @@ sys.path.insert(0, _UP)
 from nla.arch_adapters import resolve_text_model  # noqa: E402
 
 BASE = "google/gemma-3-12b-it"
-# Same floor stage0 uses: an activation needs enough left-context to mean
-# anything. Applied WITHIN the response region here, not from sequence start.
-_MIN_OFFSET = 16
+# An activation needs enough left-context to mean anything; earlier positions
+# decode to noise. Upstream stage0 uses _MIN_POSITION = 50 measured from the
+# SEQUENCE start. This is measured from the RESPONSE start instead, because a
+# position inside the user's prompt is not where either the SAE or the NLA saw
+# tokens -- so the two numbers are not directly comparable and 16 here was NOT
+# equivalent to 50 there.
+#
+# Measured on the SAE corpus, whose model turn begins at a median token 26:
+#   offset 16 -> absolute floor ~42 from sequence start, BELOW the paper's 50
+#   offset 50 -> absolute floor ~76, comfortably above it
+# So 16 was quietly the looser setting. 50 costs almost nothing -- usable
+# conversations go 123/128 -> 121/128, median valid positions 465 -> 431.
+_MIN_OFFSET = 50
 
 # The corpus Gemma Scope ships alongside the SAE. Already downloaded by this
 # project's setup step (the allow_patterns glob covers it) and already read by
@@ -135,7 +145,8 @@ def wildchat_conversations(n: int, seed: int) -> list[list[dict]]:
     return [out[int(i)] for i in idx]
 
 
-def saecorpus_docs(n: int, seed: int, tok, min_response_tokens: int = 32) -> list[dict]:
+def saecorpus_docs(n: int, seed: int, tok,
+                   min_response_tokens: int = _MIN_OFFSET + 16) -> list[dict]:
     """Sample N conversations from the corpus Gemma Scope ships with the SAE.
 
     WHY THIS EXISTS: the `rollout` arm reproduces Gemma Scope's recipe by
@@ -198,8 +209,10 @@ def saecorpus_docs(n: int, seed: int, tok, min_response_tokens: int = 32) -> lis
             us = u + 3 if ids[u + 2] == nl else u + 2        # past "<sot>user\n"
             ms = m + 3 if ids[m + 2] == nl else m + 2        # past "<sot>model\n"
             ue = next((j for j in range(us, m) if ids[j] == eot), m)
-            # Enough response tokens to sample an activation position from,
-            # after _MIN_OFFSET is applied inside the response.
+            # Enough response tokens to sample from AFTER _MIN_OFFSET is applied
+            # inside the response -- the default leaves at least 16 candidate
+            # positions, so this tracks _MIN_OFFSET rather than being a second
+            # constant that can drift away from it.
             if len(ids) - ms < min_response_tokens:
                 continue
             key = ids.tobytes()
