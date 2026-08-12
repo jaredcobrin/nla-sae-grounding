@@ -175,20 +175,23 @@ than a comfortable one.
 One command: corpus → round trip → SAE → labelling → judging → every number.
 
 ```bash
-bash scripts/run_experiment.sh          # ~4-5h on one 24GB GPU
+bash scripts/run_experiment.sh          # ~5h, mostly corpus generation
 ```
 
-**One activation per conversation.** `N_DOCS` (default 120) is therefore both the
-number of Gemma conversations generated and the number of *independent* samples
-the statistics get. Two activations from one response share nearly all their
-context — they are one cluster, not two observations — so taking several per
-conversation inflates the row count while narrowing every confidence interval.
-Raise it for more power:
+**One activation per conversation, one explanation per activation.** `N_DOCS`
+(default 200) is therefore both the number of Gemma conversations generated and
+the number of *independent* samples the statistics get — nothing is nested
+inside anything else. Two activations from one response share nearly all their
+context, and two explanations of one activation turn out to be ~97% the same
+measurement (ICC 0.97 on FVE; the decomposition is in `scripts/run_experiment.sh`
+under `RUNS`). Either kind of nesting inflates the row count while narrowing
+every confidence interval.
 
-The default of 120 is set by a power calculation, not by taste: at the effect
-size measured in an earlier run, ~112 independent activations are needed before
-§3's comparison can be called either way. `N_DOCS=50` runs in ~2.5h but is very
-likely to come back inconclusive.
+The default of 200 comes from a power calculation, not taste: at the effect size
+measured in an earlier run, ~112 independent activations are the minimum before
+§3's comparison can be called either way, and 200 leaves margin for activations
+that drop out of a bucket comparison by having no latents in one of the buckets.
+`N_DOCS=50` runs in ~1.5h but is very likely to come back inconclusive.
 
 ```bash
 N_DOCS=50 bash scripts/run_experiment.sh     # faster, underpowered

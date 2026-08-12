@@ -5,9 +5,11 @@
 #   export AV=... AR=...          # the nla-gemma3-12b-L32-{av,ar} snapshot dirs
 #   bash scripts/run_experiment.sh
 #
-# ~4-5h on one 24GB GPU at the default N_DOCS=120. Each stage writes its output before the next starts, so
-# a failure part-way does not cost the stages already done, and re-running skips
-# the corpus if the parquet exists.
+# ~5h on one GPU at the default N_DOCS=200, most of it stage 1: generating the
+# corpus is now the dominant cost, since dropping to one explanation per
+# activation cut stages 2 and 4 to a third. Each stage writes its output before
+# the next starts, so a failure part-way does not cost the stages already done,
+# and re-running skips the corpus if the parquet exists.
 #
 # The last stage writes results/summary.json and results/SUMMARY.md, which
 # contain every number quoted in RESULTS.md. Nothing else needs to be computed
@@ -17,12 +19,36 @@ set -euo pipefail
 : "${NLA_REPO:?set NLA_REPO to a clone of kitft/natural_language_autoencoders}"
 AV="${AV:?set AV to the nla-gemma3-12b-L32-av snapshot directory}"
 AR="${AR:?set AR to the nla-gemma3-12b-L32-ar snapshot directory}"
-# ONE ACTIVATION PER CONVERSATION, so N_DOCS is also the number of independent
-# samples. Two activations from one Gemma response share nearly all their
-# context and are one cluster, not two observations -- an earlier run drew 50
-# activations from only 30 conversations and every interval was too narrow.
-N_DOCS="${N_DOCS:-120}"
-RUNS="${RUNS:-5}"
+# ONE ACTIVATION PER CONVERSATION, and (see RUNS below) one run per activation,
+# so N_DOCS is the number of independent samples full stop. Two activations from
+# one Gemma response share nearly all their context and are one cluster, not two
+# observations -- an earlier run drew 50 activations from only 30 conversations
+# and every interval was too narrow.
+N_DOCS="${N_DOCS:-200}"
+# RUNS = how many times each activation is pushed through AV -> AR. This was 5,
+# on the assumption that T=1 sampling made the explanations vary enough to need
+# averaging. Measured, on a completed 50-activation run, by splitting
+# between-activation from within-activation variance:
+#
+#   quantity          ICC      within-var   between-var
+#   n_shared          0.980      1.24          60.7
+#   FVE               0.974      0.00185        0.0706
+#   Jaccard           0.892      0.00043        0.0035
+#   grounding rate    0.655      0.01164        0.0221
+#
+# ICC ~0.9 means the 5 explanations of one activation say substantially the same
+# thing. Runs are nested inside an activation, so they are not independent
+# samples and the extra ones mostly re-measure what is already known.
+# Conversations ARE independent. At a fixed budget the trade is one-sided:
+#
+#   plan              SE(FVE)   SE(grounding)   AV+AR passes   judge units
+#   120 conv x 5      0.0243       0.0143           600            600
+#   200 conv x 1      0.0190       0.0130           200            200
+#
+# Tighter on both, and a third of the round-trip and judging cost. The only
+# thing R=1 gives up is the ICC estimate above -- which does not need redoing,
+# because it is already measured and recorded here.
+RUNS="${RUNS:-1}"
 PARQUET="${PARQUET:-acts_rollout${N_DOCS}_L32.parquet}"
 OUT="${OUT:-results}"
 
@@ -128,7 +154,7 @@ else
       --n-docs "$N_DOCS" --positions-per-doc 1 --seed 42 --out "$PARQUET"
 fi
 # The corpus is the most expensive thing to lose: ~2h of Gemma generation at
-# N_DOCS=120, and it is unreproducible if the seed or the model ever changes.
+# N_DOCS=200, and it is unreproducible if the seed or the model ever changes.
 backup corpus "$PARQUET" "$PARQUET.nla_meta.yaml"
 
 # ---- 2. round trip -----------------------------------------------------------
