@@ -84,6 +84,31 @@ The mean above is not the typical pair. With a 71x multiplier a single activatio
 
 - **58% of `shared` latents were never mentioned** in the explanation
 
+### Is this just label quality?
+
+A latent scored 'not present' has two readings: the AV never mentioned it, or its label is too vague for the judge to match. Splitting the same rows on each label's own AUC separates them, with no extra judging.
+
+| label AUC band | n | conveyed | null_expl | vs null |
+|---|---:|---:|---:|---:|
+| 0.758-0.793 | 575 | 31.7% | 11.2% | 2.8x |
+| 0.793-0.840 | 575 | 36.7% | 8.1% | 4.6x |
+| 0.840-0.883 | 575 | 34.4% | 11.2% | 3.1x |
+| 0.883-0.938 | 575 | 40.5% | 6.6% | 6.1x |
+| 0.938-1.000 | 575 | 47.3% | 4.1% | 11.7x |
+
+- conveyance moves **+15.7 points** from the weakest validated labels to the strongest. A large lift means the headline rate understates what happens for well-identified latents, and that chance is lower there too -- a vague label matches unrelated explanations more often as well.
+
+**The check that matters: does the shared-vs-lost gap survive as the label threshold tightens?** If it only exists among weak labels it is an artefact of labelling, not a result about the AV.
+
+| labels kept | shared | lost | gap |
+|---|---:|---:|---:|
+| all validated (n=1,682/663) | 41.9% | 31.4% | **+10.5 pts** |
+| AUC >= 0.85 (n=938/352) | 46.6% | 36.6% | **+9.9 pts** |
+| AUC >= 0.90 (n=605/195) | 47.9% | 39.0% | **+9.0 pts** |
+| AUC >= 0.94 (n=369/111) | 50.4% | 41.4% | **+9.0 pts** |
+
+- the gap varies by **1.6 points** across those thresholds (stable -- the finding does not depend on label quality).
+
 ## 5. Judge validation
 
 - false_positive_rate: **0.067**

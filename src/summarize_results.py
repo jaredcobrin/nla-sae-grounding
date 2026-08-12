@@ -278,6 +278,71 @@ def conveyance(rows: list[dict], fpr: float) -> dict:
     }
 
 
+def by_label_quality(rows: list[dict], n_bands: int = 5) -> dict | None:
+    """Does the conveyance rate just track how good the LABEL is?
+
+    When a latent comes back "not present" there are two readings: the AV never
+    mentioned it, or its label is too vague for the judge to match. This
+    separates them without any extra judging, by splitting the same rows on the
+    label's own AUC.
+
+    It replaced a proposed fourth judge arm that would have scored each latent
+    against the SOURCE TEXT as a "perfect explanation" ceiling. That arm was
+    dropped: the source text is the document the activation came from, and a
+    latent's label is derived from text that makes it fire, so asking whether
+    the source matches the label mostly re-asks whether the label is right --
+    which the AUC gate in label_features.py already tests, with a wrong-label
+    null and disjoint select/report bands. It would have doubled the judge stage
+    to weakly duplicate an existing control.
+
+    Two things to read here:
+      * conveyance RISING with label AUC means label quality limits the headline
+        rate, so the headline understates what happens for well-identified
+        latents. Expect null_expl to fall at the same time -- a vague label
+        matches unrelated explanations more often too.
+      * the shared-vs-lost gap holding as the threshold tightens is the finding
+        surviving its most obvious confound. If the gap only exists among weak
+        labels, it is an artefact of labelling, not a result about the AV.
+    """
+    rows = [r for r in rows if r.get("label_auc") is not None]
+    if len(rows) < n_bands * 20:
+        return None
+    rows.sort(key=lambda r: r["label_auc"])
+    # Same convention as conveyance(): unknowns stay in the denominator, so
+    # these rates are directly comparable to the bucket table above.
+    rate = lambda s: (sum(1 for r in s if r["verdict"] == "present") / len(s)
+                      if s else None)
+
+    bands, per = [], len(rows) // n_bands
+    for i in range(n_bands):
+        b = rows[i * per:] if i == n_bands - 1 else rows[i * per:(i + 1) * per]
+        ne = [r["null_expl_rate"] for r in b if r.get("null_expl_rate") is not None]
+        bands.append({
+            "auc_low": b[0]["label_auc"], "auc_high": b[-1]["label_auc"],
+            "n": len(b), "rate": rate(b),
+            "null_expl_rate": st.mean(ne) if ne else None,
+        })
+
+    thresholds = []
+    for thr in (0.0, 0.85, 0.90, 0.94):
+        s = [r for r in rows if r["label_auc"] >= thr]
+        sh = [r for r in s if r["bucket"] == "shared"]
+        ls = [r for r in s if r["bucket"] == "lost"]
+        if not sh or not ls:
+            continue
+        thresholds.append({"threshold": thr, "n_shared": len(sh), "n_lost": len(ls),
+                           "shared": rate(sh), "lost": rate(ls),
+                           "gap": rate(sh) - rate(ls)})
+    gaps = [t["gap"] for t in thresholds]
+    return {
+        "bands": bands,
+        "rate_lift_weakest_to_strongest": bands[-1]["rate"] - bands[0]["rate"],
+        "by_threshold": thresholds,
+        # If this is small the finding does not depend on label quality.
+        "gap_spread_across_thresholds": (max(gaps) - min(gaps)) if gaps else None,
+    }
+
+
 def judge_validation(g: dict) -> dict:
     """The judge's own error rates -- the floor everything in section 3 sits on."""
     v = dict(g.get("validation") or {})
@@ -418,8 +483,45 @@ def render_md(s: dict) -> str:
           f"| not mentioned | {m['unmentioned_shared']:,} | {m['unmentioned_lost']:,} |",
           "",
           f"- **{m['frac_of_shared_unmentioned']:.0%} of `shared` latents were "
-          f"never mentioned** in the explanation",
-          "", "## 5. Judge validation", ""]
+          f"never mentioned** in the explanation"]
+
+    q = s.get("label_quality")
+    if q:
+        L += ["", "### Is this just label quality?", "",
+              "A latent scored 'not present' has two readings: the AV never "
+              "mentioned it, or its label is too vague for the judge to match. "
+              "Splitting the same rows on each label's own AUC separates them, "
+              "with no extra judging.", "",
+              "| label AUC band | n | conveyed | null_expl | vs null |",
+              "|---|---:|---:|---:|---:|"]
+        for b in q["bands"]:
+            ratio = (b["rate"] / b["null_expl_rate"]) if b["null_expl_rate"] else None
+            L.append(f"| {b['auc_low']:.3f}-{b['auc_high']:.3f} | {b['n']:,} | "
+                     f"{b['rate']:.1%} | {b['null_expl_rate']:.1%} | "
+                     + (f"{ratio:.1f}x |" if ratio else "- |"))
+        L += ["",
+              f"- conveyance moves **{100*q['rate_lift_weakest_to_strongest']:+.1f} "
+              f"points** from the weakest validated labels to the strongest. A "
+              f"large lift means the headline rate understates what happens for "
+              f"well-identified latents, and that chance is lower there too -- a "
+              f"vague label matches unrelated explanations more often as well.",
+              "",
+              "**The check that matters: does the shared-vs-lost gap survive as "
+              "the label threshold tightens?** If it only exists among weak "
+              "labels it is an artefact of labelling, not a result about the AV.",
+              "",
+              "| labels kept | shared | lost | gap |", "|---|---:|---:|---:|"]
+        for t in q["by_threshold"]:
+            nm = "all validated" if t["threshold"] == 0.0 else f"AUC >= {t['threshold']:.2f}"
+            L.append(f"| {nm} (n={t['n_shared']:,}/{t['n_lost']:,}) | {t['shared']:.1%} | "
+                     f"{t['lost']:.1%} | **{100*t['gap']:+.1f} pts** |")
+        if q["gap_spread_across_thresholds"] is not None:
+            spread = 100 * q["gap_spread_across_thresholds"]
+            L += ["", f"- the gap varies by **{spread:.1f} points** across those "
+                      f"thresholds "
+                      f"({'stable -- the finding does not depend on label quality' if spread < 5 else 'UNSTABLE -- the finding tracks label quality and must not be quoted as a result about the AV'})."]
+
+    L += ["", "## 5. Judge validation", ""]
     for k, v in s["judge"].items():
         if isinstance(v, (int, float)):
             L.append(f"- {k}: **{v:.3f}**")
@@ -560,6 +662,7 @@ def main() -> None:
         "overlap": overlap(sm, bg),
         "labels": labels(lab),
         "conveyance": conveyance(gr["rows"], fpr),
+        "label_quality": by_label_quality(gr["rows"]),
         "judge": judge_validation(gr),
     }
 
