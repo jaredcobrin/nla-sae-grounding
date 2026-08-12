@@ -21,39 +21,55 @@ This repo does two things: it **reproduces the experiment**, and it ships a
 
 ## The findings
 
-**1. The NLA round trip reconstructs an activation better than the SAE does.**
+> Figures below are from a **50-activation** run and are superseded. The power
+> calculation puts the minimum for finding 3 at ~112 independent activations; a
+> 200-conversation run regenerates all of them into
+> [`results/SUMMARY.md`](results/SUMMARY.md), which is the only file numbers
+> should be quoted from.
 
-| | FVE |
-|---|---|
-| SAE reconstruction vs original | 0.587 |
-| **AV → text → AR** vs original | **0.739** |
+**1. What the AR produces is not shaped like a real activation.**
 
-Measured on the corpus the SAE was itself fine-tuned on, using the stronger of
-its two variants — the conservative setting for this comparison.
+| rebuilt by the SAE | FVE | latents used |
+|---|---:|---:|
+| a **real activation** | 0.582 | 119.7 |
+| the **AR's output** | **0.711** | **98.9** |
+
+Hand the SAE something the AR wrote and it decomposes it *better* than a genuine
+activation, with fewer latents. The AR does not emit a typical point in
+activation space — it emits something cleaner, sitting more squarely inside the
+SAE's dictionary. (The full NLA round trip also beats the SAE at rebuilding a
+real activation, 0.687 vs 0.582, but that ranks two systems rather than
+characterising either.)
 
 **2. Latent overlap survives the round trip, far above chance.**
 
 | Jaccard | `l0_small` | `l0_big` |
 |---|---:|---:|
-| rebuild vs its own activation | 0.576 | 0.450 |
-| rebuild vs an **unrelated** activation | 0.009 | 0.026 |
-| ratio | **65×** | **17×** |
+| rebuild vs its own activation | 0.540 | 0.451 |
+| rebuild vs an **unrelated** activation | 0.013 | 0.030 |
+| ratio | **43×** | **15×** |
 
 Integer set arithmetic on latent IDs. No judge, no labels, nothing to calibrate —
 the most robust number here.
 
-**3. The latents that survive are the ones the explanation talks about.**
+**3. Does the explanation talk about the latents that survive?** Two separate
+measurements. *Bucketing* is set arithmetic, and its null is the mismatched
+control above. *Matching* puts a judge on the explanation, and has two nulls of
+its own.
 
-| bucket | latents | mentioned in the explanation |
-|---|---:|---:|
-| **shared** | 1,840 | **45.9%** |
-| made | 562 | 35.1% |
-| lost | 630 | 31.4% |
+| bucket | latents | mentioned in the explanation | chance |
+|---|---:|---:|---:|
+| **shared** | 1,682 | **41.9%** | 8.4% |
+| made | 530 | 34.5% | 7.2% |
+| lost | 663 | 31.4% | 8.5% |
 
-`shared` is **8.0×** the judge's measured 5.75% false-positive rate. Compared per
-activation across the 50 (not by pooling the pairs, which would overstate
-confidence ~2.5×), `shared` beats `lost` by **+11.2 points** (t = 2.56) and `made`
-by **+12.6** (t = 2.42). `made` vs `lost` is not distinguishable.
+`shared` is **6.3×** the judge's measured 6.7% false-positive rate, and chance is
+flat across buckets, so the ordering is not a chance-rate artifact. Compared per
+activation across the 50 — never by pooling pairs, which would overstate
+confidence ~2.5× — `shared` beats `made` by **+10.1 points** (CI [+1.2, +19.0]).
+**`shared` vs `lost` is +8.5 points but its interval crosses zero, so at this
+sample size it is inconclusive** — a power problem, and what the larger run is
+for. `made` vs `lost` is indistinguishable.
 
 **This is a correlation between an SAE's reading of an activation and text an
 independent model wrote about it.** What it implies about the AV is not settled
@@ -289,11 +305,11 @@ turn cannot produce, so it is borrowed and the page says so.
 **4. Does the explanation actually say it?** Every latent genuinely in the
 activation, put to the graded matcher — `CLEARLY` / `PROBABLY` / `UNCLEAR` / `NO`.
 **The only model judgement on the page.** Its prompt was chosen by a measured
-bake-off: 5.75% false-positive rate, against 78.3% for the plain yes/no wording it
-replaced.
+bake-off: a 6.7% false-positive rate, against 78.3% for the plain yes/no wording
+it replaced.
 
 Sections 2 and 4 answer different questions, and the gap between them is the
-point: **54% of SHARED latents are never stated in the explanation** — the AR
+point: **58% of SHARED latents are never stated in the explanation** — the AR
 reconstructs them from context. A latent marked SHARED but `NO` survived on the
 AR's inference, not on anything the AV wrote.
 

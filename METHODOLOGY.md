@@ -18,13 +18,13 @@ saw the NLA.
 
 **Gemma metric trap.** Gemma's activations sit at mean pairwise cosine **0.967**
 (Qwen: 0.30) because dimension 2339 carries ~70,783 of the mean. So `rawvar` is
-tiny — **0.0279** — and it is FVE's denominator:
+tiny — **0.0282** — and it is FVE's denominator:
 
 ```
-FVE = 1 − 2(1−cos)/rawvar   →   1 − 71.7×(1−cos)
+FVE = 1 − 2(1−cos)/rawvar   →   1 − 70.9×(1−cos)
 ```
 
-0.001 of cosine moves FVE by 0.072. The multiplier depends on which activations
+0.001 of cosine moves FVE by 0.071. The multiplier depends on which activations
 were sampled (the n=10 run: 65.0×), so it is not a constant of the model. Every
 FVE here is reported with its cosine.
 
@@ -136,13 +136,13 @@ the 95th percentile of that pooled null — a measured 5% false-positive rate ra
 than a number chosen by feel.
 
 ```
-attempted     1,624      mean AUC 0.742   <- includes the half that get rejected
-                         wrong-label null 0.499
+attempted     2,242      mean AUC 0.743   <- includes the half that get rejected
+                         wrong-label null 0.498
                          threshold        0.756
-validated       816 (50%)  mean AUC 0.873
+validated     1,115 (50%)   mean AUC 0.876
 ```
 
-**0.742 is not the quality of the labels in use.** Kept labels average 0.873.
+**0.743 is not the quality of the labels in use.** Kept labels average 0.876.
 They sit there rather than 0.95+ because the test band is harder than what the
 generator saw, the scorer is Gemma-3-12B not a frontier model, and some latents
 are genuinely polysemantic.
@@ -205,7 +205,7 @@ banned — same broad topic, could plausibly contain it, grammatical patterns fo
 in all writing.
 
 ```
-false-positive rate   5.7%    (the prompt it replaced: 78.3%)
+false-positive rate   6.7%    (the prompt it replaced: 78.3%)
 matcher AUC           0.807   vs unrelated explanations
                       0.836   vs latents that never fired
 self-consistency     89.2%    across 5 explanations of one activation

@@ -22,6 +22,20 @@
     },
     "rawvar": 0.028220968320965767,
     "fve_multiplier": 70.86929042453058,
+    "mismatched_control": null,
+    "fve_B_distribution": {
+      "n": 250,
+      "mean": 0.6874967752659772,
+      "median": 0.774398477673149,
+      "p10": 0.4151264565276377,
+      "p25": 0.6712756312002026,
+      "p75": 0.8252291083826254,
+      "p90": 0.8619440859976595,
+      "min": -0.6321503698398596,
+      "max": 0.9133080307414347,
+      "n_below_zero": 13,
+      "trimmed_mean_5pct": 0.7278829207362166
+    },
     "gap_B_minus_A": 0.10565160804056917,
     "gap_C_minus_A": 0.12896096545862235,
     "L0_orig": 119.72,
@@ -96,19 +110,28 @@
         "n": 1682,
         "conveyed": 705,
         "rate": 0.41914387633769323,
-        "mean_label_auc": 0.8706559806034483
+        "mean_label_auc": 0.8706559806034483,
+        "null_feat_rate": 0.06698374950455806,
+        "null_expl_rate": 0.08442330558858502,
+        "over_null_expl": 4.964788732394366
       },
       "lost": {
         "n": 663,
         "conveyed": 208,
         "rate": 0.3137254901960784,
-        "mean_label_auc": 0.8598463423831071
+        "mean_label_auc": 0.8598463423831071,
+        "null_feat_rate": 0.07038712921065862,
+        "null_expl_rate": 0.08547008547008547,
+        "over_null_expl": 3.6705882352941175
       },
       "made": {
         "n": 530,
         "conveyed": 183,
         "rate": 0.3452830188679245,
-        "mean_label_auc": 0.8674454599056604
+        "mean_label_auc": 0.8674454599056604,
+        "null_feat_rate": 0.06289308176100629,
+        "null_expl_rate": 0.07169811320754717,
+        "over_null_expl": 4.815789473684211
       }
     },
     "real": {
@@ -118,6 +141,7 @@
       "fpr_used": 0.06701449275362319
     },
     "shared_over_fpr_floor": 6.254525836353986,
+    "null_expl_spread_across_buckets": 0.013771972262538304,
     "comparisons": {
       "shared_vs_lost": {
         "clustered": {
@@ -171,6 +195,81 @@
       "p_shared_given_unmentioned": 0.6822625698324022,
       "frac_of_shared_unmentioned": 0.5808561236623068
     }
+  },
+  "label_quality": {
+    "bands": [
+      {
+        "auc_low": 0.7578125,
+        "auc_high": 0.79296875,
+        "n": 575,
+        "rate": 0.3165217391304348,
+        "null_expl_rate": 0.11188405797101449
+      },
+      {
+        "auc_low": 0.79296875,
+        "auc_high": 0.83984375,
+        "n": 575,
+        "rate": 0.36695652173913046,
+        "null_expl_rate": 0.08057971014492753
+      },
+      {
+        "auc_low": 0.83984375,
+        "auc_high": 0.8828125,
+        "n": 575,
+        "rate": 0.3443478260869565,
+        "null_expl_rate": 0.11246376811594203
+      },
+      {
+        "auc_low": 0.8828125,
+        "auc_high": 0.9375,
+        "n": 575,
+        "rate": 0.4052173913043478,
+        "null_expl_rate": 0.06608695652173913
+      },
+      {
+        "auc_low": 0.9375,
+        "auc_high": 1.0,
+        "n": 575,
+        "rate": 0.47304347826086957,
+        "null_expl_rate": 0.04057971014492753
+      }
+    ],
+    "rate_lift_weakest_to_strongest": 0.15652173913043477,
+    "by_threshold": [
+      {
+        "threshold": 0.0,
+        "n_shared": 1682,
+        "n_lost": 663,
+        "shared": 0.41914387633769323,
+        "lost": 0.3137254901960784,
+        "gap": 0.1054183861416148
+      },
+      {
+        "threshold": 0.85,
+        "n_shared": 938,
+        "n_lost": 352,
+        "shared": 0.46588486140724944,
+        "lost": 0.3664772727272727,
+        "gap": 0.09940758867997673
+      },
+      {
+        "threshold": 0.9,
+        "n_shared": 605,
+        "n_lost": 195,
+        "shared": 0.4793388429752066,
+        "lost": 0.38974358974358975,
+        "gap": 0.08959525323161688
+      },
+      {
+        "threshold": 0.94,
+        "n_shared": 369,
+        "n_lost": 111,
+        "shared": 0.5040650406504065,
+        "lost": 0.4144144144144144,
+        "gap": 0.08965062623599207
+      }
+    ],
+    "gap_spread_across_thresholds": 0.015823132909997928
   },
   "judge": {
     "false_positive_rate": 0.06701449275362319,
