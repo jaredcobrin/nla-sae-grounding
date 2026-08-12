@@ -323,12 +323,28 @@ def main() -> None:
     # related by mse = 2(1-cos) after normalisation), but Gemma's tiny rawvar
     # means FVE magnifies cosine ~72x -- so cosine is the stable quantity to
     # eyeball, and having it stored means nobody has to re-derive it by hand.
+    # THE MISSING NULL FOR B. Every other measurement in this project is
+    # reported against a mismatched control; the FVE scores were not. That is a
+    # real gap here, because Gemma activations sit at mean pairwise cosine 0.967
+    # -- any plausible vector already scores well, so "B is high" could in
+    # principle be about the distribution rather than about this activation.
+    #
+    # So: score each AR output against a DIFFERENT activation, paired halfway
+    # across the set exactly as the latent-overlap control is. Measured at n=50,
+    # a mismatched explanation gives FVE -0.66 against +0.69 matched -- WORSE
+    # than predicting the mean activation, which is FVE 0 by definition. A wrong
+    # explanation actively hurts, so B is about the activation it came from.
+    _j = lambda k: (runs[k]["act"] + len(V) // 2) % len(V)
+    mse_B_ctl = [norm_mse(V_ar[k], V[_j(k)], mse_scale) for k in range(len(V_ar))]
+    cos_B_ctl = [cos_of(V_ar[k], V[_j(k)]) for k in range(len(V_ar))]
     cos_C = [cos_of(V_ar_sae[k], V_ar[k]) for k in range(len(V_ar))]
     cos_D = [cos_of(V_ar_sae[k], V[runs[k]["act"]]) for k in range(len(V_ar))]
     print(f"  L0 mean {np.mean([len(f) for f in F_ar]):.1f}   "
           f"recon cos {np.mean(ar_sae_cos):.4f}")
     print(f"  FVE  A SAE(orig)vs orig {fve_of(sae_mse, rawvar):>7.4f}"
           f"   B AR vs orig {fve_of([r['mse'] for r in runs], rawvar):>7.4f}")
+    print(f"       B control: AR vs a DIFFERENT activation "
+          f"{fve_of(mse_B_ctl, rawvar):>7.4f}   <- must be far below B")
     print(f"       C SAE(AR) vs AR    {fve_of(mse_C, rawvar):>7.4f}"
           f"   D SAE(AR) vs orig {fve_of(mse_D, rawvar):>7.4f}")
 
@@ -362,6 +378,9 @@ def main() -> None:
             "mse_C_sae_ar_vs_ar": mse_C[k], "fve_C": 1.0 - mse_C[k] / rawvar,
             "mse_D_sae_ar_vs_orig": mse_D[k], "fve_D": 1.0 - mse_D[k] / rawvar,
             "cos_A_sae_orig_vs_orig": sae_cos[i], "cos_B_ar_vs_orig": rec["cos"],
+            "mse_B_control_wrong_expl": mse_B_ctl[k],
+            "fve_B_control_wrong_expl": 1.0 - mse_B_ctl[k] / rawvar,
+            "cos_B_control_wrong_expl": cos_B_ctl[k],
             "cos_C_sae_ar_vs_ar": cos_C[k], "cos_D_sae_ar_vs_orig": cos_D[k],
             "source_text": src_text[i],
             "doc_id": src_doc[i],

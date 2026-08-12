@@ -31,6 +31,15 @@ SRC="$HERE/src"
 export NLA_REPO
 mkdir -p "$OUT"
 
+# Gemma-3-12B in bf16 is 22.5GB of weights. On a 24GB card that leaves ~800MB,
+# and the default CUDA allocator fragments it badly enough that cuBLAS cannot
+# get workspace -- the failure is CUBLAS_STATUS_EXECUTION_FAILED, not a clean
+# "out of memory", so it does not look like what it is. Measured on a 4090:
+# without this, stage 1 aborts before the first conversation; with it, peak sits
+# at 23,246 MiB and does not grow over 16 iterations.
+# Harmless on a big card, so it is set unconditionally rather than detected.
+export PYTORCH_CUDA_ALLOC_CONF="${PYTORCH_CUDA_ALLOC_CONF:-expandable_segments:True}"
+
 # ---- ARCHIVE ANY PREVIOUS RUN'S ARTEFACTS ------------------------------------
 # A fresh clone of this repo ships the committed results of an earlier run, and
 # this script writes into the same directory. If a stage then fails or is

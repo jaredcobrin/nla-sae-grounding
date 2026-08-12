@@ -364,3 +364,59 @@ rather than refuses.
 - **Anything at n=50 from this layout.** The published numbers come from the
   original runs; this repo has reproduced the *pipeline*, at small n, not the
   results.
+
+
+---
+
+# Session 3 — the 24 GB claim, tested on an actual 24 GB card
+
+Sessions 1 and 2 both ran on a 46 GB L40S and reported a 23,393 MiB peak, from
+which the README claimed 24 GB was enough. That inference was wrong, and a 4090
+showed why.
+
+## What happened
+
+Stage 1 aborted before the first conversation:
+
+```
+RuntimeError: CUDA error: CUBLAS_STATUS_EXECUTION_FAILED
+  when calling cublasGemmEx(...)
+```
+
+Not "out of memory" — cuBLAS failing to obtain workspace, which is the same
+thing wearing a disguise. Measured on the card:
+
+| | MiB |
+|---|---:|
+| usable | 24,091 |
+| **Gemma-3-12B bf16 weights alone** | **22,538 (93.6%)** |
+| peak, generate + hidden-state forward | 23,352 |
+| left for cuBLAS | **~740** |
+
+On the L40S the identical peak left 22 GB spare, so the allocator never had to
+work hard and the problem was invisible.
+
+## The fix
+
+`PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True`, now set unconditionally by
+`scripts/run_experiment.sh`. Tested over 16 generate-and-forward cycles:
+
+```
+iter  4: ok, peak 23246 MiB, reserved 23386 MiB
+iter  8: ok, peak 23246 MiB, reserved 23386 MiB
+iter 12: ok, peak 23246 MiB, reserved 23386 MiB
+iter 16: ok, peak 23246 MiB, reserved 23386 MiB
+survived 16/16
+```
+
+Flat: no fragmentation growth. The flag is harmless on a large card, so it is
+set always rather than detected.
+
+**Still only stage 1.** The full pipeline has been run end to end on 46 GB only.
+24 GB is the tested floor, not a comfortable one, and the README now says so.
+
+## Lesson
+
+A peak measured on a large card does not establish a minimum. 23.4 GB of 46 GB
+and 23.4 GB of 24.1 GB are different situations, and only the second is a
+requirement claim.

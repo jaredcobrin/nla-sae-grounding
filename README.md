@@ -152,9 +152,21 @@ nothing is being copied off the machine.
 
 | | VRAM | |
 |---|---|---|
-| the experiment | **24 GB** | measured ([TEST_LOG.md](TEST_LOG.md)); one 12B model resident at a time |
+| the experiment | **24 GB minimum, 40 GB comfortable** | see below |
 | the tool, responsive | ~72 GB | all three models resident, so a turn is fast |
-| the tool, `--phase` | **24 GB** | loads and releases per turn; a minute or two per reply |
+| the tool, `--phase` | 24 GB | loads and releases per turn; a minute or two per reply |
+
+**24 GB is genuinely tight.** Gemma-3-12B in bf16 is **22.5 GB of weights** against
+24.1 GB usable — 93.6% of the card, leaving ~800 MB for everything else. On a
+4090 the default allocator fragments that and cuBLAS cannot get workspace; the
+run dies with `CUBLAS_STATUS_EXECUTION_FAILED`, which is an out-of-memory that
+does not say so.
+
+`scripts/run_experiment.sh` sets `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True`,
+which fixes it: measured peak 23,246 MiB, flat over 16 iterations with no
+fragmentation growth. **The full pipeline has only been run end to end on a 46 GB
+card**, so on 24 GB expect it to work but treat it as the tested floor rather
+than a comfortable one.
 
 ---
 
