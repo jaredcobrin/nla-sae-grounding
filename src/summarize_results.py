@@ -82,11 +82,33 @@ def reconstruction(ov: dict) -> dict:
     # readability only -- it is NOT independent evidence.
     cos = {k: 1 - (1 - v) * rawvar / 2 for k, v in fve.items()}
     t = ov["totals"]
+
+    # THE MEAN FVE IS NOT THE TYPICAL FVE. rawvar is ~0.028 here, so FVE
+    # multiplies any cosine gap by ~71x, and the mean inherits every outlier at
+    # that weight. In one run the mean was 0.688 while the median was 0.774 --
+    # the whole difference was three activations out of fifty whose cosine was
+    # 0.978 instead of 0.997. Reporting only the mean makes a handful of hard
+    # cases look like a systematically worse model. Both go in the summary.
+    b = sorted(r["fve_B"] for r in ov.get("runs", []) if r.get("fve_B") is not None)
+    dist = None
+    if b:
+        q = lambda p: b[min(int(p * len(b)), len(b) - 1)]
+        dist = {
+            "n": len(b),
+            "mean": st.mean(b),
+            "median": st.median(b),
+            "p10": q(0.10), "p25": q(0.25), "p75": q(0.75), "p90": q(0.90),
+            "min": b[0], "max": b[-1],
+            "n_below_zero": sum(x < 0 for x in b),
+            "trimmed_mean_5pct": st.mean(b[max(1, len(b) // 20):
+                                           len(b) - max(1, len(b) // 20)]),
+        }
     return {
         "fve": fve,
         "cos_implied": cos,
         "rawvar": rawvar,
         "fve_multiplier": 2 / rawvar,        # 0.001 of cosine moves FVE by this/1000
+        "fve_B_distribution": dist,
         "gap_B_minus_A": fve["B_ar_vs_orig"] - fve["A_sae_orig_vs_orig"],
         "gap_C_minus_A": fve["C_sae_ar_vs_ar"] - fve["A_sae_orig_vs_orig"],
         "L0_orig": t["n_orig"],
@@ -153,12 +175,34 @@ def conveyance(rows: list[dict], fpr: float) -> dict:
         s = [r for r in rows if r["bucket"] == b]
         k = sum(1 for r in s if r["verdict"] == "present")
         aucs = [r["label_auc"] for r in s if r.get("label_auc") is not None]
+        # Each bucket gets its OWN chance rate, not just the global one. If
+        # `shared` latents happened to be more generic than `lost` ones, an
+        # arbitrary explanation would match them more often by accident, and the
+        # shared-vs-lost gap computed below would be that artefact rather than a
+        # result. So both nulls are broken out per bucket, and the gap is only
+        # interpretable if they come back flat:
+        #   null_feat -- a latent that did NOT fire, judged against the real
+        #     explanation. The judge's own false-positive floor.
+        #   null_expl -- a latent that DID fire, judged against three unrelated
+        #     explanations. The chance-match floor.
+        nf = [r["null_feat_rate"] for r in s if r.get("null_feat_rate") is not None]
+        ne = [r["null_expl_rate"] for r in s if r.get("null_expl_rate") is not None]
+        m_ne = st.mean(ne) if ne else None
         by_bucket[b] = {
             "n": len(s),
             "conveyed": k,
             "rate": k / len(s) if s else None,
             "mean_label_auc": st.mean(aucs) if aucs else None,
+            "null_feat_rate": st.mean(nf) if nf else None,
+            "null_expl_rate": m_ne,
+            "over_null_expl": (k / len(s)) / m_ne if s and m_ne else None,
         }
+
+    # The bucket comparison is only meaningful if chance does not itself vary by
+    # bucket. Recorded as a number so a later run cannot quietly violate it.
+    _ne = [d["null_expl_rate"] for d in by_bucket.values()
+           if d["null_expl_rate"] is not None]
+    null_spread = (max(_ne) - min(_ne)) if _ne else None
 
     # REAL = shared + lost = latents genuinely in the original activation.
     # `made` is excluded because those are not in the original at all.
@@ -204,6 +248,7 @@ def conveyance(rows: list[dict], fpr: float) -> dict:
         "real": {"n": len(real), "rate": p_real,
                  "rate_corrected_for_fpr": corrected, "fpr_used": fpr},
         "shared_over_fpr_floor": (by_bucket["shared"]["rate"] / fpr) if fpr else None,
+        "null_expl_spread_across_buckets": null_spread,
         "comparisons": comparisons,
         "mentioned_x_outcome": {
             "mentioned_shared": cs, "mentioned_lost": cl,
@@ -260,8 +305,25 @@ def render_md(s: dict) -> str:
           f"- **C - A = {r['gap_C_minus_A']:+.4f}**",
           f"- L0: original {r['L0_orig']:.1f}, AR output {r['L0_ar']:.1f}",
           f"- `rawvar` {r['rawvar']:.4f}, so FVE = 1 - "
-          f"{r['fve_multiplier']:.1f}x(1-cos)",
-          "", "## 2. Latent overlap", "",
+          f"{r['fve_multiplier']:.1f}x(1-cos)"]
+    if r.get("fve_B_distribution"):
+        b = r["fve_B_distribution"]
+        L += ["",
+              "### How row B is distributed across the individual pairs", "",
+              "The mean above is not the typical pair. With a "
+              f"{r['fve_multiplier']:.0f}x multiplier a single activation whose "
+              "cosine is a couple of points low drags the mean a long way, so "
+              "the median is the better summary of what happens to a typical "
+              "activation.", "",
+              "| min | p10 | p25 | **median** | mean | p75 | p90 | max |",
+              "|---:|---:|---:|---:|---:|---:|---:|---:|",
+              f"| {b['min']:+.3f} | {b['p10']:+.3f} | {b['p25']:+.3f} | "
+              f"**{b['median']:+.3f}** | {b['mean']:+.3f} | {b['p75']:+.3f} | "
+              f"{b['p90']:+.3f} | {b['max']:+.3f} |", "",
+              f"- {b['n']:,} pairs; **{b['n_below_zero']}** score below 0 "
+              f"(worse than predicting the corpus mean)",
+              f"- 5% trimmed mean **{b['trimmed_mean_5pct']:+.4f}**"]
+    L += ["", "## 2. Latent overlap", "",
           "| | " + " | ".join(o) + " |", "|---|" + "---:|" * len(o)]
     for row, fmt in (("shared", "{:,}"), ("lost", "{:,}"), ("made", "{:,}")):
         L.append(f"| {row} (total) | " + " | ".join(
@@ -282,18 +344,30 @@ def render_md(s: dict) -> str:
           f"validated only **{l['mean_auc_validated']:.3f}**",
           f"- wrong-label null **{l['mean_auc_wrong_label_null']:.3f}**",
           "", "## 4. Conveyance", "",
-          "| bucket | n | conveyed | mean label AUC |", "|---|---:|---:|---:|"]
+          "| bucket | n | conveyed | null_feat | null_expl | vs null_expl | mean label AUC |",
+          "|---|---:|---:|---:|---:|---:|---:|"]
     for b in ("shared", "made", "lost"):
         d = c["by_bucket"][b]
-        L.append(f"| {b} | {d['n']:,} | {d['rate']:.1%} | {d['mean_label_auc']:.3f} |")
+        L.append(f"| {b} | {d['n']:,} | {d['rate']:.1%} | {d['null_feat_rate']:.1%} | "
+                 f"{d['null_expl_rate']:.1%} | {d['over_null_expl']:.1f}x | "
+                 f"{d['mean_label_auc']:.3f} |")
     L += [f"| **REAL** (shared+lost) | {c['real']['n']:,} | "
-          f"{c['real']['rate']:.1%} | |",
+          f"{c['real']['rate']:.1%} | | | | |",
           "",
           f"- corrected for the judge's {c['real']['fpr_used']:.2%} false-positive "
           f"rate: **{c['real']['rate_corrected_for_fpr']:.1%}** "
           f"(correcting always lowers the raw {c['real']['rate']:.1%})",
           f"- `shared` is **{c['shared_over_fpr_floor']:.1f}x** the "
           f"false-positive floor",
+          "",
+          "**The two null columns are the check on the bucket comparison below.** "
+          "`null_feat` is a latent that did not fire, judged against the real "
+          "explanation; `null_expl` is a latent that did fire, judged against "
+          "unrelated explanations. If chance were higher for `shared` than for "
+          "`lost`, the gap below would be an artefact of `shared` latents simply "
+          "being more generic. Spread across buckets here: "
+          f"**{100 * c['null_expl_spread_across_buckets']:.1f} pts** "
+          f"({'flat -- the comparison stands' if c['null_expl_spread_across_buckets'] < 0.05 else 'NOT FLAT -- the bucket comparison below is confounded, do not quote it'}).",
           "",
           "### Bucket comparisons (per activation, then across activations)", "",
           "| comparison | difference | 95% CI | t | n acts | pooled z |",
