@@ -139,8 +139,14 @@ not a backup; it dies with the pod.
 export BACKUP_REPO=your-username/nla-run-artifacts    # created on first push
 ```
 
-Leave it unset and the run works exactly the same, with a warning that nothing
-is being copied off the machine.
+**This needs a WRITE token, which is not the one the models needed.** Downloading
+gated models works with a read token; creating a dataset returns 403. Make one at
+[huggingface.co/settings/tokens](https://huggingface.co/settings/tokens) with the
+write role and `hf auth login` with it. The script checks at startup and tells you
+rather than failing silently six stages in.
+
+Leave `BACKUP_REPO` unset and the run works exactly the same, with a warning that
+nothing is being copied off the machine.
 
 **Hardware: 150 GB of storage on the disk `HF_HOME` points at, and**
 

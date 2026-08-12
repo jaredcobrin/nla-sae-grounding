@@ -60,6 +60,29 @@ if [ -z "$BACKUP_REPO" ]; then
   echo "!! BACKUP_REPO is not set. Nothing is copied off this machine, so if it"
   echo "   dies mid-run everything is lost. See scripts/run_experiment.sh."
   echo
+else
+  # Check WRITE access now rather than discovering it at the first upload, hours
+  # in. A read token downloads gated models perfectly well and 403s on a dataset
+  # write, so "the login worked" is not evidence this will.
+  python - "$BACKUP_REPO" <<'PYCHK' || exit 1
+import sys
+from huggingface_hub import HfApi
+repo = sys.argv[1]
+try:
+    HfApi().create_repo(repo, repo_type="dataset", private=True, exist_ok=True)
+    print(f"    [backup] {repo} ready")
+except Exception as e:
+    msg = str(e)
+    print(f"!! BACKUP_REPO is set to {repo} but it cannot be written to.")
+    if "403" in msg or "Forbidden" in msg:
+        print("   Your token is READ-only. Downloading gated models needs read;")
+        print("   backing up needs WRITE. Create a write token at")
+        print("   https://huggingface.co/settings/tokens and `hf auth login` again.")
+    else:
+        print(f"   {msg[:200]}")
+    print("   Fix it, or unset BACKUP_REPO to run without backups.")
+    sys.exit(1)
+PYCHK
 fi
 
 # ---- 1. corpus ---------------------------------------------------------------
