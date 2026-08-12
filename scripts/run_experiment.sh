@@ -31,6 +31,27 @@ SRC="$HERE/src"
 export NLA_REPO
 mkdir -p "$OUT"
 
+# ---- ARCHIVE ANY PREVIOUS RUN'S ARTEFACTS ------------------------------------
+# A fresh clone of this repo ships the committed results of an earlier run, and
+# this script writes into the same directory. If a stage then fails or is
+# skipped, $OUT holds a MIX -- some files from this run, some from the last --
+# and summarize_results.py will read that mix and produce a summary that is part
+# new and part stale, with nothing anywhere saying so.
+#
+# So anything already present is moved aside before stage 1. Moved, not deleted:
+# the previous run's numbers are what RESULTS.md currently quotes.
+_prev=$(ls "$OUT"/feature_overlap*.json "$OUT"/grounding.json \
+             "$OUT"/feature_labels.json "$OUT"/summary.json \
+             "$OUT"/SUMMARY.md "$OUT"/per_example.csv \
+             "$OUT"/LATENTS_BY_BUCKET.md 2>/dev/null || true)
+if [ -n "$_prev" ]; then
+  _arch="$OUT/previous_$(date +%Y%m%d_%H%M%S)"
+  mkdir -p "$_arch"
+  echo "    moving a previous run's artefacts to $_arch/"
+  for f in $_prev; do mv "$f" "$_arch/"; done
+  echo
+fi
+
 # ---- BACKUP AFTER EVERY STAGE ------------------------------------------------
 # Rented GPU boxes disappear. One died two hours into corpus generation and took
 # the parquet with it -- the expensive part of the run, with no copy anywhere.
