@@ -129,6 +129,19 @@ python -c "from huggingface_hub import snapshot_download as d; \
 shell you run this from — the scripts read all five. Putting them in a file you
 can `source` saves re-deriving `AV`/`AR` later.
 
+**On a rented box, also set `BACKUP_REPO`.** Every stage's output is pushed to a
+HuggingFace dataset as soon as it exists, so if the machine disappears you lose
+one stage rather than the whole run. This is not hypothetical — a pod died two
+hours into corpus generation and took the parquet with it. The pod's own disk is
+not a backup; it dies with the pod.
+
+```bash
+export BACKUP_REPO=your-username/nla-run-artifacts    # created on first push
+```
+
+Leave it unset and the run works exactly the same, with a warning that nothing
+is being copied off the machine.
+
 **Hardware: 150 GB of storage on the disk `HF_HOME` points at, and**
 
 | | VRAM | |
