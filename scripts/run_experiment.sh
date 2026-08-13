@@ -5,11 +5,14 @@
 #   export AV=... AR=...          # the nla-gemma3-12b-L32-{av,ar} snapshot dirs
 #   bash scripts/run_experiment.sh
 #
-# ~1.5-2h on one GPU at the default N_DOCS=200. Stage 1 used to dominate at ~3h
-# of Gemma generation; it now samples Gemma Scope's shipped corpus instead and
-# takes minutes, leaving labelling and judging as the bulk. Each stage writes
-# its output before the next starts, so a failure part-way does not cost the
-# stages already done, and re-running skips the corpus if the parquet exists.
+# ~3-4h on one GPU at the default N_DOCS=200. Stage 1 used to dominate at ~3h of
+# Gemma generation; it now samples Gemma Scope's shipped corpus and takes
+# minutes. The bulk is now stage 4: the paragraph ablation puts THREE variants of
+# every explanation through the AR, the SAE and the judge, so labelling and
+# judging do roughly three times the work of a single-variant run. Each stage
+# writes its output before the next starts, so a failure part-way does not cost
+# the stages already done, and re-running skips the corpus if the parquet
+# exists.
 #
 # The last stage writes results/summary.json and results/SUMMARY.md, which
 # contain every number quoted in RESULTS.md. Nothing else needs to be computed
@@ -83,6 +86,7 @@ export PYTORCH_CUDA_ALLOC_CONF="${PYTORCH_CUDA_ALLOC_CONF:-expandable_segments:T
 _prev=$(ls "$OUT"/feature_overlap*.json "$OUT"/grounding.json \
              "$OUT"/feature_labels.json "$OUT"/summary.json \
              "$OUT"/SUMMARY.md "$OUT"/per_example.csv \
+             "$OUT"/explanation_splits.json \
              "$OUT"/LATENTS_BY_BUCKET.md 2>/dev/null || true)
 if [ -n "$_prev" ]; then
   _arch="$OUT/previous_$(date +%Y%m%d_%H%M%S)"
@@ -179,7 +183,8 @@ backup corpus "$PARQUET" "$PARQUET.nla_meta.yaml"
 echo "=== 2/5  round trip (AV -> AR) + SAE ==="
 python "$SRC/roundtrip.py" --av "$AV" --ar "$AR" \
     --parquet "$PARQUET" --n "$N_DOCS" --runs "$RUNS" --out-dir "$OUT"
-backup roundtrip "$OUT/feature_overlap.json" "$OUT/feature_overlap_vectors.npz"
+backup roundtrip "$OUT/feature_overlap.json" "$OUT/feature_overlap_vectors.npz" \
+    "$OUT/explanation_splits.json"
 
 # ---- 3. re-encode under both SAEs --------------------------------------------
 # Seconds, no model. l0_big for the reconstruction claim (the STRONGER SAE, so
@@ -220,8 +225,10 @@ cat <<EOF
 Done. Results in $OUT/
 
   SUMMARY.md            every reported number, as tables    <- start here
+                        sections 6 and 7 are the ablation and the near-miss sweep
   summary.json          the same, machine-readable
-  per_example.csv       one row per (activation, explanation)
+  per_example.csv       one row per (activation, explanation, variant)
+  explanation_splits.json  20 splits to eyeball, plus the split success rate
   LATENTS_BY_BUCKET.md  per activation: explanation, source text, labelled latents
 
 Check these before believing anything:
@@ -234,6 +241,9 @@ Check these before believing anything:
      scored 78% and made every downstream number void
   4. the control rows in section 2. If a control sits near its matched number,
      that measurement is not discriminating and must not be quoted
+  5. the split anchor rate in section 6. Below ~90% means the AV's output format
+     has moved and the paragraph variants are not what they claim to be --
+     inspect results/explanation_splits.json before quoting section 6
 
 Not part of the experiment, kept for reference:
   src/describe_buckets.py     blind bucket summaries -- qualitative, unreported

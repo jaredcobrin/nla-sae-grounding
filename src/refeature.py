@@ -85,6 +85,25 @@ def main() -> None:
         if len(act_of) != len(v_ar):
             act_of = [i // (len(v_ar) // len(v_orig)) for i in range(len(v_ar))]
 
+        # VARIANT, carried from the round trip. Each activation appears once per
+        # paragraph-ablation variant, so without this every aggregate below would
+        # average an explanation together with two ablations of itself.
+        var_of = ([r.get("variant", "full") for r in J["runs"]]
+                  if len(J.get("runs", [])) == len(v_ar)
+                  else ["full"] * len(v_ar))
+        run_of = ([r.get("run", 0) for r in J["runs"]]
+                  if len(J.get("runs", [])) == len(v_ar) else list(range(len(v_ar))))
+
+        # NEAR-MISS NEIGHBOURS under THIS SAE. Encoded from the vectors the round
+        # trip saved, so the distance sweep is available for both SAEs without
+        # touching Gemma again.
+        F_nb = {}
+        if "v_neighbor" in Z and len(Z["v_neighbor"]):
+            A_nb = encode(torch.from_numpy(Z["v_neighbor"]).float(), P)
+            for n, (ai, dd_) in enumerate(zip(Z["neighbor_act"].tolist(),
+                                              Z["neighbor_delta"].tolist())):
+                F_nb[(int(ai), int(dd_))] = set(torch.nonzero(A_nb[n]).flatten().tolist())
+
         runs, sh, lo, md, jj, cc = [], 0, 0, 0, [], []
         for i, fr in enumerate(F_r):
             k = int(act_of[i]) % len(F_o)
@@ -99,7 +118,12 @@ def main() -> None:
             # control to 0.040 where roundtrip.py's half-offset gave 0.026.
             # Same pairing rule as roundtrip.py:317 so the two files agree.
             cc.append(jac(F_o[(k + len(F_o) // 2) % len(F_o)], fr))
-            runs.append({"act": k, "run": i,
+            runs.append({"act": k, "run": run_of[i], "variant": var_of[i],
+                          "jaccard": jac(fo, fr),
+                          "control_jaccard": cc[-1],
+                          "neighbor_jaccard": {
+                              str(dd_): jac(F_nb[(k, dd_)], fr)
+                              for (ak, dd_) in F_nb if ak == k},
                           "shared_features": sorted(fo & fr),
                           "lost_features": sorted(fo - fr),
                           "invented_features": sorted(fr - fo)})
@@ -110,11 +134,34 @@ def main() -> None:
               f"{np.mean([len(f) for f in F_r]):>7.1f} {sh/n:>7.1f} {lo/n:>6.1f} "
               f"{md/n:>6.1f} {100*sh/max(1,sh+lo):>5.0f}% {np.mean(jj):>6.3f} "
               f"{np.mean(cc):>6.3f} {len(uniq):>6}")
+        # Totals per variant as well as overall. The overall row is variant=full
+        # so it stays comparable to what this file reported before the ablation
+        # existed, rather than being an average over three different texts.
+        def _tot(rs):
+            if not rs:
+                return {}
+            return {"n_pairs": len(rs),
+                     "shared": float(np.mean([len(r["shared_features"]) for r in rs])),
+                     "lost": float(np.mean([len(r["lost_features"]) for r in rs])),
+                     "made": float(np.mean([len(r["invented_features"]) for r in rs])),
+                     "jaccard": float(np.mean([r["jaccard"] for r in rs])),
+                     "control": float(np.mean([r["control_jaccard"] for r in rs]))}
+
+        variants = sorted({r["variant"] for r in runs})
+        by_variant = {v: _tot([r for r in runs if r["variant"] == v]) for v in variants}
+        _full = [r for r in runs if r["variant"] == "full"] or runs
+        deltas = sorted({int(k) for r in runs for k in r["neighbor_jaccard"]})
+        sweep = {str(d): {
+            "jaccard": float(np.mean([r["neighbor_jaccard"][str(d)] for r in _full
+                                       if str(d) in r["neighbor_jaccard"]])),
+            "n": sum(1 for r in _full if str(d) in r["neighbor_jaccard"]),
+        } for d in deltas} or None
         (dd / a.out_name).write_text(json.dumps(
             {"sae": a.sae, "stage1": {"F_orig": [sorted(f) for f in F_o]},
              "runs": runs,
-             "totals": {"shared": sh / n, "lost": lo / n, "made": md / n,
-                         "jaccard": float(np.mean(jj)), "control": float(np.mean(cc))}},
+             "by_variant": by_variant,
+             "distance_sweep": sweep,
+             "totals": _tot(_full)},
             indent=2))
     print("-" * 84)
     print(f"unique features to label across all corpora: {len(grand)}")

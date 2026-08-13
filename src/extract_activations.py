@@ -84,6 +84,12 @@ BASE = "google/gemma-3-12b-it"
 # conversations go 123/128 -> 121/128, median valid positions 465 -> 431.
 _MIN_OFFSET = 50
 
+# Offsets for the near-miss control (roundtrip.py section "distance sweep").
+# Signed and kept separate -- text before the activation is context it encodes,
+# text after is context it cannot, so -20 and +20 are not the same measurement
+# and must never be averaged together.
+_NEIGHBOR_OFFSETS = (-50, -20, -5, 5, 20, 50)
+
 # The corpus Gemma Scope ships alongside the SAE. Already downloaded by this
 # project's setup step (the allow_patterns glob covers it) and already read by
 # label_features.py, which decodes context snippets out of the same `tokens`
@@ -350,7 +356,30 @@ def main() -> None:
         if len(cand) < a.positions_per_doc:
             print(f"  [skip] doc {k}: only {len(cand)} valid response positions")
             continue
+        candset = set(cand)
         for p in rng.choice(cand, a.positions_per_doc, replace=False):
+            # NEAR-MISS NEIGHBOURS, for the distance sweep in roundtrip.py.
+            # The existing latent-overlap null compares against an UNRELATED
+            # conversation, which is an easy null: two random activations share
+            # almost nothing. The harder question is whether the match is
+            # specific to THIS TOKEN or would hold anywhere nearby in the same
+            # response -- same topic, same document, same speaker.
+            #
+            # Taken from the forward pass that is already running here. Doing it
+            # later would mean loading Gemma a second time alongside the AV/AR,
+            # which does not fit. No extra AV or AR work: the round trip still
+            # happens only at p.
+            #
+            # Offsets that fall outside the valid region are DROPPED, not
+            # clamped -- clamping would silently turn a +50 into a +30 and make
+            # the curve's x-axis a lie. Which offsets survived is recorded per
+            # row so attrition is visible downstream.
+            nb_off, nb_vec = [], []
+            for d in _NEIGHBOR_OFFSETS:
+                q = int(p) + d
+                if q in candset:          # in-response, past _MIN_OFFSET, not special
+                    nb_off.append(d)
+                    nb_vec.append(H[q].float().cpu().numpy().tolist())
             rows.append({
                 "n_raw_tokens": int(ids.shape[1]),
                 # Context the activation actually encodes: everything up to and
@@ -371,6 +400,11 @@ def main() -> None:
                 "activation_vector": H[int(p)].float().cpu().numpy().tolist(),
                 "activation_layer": a.layer_index,
                 "doc_id": it["doc_id"],
+                # Same conversation, same forward pass, offset by these many
+                # tokens. Variable length: an offset that left the valid region
+                # is absent rather than clamped.
+                "neighbor_offsets": nb_off,
+                "neighbor_vectors": nb_vec,
             })
         print(f"  doc {k}: {ids.shape[1]} tok, response starts at {n_prefix}, "
               f"{len(cand)} valid positions -> {a.positions_per_doc} sampled")

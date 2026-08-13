@@ -77,7 +77,26 @@ def two_prop_z(k1: int, n1: int, k2: int, n2: int) -> float | None:
 
 def reconstruction(ov: dict) -> dict:
     """Section 1: the four FVE comparisons, plus the cosine/L0 they imply."""
-    fve, rawvar = ov["fve"], ov["rawvar"]
+    fve, rawvar = dict(ov["fve"]), ov["rawvar"]
+    runs = ov.get("runs") or []
+
+    # RECOMPUTE B/C/D FROM THE RUNS HANDED IN, rather than trusting the
+    # top-level `fve` block. That block is fixed at variant="full", so the
+    # paragraph ablation would otherwise report the same FVE for all three
+    # variants -- which is exactly what it did before this, and it looked
+    # perfectly plausible in the table. A is per-ACTIVATION, not per-run, so it
+    # is left alone; the same activations underlie every variant.
+    #
+    # FVE is 1 - mean(mse)/rawvar, so it must be rebuilt from the mse values.
+    # Averaging per-example FVEs would give a different number.
+    _mse = lambda key: [r[key] for r in runs if r.get(key) is not None]
+    for out_key, mse_key in (("B_ar_vs_orig", "mse_B_ar_vs_orig"),
+                              ("C_sae_ar_vs_ar", "mse_C_sae_ar_vs_ar"),
+                              ("D_sae_ar_vs_orig", "mse_D_sae_ar_vs_orig")):
+        vals = _mse(mse_key) or (_mse("mse") if out_key == "B_ar_vs_orig" else [])
+        if vals:
+            fve[out_key] = 1.0 - st.mean(vals) / rawvar
+
     # FVE = 1 - 2(1-cos)/rawvar, so cos is FIXED once FVE is known. Reported for
     # readability only -- it is NOT independent evidence.
     cos = {k: 1 - (1 - v) * rawvar / 2 for k, v in fve.items()}
@@ -343,6 +362,105 @@ def by_label_quality(rows: list[dict], n_bands: int = 5) -> dict | None:
     }
 
 
+def ablation(ov: dict, sm: dict, bg: dict, gr: dict, fpr: float,
+             variants: list[str]) -> dict | None:
+    """Section 6: what each part of the explanation contributes.
+
+    The AV writes to a three-part shape -- what kind of document this is, what it
+    is about, and what the FINAL TOKEN is doing. The third part is a different
+    kind of claim from the first two: it is about the single token the activation
+    sits on, not the surrounding passage. If it carries most of the signal alone,
+    the NLA is doing next-token description rather than context summarisation,
+    and every other section has to be read in that light.
+
+    No new metric is introduced. Each variant goes through the identical pipeline
+    -- same AR, same SAE, same buckets, same judge, same nulls -- and this reports
+    the existing numbers three times, side by side.
+
+    TWO THINGS TO CHECK BEFORE READING THE RESULT:
+
+    * the split's anchor rate, in `split`. The cut is made at the paragraph that
+      talks about the final token; if the AV's output format drifts, that rate
+      falls and the variants stop being what they claim to be.
+    * `tokens_mean` and `fve_B_per_100_tokens`. The variants are not the same
+      length, so a variant scoring higher could simply be the one with more text.
+      Reporting per token does not remove that confound -- it exposes it.
+    """
+    if len(variants) < 2:
+        return None
+    bv = ov.get("by_variant") or {}
+    out = {"variants": variants, "split": ov.get("split_report"), "by_variant": {}}
+    for v in variants:
+        runs = [r for r in ov["runs"] if r.get("variant", "full") == v]
+        rows = [r for r in gr["rows"] if r.get("variant", "full") == v]
+        sm_v = {**sm, "runs": [r for r in sm["runs"] if r.get("variant", "full") == v],
+                "totals": (sm.get("by_variant", {}).get(v) or sm["totals"])}
+        bg_v = {**bg, "runs": [r for r in bg["runs"] if r.get("variant", "full") == v],
+                "totals": (bg.get("by_variant", {}).get(v) or bg["totals"])}
+        entry = {
+            "reconstruction": reconstruction({**ov, "runs": runs}) if runs else None,
+            "overlap": overlap(sm_v, bg_v) if sm_v["runs"] and bg_v["runs"] else None,
+            "conveyance": conveyance(rows, fpr) if rows else None,
+            "label_quality": by_label_quality(rows) if rows else None,
+        }
+        for k in ("tokens_mean", "tokens_median", "chars_mean",
+                  "fve_B_per_100_tokens", "n_split_failed", "n_untagged", "n_cjk"):
+            if k in bv.get(v, {}):
+                entry[k] = bv[v][k]
+        out["by_variant"][v] = entry
+    return out
+
+
+def distance_sweep(ov: dict, sm: dict, bg: dict) -> dict | None:
+    """Section 7: is the latent match specific to THIS token?
+
+    The standing Jaccard null compares the rebuild against an activation from an
+    unrelated conversation, which shares almost nothing -- an easy bar to clear.
+    This is the hard version: compare the rebuild of position p against the REAL
+    activation at p+d in the SAME conversation. Same topic, same document, same
+    speaker, a few tokens away.
+
+      flat across d   -> the explanation describes the passage, and the exact
+                         position is doing no work
+      falls with |d|  -> the round trip is genuinely position-specific
+
+    Directions are never averaged: text before p is context the activation
+    encodes, text after is context it cannot, so -20 and +20 are different
+    measurements and pooling them would hide any asymmetry.
+
+    `restricted` repeats the curve over only the activations long enough to
+    supply every offset. Without it each point comes from a different subset of
+    conversations -- short responses lose the far offsets first, and short
+    responses are not a random subsample -- so a falling curve could be attrition
+    rather than distance.
+    """
+    sw = ov.get("distance_sweep")
+    if not sw:
+        return None
+    out = {
+        "offsets": sw["offsets"],
+        "self_match_delta0": sw["self_match_delta0"],
+        "unrelated_conversation_null": sw["unrelated_conversation_null"],
+        "n_activations": sw.get("n_activations"),
+        "n_activations_all_offsets": sw.get("n_activations_all_offsets"),
+        "l0_big": (sw.get("by_variant") or {}).get("full"),
+        "l0_big_restricted": (sw.get("by_variant_restricted") or {}).get("full"),
+        "by_variant": sw.get("by_variant"),
+        "l0_small": sm.get("distance_sweep"),
+    }
+    curve, self0 = out["l0_big"] or {}, out["self_match_delta0"]
+    if curve and self0:
+        # How much of the self-match survives one step away, and at the far end.
+        # Near 1.0 at d=+-5 means the match is about the passage, not the token.
+        near = [curve[k]["jaccard"] for k in ("5", "-5")
+                if curve.get(k, {}).get("jaccard") is not None]
+        far = [curve[k]["jaccard"] for k in ("50", "-50")
+               if curve.get(k, {}).get("jaccard") is not None]
+        out["nearest_over_self"] = (max(near) / self0) if near else None
+        out["furthest_over_self"] = (max(far) / self0) if far else None
+    return out
+
+
 def judge_validation(g: dict) -> dict:
     """The judge's own error rates -- the floor everything in section 3 sits on."""
     v = dict(g.get("validation") or {})
@@ -525,7 +643,98 @@ def render_md(s: dict) -> str:
     for k, v in s["judge"].items():
         if isinstance(v, (int, float)):
             L.append(f"- {k}: **{v:.3f}**")
+
+    ab = s.get("ablation")
+    if ab:
+        L += ["", "## 6. Paragraph ablation — which part of the explanation carries it", "",
+              "The AV writes to a three-part shape: what kind of document this is, "
+              "what it is about, and what the **final token** is doing. The third "
+              "part is a different kind of claim -- about the one token the "
+              "activation sits on, not the passage around it. Each variant runs "
+              "through the identical pipeline; no new metric is introduced.", "",
+              "| | `full` | `no_final` (parts 1-2) | `final_only` (part 3) |",
+              "|---|---:|---:|---:|"]
+        vs = ab["variants"]
+        cell = lambda f: " | ".join(f(ab["by_variant"][v]) for v in vs)
+        def _g(d, *path, default=None):
+            for k in path:
+                if not isinstance(d, dict) or k not in d or d[k] is None:
+                    return default
+                d = d[k]
+            return d
+        rows_spec = [
+            ("**FVE B** (mean)", lambda e: _fmt(_g(e, "reconstruction", "fve", "B_ar_vs_orig"), "{:+.4f}")),
+            ("FVE B (median)", lambda e: _fmt(_g(e, "reconstruction", "fve_B_distribution", "median"), "{:+.4f}")),
+            ("cosine B", lambda e: _fmt(_g(e, "reconstruction", "cos_implied", "B_ar_vs_orig"), "{:.5f}")),
+            ("FVE B control (wrong activation)", lambda e: _fmt(_g(e, "reconstruction", "mismatched_control", "fve_B_control"), "{:+.4f}")),
+            ("Jaccard `l0_small`", lambda e: _fmt(_g(e, "overlap", "l0_small", "jaccard_matched"), "{:.4f}")),
+            ("Jaccard control `l0_small`", lambda e: _fmt(_g(e, "overlap", "l0_small", "jaccard_control"), "{:.4f}")),
+            ("shared latents", lambda e: _fmt(_g(e, "overlap", "l0_small", "totals", "shared"), "{:,}")),
+            ("lost latents", lambda e: _fmt(_g(e, "overlap", "l0_small", "totals", "lost"), "{:,}")),
+            ("made latents", lambda e: _fmt(_g(e, "overlap", "l0_small", "totals", "made"), "{:,}")),
+            ("conveyance `shared`", lambda e: _fmt(_g(e, "conveyance", "by_bucket", "shared", "rate"), "{:.1%}")),
+            ("conveyance `lost`", lambda e: _fmt(_g(e, "conveyance", "by_bucket", "lost", "rate"), "{:.1%}")),
+            ("chance (`null_expl`, shared)", lambda e: _fmt(_g(e, "conveyance", "by_bucket", "shared", "null_expl_rate"), "{:.1%}")),
+            ("shared - lost gap", lambda e: _fmt(_g(e, "conveyance", "comparisons", "shared_vs_lost", "clustered", "mean"), "{:+.1%}")),
+            ("**tokens** (mean)", lambda e: _fmt(e.get("tokens_mean"), "{:.0f}")),
+            ("**FVE B per 100 tokens**", lambda e: _fmt(e.get("fve_B_per_100_tokens"), "{:+.4f}")),
+        ]
+        for label, f in rows_spec:
+            L.append(f"| {label} | " + cell(f) + " |")
+        sp = ab.get("split") or {}
+        L += ["",
+              f"- split: **{sp.get('usable', 0):,}/{sp.get('n', 0):,}** usable, "
+              f"anchor rate **{_fmt(sp.get('anchor_rate'), '{:.0%}')}**, "
+              f"methods `{sp.get('by_method')}`",
+              "- the cut is made at the paragraph naming the final token. A falling "
+              "anchor rate means the AV's output format moved and these variants "
+              "are no longer what they claim -- check `explanation_splits.json`.",
+              "- **the variants differ in length**, so read FVE per 100 tokens "
+              "beside the raw figure. Per-token does not remove the confound, it "
+              "makes it visible."]
+
+    sw = s.get("distance_sweep")
+    if sw:
+        L += ["", "## 7. Near-miss sweep — is the match specific to this token?", "",
+              "The standing Jaccard null uses an **unrelated conversation**, which "
+              "shares almost nothing. This is the harder null: the rebuild of "
+              "position *p* against the **real activation at p+d in the same "
+              "conversation** -- same topic, same document, a few tokens away. "
+              "Flat across *d* would mean the explanation describes the passage "
+              "and the exact position does no work.", "",
+              "| offset | Jaccard (`l0_big`) | n | restricted | n |",
+              "|---|---:|---:|---:|---:|"]
+        big = sw.get("l0_big") or {}
+        res = sw.get("l0_big_restricted") or {}
+        L.append(f"| **d = 0** (its own activation) | **{sw['self_match_delta0']:.4f}** | | | |")
+        for d in sw["offsets"]:
+            e, r = big.get(str(d), {}), res.get(str(d), {})
+            L.append(f"| d = {d:+d} | {_fmt(e.get('jaccard'), '{:.4f}')} | {e.get('n', 0)} "
+                     f"| {_fmt(r.get('jaccard'), '{:.4f}')} | {r.get('n', 0)} |")
+        L.append(f"| *unrelated conversation* | *{sw['unrelated_conversation_null']:.4f}* | | | |")
+        L += ["",
+              f"- **{sw.get('n_activations_all_offsets')}/{sw.get('n_activations')}** "
+              f"activations are long enough to supply every offset. The "
+              f"`restricted` columns use only those, so the points are comparable "
+              f"to each other; in the unrestricted columns a falling curve could "
+              f"be attrition, since short responses lose the far offsets first.",
+              "- directions are **not** averaged: text before *p* is context the "
+              "activation encodes, text after is context it cannot."]
+        if sw.get("nearest_over_self") is not None:
+            L.append(f"- at the nearest offset the match retains "
+                     f"**{sw['nearest_over_self']:.0%}** of the self-match; at the "
+                     f"furthest, **{_fmt(sw.get('furthest_over_self'), '{:.0%}')}**.")
     return "\n".join(L) + "\n"
+
+
+def _fmt(v, spec="{:.3f}"):
+    """Format a number that may legitimately be absent."""
+    if v is None:
+        return "-"
+    try:
+        return spec.format(v)
+    except (TypeError, ValueError):
+        return str(v)
 
 
 def render_by_bucket(ov: dict, sm: dict, lab: dict, gr: list | None = None) -> str:
@@ -641,7 +850,28 @@ def main() -> None:
 
     fpr = float((gr.get("validation") or {}).get("false_positive_rate", 0.057))
 
-    n_acts = len({r["act"] for r in ov["runs"]})
+    # EVERY PRIMARY SECTION IS variant="full" ONLY.
+    # The paragraph ablation makes three records per activation -- the whole
+    # explanation and two cut-down versions of it. Pooling them would report the
+    # average of an explanation and two ablations of itself, which is not a
+    # quantity anything is true of. So the sections below are filtered to the
+    # unmodified explanation, and the ablation gets its own section where the
+    # three are shown side by side.
+    # `.get("variant", "full")` throughout: artefacts written before the ablation
+    # existed have no variant field and are all "full" by definition.
+    _V = lambda rs, v="full": [r for r in rs if r.get("variant", "full") == v]
+    variants = [v for v in ("full", "no_final", "final_only")
+                if any(r.get("variant", "full") == v for r in ov["runs"])]
+    has_ablation = len(variants) > 1
+
+    ov_full = {**ov, "runs": _V(ov["runs"])}
+    sm_full = {**sm, "runs": _V(sm["runs"]),
+                "totals": (sm.get("by_variant", {}).get("full") or sm["totals"])}
+    bg_full = {**bg, "runs": _V(bg["runs"]),
+                "totals": (bg.get("by_variant", {}).get("full") or bg["totals"])}
+    rows_full = _V(gr["rows"])
+
+    n_acts = len({r["act"] for r in ov_full["runs"]})
     # HOW MANY INDEPENDENT SAMPLES IS THIS REALLY? Two activations from the same
     # Gemma conversation share nearly all their context, so they are one cluster,
     # not two observations. An earlier run had 50 activations from 30
@@ -654,16 +884,21 @@ def main() -> None:
             "n_activations": n_acts,
             "n_documents": n_docs,
             "independent": (n_docs == n_acts) if n_docs else None,
-            "n_pairs": len(ov["runs"]),
-            "runs_per_activation": len(ov["runs"]) // max(n_acts, 1),
+            "n_pairs": len(ov_full["runs"]),
+            "runs_per_activation": len(ov_full["runs"]) // max(n_acts, 1),
+            "variants": variants,
             "source": str(d.resolve()),
         },
-        "reconstruction": reconstruction(ov),
-        "overlap": overlap(sm, bg),
+        "reconstruction": reconstruction(ov_full),
+        "overlap": overlap(sm_full, bg_full),
         "labels": labels(lab),
-        "conveyance": conveyance(gr["rows"], fpr),
-        "label_quality": by_label_quality(gr["rows"]),
+        "conveyance": conveyance(rows_full, fpr),
+        "label_quality": by_label_quality(rows_full),
         "judge": judge_validation(gr),
+        # The paragraph ablation: every section above, recomputed per variant.
+        "ablation": (ablation(ov, sm, bg, gr, fpr, variants)
+                     if has_ablation else None),
+        "distance_sweep": distance_sweep(ov, sm, bg),
     }
 
     out = Path(a.out) if a.out else d / "summary.json"
@@ -673,11 +908,12 @@ def main() -> None:
     # Per-example table. Everything the round trip recorded for each (activation,
     # explanation) pair, one row each, so a reader can check any single case
     # without parsing JSON -- and so a claim about "the outliers" can be checked.
-    cols = ["act", "run", "row", "fve_A", "fve_B", "fve_C", "fve_D",
+    cols = ["act", "run", "variant", "row", "fve_A", "fve_B", "fve_C", "fve_D",
             "cos_A_sae_orig_vs_orig", "cos_B_ar_vs_orig",
             "cos_C_sae_ar_vs_ar", "cos_D_sae_ar_vs_orig",
             "n_orig", "n_ar", "n_shared", "n_lost", "n_invented",
-            "jaccard", "control_jaccard", "weighted_kept", "cjk", "untagged"]
+            "jaccard", "control_jaccard", "weighted_kept",
+            "n_tokens", "n_chars", "split_method", "cjk", "untagged"]
     lines = [",".join(cols)]
     for r in ov["runs"]:
         lines.append(",".join(

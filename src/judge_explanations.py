@@ -201,6 +201,11 @@ def main() -> None:
             if not e:
                 continue
             units.append({"corpus": nm, "act": r["act"], "run": i,
+                           # Which paragraph-ablation variant this explanation is.
+                           # Carried onto every judged row so conveyance can be
+                           # reported per variant instead of averaging an
+                           # explanation with two ablations of itself.
+                           "variant": r.get("variant", "full"),
                            "explanation": e[:a.max_expl_chars],
                            "shared": set(r["shared_features"]),
                            "lost": set(r["lost_features"]),
@@ -274,7 +279,8 @@ def main() -> None:
             verdict = "unknown"
         else:
             verdict = "present"
-        rows.append({"unit": i, "corpus": u["corpus"], "act": u["act"], "feature": f,
+        rows.append({"unit": i, "corpus": u["corpus"], "act": u["act"],
+                      "variant": u.get("variant", "full"), "feature": f,
                      "bucket": bucket, "verdict": verdict, "grade": d["grade"],
                      # The label itself, not just its id. Without it every reader
                      # has to join this file against feature_labels.json by hand

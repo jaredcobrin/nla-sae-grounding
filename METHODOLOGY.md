@@ -251,3 +251,94 @@ self-consistency     89.2%    across 5 explanations of one activation
 - **Blind bucket descriptions** (`src/describe_buckets.py`). Works and is legible,
   but qualitative and read by eye, so **not reported in `RESULTS.md`**. With 2–3
   labelled latents it over-reaches ~10% of the time.
+
+---
+
+## 7. Two harder controls
+
+Both reuse the pipeline exactly as it already stands. Neither introduces a new
+metric: every existing number — FVE mean and median, the A/B/C/D comparisons,
+Jaccard on both SAEs with its mismatched null, the shared/lost/made buckets, the
+judge's conveyance with `null_feat`/`null_expl`/per-bucket chance/label-quality
+stratification, and the same per-activation aggregation — is simply computed more
+than once and reported side by side.
+
+### 7a. Paragraph ablation — which part of the explanation carries it
+
+The AV writes to a stable three-part shape:
+
+1. what kind of document this is
+2. what it is about
+3. **what the final token is doing**
+
+Part 3 is a different kind of claim from parts 1–2: it describes the single token
+the activation sits on, not the passage around it. If it carries most of the
+reconstruction on its own, the NLA is doing next-token description rather than
+context summarisation, and every other section has to be read in that light.
+
+The explanation is generated **once** per activation and then split, so the
+comparison is paired — none of the difference between variants can come from
+resampling the AV.
+
+| variant | what it is |
+|---|---|
+| `full` | the explanation as written |
+| `no_final` | parts 1–2 |
+| `final_only` | part 3 |
+
+**The split is anchored on the phrase, not on paragraph count.** Measured over 250
+real explanations:
+
+```
+exactly 3 paragraphs                                  245/250   98%
+"final token" appears at least once                   250/250  100%
+...appears more than once (would be ambiguous)          0/250
+exactly one paragraph contains it, and not the first  250/250  100%
+```
+
+The five that are not three paragraphs are the case that makes the anchor
+necessary: the final token is *itself* a newline, so the AV writes `Final token "`
+/ blank line / `" ends a transitional header…` and the paragraph splits itself.
+Anchoring on the phrase rejoins those; counting paragraphs would have put half of
+part 3 into `no_final` and corrupted both variants without any error.
+
+`explanation_splits.json` dumps 20 splits to eyeball and records the method used
+per sample. **Watch the anchor rate in `SUMMARY.md` §6** — if it falls, the AV's
+output format has moved and the variants are no longer what they claim.
+
+**Length is reported, not adjusted away.** The variants differ in length, so a
+variant could score higher simply by having more text. `SUMMARY.md` prints token
+counts and FVE per 100 tokens beside the raw figure. On this AV the two ablations
+are close in length anyway (~318 vs ~337 characters), but that is a property of
+this checkpoint, not a guarantee.
+
+### 7b. Near-miss sweep — is the match specific to this token?
+
+The standing Jaccard null compares the rebuild against an activation from an
+**unrelated conversation**, which shares almost nothing (0.013 against a matched
+0.540). Clearing that bar shows the rebuild is not generic. It does **not** show
+the rebuild is specific to *this token*.
+
+The harder version: compare the rebuild of position *p* against the **real
+activation at p+d in the same conversation**, for d ∈ {−50, −20, −5, +5, +20,
++50}. Same topic, same document, same speaker, a few tokens away.
+
+- **flat across d** → the explanation describes the passage; the exact position is
+  doing no work
+- **falls with |d|** → the round trip is genuinely position-specific
+
+No extra AV or AR work: the round trip still happens only at *p*. The neighbour
+activations come from the forward pass that already runs during extraction, which
+is also why they are saved there — doing it later would need Gemma resident
+alongside the AV and AR, which does not fit.
+
+**Directions are never averaged.** Text before *p* is context the activation
+encodes; text after is context it cannot. −20 and +20 are different measurements
+and pooling them would hide any asymmetry.
+
+**Attrition is reported, not clamped.** An offset that falls outside the valid
+region is dropped, never moved to the nearest legal position — clamping would turn
+a +50 into a +30 and make the x-axis a lie. Since short responses lose the far
+offsets first, and short responses are not a random subsample, `SUMMARY.md` §7
+also prints a **restricted** curve over only the activations long enough to supply
+every offset, so the points are comparable to each other.

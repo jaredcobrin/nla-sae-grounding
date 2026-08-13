@@ -72,6 +72,7 @@ from nla.schema import load_predict_mean_baselines                    # noqa: E4
 from nla_inference import NLACritic                                   # noqa: E402
 
 from hf_paths import sae_variant_dir, L0_BIG  # noqa: E402
+from explanation_parts import VARIANTS, split_explanation, split_report  # noqa: E402
 
 # If injection silently fails the AV describes the literal marker char and
 # free-associates in CJK. CLAUDE.md calls this the loudest smoke test for the
@@ -169,6 +170,14 @@ def main() -> None:
                                     do_sample=True)
         return e
 
+    # Length of a variant in tokens, not characters -- the AR reads tokens, so
+    # that is the unit FVE-per-token has to be in. Uses the AV's own tokenizer,
+    # which is the same one the AR uses. Must be called before the AV is released.
+    def _ntok(text: str | None) -> int:
+        if not text:
+            return 0
+        return len(av.tokenizer.encode(text, add_special_tokens=False))
+
     # ---------------- Stage 0: sample + FVE health check ----------------
     # THIS IS A DIAGNOSTIC, NOT A FILTER.
     #
@@ -218,6 +227,22 @@ def main() -> None:
     # every confidence interval downstream.
     src_doc = [_docs[int(r)] for r in row_idx]
     n_docs = len(set(src_doc))
+    # NEAR-MISS NEIGHBOURS for the distance sweep. Written by
+    # extract_activations.py from the same forward pass that produced the
+    # activation; absent from corpora built before that existed, in which case
+    # the sweep is skipped rather than faked.
+    nb_off_all, nb_vec_all = None, None
+    if {"neighbor_offsets", "neighbor_vectors"} <= _cols:
+        _nb = _pq.ParquetFile(args.parquet).read(
+            columns=["neighbor_offsets", "neighbor_vectors"])
+        _o = _nb.column("neighbor_offsets").to_pylist()
+        _v = _nb.column("neighbor_vectors").to_pylist()
+        nb_off_all = [[int(d) for d in _o[int(r)]] for r in row_idx]
+        nb_vec_all = [_v[int(r)] for r in row_idx]
+        print(f"  -> near-miss neighbours available for "
+              f"{sum(1 for o in nb_off_all if o)}/{len(row_idx)} activations")
+    else:
+        print("  -> no neighbour columns in this parquet; distance sweep skipped")
     print(f"  -> carried {len(src_text)} source texts into the results")
     print(f"  -> {len(V)} activations from {n_docs} distinct conversations"
           + ("" if n_docs == len(V) else
@@ -238,15 +263,71 @@ def main() -> None:
     # Keeping both resident costs ~48GB and does not fit a 46GB card. The AV
     # never needs the AR's output, and explanations are just strings, so
     # splitting the loop in two costs nothing but a model reload.
+    # PARAGRAPH ABLATION. The explanation is generated ONCE per (activation, run)
+    # and then split into the variants below, so every variant describes the same
+    # activation and the same sampled text -- the comparison is paired, and none
+    # of the difference between variants can come from resampling the AV.
+    #
+    #   full        the explanation as written                (the existing path)
+    #   no_final    parts 1-2: document type, what it is about
+    #   final_only  part 3: what the FINAL TOKEN is doing
+    #
+    # Each variant is a separate record and goes through the identical downstream
+    # pipeline -- same AR, same SAE, same buckets, same judge, same nulls. No new
+    # metric is introduced; every existing number is simply computed three times.
+    #
+    # Token counts are recorded per variant because the variants are not the same
+    # length, and FVE-per-token is reported alongside raw FVE so a length effect
+    # is visible rather than being absorbed into the result. Measured on 250 real
+    # explanations the two ablations are close in length anyway -- no_final ~318
+    # chars, final_only ~337 -- but that is a property of this AV, not a promise.
     print(f"\n--- Stage 2a: AV -> explanations, {args.runs} runs per activation ---")
-    plan = []
+    print(f"    each split into {len(VARIANTS)} variants: {', '.join(VARIANTS)}")
+    plan, splits = [], []
     for i in range(len(V)):
         for r in range(args.runs):
             e = gen(V[i], seed * 1000 + i * 100 + r)
-            plan.append({"act": i, "run": r, "row": int(row_idx[i]), "explanation": e,
-                          "cjk": bool(e and _CJK.search(e)), "untagged": e is None})
-        done = sum(1 for x in plan if x["act"] == i and not x["untagged"])
+            sp = split_explanation(e)
+            splits.append(sp)
+            for variant in VARIANTS:
+                text = sp[variant]
+                plan.append({
+                    "act": i, "run": r, "variant": variant, "row": int(row_idx[i]),
+                    "explanation": text,
+                    # the unsplit text, on every record, so a reader of one row
+                    # can see what it was cut out of
+                    "explanation_full": sp["full"],
+                    "split_method": sp["method"],
+                    "n_chars": len(text) if text else 0,
+                    "n_tokens": _ntok(text),
+                    "cjk": bool(text and _CJK.search(text)),
+                    # An ablation that produced no text is NOT the same failure as
+                    # a broken injection, but both reach the AR as nothing. Flagged
+                    # separately so they never get pooled.
+                    "untagged": text is None,
+                    "split_failed": sp[variant] is None and sp["full"] is not None,
+                })
+        done = sum(1 for x in plan
+                   if x["act"] == i and x["variant"] == "full" and not x["untagged"])
         print(f"  act {i}: {done}/{args.runs} explanations")
+
+    srep = split_report(splits)
+    print(f"\n  split: {srep['usable']}/{srep['n']} usable "
+          f"({srep['usable_rate']:.0%}), by method {srep['by_method']}")
+    if srep["anchor_rate"] is not None and srep["anchor_rate"] < 0.9:
+        print(f"  !! ANCHOR RATE {srep['anchor_rate']:.0%} -- the AV's output format has")
+        print(f"     moved and the ablation may not be cutting where it claims.")
+        print(f"     Inspect results/explanation_splits.json before using section 6.")
+    # ~20 splits dumped for manual inspection, as the design requires: the split
+    # point is the thing most likely to break silently.
+    (out_dir / "explanation_splits.json").write_text(json.dumps({
+        "report": srep,
+        "sample": [{"method": s["method"], "n_paragraphs": s["n_paragraphs"],
+                     "full": s["full"], "no_final": s["no_final"],
+                     "final_only": s["final_only"]}
+                    for s in splits[:20]],
+    }, indent=2))
+    print(f"  wrote {out_dir/'explanation_splits.json'} (20 splits to eyeball)")
     del av
     gc.collect()
     if torch.cuda.is_available():
@@ -285,9 +366,14 @@ def main() -> None:
     #
     # It is computed from the stage-2 work rather than a separate pass, which
     # also means the AV and AR never have to be resident together.
-    health_fve = fve_of([r["mse"] for r in runs], rawvar)
-    gate_log = [{"seed": seed, "fve": health_fve, "note": "health check, not a filter"}]
-    print(f"\n  FVE health check: {health_fve:.4f}")
+    # ON variant="full" ONLY. The ablations are EXPECTED to reconstruct worse --
+    # that is the measurement -- so pooling them into the health check would drag
+    # it below the band and raise a broken-pipeline warning on a healthy run.
+    _full_mse = [r["mse"] for r in runs if r["variant"] == "full"]
+    health_fve = fve_of(_full_mse, rawvar)
+    gate_log = [{"seed": seed, "fve": health_fve, "variant": "full",
+                  "note": "health check, not a filter"}]
+    print(f"\n  FVE health check (variant=full): {health_fve:.4f}")
     if not (args.health_lo <= health_fve <= args.health_hi):
         print(f"  !! WARNING: outside the expected band "
               f"[{args.health_lo}, {args.health_hi}]. The paper reports ~0.752.")
@@ -299,8 +385,9 @@ def main() -> None:
         print(f"  within the expected band; AV/AR look healthy")
     n_untagged = sum(r["untagged"] for r in runs)
     n_cjk = sum(r["cjk"] for r in runs)
-    print(f"  FVE over all {len(runs)} runs: {fve_of([r['mse'] for r in runs], rawvar):.4f}"
-          f"   untagged {n_untagged}/{len(runs)}   CJK {n_cjk}/{len(runs)}")
+    print(f"  FVE over {len(_full_mse)} full explanations: {health_fve:.4f}"
+          f"   untagged {n_untagged}/{len(runs)}   CJK {n_cjk}/{len(runs)}"
+          f"   (counts span all {len(VARIANTS)} variants)")
 
     # ---------------- Stage 3: AR output -> SAE ----------------
     print("\n--- Stage 3: AR output activations through the SAE ---")
@@ -389,7 +476,144 @@ def main() -> None:
             **({"activation_token_index": src_pos[i]} if src_pos else {}),
         })
 
-    def m(key): return float(np.mean([r[key] for r in runs]))
+    # ---------------- Stage 5: near-miss distance sweep ----------------
+    # THE EXISTING JACCARD NULL IS AN EASY ONE. It compares the rebuild against
+    # an activation from an UNRELATED conversation, which shares almost nothing
+    # -- 0.013 against a matched 0.540. Clearing that bar shows the rebuild is
+    # not generic; it does not show the rebuild is specific to THIS TOKEN.
+    #
+    # The hard version: compare the rebuild of position p against the real
+    # activation at p+d in the SAME conversation. Same topic, same document, same
+    # speaker, a few tokens away. If Jaccard stays flat across d, the explanation
+    # describes the passage and the exact position is doing no work. If it falls
+    # off with |d|, the round trip is genuinely position-specific.
+    #
+    # No new AV or AR work -- the round trip still happens only at p. Directions
+    # are kept separate throughout: text before p is context the activation
+    # encodes, text after is context it cannot, so -20 and +20 are different
+    # measurements and averaging them would hide any asymmetry.
+    sweep = None
+    _nb_flat, _nb_owner = [], []
+    if nb_off_all is not None and any(nb_off_all):
+        print("\n--- Stage 5: near-miss distance sweep ---")
+        # Encode every neighbour once, in one batch, and index back by activation.
+        for i, (offs, vecs) in enumerate(zip(nb_off_all, nb_vec_all)):
+            for d, vec in zip(offs, vecs):
+                _nb_flat.append(vec)
+                _nb_owner.append((i, int(d)))
+        flat, owner = _nb_flat, _nb_owner
+        F_nb: dict[tuple[int, int], set] = {}
+        if flat:
+            A_nb = sae_encode(torch.tensor(flat, dtype=torch.float32), P)
+            for n, (i, d) in enumerate(owner):
+                F_nb[(i, d)] = set((A_nb[n] > 0).nonzero().flatten().tolist())
+
+        offsets = sorted({d for _, d in owner})
+        # A conversation supports the RESTRICTED curve only if it has every
+        # offset. Without that, each point on the curve is drawn from a different
+        # subset of conversations and the shape could be attrition rather than
+        # distance -- short responses lose the far offsets first, and short
+        # responses are not a random subsample.
+        complete = {i for i in range(len(V))
+                    if all((i, d) in F_nb for d in offsets)}
+        print(f"  offsets {offsets}; {len(complete)}/{len(V)} activations have all of them")
+
+        # enumerate, not runs.index(rec): index() is O(n) per call and matches by
+        # VALUE, so two identical records would both resolve to the first one.
+        for k, rec in enumerate(runs):
+            rec["neighbor_jaccard"] = {
+                str(d): (len(F_ar[k] & F_nb[(rec["act"], d)]) /
+                          max(len(F_ar[k] | F_nb[(rec["act"], d)]), 1))
+                for d in offsets if (rec["act"], d) in F_nb}
+
+        def _curve(rs, restrict=None):
+            out = {}
+            for d in offsets:
+                vals = [r["neighbor_jaccard"][str(d)] for r in rs
+                        if str(d) in r["neighbor_jaccard"]
+                        and (restrict is None or r["act"] in restrict)]
+                out[str(d)] = {"jaccard": float(np.mean(vals)) if vals else None,
+                                "n": len(vals)}
+            return out
+
+        _fr = [r for r in runs if r["variant"] == "full"]
+        sweep = {
+            "offsets": offsets,
+            "self_match_delta0": float(np.mean([r["jaccard"] for r in _fr])),
+            "unrelated_conversation_null": float(np.mean([r["control_jaccard"] for r in _fr])),
+            "by_variant": {v: _curve([r for r in runs if r["variant"] == v])
+                            for v in VARIANTS},
+            # Same curve over only the activations long enough for every offset,
+            # so the points are comparable to each other rather than each being a
+            # different subsample.
+            "by_variant_restricted": {
+                v: _curve([r for r in runs if r["variant"] == v], restrict=complete)
+                for v in VARIANTS},
+            "n_activations_all_offsets": len(complete),
+            "n_activations": len(V),
+        }
+        c = sweep["by_variant"]["full"]
+        print("  variant=full:  d=0 (self) %.4f" % sweep["self_match_delta0"])
+        for d in offsets:
+            e = c[str(d)]
+            print("                 d=%+4d      %s   n=%d"
+                  % (d, ("%.4f" % e["jaccard"]) if e["jaccard"] is not None else "  -  ", e["n"]))
+        print("                 unrelated  %.4f  <- the easy null" %
+              sweep["unrelated_conversation_null"])
+
+    # EVERY AGGREGATE IS PER VARIANT. Pooling the three would average an
+    # explanation with two ablations of itself and mean nothing. The top-level
+    # `fve`/`totals` keep reporting variant="full" so that downstream stages and
+    # older artefacts keep the same contract, and `by_variant` carries all three.
+    def _sub(v): return [r for r in runs if r["variant"] == v]
+
+    def _agg(rs: list[dict]) -> dict:
+        if not rs:
+            return {}
+        mm = lambda k: float(np.mean([r[k] for r in rs]))
+        tok = [r["n_tokens"] for r in rs if r["n_tokens"] > 0]
+        fve_b = fve_of([r["mse"] for r in rs], rawvar)
+        return {
+            "n_pairs": len(rs),
+            "n_activations": len({r["act"] for r in rs}),
+            "totals": {k: mm(k) for k in ("n_orig", "n_ar", "n_shared", "n_lost",
+                                           "n_invented", "jaccard",
+                                           "control_jaccard", "weighted_kept")},
+            "fve": {"A_sae_orig_vs_orig": fve_of(sae_mse, rawvar),
+                     "B_ar_vs_orig": fve_b,
+                     "B_control_wrong_activation":
+                         fve_of([r["mse_B_control_wrong_expl"] for r in rs], rawvar),
+                     "C_sae_ar_vs_ar": fve_of([r["mse_C_sae_ar_vs_ar"] for r in rs], rawvar),
+                     "D_sae_ar_vs_orig": fve_of([r["mse_D_sae_ar_vs_orig"] for r in rs], rawvar)},
+            "fve_B_median": float(np.median([r["fve_B"] for r in rs])),
+            "cos_B_mean": mm("cos"),
+            # LENGTH, MADE VISIBLE. The variants differ in length, so a variant
+            # scoring higher could simply be the one with more text. Reporting
+            # FVE per token does not remove that confound -- it exposes it.
+            "tokens_mean": float(np.mean(tok)) if tok else 0.0,
+            "tokens_median": float(np.median(tok)) if tok else 0.0,
+            "chars_mean": mm("n_chars"),
+            "fve_B_per_100_tokens": (100.0 * fve_b / float(np.mean(tok))) if tok else None,
+            "n_split_failed": sum(1 for r in rs if r.get("split_failed")),
+            "n_untagged": sum(1 for r in rs if r["untagged"]),
+            "n_cjk": sum(1 for r in rs if r["cjk"]),
+        }
+
+    by_variant = {v: _agg(_sub(v)) for v in VARIANTS}
+    full_runs = _sub("full") or runs
+
+    def m(key): return float(np.mean([r[key] for r in full_runs]))
+    print("\n  --- per variant (paragraph ablation) ---")
+    print("  %-11s %7s %7s %8s %8s %8s %7s" %
+          ("variant", "FVE B", "median", "cos", "Jaccard", "shared", "tokens"))
+    for v in VARIANTS:
+        d = by_variant[v]
+        if not d:
+            continue
+        print("  %-11s %+7.4f %+7.4f %8.5f %8.4f %8.1f %7.0f" %
+              (v, d["fve"]["B_ar_vs_orig"], d["fve_B_median"], d["cos_B_mean"],
+               d["totals"]["jaccard"], d["totals"]["n_shared"], d["tokens_mean"]))
+    print()
     print(f"  |F_orig| {m('n_orig'):.1f}   |F_ar| {m('n_ar'):.1f}")
     print(f"  shared   {m('n_shared'):.1f}   lost {m('n_lost'):.1f}   "
           f"invented {m('n_invented'):.1f}")
@@ -407,6 +631,17 @@ def main() -> None:
         row_idx=np.array([int(r) for r in row_idx]),
         run_act=np.array([r["act"] for r in runs]),
         run_idx=np.array([r["run"] for r in runs]),
+        # which ablation each v_ar row came from, so the saved vectors
+        # can be split by variant without re-reading the JSON
+        run_variant=np.array([r["variant"] for r in runs]),
+        # Near-miss neighbours, flattened, with an (activation, offset) index so
+        # refeature.py can redo the distance sweep under the other SAE without
+        # re-reading the parquet or re-running Gemma. Empty arrays when the
+        # corpus predates them.
+        v_neighbor=(np.array(_nb_flat, dtype=np.float32) if _nb_flat
+                     else np.zeros((0, V.shape[1]), dtype=np.float32)),
+        neighbor_act=np.array([i for i, _ in _nb_owner], dtype=np.int64),
+        neighbor_delta=np.array([d for _, d in _nb_owner], dtype=np.int64),
     )
     (out_dir / "feature_overlap.json").write_text(json.dumps({
         "config": vars(args), "seed_used": seed, "rawvar": rawvar,
@@ -419,15 +654,22 @@ def main() -> None:
                                    for i in range(len(V))],
                     "sae_cos": sae_cos, "sae_fve": fve_of(sae_mse, rawvar)},
         "runs": runs,
+        # variant="full" -- the unmodified explanation. Downstream code that
+        # predates the ablation reads these and keeps reporting the primary
+        # result rather than an average over an explanation and two ablations.
         "totals": {k: m(k) for k in ("n_orig", "n_ar", "n_shared", "n_lost",
                                       "n_invented", "jaccard", "control_jaccard",
                                       "weighted_kept")},
         "fve": {"A_sae_orig_vs_orig": fve_of(sae_mse, rawvar),
-                 "B_ar_vs_orig": fve_of([r["mse"] for r in runs], rawvar),
-                 "C_sae_ar_vs_ar": fve_of(mse_C, rawvar),
-                 "D_sae_ar_vs_orig": fve_of(mse_D, rawvar)},
+                 "B_ar_vs_orig": fve_of([r["mse"] for r in full_runs], rawvar),
+                 "C_sae_ar_vs_ar": fve_of([r["mse_C_sae_ar_vs_ar"] for r in full_runs], rawvar),
+                 "D_sae_ar_vs_orig": fve_of([r["mse_D_sae_ar_vs_orig"] for r in full_runs], rawvar)},
+        "variants": list(VARIANTS),
+        "by_variant": by_variant,
+        "split_report": srep,
+        "distance_sweep": sweep,
         "sanity": {"untagged": n_untagged, "cjk": n_cjk,
-                    "fve_all_runs": fve_of([r["mse"] for r in runs], rawvar)},
+                    "fve_all_runs": fve_of([r["mse"] for r in full_runs], rawvar)},
     }, indent=2))
     print(f"\nwrote {out_dir/'feature_overlap.json'}")
     print(f"wrote {out_dir/'feature_overlap_vectors.npz'}")
