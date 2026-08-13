@@ -5,14 +5,27 @@
 #   export AV=... AR=...          # the nla-gemma3-12b-L32-{av,ar} snapshot dirs
 #   bash scripts/run_experiment.sh
 #
-# ~3-4h on one GPU at the default N_DOCS=200. Stage 1 used to dominate at ~3h of
-# Gemma generation; it now samples Gemma Scope's shipped corpus and takes
-# minutes. The bulk is now stage 4: the paragraph ablation puts THREE variants of
-# every explanation through the AR, the SAE and the judge, so labelling and
-# judging do roughly three times the work of a single-variant run. Each stage
-# writes its output before the next starts, so a failure part-way does not cost
-# the stages already done, and re-running skips the corpus if the parquet
-# exists.
+# ~2-3h on one GPU at the default N_DOCS=200, most of it stage 4.
+#
+# WHAT COSTS WHAT, since it is easy to over-attribute this to the ablation:
+#   corpus       200 forward passes over Gemma Scope's shipped text. Minutes.
+#   AV           200 generations. The ablation does NOT change this -- the
+#                explanation is generated ONCE and then split.
+#   AR           200 -> 600 with the ablation, but these are single forward
+#                passes, not 200-token generations. Cheap.
+#   labelling    driven by UNIQUE latents, which grow ~n^0.89 with activations:
+#                1,142 at 50 activations, so ~3,900 at 200. The three variants
+#                are reconstructions of the SAME activation, sharing F_orig
+#                entirely and most of F_ar, so they add far less than 3x. This
+#                is the least certain estimate here -- no measured rate exists.
+#   judging      the one stage the ablation really multiplies. At the measured
+#                634 judgements/min (TEST_LOG.md): 200 units = 25 min without
+#                the ablation, 600 units = 76 min with it. About +50 min.
+#
+# So the jump from a 50-activation run is mostly the 4x scale-up in labelling,
+# not the ablation. Each stage writes its output before the next starts, so a
+# failure part-way does not cost the stages already done, and re-running skips
+# the corpus if the parquet exists.
 #
 # The last stage writes results/summary.json and results/SUMMARY.md, which
 # contain every number quoted in RESULTS.md. Nothing else needs to be computed

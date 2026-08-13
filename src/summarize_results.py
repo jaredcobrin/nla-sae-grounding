@@ -913,7 +913,8 @@ def main() -> None:
             "cos_C_sae_ar_vs_ar", "cos_D_sae_ar_vs_orig",
             "n_orig", "n_ar", "n_shared", "n_lost", "n_invented",
             "jaccard", "control_jaccard", "weighted_kept",
-            "n_tokens", "n_chars", "split_method", "cjk", "untagged"]
+            "n_tokens", "n_chars", "split_method",
+            "activation_token_index", "offset_into_response", "cjk", "untagged"]
     lines = [",".join(cols)]
     for r in ov["runs"]:
         lines.append(",".join(

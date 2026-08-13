@@ -207,7 +207,8 @@ def main() -> None:
     import pyarrow.parquet as _pq
     _cols = set(_pq.ParquetFile(args.parquet).schema_arrow.names)
     _want = ["detokenized_text_truncated", "doc_id"] + [
-        c for c in ("prompt", "response", "activation_token_index")
+        c for c in ("prompt", "response", "activation_token_index",
+                     "response_start_index")
         if c in _cols]
     _tbl = _pq.ParquetFile(args.parquet).read(columns=_want)
     _txt = _tbl.column("detokenized_text_truncated").to_pylist()
@@ -218,9 +219,18 @@ def main() -> None:
     # 1200 characters before its token. Older corpora lack these columns.
     _get = lambda c: (_tbl.column(c).to_pylist() if c in _want else None)
     _p, _r, _pos = _get("prompt"), _get("response"), _get("activation_token_index")
+    # WHERE IN THE RESPONSE the activation sits. The absolute token index alone
+    # cannot answer "did this activation have enough left-context", because the
+    # prompt length varies -- the offset INTO THE RESPONSE is what _MIN_OFFSET
+    # governs. Carried through so the standing question about the low-FVE
+    # outliers ("are they low-context positions?") is answerable from the
+    # results, which it was not on the previous run: the field was extracted but
+    # never reached feature_overlap.json, so the check could not be run at all.
+    _rs = _get("response_start_index")
     src_prompt = [_p[int(i)] for i in row_idx] if _p else None
     src_response = [_r[int(i)] for i in row_idx] if _r else None
     src_pos = [_pos[int(i)] for i in row_idx] if _pos else None
+    src_rstart = [_rs[int(i)] for i in row_idx] if _rs else None
     # DOC ID PER ACTIVATION, carried through so the independence of the sample is
     # checkable from the results alone. An earlier run had 50 activations drawn
     # from only 30 conversations -- invisible in every artefact, and it narrowed
@@ -474,6 +484,9 @@ def main() -> None:
             **({"prompt": src_prompt[i]} if src_prompt else {}),
             **({"response": src_response[i]} if src_response else {}),
             **({"activation_token_index": src_pos[i]} if src_pos else {}),
+            **({"response_start_index": src_rstart[i],
+                 "offset_into_response": src_pos[i] - src_rstart[i]}
+                if src_rstart and src_pos else {}),
         })
 
     # ---------------- Stage 5: near-miss distance sweep ----------------
