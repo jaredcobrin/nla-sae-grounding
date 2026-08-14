@@ -188,9 +188,17 @@ def main() -> None:
 
     units = []
     for d, nm in zip(a.dirs, names):
+        # The explanation text lives in feature_overlap.json, NOT in the
+        # re-encoded l0_small file -- refeature.py carries only latent sets. The
+        # two are index-aligned run for run, which is the same join
+        # judge_explanations.py makes.
+        base = json.loads((Path(d) / "feature_overlap.json").read_text())
         j = json.loads((Path(d) / f"feature_overlap_{a.sae}.json").read_text())
+        assert len(base["runs"]) == len(j["runs"]), (
+            f"{len(base['runs'])} runs in feature_overlap.json but "
+            f"{len(j['runs'])} in the {a.sae} file -- they must align by index")
         for i, r in enumerate(j["runs"]):
-            e = r.get("explanation")
+            e = (base["runs"][i].get("explanation") or "").strip()
             if not e:
                 continue
             units.append({"corpus": nm, "act": r["act"], "run": i,
@@ -204,6 +212,10 @@ def main() -> None:
     print(f"[data] {len(units)} units over {len(keep)} activations, "
           f"variants {sorted({u['variant'] for u in units})}")
 
+    if not units:
+        raise SystemExit("no units built -- check that feature_overlap.json and "
+                         f"feature_overlap_{a.sae}.json are both present in "
+                         f"{a.dirs} and carry explanations")
     key, spec = build(units, usable, a.seed)
     print(f"[work] {len(spec)} judgements PER PROMPT, {len(a.prompts)} prompts "
           f"= {len(spec)*len(a.prompts)} total\n")
