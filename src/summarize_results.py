@@ -198,15 +198,91 @@ def labels(lab: dict) -> dict:
     }
 
 
-def conveyance(rows: list[dict], fpr: float) -> dict:
+def monotonicity(rows: list[dict]) -> dict | None:
+    """Is the judge CONSISTENT about containment? Measured, not assumed.
+
+    `full` is literally `no_final` + `final_only` -- the paragraph split is a cut,
+    not a rewrite. So anything `final_only` covers, `full` must also cover: adding
+    text cannot remove coverage. Any (activation, latent) judged covered under
+    the SUBSET and not covered under the SUPERSET is a logical violation.
+
+    Measured on the 200-conversation run: 435 violations against 128 in the legal
+    direction, a 3.4:1 ratio, on 2,047 latents judged under both. So the judge is
+    NOT monotonic, and the cause is almost certainly its own prompt, which tells
+    it to "be strict" because "most detectors are NOT covered". That makes the
+    judgement RELATIVE to the whole explanation -- is this one of the main things
+    here? -- rather than absolute containment. Feed it more text and each latent
+    is a smaller share of it, so the same latent flips to "not covered".
+
+    CONSEQUENCE, and it is a real limit on what this project can claim:
+    conveyance rates are NOT comparable ACROSS variants of different lengths. A
+    shorter explanation scores higher for reasons of salience, not content.
+    WITHIN one variant the artefact applies to every bucket equally and cancels,
+    so shared-vs-lost inside a single variant is unaffected.
+
+    This is why `conveyance` reports `rate_union` alongside the direct rate --
+    see that function.
+    """
+    seen: dict[tuple, dict] = {}
+    for r in rows:
+        seen.setdefault((r["act"], r["feature"]), {})[r.get("variant", "full")] = r
+    both = [d for d in seen.values() if "full" in d and "final_only" in d]
+    if len(both) < 50:
+        return None
+    P = lambda r: r["verdict"] == "present"
+    viol = sum(1 for d in both if not P(d["full"]) and P(d["final_only"]))
+    legal = sum(1 for d in both if P(d["full"]) and not P(d["final_only"]))
+    return {
+        "n_judged_under_both": len(both),
+        "violations_full_no_subset_yes": viol,
+        "legal_full_yes_subset_no": legal,
+        "violation_rate": viol / len(both),
+        "ratio_violation_to_legal": (viol / legal) if legal else None,
+        # A monotonic judge would put this near zero. Anything above ~5% means
+        # cross-variant conveyance comparisons are measuring length, not content.
+        "cross_variant_comparable": viol / len(both) < 0.05,
+    }
+
+
+def conveyance(rows: list[dict], fpr: float,
+               union_rows: list[dict] | None = None) -> dict:
     """Section 3: does the explanation cover each latent?
 
     Bucket comparisons are computed PER ACTIVATION and compared across them.
     The pooled z is also reported, solely to document how much pooling inflates.
+
+    `union_rows`, when given, supplies the SEGMENT judgements this explanation is
+    made of, and every bucket also gets a `rate_union`: a latent counts as
+    covered if ANY segment covers it. That figure is monotonic by construction --
+    a union cannot be smaller than one of its parts -- which the directly-judged
+    rate is not (see `monotonicity`). Both are reported: the direct rate is what
+    the judge actually said, the union is the coherent one.
+
+    The union is a LOWER bound on true containment. A latent covered only by the
+    COMBINATION of two segments -- paragraph 1 establishes "code tutorial",
+    paragraph 3 says "variable declaration", and the latent is "variable
+    declaration in code tutorials" -- is missed, because each segment is judged
+    alone. That is the price of monotonicity, and it is the safe direction.
     """
     by_bucket, per_act = {}, defaultdict(list)
     for r in rows:
         per_act[r["act"]].append(r)
+
+    # (activation, latent) -> covered by at least one segment.
+    #
+    # A latent appears here only if it was actually JUDGED under some segment.
+    # That distinction is load-bearing: the `made` bucket is per-variant, so a
+    # latent the AR invents from the full explanation may never appear in a
+    # segment's buckets and so was never judged there. Counting those as "not
+    # covered" made the union rate for `made` come out BELOW the direct rate
+    # (33.1% vs 37.0%) -- impossible for a union, and purely an artefact of
+    # scoring unmeasured latents as negatives. Rows with no segment judgement are
+    # EXCLUDED from the union rate, and the coverage is reported alongside so a
+    # thin denominator cannot pass unnoticed.
+    uni: dict[tuple, bool] = {}
+    for r in (union_rows or []):
+        k = (r["act"], r["feature"])
+        uni[k] = uni.get(k, False) or (r["verdict"] == "present")
 
     for b in ("shared", "lost", "made"):
         s = [r for r in rows if r["bucket"] == b]
@@ -225,10 +301,19 @@ def conveyance(rows: list[dict], fpr: float) -> dict:
         nf = [r["null_feat_rate"] for r in s if r.get("null_feat_rate") is not None]
         ne = [r["null_expl_rate"] for r in s if r.get("null_expl_rate") is not None]
         m_ne = st.mean(ne) if ne else None
+        s_uni = [r for r in s if (r["act"], r["feature"]) in uni] if uni else []
+        ku = sum(1 for r in s_uni if uni[(r["act"], r["feature"])]) if s_uni else None
         by_bucket[b] = {
             "n": len(s),
             "conveyed": k,
             "rate": k / len(s) if s else None,
+            # Monotonic by construction; see the docstring. None when the run has
+            # no segment judgements to union (single-variant runs).
+            "rate_union": (ku / len(s_uni)) if s_uni else None,
+            # How many of this bucket's latents the union could actually be
+            # computed on. A low number means the union rate is not comparable
+            # to the direct rate beside it.
+            "n_union": len(s_uni) or None,
             "mean_label_auc": st.mean(aucs) if aucs else None,
             "null_feat_rate": st.mean(nf) if nf else None,
             "null_expl_rate": m_ne,
@@ -556,15 +641,19 @@ def render_md(s: dict) -> str:
           f"validated only **{l['mean_auc_validated']:.3f}**",
           f"- wrong-label null **{l['mean_auc_wrong_label_null']:.3f}**",
           "", "## 4. Conveyance", "",
-          "| bucket | n | conveyed | null_feat | null_expl | vs null_expl | mean label AUC |",
-          "|---|---:|---:|---:|---:|---:|---:|"]
+          "| bucket | n | conveyed | conveyed (union) | null_feat | null_expl | vs null_expl | mean label AUC |",
+          "|---|---:|---:|---:|---:|---:|---:|---:|"]
     for b in ("shared", "made", "lost"):
         d = c["by_bucket"][b]
-        L.append(f"| {b} | {d['n']:,} | {d['rate']:.1%} | {d['null_feat_rate']:.1%} | "
+        u = _fmt(d.get("rate_union"), "{:.1%}")
+        if d.get("n_union"):
+            u += f" (n={d['n_union']:,})"
+        L.append(f"| {b} | {d['n']:,} | {d['rate']:.1%} | {u} | "
+                 f"{d['null_feat_rate']:.1%} | "
                  f"{d['null_expl_rate']:.1%} | {d['over_null_expl']:.1f}x | "
                  f"{d['mean_label_auc']:.3f} |")
     L += [f"| **REAL** (shared+lost) | {c['real']['n']:,} | "
-          f"{c['real']['rate']:.1%} | | | | |",
+          f"{c['real']['rate']:.1%} | | | | | |",
           "",
           f"- corrected for the judge's {c['real']['fpr_used']:.2%} false-positive "
           f"rate: **{c['real']['rate_corrected_for_fpr']:.1%}** "
@@ -643,6 +732,31 @@ def render_md(s: dict) -> str:
     for k, v in s["judge"].items():
         if isinstance(v, (int, float)):
             L.append(f"- {k}: **{v:.3f}**")
+
+    mo = s.get("judge_monotonicity")
+    if mo:
+        L += ["", "### Is the judge consistent about containment?", "",
+              "`full` is exactly `no_final` + `final_only` -- the split is a cut, "
+              "not a rewrite -- so anything a part covers, the whole must cover. "
+              "Any latent judged covered under the SUBSET and not under the "
+              "SUPERSET is a logical violation.", "",
+              f"- judged under both: **{mo['n_judged_under_both']:,}**",
+              f"- **violations** (full NO, subset YES): "
+              f"**{mo['violations_full_no_subset_yes']:,}** "
+              f"({mo['violation_rate']:.1%})",
+              f"- legal direction (full YES, subset NO): "
+              f"{mo['legal_full_yes_subset_no']:,}",
+              ""]
+        if not mo["cross_variant_comparable"]:
+            L += ["> **Conveyance rates are NOT comparable across variants.** The "
+                  "judge's prompt tells it to be strict because most latents are "
+                  "not covered, which makes the judgement RELATIVE to the whole "
+                  "explanation rather than absolute containment. A shorter "
+                  "explanation therefore scores higher for reasons of salience, "
+                  "not content. Within a single variant the artefact applies to "
+                  "every bucket equally and cancels, so shared-vs-lost inside one "
+                  "variant is unaffected. Use `rate_union` for anything "
+                  "cross-variant.", ""]
 
     ab = s.get("ablation")
     if ab:
@@ -892,7 +1006,15 @@ def main() -> None:
         "reconstruction": reconstruction(ov_full),
         "overlap": overlap(sm_full, bg_full),
         "labels": labels(lab),
-        "conveyance": conveyance(rows_full, fpr),
+        # The segments `full` is made of. Passed so conveyance can report a
+        # union rate that is monotonic by construction, which the directly
+        # judged rate is not -- see monotonicity().
+        "conveyance": conveyance(
+            rows_full, fpr,
+            union_rows=[r for r in gr["rows"]
+                        if r.get("variant", "full") in ("no_final", "final_only")]
+            if has_ablation else None),
+        "judge_monotonicity": monotonicity(gr["rows"]),
         "label_quality": by_label_quality(rows_full),
         "judge": judge_validation(gr),
         # The paragraph ablation: every section above, recomputed per variant.

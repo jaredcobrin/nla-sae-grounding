@@ -53,12 +53,12 @@ The mean above is not the typical pair. With a 71x multiplier a single activatio
 
 ## 4. Conveyance
 
-| bucket | n | conveyed | null_feat | null_expl | vs null_expl | mean label AUC |
-|---|---:|---:|---:|---:|---:|---:|
-| shared | 1,682 | 41.9% | 6.7% | 8.4% | 5.0x | 0.871 |
-| made | 530 | 34.5% | 6.3% | 7.2% | 4.8x | 0.867 |
-| lost | 663 | 31.4% | 7.0% | 8.5% | 3.7x | 0.860 |
-| **REAL** (shared+lost) | 2,345 | 38.9% | | | | |
+| bucket | n | conveyed | conveyed (union) | null_feat | null_expl | vs null_expl | mean label AUC |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| shared | 1,682 | 41.9% | - | 6.7% | 8.4% | 5.0x | 0.871 |
+| made | 530 | 34.5% | - | 6.3% | 7.2% | 4.8x | 0.867 |
+| lost | 663 | 31.4% | - | 7.0% | 8.5% | 3.7x | 0.860 |
+| **REAL** (shared+lost) | 2,345 | 38.9% | | | | | |
 
 - corrected for the judge's 6.70% false-positive rate: **34.5%** (correcting always lowers the raw 38.9%)
 - `shared` is **6.3x** the false-positive floor
