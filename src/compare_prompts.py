@@ -195,24 +195,34 @@ def add_derived_full(r: dict) -> dict:
         # a union fires if ANY part fires, so the null rates union the same way
         ne = 1.0 - float(np.prod([1.0 - x["null_expl"] for x in xs]))
         nf = 1.0 - float(np.prod([1.0 - x["null_feat"] for x in xs]))
+        # NOT a grade. The union is a boolean -- some segment covered it, or
+        # none did -- and the first version of this labelled that boolean
+        # "CLEARLY"/"NO", which made the summary table report 38.7% CLEARLY and
+        # 0% PROBABLY for derived rows. Those columns were manufactured, not
+        # measured. The grade distribution lives on the SEGMENT rows; a derived
+        # row only has a coverage bit.
         derived.append({"act": act, "feature": f, "variant": "full(derived)",
-                         "grade": "CLEARLY" if cov else "NO",
+                         "grade": None, "covered": cov,
                          "verdict": ("not_present" if not cov
                                      else "unknown" if (ne > UNKNOWN_AT or nf > UNKNOWN_AT)
                                      else "present"),
                          "null_expl": ne, "null_feat": nf})
     s = derived
-    gc = Counter(x["grade"] for x in s); vc = Counter(x["verdict"] for x in s)
+    vc = Counter(x["verdict"] for x in s)
     r["by_variant"]["full(derived)"] = {
         "n": len(s),
-        "covered": sum(1 for x in s if x["grade"] in COVERED) / len(s),
+        "covered": sum(1 for x in s if x["covered"]) / len(s),
         "present": vc["present"] / len(s),
         "not_present": vc["not_present"] / len(s),
         "unknown": vc["unknown"] / len(s),
-        "grades": {g: gc.get(g, 0) / len(s) for g in OPTS},
+        # no per-grade breakdown: a union has no grade, only a coverage bit
+        "grades": None,
         "fpr": float(np.mean([x["null_feat"] for x in s])),
         "null_expl": float(np.mean([x["null_expl"] for x in s])),
     }
+    # the derived rows were previously computed and thrown away, so no breakdown
+    # of them could be recovered from the output at all
+    r["rows"] = r["rows"] + derived
     r["monotonicity"] = {"n": len(s), "violations": 0, "legal": None,
                           "violation_rate": 0.0, "note": "0 by construction"}
     return r
@@ -337,7 +347,12 @@ def main() -> None:
           ("", "variant", "CLEARLY", "PROBABLY", "UNCLEAR", "NO", "present", "unknown"))
     for n, r in res.items():
         for v, d in sorted(r["by_variant"].items()):
-            g = d["grades"]
+            g = d.get("grades")
+            if not g:      # derived rows carry a coverage bit, not a grade
+                print("%-5s %-12s %8s %8s %8s %8s   %8.1f%% %8.1f%%   (union: %.1f%% covered)"
+                      % (n, v, "-", "-", "-", "-", 100*d["present"],
+                         100*d["unknown"], 100*d["covered"]))
+                continue
             print("%-5s %-12s %8.1f%% %8.1f%% %8.1f%% %8.1f%%   %8.1f%% %8.1f%%"
                   % (n, v, 100*g["CLEARLY"], 100*g["PROBABLY"], 100*g["UNCLEAR"],
                      100*g["NO"], 100*d["present"], 100*d["unknown"]))
