@@ -133,15 +133,24 @@ def evaluate(key, cont, units):
     ne_ = [m for (i, f, arm), m in zip(key, margin) if arm == "null_expl"]
     nf_ = [m for (i, f, arm), m in zip(key, margin) if arm == "null_feat"]
 
-    out = {"n_rows": len(rows),
+    out = {"n_rows": len(rows), "rows": rows,
            "auc_vs_null_expl": auc(mt, ne_), "auc_vs_null_feat": auc(mt, nf_),
            "by_variant": {}}
     for v in sorted({r["variant"] for r in rows}):
         s = [r for r in rows if r["variant"] == v]
+        gc = Counter(r["grade"] for r in s)
+        vc = Counter(r["verdict"] for r in s)
         out["by_variant"][v] = {
             "n": len(s),
             "covered": sum(1 for r in s if r["grade"] in COVERED) / len(s),
-            "present": sum(1 for r in s if r["verdict"] == "present") / len(s),
+            "present": vc["present"] / len(s),
+            "not_present": vc["not_present"] / len(s),
+            "unknown": vc["unknown"] / len(s),
+            # THE RAW REPLY DISTRIBUTION. The first version of this harness saved
+            # only aggregates, so "how often did it actually say CLEARLY?" could
+            # not be answered without re-running the whole comparison. Cheap to
+            # store, and it is the first thing anyone asks.
+            "grades": {g: gc.get(g, 0) / len(s) for g in OPTS},
             "fpr": float(np.mean([r["null_feat"] for r in s])),
             "null_expl": float(np.mean([r["null_expl"] for r in s])),
         }
@@ -163,6 +172,52 @@ def evaluate(key, cont, units):
     return out
 
 
+def add_derived_full(r: dict) -> dict:
+    """Reconstruct `full` as the union of its two segments.
+
+    Monotonic BY CONSTRUCTION -- full covers a latent iff some segment does, so
+    covered(segment) implies covered(full) and the violation count is 0 without
+    the model having to be consistent about it.
+
+    The cost is the compounding false-positive rate: full inherits every
+    segment's mistakes, so its FPR is ~1-(1-f1)(1-f2) rather than either alone.
+    That is reported, not hidden -- a union bought with a tripled error floor is
+    not obviously a better measurement, and the corrected rates are what settle
+    it.
+    """
+    rows = r["rows"]
+    by = {}
+    for x in rows:
+        by.setdefault((x["act"], x["feature"]), []).append(x)
+    derived = []
+    for (act, f), xs in by.items():
+        cov = any(x["grade"] in COVERED for x in xs)
+        # a union fires if ANY part fires, so the null rates union the same way
+        ne = 1.0 - float(np.prod([1.0 - x["null_expl"] for x in xs]))
+        nf = 1.0 - float(np.prod([1.0 - x["null_feat"] for x in xs]))
+        derived.append({"act": act, "feature": f, "variant": "full(derived)",
+                         "grade": "CLEARLY" if cov else "NO",
+                         "verdict": ("not_present" if not cov
+                                     else "unknown" if (ne > UNKNOWN_AT or nf > UNKNOWN_AT)
+                                     else "present"),
+                         "null_expl": ne, "null_feat": nf})
+    s = derived
+    gc = Counter(x["grade"] for x in s); vc = Counter(x["verdict"] for x in s)
+    r["by_variant"]["full(derived)"] = {
+        "n": len(s),
+        "covered": sum(1 for x in s if x["grade"] in COVERED) / len(s),
+        "present": vc["present"] / len(s),
+        "not_present": vc["not_present"] / len(s),
+        "unknown": vc["unknown"] / len(s),
+        "grades": {g: gc.get(g, 0) / len(s) for g in OPTS},
+        "fpr": float(np.mean([x["null_feat"] for x in s])),
+        "null_expl": float(np.mean([x["null_expl"] for x in s])),
+    }
+    r["monotonicity"] = {"n": len(s), "violations": 0, "legal": None,
+                          "violation_rate": 0.0, "note": "0 by construction"}
+    return r
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -176,6 +231,16 @@ def main() -> None:
     ap.add_argument("--max-expl-chars", type=int, default=1200)
     ap.add_argument("--batch", type=int, default=24)
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--derive-full", action="store_true",
+                    help="judge ONLY the two segments (no_final = everything "
+                         "before the final-token paragraph, final_only = that "
+                         "paragraph) and derive full = S1 OR S2, instead of "
+                         "judging full's text directly. Monotonicity is then "
+                         "arithmetic rather than something the model has to "
+                         "respect: a union cannot be smaller than a part. Costs "
+                         "2 judgements per latent instead of 3. The ablation "
+                         "already produced these exact segments, so nothing "
+                         "needs re-splitting.")
     ap.add_argument("--out", default="results/prompt_comparison.json")
     a = ap.parse_args()
     sys.stdout.reconfigure(line_buffering=True)
@@ -209,6 +274,23 @@ def main() -> None:
                            "made": set(r["invented_features"])})
     keep = set(sorted({u["act"] for u in units})[:a.acts])
     units = [u for u in units if u["act"] in keep]
+    if a.derive_full:
+        # `full` is not judged at all; its coverage is reconstructed from the two
+        # segments it is made of. The latents asked about are still full's own --
+        # its buckets differ from the segments' because its F_ar differs -- but a
+        # latent does not need to sit in a segment's bucket for that segment's
+        # TEXT to be judged against it.
+        full_units = {(u["corpus"], u["act"]): u for u in units
+                      if u.get("variant") == "full"}
+        units = [u for u in units if u.get("variant") != "full"]
+        for u in units:               # ask about full's latents too
+            fu = full_units.get((u["corpus"], u["act"]))
+            if fu:
+                u["shared"] = u["shared"] | fu["shared"]
+                u["lost"] = u["lost"] | fu["lost"]
+                u["made"] = u["made"] | fu["made"]
+        print(f"[mode] --derive-full: judging {len(units)} segment units; "
+              f"full will be derived as S1 OR S2")
     print(f"[data] {len(units)} units over {len(keep)} activations, "
           f"variants {sorted({u['variant'] for u in units})}")
 
@@ -235,6 +317,8 @@ def main() -> None:
         t0 = time.time()
         cont = score_one(model, tok, opt_ids, PROMPTS[name], spec, a.batch)
         res[name] = evaluate(key, cont, units)
+        if a.derive_full:
+            res[name] = add_derived_full(res[name])
         print(f"    done in {(time.time()-t0)/60:.1f} min\n")
 
     print("=" * 78)
@@ -248,7 +332,18 @@ def main() -> None:
               (n, ("%.1f%% viol" % (100*m.get("violation_rate", float('nan')))),
                r["fpr_spread"], r["auc_vs_null_expl"], r["auc_vs_null_feat"],
                r["n_rows"]))
-    print("\nper-variant covered rate / its own FPR:")
+    print("\nGRADE DISTRIBUTION (the judge's raw reply, matched arm)")
+    print("%-5s %-12s %9s %9s %9s %9s   %9s %9s" %
+          ("", "variant", "CLEARLY", "PROBABLY", "UNCLEAR", "NO", "present", "unknown"))
+    for n, r in res.items():
+        for v, d in sorted(r["by_variant"].items()):
+            g = d["grades"]
+            print("%-5s %-12s %8.1f%% %8.1f%% %8.1f%% %8.1f%%   %8.1f%% %8.1f%%"
+                  % (n, v, 100*g["CLEARLY"], 100*g["PROBABLY"], 100*g["UNCLEAR"],
+                     100*g["NO"], 100*d["present"], 100*d["unknown"]))
+        print()
+
+    print("per-variant covered rate / its own FPR:")
     for n, r in res.items():
         print("  %-4s " % n + "  ".join(
             "%s %.1f%%/%.1f%%" % (v, 100*d["covered"], 100*d["fpr"])

@@ -263,7 +263,83 @@ Reply with exactly one word:
   NO        the description does not convey this"""
 
 
-PROMPTS = {"A0": _PROMPT_A0, "A": _PROMPT_A, "B": _PROMPT_B}
+
+# B2 -- B, with a strictness anchor that does NOT depend on text length.
+#
+# B measured 33-49% FPR and answered "covered" for ~82% of everything, so the
+# two-null gate discarded 46-71 points of it as unknown. That is the documented
+# failure of the original 78% prompt: the measurement refuses itself. The cause
+# was removing the base rate with nothing in its place.
+#
+# But A0's version of that anchor is stated in terms of the TEXT -- the summary
+# is short and covers only some of what the passage contains -- which is exactly
+# what makes the judgement scale with how much text is shown. So B2 states the
+# base rate in terms of the LATENT COUNT instead: a vector carries roughly twenty
+# active latents and a description names a few of them. That is true regardless
+# of whether the description is one paragraph or three, so it supplies the prior
+# without tying it to length.
+#
+# Also tightened from B: the instruction on candidate readings. B said they
+# "count", full stop, and paragraph 3 averages ~7 of them -- which is a lot of
+# licence. B2 keeps them creditable but requires the latent to match a reading
+# the description actually commits to.
+_PROMPT_B2 = """CONTEXT — what this data is.
+
+A language model was reading a passage of text. At one token position its
+internal state was captured as a vector.
+
+Two independent things were derived from that vector.
+
+(1) A sparse autoencoder decomposes such a vector into LATENTS — individual
+    directions, each responding to one recurring thing. A typical vector has on
+    the order of twenty active latents. At any given position a latent either
+    fires or it does not.
+
+(2) Separately, a Natural Language Autoencoder read the same vector and wrote a
+    description of what it appeared to represent. Here is that description,
+    verbatim and complete:
+
+        {expl}
+
+THE LATENT YOU ARE SCORING responds to:
+
+        {content}
+
+This latent may or may not have fired in the vector that description was written
+from. It may equally have been taken from a different vector entirely, captured
+from unrelated text. You are not told which, and that is what you are judging.
+
+YOUR TASK.
+
+From the description alone, does it indicate that THIS latent was among those
+active in the vector it describes?
+
+Be strict. A vector carries roughly twenty active latents and a description
+names only a few of them, so most latents you are shown will NOT be indicated,
+and NO is the ordinary answer.
+
+You cannot see the vector or the original passage. Judge only what the
+description itself conveys.
+
+A description may assert things directly, and it may also raise candidate
+readings or continuations. A candidate reading counts only if the description
+commits to it as a reading of this passage — not merely because one item in a
+list of possibilities happens to resemble the latent.
+
+Do NOT answer yes merely because:
+  - the description concerns the same broad subject area
+  - the passage could plausibly have contained this
+  - the latent describes a grammatical or formatting pattern common to nearly
+    all writing, and so would fire in almost any passage
+
+Reply with exactly one word:
+  CLEARLY   the description conveys this
+  PROBABLY  not stated outright, but clearly implied
+  UNCLEAR   genuinely cannot tell
+  NO        the description does not convey this"""
+
+
+PROMPTS = {"A0": _PROMPT_A0, "A": _PROMPT_A, "B": _PROMPT_B, "B2": _PROMPT_B2}
 
 
 @torch.no_grad()
