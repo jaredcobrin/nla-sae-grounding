@@ -57,35 +57,35 @@ The mean above is not the typical pair. With a 68x multiplier a single activatio
 
 | bucket | n | conveyed | conveyed (union) | null_feat | null_expl | vs null_expl | mean label AUC |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| shared | 1,363 | 42.4% | 62.9% (n=1,363) | 5.1% | 9.7% | 4.4x | 0.878 |
-| made | 441 | 37.0% | 55.5% (n=263) | 6.3% | 9.8% | 3.8x | 0.869 |
-| lost | 471 | 25.5% | 48.4% (n=471) | 5.4% | 12.2% | 2.1x | 0.863 |
-| **REAL** (shared+lost = F_orig) | 1,834 | 38.1% | | | | | |
+| shared | 1,363 | 47.4% | 50.2% (n=1,363) | 7.0% | 9.2% | 5.2x | 0.878 |
+| made | 866 | 37.1% | 38.3% (n=866) | 5.3% | 5.8% | 6.3x | 0.871 |
+| lost | 471 | 30.4% | 33.5% (n=471) | 7.0% | 10.9% | 2.8x | 0.863 |
+| **REAL** (shared+lost = F_orig) | 1,834 | 43.0% | | | | | |
 
 **Compare variants on this row, not on `shared`.** `shared` and `lost` partition F_orig, the latents genuinely in the activation, so their union is the same set for every variant — three descriptions of one activation, asked about the same latents. `shared` on its own is an *outcome* (how much the AR recovered), so a rate over it divides by a number that moves with what is being measured.
 
 - of F_orig, the AR recovered **74.3%** (`shared`); the rest was destroyed by the round trip (`lost`)
-- of F_orig, the explanation conveys **38.1%** raw, **33.2%** corrected for the judge's false-positive rate
-- split: **42.4%** of recovered latents are conveyed vs **25.5%** of destroyed ones
+- of F_orig, the explanation conveys **43.0%** raw, **40.3%** corrected for the judge's false-positive rate
+- split: **47.4%** of recovered latents are conveyed vs **30.4%** of destroyed ones
 
 ### `made` — reported separately
 
 These latents were **never in the original activation**; the AR produced them from the text. They are not part of faithfulness to the activation, so they are kept out of the coverage rate above rather than averaged into it.
 
-- **441** invented latents, **37.0%** of them traceable to something the explanation says (chance 9.8%)
+- **866** invented latents, **37.1%** of them traceable to something the explanation says (chance 5.8%)
 
-- corrected for the judge's 7.23% false-positive rate: **33.2%** (correcting always lowers the raw 38.1%)
-- `shared` is **5.9x** the false-positive floor
+- corrected for the judge's 4.55% false-positive rate: **40.3%** (correcting always lowers the raw 43.0%)
+- `shared` is **10.4x** the false-positive floor
 
-**The two null columns are the check on the bucket comparison below.** `null_feat` is a latent that did not fire, judged against the real explanation; `null_expl` is a latent that did fire, judged against unrelated explanations. If chance were higher for `shared` than for `lost`, the gap below would be an artefact of `shared` latents simply being more generic. Spread across buckets here: **2.6 pts** (flat -- the comparison stands).
+**The two null columns are the check on the bucket comparison below.** `null_feat` is a latent that did not fire, judged against the real explanation; `null_expl` is a latent that did fire, judged against unrelated explanations. If chance were higher for `shared` than for `lost`, the gap below would be an artefact of `shared` latents simply being more generic. Spread across buckets here: **5.1 pts** (NOT FLAT -- the bucket comparison below is confounded, do not quote it).
 
 ### Bucket comparisons (per activation, then across activations)
 
 | comparison | difference | 95% CI | t | n acts | pooled z |
 |---|---:|---|---:|---:|---:|
-| shared vs lost | +18.8 pts | [+13.6, +24.1] | 7.00 | 168 | 6.5 |
-| shared vs made | +10.4 pts | [+3.9, +16.9] | 3.15 | 170 | 2.0 |
-| made vs lost | +6.6 pts | [-0.6, +13.8] | 1.80 | 147 | 3.7 |
+| shared vs lost | +16.5 pts | [+10.7, +22.3] | 5.53 | 168 | 6.4 |
+| shared vs made | +12.4 pts | [+7.6, +17.1] | 5.05 | 192 | 4.8 |
+| made vs lost | +3.4 pts | [-3.1, +9.8] | 1.02 | 165 | 2.5 |
 
 *Pooled z is shown only to document the inflation; the clustered figures are the ones to quote.*
 
@@ -93,10 +93,10 @@ These latents were **never in the original activation**; the AR produced them fr
 
 | | shared | lost |
 |---|---:|---:|
-| mentioned | 578 | 120 |
-| not mentioned | 785 | 351 |
+| mentioned | 646 | 143 |
+| not mentioned | 717 | 328 |
 
-- **58% of `shared` latents were never mentioned** in the explanation
+- **53% of `shared` latents were never mentioned** in the explanation
 
 ### Is this just label quality?
 
@@ -104,41 +104,40 @@ A latent scored 'not present' has two readings: the AV never mentioned it, or it
 
 | label AUC band | n | conveyed | null_expl | vs null |
 |---|---:|---:|---:|---:|
-| 0.756-0.801 | 455 | 31.0% | 12.0% | 2.6x |
-| 0.801-0.848 | 455 | 32.5% | 14.6% | 2.2x |
-| 0.850-0.895 | 455 | 35.6% | 13.5% | 2.6x |
-| 0.895-0.943 | 455 | 38.5% | 7.0% | 5.5x |
-| 0.943-1.000 | 455 | 51.6% | 4.2% | 12.4x |
+| 0.756-0.801 | 540 | 30.9% | 11.1% | 2.8x |
+| 0.801-0.848 | 540 | 34.6% | 11.5% | 3.0x |
+| 0.848-0.895 | 540 | 40.7% | 10.7% | 3.8x |
+| 0.895-0.943 | 540 | 43.7% | 5.1% | 8.6x |
+| 0.943-1.000 | 540 | 55.6% | 3.7% | 15.1x |
 
-- conveyance moves **+20.7 points** from the weakest validated labels to the strongest. A large lift means the headline rate understates what happens for well-identified latents, and that chance is lower there too -- a vague label matches unrelated explanations more often as well.
+- conveyance moves **+24.6 points** from the weakest validated labels to the strongest. A large lift means the headline rate understates what happens for well-identified latents, and that chance is lower there too -- a vague label matches unrelated explanations more often as well.
 
 **The check that matters: does the shared-vs-lost gap survive as the label threshold tightens?** If it only exists among weak labels it is an artefact of labelling, not a result about the AV.
 
 | labels kept | shared | lost | gap |
 |---|---:|---:|---:|
-| all validated (n=1,363/471) | 42.4% | 25.5% | **+16.9 pts** |
-| AUC >= 0.85 (n=837/254) | 46.5% | 26.8% | **+19.7 pts** |
-| AUC >= 0.90 (n=534/157) | 50.2% | 28.7% | **+21.5 pts** |
-| AUC >= 0.94 (n=315/80) | 54.0% | 38.8% | **+15.2 pts** |
+| all validated (n=1,363/471) | 47.4% | 30.4% | **+17.0 pts** |
+| AUC >= 0.85 (n=837/254) | 53.6% | 33.5% | **+20.2 pts** |
+| AUC >= 0.90 (n=534/157) | 57.1% | 35.7% | **+21.4 pts** |
+| AUC >= 0.94 (n=315/80) | 59.7% | 46.2% | **+13.4 pts** |
 
-- the gap varies by **6.3 points** across those thresholds (UNSTABLE -- the finding tracks label quality and must not be quoted as a result about the AV).
+- the gap varies by **8.0 points** across those thresholds (UNSTABLE -- the finding tracks label quality and must not be quoted as a result about the AV).
 
 ## 5. Judge validation
 
-- false_positive_rate: **0.072**
-- matcher_auc_vs_null_expl: **0.797**
-- matcher_auc_vs_null_feat: **0.826**
-- self_consistency: **0.857**
+- false_positive_rate: **0.046**
+- matcher_auc_vs_null_expl: **0.783**
+- matcher_auc_vs_null_feat: **0.808**
+- monotonicity_violation_rate: **0.000**
+- fpr_spread_across_variants: **0.037**
 
 ### Is the judge consistent about containment?
 
 `full` is exactly `no_final` + `final_only` -- the split is a cut, not a rewrite -- so anything a part covers, the whole must cover. Any latent judged covered under the SUBSET and not under the SUPERSET is a logical violation.
 
-- judged under both: **2,047**
-- **violations** (full NO, subset YES): **435** (21.3%)
-- legal direction (full YES, subset NO): 128
-
-> **Conveyance rates are NOT comparable across variants.** The judge's prompt tells it to be strict because most latents are not covered, which makes the judgement RELATIVE to the whole explanation rather than absolute containment. A shorter explanation therefore scores higher for reasons of salience, not content. Within a single variant the artefact applies to every bucket equally and cancels, so shared-vs-lost inside one variant is unaffected. Use `rate_union` for anything cross-variant.
+- judged under both: **2,414**
+- **violations** (full NO, subset YES): **33** (1.4%)
+- legal direction (full YES, subset NO): 69
 
 
 ## 6. Paragraph ablation — which part of the explanation carries it
@@ -156,10 +155,10 @@ The AV writes to a three-part shape: what kind of document this is, what it is a
 | shared latents | 2,834 | 1,215 | 2,376 |
 | lost latents | 1,202 | 2,821 | 1,660 |
 | made latents | 959 | 1,038 | 835 |
-| conveyance `shared` | 42.4% | 48.6% | 59.0% |
-| conveyance `lost` | 25.5% | 22.7% | 42.7% |
-| chance (`null_expl`, shared) | 9.7% | 6.8% | 10.1% |
-| shared - lost gap | +18.8% | +30.6% | +14.5% |
+| conveyance `shared` | 47.4% | 21.6% | 46.0% |
+| conveyance `lost` | 30.4% | 12.8% | 27.5% |
+| chance (`null_expl`, shared) | 9.2% | 2.6% | 7.1% |
+| shared - lost gap | +16.5% | +11.4% | +16.2% |
 | **tokens** (mean) | 134 | 59 | 73 |
 | **FVE B per 100 tokens** | +0.5172 | +0.4516 | +0.7931 |
 

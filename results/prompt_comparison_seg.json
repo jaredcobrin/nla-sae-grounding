@@ -1,0 +1,6180 @@
+{
+  "config": {
+    "dirs": [
+      "results"
+    ],
+    "names": [
+      "rollout"
+    ],
+    "labels_json": "results/feature_labels.json",
+    "sae": "l0_small",
+    "acts": 13,
+    "prompts": [
+      "A",
+      "B2"
+    ],
+    "model": "google/gemma-3-12b-it",
+    "max_expl_chars": 1200,
+    "batch": 24,
+    "seed": 0,
+    "derive_full": true,
+    "out": "results/prompt_comparison_seg.json"
+  },
+  "n_judgements_per_prompt": 2345,
+  "results": {
+    "A": {
+      "n_rows": 335,
+      "rows": [
+        {
+          "act": 0,
+          "feature": 40,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 0,
+          "feature": 121,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 769,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 1267,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 2463,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 2688,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 5068,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 7024,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 10989,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 13870,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 14143,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 40,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 121,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 943,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 1642,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 2463,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 2688,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 5068,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 7024,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 10989,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 14143,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 30,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 72,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 1,
+          "feature": 138,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 144,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 272,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 287,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 529,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 765,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 809,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 1267,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 1276,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 1797,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 2589,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 3295,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 4710,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 8051,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 30,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 138,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 144,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 272,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 287,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 529,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 765,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 809,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 1267,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 1276,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 1797,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 2589,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 4710,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 7085,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 8051,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 1252,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 1295,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 1876,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 2756,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 2793,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 2989,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 3468,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 9855,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 9980,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 10155,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 11272,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 13287,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 2,
+          "feature": 13752,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 15169,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 1252,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 1295,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 1876,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 2,
+          "feature": 2756,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 2,
+          "feature": 2793,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 2989,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 9855,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 9980,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 2,
+          "feature": 10155,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 11272,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 13287,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 13752,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 2,
+          "feature": 15169,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 109,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 303,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 343,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 373,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 612,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 863,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 1490,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 1810,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 3290,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 3748,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 4365,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 5075,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 5372,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 8077,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 9585,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 9683,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 10159,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 10298,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 10953,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 12524,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 3,
+          "feature": 13861,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 16120,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 109,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 303,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 373,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 612,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 626,
+          "variant": "final_only",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 3,
+          "feature": 863,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 1031,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 3,
+          "feature": 1810,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 3,
+          "feature": 3290,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 3748,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 4365,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 5075,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 5372,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 3,
+          "feature": 8077,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 3,
+          "feature": 9585,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 9683,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 10159,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 10953,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 12524,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 16120,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 4,
+          "feature": 54,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 389,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 461,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 525,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 1103,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 1128,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 1177,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 2102,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 2248,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 3827,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 4009,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 10571,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 13636,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 54,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 389,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 525,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 1103,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 1128,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 1177,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 2248,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 3827,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 10571,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 5,
+          "feature": 449,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 5,
+          "feature": 1293,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 5,
+          "feature": 2898,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 5,
+          "feature": 3092,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 5,
+          "feature": 3220,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 5,
+          "feature": 6132,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 5,
+          "feature": 10161,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 5,
+          "feature": 15175,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 5,
+          "feature": 449,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 5,
+          "feature": 1267,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 5,
+          "feature": 1293,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 5,
+          "feature": 2898,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 5,
+          "feature": 3092,
+          "variant": "final_only",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 5,
+          "feature": 3220,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 5,
+          "feature": 3858,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 5,
+          "feature": 6132,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 5,
+          "feature": 10161,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 5,
+          "feature": 15175,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 30,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 63,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 6,
+          "feature": 123,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 937,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 2136,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 2138,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 2464,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 2485,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 7155,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 9770,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 11110,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 12073,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 30,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 63,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 6,
+          "feature": 123,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 937,
+          "variant": "final_only",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 6,
+          "feature": 2136,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 6,
+          "feature": 2138,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 2464,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 2485,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 7155,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 9770,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 6,
+          "feature": 11110,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 6,
+          "feature": 12073,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 105,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 260,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 329,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 422,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 519,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 589,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 751,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 809,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 831,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 1460,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 2118,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 3183,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 3263,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 3488,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 3914,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 4754,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 4871,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 7549,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 8861,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 9235,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 10612,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 11557,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 15162,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 15397,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 15530,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 105,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 260,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 329,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 422,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 519,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 589,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 751,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 809,
+          "variant": "final_only",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 831,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 1460,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 2118,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 3183,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 3263,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 3488,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 3914,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 4754,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 4871,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 1.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 7549,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 9235,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 10612,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 11557,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 15530,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 343,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 907,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 1172,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 1173,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 3044,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 3563,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 8,
+          "feature": 7617,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 8897,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 9473,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 13161,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 16059,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 301,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 343,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.6666666666666666
+        },
+        {
+          "act": 8,
+          "feature": 907,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 1172,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 1173,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 8,
+          "feature": 2427,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 3563,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 7617,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 8897,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 9473,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 13161,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 16059,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 102,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 109,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 342,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 422,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 590,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 856,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 908,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 2734,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 5123,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 6351,
+          "variant": "no_final",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 102,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 109,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 9,
+          "feature": 342,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 422,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 590,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 856,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 908,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 1267,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 2734,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 3461,
+          "variant": "final_only",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 5123,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 5830,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 6351,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 66,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 197,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 291,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 373,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 422,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 519,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 626,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 684,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 746,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 900,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 1128,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 2515,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 4793,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 6880,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 8031,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 11062,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 13663,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 66,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 291,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 373,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 422,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.6666666666666666
+        },
+        {
+          "act": 10,
+          "feature": 519,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 900,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 1128,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 10,
+          "feature": 2515,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 4793,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 8031,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 10,
+          "feature": 11062,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 13663,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 600,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 1153,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 1662,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 2136,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 2314,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 6132,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 10828,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 14793,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 245,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 600,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 1153,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 1662,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 2136,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 11,
+          "feature": 2314,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 6132,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 10828,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.0,
+          "null_feat": 0.6666666666666666
+        },
+        {
+          "act": 11,
+          "feature": 14793,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 12,
+          "feature": 78,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 12,
+          "feature": 123,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.0
+        },
+        {
+          "act": 12,
+          "feature": 868,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 12,
+          "feature": 12977,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 12,
+          "feature": 13098,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 12,
+          "feature": 14382,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 12,
+          "feature": 78,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 12,
+          "feature": 123,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 1.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 12,
+          "feature": 868,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 12,
+          "feature": 12977,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 12,
+          "feature": 14382,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        }
+      ],
+      "auc_vs_null_expl": 0.7550025989455706,
+      "auc_vs_null_feat": 0.8008687903764758,
+      "by_variant": {
+        "final_only": {
+          "n": 162,
+          "covered": 0.4074074074074074,
+          "present": 0.3765432098765432,
+          "not_present": 0.5925925925925926,
+          "unknown": 0.030864197530864196,
+          "grades": {
+            "CLEARLY": 0.3765432098765432,
+            "PROBABLY": 0.030864197530864196,
+            "UNCLEAR": 0.0,
+            "NO": 0.5925925925925926
+          },
+          "fpr": 0.06790123456790123,
+          "null_expl": 0.08436213991769546
+        },
+        "no_final": {
+          "n": 173,
+          "covered": 0.1907514450867052,
+          "present": 0.1907514450867052,
+          "not_present": 0.8092485549132948,
+          "unknown": 0.0,
+          "grades": {
+            "CLEARLY": 0.18497109826589594,
+            "PROBABLY": 0.005780346820809248,
+            "UNCLEAR": 0.0,
+            "NO": 0.8092485549132948
+          },
+          "fpr": 0.02119460500963391,
+          "null_expl": 0.019267822736030827
+        },
+        "full(derived)": {
+          "n": 186,
+          "covered": 0.3870967741935484,
+          "present": 0.3333333333333333,
+          "not_present": 0.6129032258064516,
+          "unknown": 0.053763440860215055,
+          "grades": {
+            "CLEARLY": 0.3870967741935484,
+            "PROBABLY": 0.0,
+            "UNCLEAR": 0.0,
+            "NO": 0.6129032258064516
+          },
+          "fpr": 0.07825567502986856,
+          "null_expl": 0.08422939068100357
+        }
+      },
+      "fpr_spread": 0.04670662955826732,
+      "monotonicity": {
+        "n": 186,
+        "violations": 0,
+        "legal": null,
+        "violation_rate": 0.0,
+        "note": "0 by construction"
+      }
+    },
+    "B2": {
+      "n_rows": 335,
+      "rows": [
+        {
+          "act": 0,
+          "feature": 40,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.6666666666666666
+        },
+        {
+          "act": 0,
+          "feature": 121,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 0,
+          "feature": 769,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 1267,
+          "variant": "no_final",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 2463,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 2688,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 1.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 5068,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 7024,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 10989,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 13870,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 14143,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 40,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 0,
+          "feature": 121,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 943,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 1642,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 2463,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 2688,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 1.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 0,
+          "feature": 5068,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 7024,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 10989,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 0,
+          "feature": 14143,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 1,
+          "feature": 30,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 72,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 1,
+          "feature": 138,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.6666666666666666
+        },
+        {
+          "act": 1,
+          "feature": 144,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 272,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 287,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 529,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 765,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 809,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 1267,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 1276,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 1797,
+          "variant": "no_final",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 2589,
+          "variant": "no_final",
+          "grade": "UNCLEAR",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 3295,
+          "variant": "no_final",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 1,
+          "feature": 4710,
+          "variant": "no_final",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 8051,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 30,
+          "variant": "final_only",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 1,
+          "feature": 138,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 1,
+          "feature": 144,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.6666666666666666
+        },
+        {
+          "act": 1,
+          "feature": 272,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 1,
+          "feature": 287,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 529,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 765,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 809,
+          "variant": "final_only",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 1,
+          "feature": 1267,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 1276,
+          "variant": "final_only",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 1797,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 2589,
+          "variant": "final_only",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 4710,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 1,
+          "feature": 7085,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 1,
+          "feature": 8051,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 2,
+          "feature": 1252,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 1295,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 1876,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 2,
+          "feature": 2756,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.0,
+          "null_feat": 0.6666666666666666
+        },
+        {
+          "act": 2,
+          "feature": 2793,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 2989,
+          "variant": "no_final",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 3468,
+          "variant": "no_final",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 9855,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 2,
+          "feature": 9980,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 10155,
+          "variant": "no_final",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 11272,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 2,
+          "feature": 13287,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.6666666666666666
+        },
+        {
+          "act": 2,
+          "feature": 13752,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 2,
+          "feature": 15169,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 1252,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 1295,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 1876,
+          "variant": "final_only",
+          "grade": "PROBABLY",
+          "verdict": "unknown",
+          "null_expl": 1.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 2,
+          "feature": 2756,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 2793,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 2,
+          "feature": 2989,
+          "variant": "final_only",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 9855,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 2,
+          "feature": 9980,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.6666666666666666
+        },
+        {
+          "act": 2,
+          "feature": 10155,
+          "variant": "final_only",
+          "grade": "PROBABLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 2,
+          "feature": 11272,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 2,
+          "feature": 13287,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 2,
+          "feature": 13752,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 2,
+          "feature": 15169,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 109,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 303,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 1.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 343,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 3,
+          "feature": 373,
+          "variant": "no_final",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 3,
+          "feature": 612,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 863,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 3,
+          "feature": 1490,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 3,
+          "feature": 1810,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 3,
+          "feature": 3290,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 1.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 3748,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 4365,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 3,
+          "feature": 5075,
+          "variant": "no_final",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 3,
+          "feature": 5372,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 3,
+          "feature": 8077,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 9585,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 9683,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 10159,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 10298,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 3,
+          "feature": 10953,
+          "variant": "no_final",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 12524,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 3,
+          "feature": 13861,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 16120,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.6666666666666666
+        },
+        {
+          "act": 3,
+          "feature": 109,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 303,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 373,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 612,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 1.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 626,
+          "variant": "final_only",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 3,
+          "feature": 863,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 1031,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 1810,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 3,
+          "feature": 3290,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 3748,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 3,
+          "feature": 4365,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 5075,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 5372,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 3,
+          "feature": 8077,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 9585,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 9683,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 10159,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 10953,
+          "variant": "final_only",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 12524,
+          "variant": "final_only",
+          "grade": "PROBABLY",
+          "verdict": "unknown",
+          "null_expl": 1.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 3,
+          "feature": 16120,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 54,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 1.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 4,
+          "feature": 389,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 461,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 525,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 1103,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 1128,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 1177,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 2102,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 2248,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 3827,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 4009,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 10571,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 13636,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 54,
+          "variant": "final_only",
+          "grade": "UNCLEAR",
+          "verdict": "not_present",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 389,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 4,
+          "feature": 525,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 1103,
+          "variant": "final_only",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 1128,
+          "variant": "final_only",
+          "grade": "UNCLEAR",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 4,
+          "feature": 1177,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 4,
+          "feature": 2248,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 3827,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 4,
+          "feature": 10571,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 5,
+          "feature": 449,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 5,
+          "feature": 1293,
+          "variant": "no_final",
+          "grade": "UNCLEAR",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 5,
+          "feature": 2898,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 5,
+          "feature": 3092,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 5,
+          "feature": 3220,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 5,
+          "feature": 6132,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 1.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 5,
+          "feature": 10161,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 5,
+          "feature": 15175,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 5,
+          "feature": 449,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 5,
+          "feature": 1267,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 5,
+          "feature": 1293,
+          "variant": "final_only",
+          "grade": "UNCLEAR",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 5,
+          "feature": 2898,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 5,
+          "feature": 3092,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 1.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 5,
+          "feature": 3220,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 5,
+          "feature": 3858,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.6666666666666666
+        },
+        {
+          "act": 5,
+          "feature": 6132,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.0
+        },
+        {
+          "act": 5,
+          "feature": 10161,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 5,
+          "feature": 15175,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 30,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 6,
+          "feature": 63,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.6666666666666666
+        },
+        {
+          "act": 6,
+          "feature": 123,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 1.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 937,
+          "variant": "no_final",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 6,
+          "feature": 2136,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 1.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 6,
+          "feature": 2138,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 6,
+          "feature": 2464,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 2485,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 1.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 7155,
+          "variant": "no_final",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 9770,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 11110,
+          "variant": "no_final",
+          "grade": "PROBABLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 12073,
+          "variant": "no_final",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 6,
+          "feature": 30,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 63,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 6,
+          "feature": 123,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 1.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 937,
+          "variant": "final_only",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 6,
+          "feature": 2136,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 1.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 6,
+          "feature": 2138,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 6,
+          "feature": 2464,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 6,
+          "feature": 2485,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 6,
+          "feature": 7155,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 6,
+          "feature": 9770,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 6,
+          "feature": 11110,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 1.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 6,
+          "feature": 12073,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 105,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 260,
+          "variant": "no_final",
+          "grade": "UNCLEAR",
+          "verdict": "not_present",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.6666666666666666
+        },
+        {
+          "act": 7,
+          "feature": 329,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 422,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 519,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 589,
+          "variant": "no_final",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 751,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 809,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 831,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 1460,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 1.0,
+          "null_feat": 0.6666666666666666
+        },
+        {
+          "act": 7,
+          "feature": 2118,
+          "variant": "no_final",
+          "grade": "UNCLEAR",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 3183,
+          "variant": "no_final",
+          "grade": "PROBABLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 3263,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 3488,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 3914,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 4754,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 4871,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 7549,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 8861,
+          "variant": "no_final",
+          "grade": "UNCLEAR",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 9235,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 10612,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 11557,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.6666666666666666
+        },
+        {
+          "act": 7,
+          "feature": 15162,
+          "variant": "no_final",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 15397,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 15530,
+          "variant": "no_final",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 105,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 260,
+          "variant": "final_only",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 329,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 422,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 519,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 589,
+          "variant": "final_only",
+          "grade": "UNCLEAR",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 751,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 809,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 831,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 1460,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 1.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 2118,
+          "variant": "final_only",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 3183,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 1.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 3263,
+          "variant": "final_only",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 3488,
+          "variant": "final_only",
+          "grade": "UNCLEAR",
+          "verdict": "not_present",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 3914,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 4754,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 1.0,
+          "null_feat": 0.6666666666666666
+        },
+        {
+          "act": 7,
+          "feature": 4871,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 7549,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 9235,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 7,
+          "feature": 10612,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 11557,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 7,
+          "feature": 15530,
+          "variant": "final_only",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 343,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 907,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 1172,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 1173,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 8,
+          "feature": 3044,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 3563,
+          "variant": "no_final",
+          "grade": "PROBABLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 8,
+          "feature": 7617,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 8897,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 9473,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 13161,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 16059,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 301,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 8,
+          "feature": 343,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 1.0
+        },
+        {
+          "act": 8,
+          "feature": 907,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 1172,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.0,
+          "null_feat": 0.6666666666666666
+        },
+        {
+          "act": 8,
+          "feature": 1173,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 8,
+          "feature": 2427,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 8,
+          "feature": 3563,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 1.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 7617,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 8897,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 9473,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 13161,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 8,
+          "feature": 16059,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 102,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 109,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.6666666666666666
+        },
+        {
+          "act": 9,
+          "feature": 342,
+          "variant": "no_final",
+          "grade": "UNCLEAR",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 422,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 590,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 9,
+          "feature": 856,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 908,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 9,
+          "feature": 2734,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 5123,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 1.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 6351,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 102,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 109,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 342,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 422,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 590,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 856,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 908,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 1267,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 2734,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 9,
+          "feature": 3461,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 5123,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 1.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 5830,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 9,
+          "feature": 6351,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 66,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 197,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 291,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 373,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 422,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 519,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 626,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 684,
+          "variant": "no_final",
+          "grade": "UNCLEAR",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 10,
+          "feature": 746,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 900,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 1128,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 2515,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 4793,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 6880,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 10,
+          "feature": 8031,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 11062,
+          "variant": "no_final",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 13663,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 66,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 291,
+          "variant": "final_only",
+          "grade": "UNCLEAR",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 373,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 422,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 10,
+          "feature": 519,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 900,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 1128,
+          "variant": "final_only",
+          "grade": "PROBABLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 10,
+          "feature": 2515,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 4793,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 8031,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.0,
+          "null_feat": 0.6666666666666666
+        },
+        {
+          "act": 10,
+          "feature": 11062,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 10,
+          "feature": 13663,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 600,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 1153,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 1662,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 2136,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 2314,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 6132,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 1.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 10828,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 14793,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 245,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.6666666666666666
+        },
+        {
+          "act": 11,
+          "feature": 600,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 11,
+          "feature": 1153,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 1.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 11,
+          "feature": 1662,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 2136,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 1.0
+        },
+        {
+          "act": 11,
+          "feature": 2314,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 6132,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 11,
+          "feature": 10828,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.6666666666666666
+        },
+        {
+          "act": 11,
+          "feature": 14793,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 12,
+          "feature": 78,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 12,
+          "feature": 123,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 1.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 12,
+          "feature": 868,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 12,
+          "feature": 12977,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 12,
+          "feature": 13098,
+          "variant": "no_final",
+          "grade": "CLEARLY",
+          "verdict": "present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 12,
+          "feature": 14382,
+          "variant": "no_final",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.3333333333333333,
+          "null_feat": 0.0
+        },
+        {
+          "act": 12,
+          "feature": 78,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 12,
+          "feature": 123,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 1.0,
+          "null_feat": 0.3333333333333333
+        },
+        {
+          "act": 12,
+          "feature": 868,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 12,
+          "feature": 12977,
+          "variant": "final_only",
+          "grade": "NO",
+          "verdict": "not_present",
+          "null_expl": 0.0,
+          "null_feat": 0.0
+        },
+        {
+          "act": 12,
+          "feature": 14382,
+          "variant": "final_only",
+          "grade": "CLEARLY",
+          "verdict": "unknown",
+          "null_expl": 0.6666666666666666,
+          "null_feat": 0.3333333333333333
+        }
+      ],
+      "auc_vs_null_expl": 0.7430147768619588,
+      "auc_vs_null_feat": 0.8025157793123933,
+      "by_variant": {
+        "final_only": {
+          "n": 162,
+          "covered": 0.6358024691358025,
+          "present": 0.4691358024691358,
+          "not_present": 0.36419753086419754,
+          "unknown": 0.16666666666666666,
+          "grades": {
+            "CLEARLY": 0.5308641975308642,
+            "PROBABLY": 0.10493827160493827,
+            "UNCLEAR": 0.037037037037037035,
+            "NO": 0.3271604938271605
+          },
+          "fpr": 0.15843621399176952,
+          "null_expl": 0.24074074074074073
+        },
+        "no_final": {
+          "n": 173,
+          "covered": 0.5260115606936416,
+          "present": 0.37572254335260113,
+          "not_present": 0.47398843930635837,
+          "unknown": 0.15028901734104047,
+          "grades": {
+            "CLEARLY": 0.41040462427745666,
+            "PROBABLY": 0.11560693641618497,
+            "UNCLEAR": 0.04046242774566474,
+            "NO": 0.43352601156069365
+          },
+          "fpr": 0.11753371868978804,
+          "null_expl": 0.18689788053949902
+        },
+        "full(derived)": {
+          "n": 186,
+          "covered": 0.6881720430107527,
+          "present": 0.3763440860215054,
+          "not_present": 0.3118279569892473,
+          "unknown": 0.3118279569892473,
+          "grades": {
+            "CLEARLY": 0.6881720430107527,
+            "PROBABLY": 0.0,
+            "UNCLEAR": 0.0,
+            "NO": 0.3118279569892473
+          },
+          "fpr": 0.23058542413381122,
+          "null_expl": 0.2909199522102747
+        }
+      },
+      "fpr_spread": 0.04090249530198148,
+      "monotonicity": {
+        "n": 186,
+        "violations": 0,
+        "legal": null,
+        "violation_rate": 0.0,
+        "note": "0 by construction"
+      }
+    }
+  }
+}

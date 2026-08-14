@@ -375,10 +375,26 @@ def main() -> None:
     ap.add_argument("--names", nargs="+", default=None)
     ap.add_argument("--labels-json", required=True)
     ap.add_argument("--model", default="google/gemma-3-12b-it")
-    ap.add_argument("--prompt", default="A0", choices=sorted(PROMPTS),
-                    help="which matcher prompt. A0 produced every number up to "
-                         "the 200-conversation run and is the reference any "
-                         "replacement must beat; A and B are candidates.")
+    ap.add_argument("--prompt", default="A", choices=sorted(PROMPTS),
+                    help="which matcher prompt. A is the default and what the "
+                         "reported numbers use. A0 is the historical one, kept "
+                         "because it produced every figure up to the first "
+                         "200-conversation run; it asserts the explanation is "
+                         "one or two sentences, true of 3%% of them, and is not "
+                         "monotonic in the explanation (21.3%% violations). B "
+                         "and B2 were candidates that failed on false positives.")
+    ap.add_argument("--derive-full", action="store_true", default=True,
+                    help="judge the two SEGMENTS the ablation produces -- "
+                         "no_final (everything before the final-token paragraph) "
+                         "and final_only (that paragraph) -- and reconstruct "
+                         "`full` as their union rather than judging its text. "
+                         "Monotonicity is then arithmetic instead of something "
+                         "the model has to respect. ON BY DEFAULT: judging whole "
+                         "explanations of differing length is what made the "
+                         "measurement non-comparable across variants.")
+    ap.add_argument("--no-derive-full", dest="derive_full", action="store_false",
+                    help="judge each variant's whole text directly (the old "
+                         "behaviour). Reproduces the pre-fix numbers.")
     ap.add_argument("--limit-acts", type=int, default=0,
                     help="sample this many ACTIVATIONS (all their variants) "
                          "instead of everything. For a bake-off run: the point "

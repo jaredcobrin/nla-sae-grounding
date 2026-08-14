@@ -25,12 +25,12 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 5 labelled, 10 unlabelled
 
 - `f40` Verbs of cognitive action following a colon or preceding a numbered list item.  *[not stated]*
-- `f2688` Fires on words introducing explanations or summaries.  *[not stated]*
-- `f5068` Preposition followed by "focus" or "emphasis.  **[stated — CLEARLY]**
-- `f7024` Identifies grammatical components within an explanation of sentence structure.  **[stated — CLEARLY]**
-- `f10989` Fires on "Em" when used to emphasize an idea or concept.  **[stated — CLEARLY]**
+- `f2688` Fires on words introducing explanations or summaries.  **[stated — None]**
+- `f5068` Preposition followed by "focus" or "emphasis.  **[stated — None]**
+- `f7024` Identifies grammatical components within an explanation of sentence structure.  **[stated — None]**
+- `f10989` Fires on "Em" when used to emphasize an idea or concept.  **[stated — None]**
 
-*Of 5 named shared latents: 3 stated, 2 not stated.*
+*Of 5 named shared latents: 4 stated, 1 not stated.*
 
 ### LOST — destroyed  · 3 labelled, 6 unlabelled
 
@@ -63,32 +63,32 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 10 labelled, 15 unlabelled
 
-- `f138` Conjunction introducing a contrasting statement mid-sentence.  **[stated — CLEARLY]**
+- `f138` Conjunction introducing a contrasting statement mid-sentence.  **[stated — None]**
 - `f144` Pronoun "It" referring back to the previously mentioned subject.  *[not stated]*
 - `f287` Conjunction "and" following a clause end.  *[not stated]*
-- `f529` but" following a preceding clause or phrase.  **[stated — CLEARLY]**
+- `f529` but" following a preceding clause or phrase.  **[stated — None]**
 - `f765` Pronoun/article following a verb or determiner in a self-help context.  *[not stated]*
-- `f809` Preposition/conjunction following a phrase about monetary performance.  **[stated — PROBABLY]**
-- `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  **[stated — CLEARLY]**
-- `f1276` Fires on tokens signifying monetary growth or accumulation.  **[stated — PROBABLY]**
+- `f809` Preposition/conjunction following a phrase about monetary performance.  *[not stated]*
+- `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  *[controls fired — cannot tell]*
+- `f1276` Fires on tokens signifying monetary growth or accumulation.  *[not stated]*
 - `f1797` Adjective describing a time-based quality following "long-".  *[not stated]*
-- `f4710` Conjunction introducing a contrasting statement.  **[stated — CLEARLY]**
+- `f4710` Conjunction introducing a contrasting statement.  **[stated — None]**
 
-*Of 10 named shared latents: 6 stated, 4 not stated.*
+*Of 10 named shared latents: 3 stated, 6 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 2 labelled, 6 unlabelled
 
 - `f2589` A noun relating to financial commitment or allocation.  *[not stated]*
-- `f8051` The feature fires on the word "effort" (and its variations) typically introduced by a preceding phrase indicating an act  **[stated — CLEARLY]**
+- `f8051` The feature fires on the word "effort" (and its variations) typically introduced by a preceding phrase indicating an act  **[stated — None]**
 
 *Of 2 named lost latents: 1 stated, 1 not stated.*
 
 ### MADE — invented  · 2 labelled, 3 unlabelled
 
 - `f30` Determiner/possessive pronoun initiating a clause about results.  *[not stated]*
-- `f272` Noun following a discourse marker or transitional phrase.  **[stated — CLEARLY]**
+- `f272` Noun following a discourse marker or transitional phrase.  *[not stated]*
 
-*Of 2 named made latents: 1 stated, 1 not stated.*
+*Of 2 named made latents: 0 stated, 2 not stated.*
 
 ---
 
@@ -110,28 +110,28 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 4 labelled, 10 unlabelled
 
-- `f9855` Identifies brand names and gaming platforms within text.  **[stated — CLEARLY]**
+- `f9855` Identifies brand names and gaming platforms within text.  **[stated — None]**
 - `f10155` Verbs signifying a shift or change, often following a discussion of a problem or need.  *[not stated]*
 - `f11272` Fires on bolded section headers introducing suggestions or categories.  *[not stated]*
-- `f15169` Fires on mentions of PlayStation and Sony related to gaming.  **[stated — CLEARLY]**
+- `f15169` Fires on mentions of PlayStation and Sony related to gaming.  **[stated — None]**
 
 *Of 4 named shared latents: 2 stated, 2 not stated.*
 
 ### LOST — destroyed  · 6 labelled, 7 unlabelled
 
-- `f1295` Fires on nouns describing physical objects used for a practical purpose.  **[stated — CLEARLY]**
-- `f1876` A preposition or conjunction introducing a list or specification.  *[controls fired — cannot tell]*
-- `f2989` Mentions a time-bound promotion or exclusive opportunity.  **[stated — PROBABLY]**
+- `f1295` Fires on nouns describing physical objects used for a practical purpose.  **[stated — None]**
+- `f1876` A preposition or conjunction introducing a list or specification.  **[stated — None]**
+- `f2989` Mentions a time-bound promotion or exclusive opportunity.  *[not stated]*
 - `f9980` Fires on a token immediately following a colon or em dash.  *[not stated]*
-- `f13287` Fires on price mentions, specifically numeric values related to cost.  **[stated — CLEARLY]**
+- `f13287` Fires on price mentions, specifically numeric values related to cost.  *[not stated]*
 - `f13752` Code-related tokens indicating data manipulation or algorithmic steps.  *[not stated]*
 
-*Of 6 named lost latents: 3 stated, 2 not stated, 1 undecidable.*
+*Of 6 named lost latents: 2 stated, 4 not stated.*
 
 ### MADE — invented  · 3 labelled, 5 unlabelled
 
-- `f1252` The feature fires on GPU model numbers and related specifications.  **[stated — CLEARLY]**
-- `f2756` Fires on capitalized proper nouns, frequently denoting places or brands.  **[stated — CLEARLY]**
+- `f1252` The feature fires on GPU model numbers and related specifications.  **[stated — None]**
+- `f2756` Fires on capitalized proper nouns, frequently denoting places or brands.  **[stated — None]**
 - `f2793` Fires on punctuation following a numerical statistic or measurement.  *[not stated]*
 
 *Of 3 named made latents: 2 stated, 1 not stated.*
@@ -157,33 +157,33 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 13 labelled, 7 unlabelled
 
 - `f109` Preposition/conjunction following an introductory phrase.  *[not stated]*
-- `f373` Presence of words related to sexual content, often in response to requests.  **[stated — CLEARLY]**
+- `f373` Presence of words related to sexual content, often in response to requests.  **[stated — None]**
 - `f612` Noun phrases describing specific phenomena or entities.  *[controls fired — cannot tell]*
-- `f3290` Fires on nouns associated with specialized areas of expertise.  *[controls fired — cannot tell]*
-- `f3748` Fires on keywords related to LGBTQ+ identity within resource lists.  *[controls fired — cannot tell]*
-- `f4365` Introduces a descriptor of a demographic group.  **[stated — CLEARLY]**
-- `f5075` A word describing a medical condition or physical attribute within a descriptive sentence.  **[stated — PROBABLY]**
+- `f3290` Fires on nouns associated with specialized areas of expertise.  *[not stated]*
+- `f3748` Fires on keywords related to LGBTQ+ identity within resource lists.  **[stated — None]**
+- `f4365` Introduces a descriptor of a demographic group.  **[stated — None]**
+- `f5075` A word describing a medical condition or physical attribute within a descriptive sentence.  *[not stated]*
 - `f5372` religious" or its variants within a list defining prohibited content.  *[not stated]*
-- `f8077` Gender" appearing within a discussion of societal concerns or ethical implications.  **[stated — CLEARLY]**
+- `f8077` Gender" appearing within a discussion of societal concerns or ethical implications.  **[stated — None]**
 - `f9683` Year numbers or dates appearing in text.  *[not stated]*
-- `f10159` Fires on terms defining or referring to gender/sex identity.  *[controls fired — cannot tell]*
-- `f12524` List item followed by a conjunction introducing an element.  **[stated — CLEARLY]**
-- `f16120` Identifies tokens within discussions of potentially sensitive social categories.  **[stated — CLEARLY]**
+- `f10159` Fires on terms defining or referring to gender/sex identity.  **[stated — None]**
+- `f12524` List item followed by a conjunction introducing an element.  *[not stated]*
+- `f16120` Identifies tokens within discussions of potentially sensitive social categories.  **[stated — None]**
 
-*Of 13 named shared latents: 6 stated, 3 not stated, 4 undecidable.*
+*Of 13 named shared latents: 6 stated, 6 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 3 labelled, 5 unlabelled
 
-- `f303` Noun indicating a field of endeavor or area of expertise.  *[controls fired — cannot tell]*
+- `f303` Noun indicating a field of endeavor or area of expertise.  *[not stated]*
 - `f9585` Terms related to BDSM practices or roleplay, often following a question or enumeration.  *[not stated]*
 - `f10953` Describes a symptom or defining characteristic of a psychological condition.  *[not stated]*
 
-*Of 3 named lost latents: 0 stated, 2 not stated, 1 undecidable.*
+*Of 3 named lost latents: 0 stated, 3 not stated.*
 
 ### MADE — invented  · 2 labelled, 3 unlabelled
 
 - `f863` Data" following a colon or bullet point in a list.  *[not stated]*
-- `f1810` Adjective preceding a noun denoting a person or group.  **[stated — CLEARLY]**
+- `f1810` Adjective preceding a noun denoting a person or group.  **[stated — None]**
 
 *Of 2 named made latents: 1 stated, 1 not stated.*
 
@@ -207,14 +207,14 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 6 labelled, 7 unlabelled
 
-- `f389` Offers guidance or information related to support services.  **[stated — CLEARLY]**
-- `f525` Noun/noun phrase following an introductory phrase like "Provide," "notes," or "information.  **[stated — CLEARLY]**
-- `f1128` Introduces a capability or assistance related to responsible content creation.  **[stated — CLEARLY]**
-- `f2248` More" or "information" following a helpful offer.  **[stated — PROBABLY]**
-- `f3827` Fires on the word "information" and its cognates/transliterations.  **[stated — CLEARLY]**
+- `f389` Offers guidance or information related to support services.  **[stated — None]**
+- `f525` Noun/noun phrase following an introductory phrase like "Provide," "notes," or "information.  **[stated — None]**
+- `f1128` Introduces a capability or assistance related to responsible content creation.  *[controls fired — cannot tell]*
+- `f2248` More" or "information" following a helpful offer.  *[not stated]*
+- `f3827` Fires on the word "information" and its cognates/transliterations.  *[not stated]*
 - `f10571` Preposition indicating addition or expansion following a noun or verb.  *[not stated]*
 
-*Of 6 named shared latents: 5 stated, 1 not stated.*
+*Of 6 named shared latents: 2 stated, 3 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 3 labelled, 4 unlabelled
 
@@ -248,25 +248,25 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 5 labelled, 9 unlabelled
 
 - `f449` Fires on a possessive pronoun immediately following a noun.  *[not stated]*
-- `f1293` Tokens following conjunctions or transitional phrases indicating continuation.  **[stated — PROBABLY]**
-- `f3092` A capitalized word or phrase describing a power/ability/effect.  **[stated — PROBABLY]**
-- `f6132` Fires on forms of "focus" describing a main subject or purpose.  **[stated — CLEARLY]**
-- `f10161` A profession/role following a comma.  **[stated — CLEARLY]**
+- `f1293` Tokens following conjunctions or transitional phrases indicating continuation.  *[not stated]*
+- `f3092` A capitalized word or phrase describing a power/ability/effect.  **[stated — None]**
+- `f6132` Fires on forms of "focus" describing a main subject or purpose.  **[stated — None]**
+- `f10161` A profession/role following a comma.  **[stated — None]**
 
-*Of 5 named shared latents: 4 stated, 1 not stated.*
+*Of 5 named shared latents: 3 stated, 2 not stated.*
 
 ### LOST — destroyed  · 1 labelled, 5 unlabelled
 
-- `f2898` Pronoun or possessive adjective referring to a character.  **[stated — CLEARLY]**
+- `f2898` Pronoun or possessive adjective referring to a character.  **[stated — None]**
 
 *Of 1 named lost latents: 1 stated, 0 not stated.*
 
 ### MADE — invented  · 2 labelled, 4 unlabelled
 
-- `f3220` Fires on a determiner/pronoun immediately following a positive descriptor.  *[not stated]*
-- `f15175` An article or adjective immediately before a descriptive noun referring to a person.  **[stated — CLEARLY]**
+- `f3220` Fires on a determiner/pronoun immediately following a positive descriptor.  **[stated — None]**
+- `f15175` An article or adjective immediately before a descriptive noun referring to a person.  **[stated — None]**
 
-*Of 2 named made latents: 1 stated, 1 not stated.*
+*Of 2 named made latents: 2 stated, 0 not stated.*
 
 ---
 
@@ -288,21 +288,21 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 7 labelled, 7 unlabelled
 
-- `f63` Adjectives modifying nouns describing attributes or capabilities.  **[stated — CLEARLY]**
-- `f2136` Noun following a positive or explanatory phrase.  *[controls fired — cannot tell]*
-- `f2138` Adverbial modification immediately after a verb or verb phrase.  **[stated — CLEARLY]**
-- `f2464` The feature triggers on the token following a phrase expressing contingency.  **[stated — CLEARLY]**
-- `f7155` Fires on intensifying adverbs/adjectives immediately preceding a noun or noun phrase.  **[stated — CLEARLY]**
-- `f11110` Indicates variability or statistical measures within a subject.  *[controls fired — cannot tell]*
-- `f12073` The feature fires on various forms of the word "wild.  **[stated — CLEARLY]**
+- `f63` Adjectives modifying nouns describing attributes or capabilities.  *[controls fired — cannot tell]*
+- `f2136` Noun following a positive or explanatory phrase.  **[stated — None]**
+- `f2138` Adverbial modification immediately after a verb or verb phrase.  **[stated — None]**
+- `f2464` The feature triggers on the token following a phrase expressing contingency.  **[stated — None]**
+- `f7155` Fires on intensifying adverbs/adjectives immediately preceding a noun or noun phrase.  **[stated — None]**
+- `f11110` Indicates variability or statistical measures within a subject.  **[stated — None]**
+- `f12073` The feature fires on various forms of the word "wild.  **[stated — None]**
 
-*Of 7 named shared latents: 5 stated, 0 not stated, 2 undecidable.*
+*Of 7 named shared latents: 6 stated, 0 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 3 labelled, 2 unlabelled
 
-- `f937` Indicates a step or action in a cooking/food preparation process.  **[stated — CLEARLY]**
+- `f937` Indicates a step or action in a cooking/food preparation process.  **[stated — None]**
 - `f2485` Fires on a term/phrase introduced by a bullet or bolding, following a colon.  *[not stated]*
-- `f9770` The feature triggers on tokens representing cannabis-related terms.  **[stated — CLEARLY]**
+- `f9770` The feature triggers on tokens representing cannabis-related terms.  **[stated — None]**
 
 *Of 3 named lost latents: 2 stated, 1 not stated.*
 
@@ -334,39 +334,39 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 13 labelled, 12 unlabelled
 
 - `f105` Adjective following a colon or bullet point.  *[not stated]*
-- `f260` Adverb/adjective preceding a noun or noun phrase indicating qualification.  **[stated — CLEARLY]**
+- `f260` Adverb/adjective preceding a noun or noun phrase indicating qualification.  *[controls fired — cannot tell]*
 - `f422` Verbs immediately following a colon or bullet point.  *[not stated]*
 - `f519` Fires on a list item introducing variations.  *[not stated]*
-- `f589` Adjective preceding a noun or noun phrase denoting a state or condition.  **[stated — CLEARLY]**
-- `f751` Fires on nouns and noun phrases indicating business or strategic concepts.  *[controls fired — cannot tell]*
-- `f1460` Fires on words describing limitations or inability.  **[stated — CLEARLY]**
-- `f2118` The feature triggers on verbs describing forecasting or estimation.  *[controls fired — cannot tell]*
+- `f589` Adjective preceding a noun or noun phrase denoting a state or condition.  *[not stated]*
+- `f751` Fires on nouns and noun phrases indicating business or strategic concepts.  **[stated — None]**
+- `f1460` Fires on words describing limitations or inability.  **[stated — None]**
+- `f2118` The feature triggers on verbs describing forecasting or estimation.  *[not stated]*
 - `f3488` A preposition/conjunction signaling pursuit of a goal.  *[not stated]*
-- `f4871` Adjective preceding a noun, indicating a specific attribute.  *[controls fired — cannot tell]*
-- `f7549` A word indicating anticipation is followed by a numerical strength.  *[not stated]*
+- `f4871` Adjective preceding a noun, indicating a specific attribute.  *[not stated]*
+- `f7549` A word indicating anticipation is followed by a numerical strength.  **[stated — None]**
 - `f11557` The feature fires on the token "release" or variations thereof, often in the context of versioning.  *[not stated]*
-- `f15530` Adjective preceding a noun denoting quality or performance.  **[stated — CLEARLY]**
+- `f15530` Adjective preceding a noun denoting quality or performance.  **[stated — None]**
 
-*Of 13 named shared latents: 4 stated, 6 not stated, 3 undecidable.*
+*Of 13 named shared latents: 4 stated, 8 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 3 labelled, 2 unlabelled
 
 - `f329` Identifies variable assignments or declarations within code.  *[not stated]*
-- `f3183` Noun or noun phrase following a preposition or related to project/task description.  **[stated — CLEARLY]**
-- `f10612` Fires on the token 'IT' or related terms when discussing technology roles or departments.  **[stated — CLEARLY]**
+- `f3183` Noun or noun phrase following a preposition or related to project/task description.  **[stated — None]**
+- `f10612` Fires on the token 'IT' or related terms when discussing technology roles or departments.  **[stated — None]**
 
 *Of 3 named lost latents: 2 stated, 1 not stated.*
 
 ### MADE — invented  · 6 labelled, 1 unlabelled
 
-- `f809` Preposition/conjunction following a phrase about monetary performance.  **[stated — CLEARLY]**
+- `f809` Preposition/conjunction following a phrase about monetary performance.  **[stated — None]**
 - `f831` Fires on digits and separators within phone numbers after crisis lifeline mentions.  *[not stated]*
-- `f3263` A word signifying financial gain immediately following a numerical value.  **[stated — PROBABLY]**
+- `f3263` A word signifying financial gain immediately following a numerical value.  *[not stated]*
 - `f3914` Fires on words beginning "Des" or "Dess" that follow a colon or asterisk.  *[not stated]*
-- `f4754` Words denoting undesirable consequences or unauthorized actions.  **[stated — CLEARLY]**
+- `f4754` Words denoting undesirable consequences or unauthorized actions.  **[stated — None]**
 - `f9235` The feature fires on the token "meet" when it indicates fulfilling a goal or standard.  *[not stated]*
 
-*Of 6 named made latents: 3 stated, 3 not stated.*
+*Of 6 named made latents: 2 stated, 4 not stated.*
 
 ---
 
@@ -388,28 +388,28 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 6 labelled, 6 unlabelled
 
-- `f343` Fires on proper nouns, frequently within a list or description.  **[stated — CLEARLY]**
+- `f343` Fires on proper nouns, frequently within a list or description.  *[not stated]*
 - `f907` Numbers used in the context of a mathematical or logical problem.  *[not stated]*
-- `f1172` Identifies data types or variable types within code or data structures.  **[stated — CLEARLY]**
+- `f1172` Identifies data types or variable types within code or data structures.  *[not stated]*
 - `f1173` Identifies function calls or definitions in code.  *[not stated]*
 - `f3563` Noun following a verb indicating a state or action.  *[not stated]*
-- `f7617` Fires on tokens marking the start of a code block or data query.  *[not stated]*
+- `f7617` Fires on tokens marking the start of a code block or data query.  **[stated — None]**
 
-*Of 6 named shared latents: 2 stated, 4 not stated.*
+*Of 6 named shared latents: 1 stated, 5 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 3 unlabelled
 
-- `f9473` Parameter name immediately after a colon in a function/method definition.  **[stated — CLEARLY]**
-- `f13161` Triggered by the word "title" (and its variations) in a context of naming or labeling.  **[stated — CLEARLY]**
+- `f9473` Parameter name immediately after a colon in a function/method definition.  *[not stated]*
+- `f13161` Triggered by the word "title" (and its variations) in a context of naming or labeling.  **[stated — None]**
 
-*Of 2 named lost latents: 2 stated, 0 not stated.*
+*Of 2 named lost latents: 1 stated, 1 not stated.*
 
 ### MADE — invented  · 2 labelled, 6 unlabelled
 
 - `f8897` Fires on the token immediately following a "Hello" or similar greeting.  *[not stated]*
-- `f16059` Fires on variable names declared or used within code.  **[stated — CLEARLY]**
+- `f16059` Fires on variable names declared or used within code.  *[not stated]*
 
-*Of 2 named made latents: 1 stated, 1 not stated.*
+*Of 2 named made latents: 0 stated, 2 not stated.*
 
 ---
 
@@ -431,16 +431,16 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 8 labelled, 6 unlabelled
 
-- `f102` Preposition following a noun indicating interaction or association.  **[stated — CLEARLY]**
-- `f109` Preposition/conjunction following an introductory phrase.  **[stated — CLEARLY]**
+- `f102` Preposition following a noun indicating interaction or association.  *[controls fired — cannot tell]*
+- `f109` Preposition/conjunction following an introductory phrase.  *[not stated]*
 - `f342` Start of a clause/sentence, often introducing a reason or consequence.  *[not stated]*
 - `f422` Verbs immediately following a colon or bullet point.  *[not stated]*
-- `f856` Preposition "to" following a verb of movement or change.  **[stated — CLEARLY]**
-- `f908` Verb indicating continuation or preservation of a state.  **[stated — CLEARLY]**
-- `f2734` Preposition followed by a verb or noun in a list context.  **[stated — PROBABLY]**
-- `f6351` The word "connection" or its variations are used to describe relationships, links, or a sense of belonging.  **[stated — CLEARLY]**
+- `f856` Preposition "to" following a verb of movement or change.  **[stated — None]**
+- `f908` Verb indicating continuation or preservation of a state.  **[stated — None]**
+- `f2734` Preposition followed by a verb or noun in a list context.  *[not stated]*
+- `f6351` The word "connection" or its variations are used to describe relationships, links, or a sense of belonging.  **[stated — None]**
 
-*Of 8 named shared latents: 6 stated, 2 not stated.*
+*Of 8 named shared latents: 3 stated, 4 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 0 labelled, 1 unlabelled
 
@@ -472,30 +472,30 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 3 labelled, 13 unlabelled
 
-- `f519` Fires on a list item introducing variations.  **[stated — CLEARLY]**
+- `f519` Fires on a list item introducing variations.  *[not stated]*
 - `f900` Fires on bolded text appearing as a section heading.  *[not stated]*
-- `f2515` Fires on tokens describing creative writing or those who produce it.  *[controls fired — cannot tell]*
+- `f2515` Fires on tokens describing creative writing or those who produce it.  **[stated — None]**
 
-*Of 3 named shared latents: 1 stated, 1 not stated, 1 undecidable.*
+*Of 3 named shared latents: 1 stated, 2 not stated.*
 
 ### LOST — destroyed  · 6 labelled, 0 unlabelled
 
 - `f373` Presence of words related to sexual content, often in response to requests.  *[not stated]*
 - `f422` Verbs immediately following a colon or bullet point.  *[not stated]*
-- `f1128` Introduces a capability or assistance related to responsible content creation.  **[stated — CLEARLY]**
-- `f4793` Fires on the start of a bulleted list item or section heading.  *[controls fired — cannot tell]*
-- `f8031` Fires on tokens within bolded text explicitly describing writing process steps.  **[stated — CLEARLY]**
-- `f13663` Preposition following a colon in a list or description.  **[stated — CLEARLY]**
+- `f1128` Introduces a capability or assistance related to responsible content creation.  *[not stated]*
+- `f4793` Fires on the start of a bulleted list item or section heading.  *[not stated]*
+- `f8031` Fires on tokens within bolded text explicitly describing writing process steps.  *[not stated]*
+- `f13663` Preposition following a colon in a list or description.  **[stated — None]**
 
-*Of 6 named lost latents: 3 stated, 2 not stated, 1 undecidable.*
+*Of 6 named lost latents: 1 stated, 5 not stated.*
 
 ### MADE — invented  · 3 labelled, 2 unlabelled
 
 - `f66` Fires on a pronoun followed by a verb indicating a request or instruction.  *[not stated]*
-- `f291` Conjunction following a list element or clause end.  **[stated — PROBABLY]**
-- `f11062` Fires on the word "brain" or "brainstorm" when discussing idea generation.  **[stated — CLEARLY]**
+- `f291` Conjunction following a list element or clause end.  *[not stated]*
+- `f11062` Fires on the word "brain" or "brainstorm" when discussing idea generation.  **[stated — None]**
 
-*Of 3 named made latents: 2 stated, 1 not stated.*
+*Of 3 named made latents: 1 stated, 2 not stated.*
 
 ---
 
@@ -517,10 +517,10 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 2 labelled, 5 unlabelled
 
-- `f600` Evaluative language, often related to interpersonal dynamics or emotional states.  **[stated — PROBABLY]**
-- `f1662` Phrases explaining why something works, often marked with bold text.  **[stated — CLEARLY]**
+- `f600` Evaluative language, often related to interpersonal dynamics or emotional states.  *[not stated]*
+- `f1662` Phrases explaining why something works, often marked with bold text.  **[stated — None]**
 
-*Of 2 named shared latents: 2 stated, 0 not stated.*
+*Of 2 named shared latents: 1 stated, 1 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 10 unlabelled
 
@@ -531,12 +531,12 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### MADE — invented  · 4 labelled, 1 unlabelled
 
-- `f1153` Introduces a label or definition, frequently followed by a colon.  **[stated — CLEARLY]**
-- `f2136` Noun following a positive or explanatory phrase.  **[stated — CLEARLY]**
+- `f1153` Introduces a label or definition, frequently followed by a colon.  **[stated — None]**
+- `f2136` Noun following a positive or explanatory phrase.  *[not stated]*
 - `f2314` Fires on "work" following a suggestion of collaboration or problem-solving.  *[not stated]*
-- `f10828` Indicates something "works well" or is a good fit for a purpose.  **[stated — CLEARLY]**
+- `f10828` Indicates something "works well" or is a good fit for a purpose.  *[controls fired — cannot tell]*
 
-*Of 4 named made latents: 3 stated, 1 not stated.*
+*Of 4 named made latents: 1 stated, 2 not stated, 1 undecidable.*
 
 ---
 
@@ -559,12 +559,12 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 5 labelled, 7 unlabelled
 
 - `f78` Punctuation mark immediately following a question.  *[not stated]*
-- `f123` Noun following a description or label.  **[stated — CLEARLY]**
+- `f123` Noun following a description or label.  *[not stated]*
 - `f868` Token follows "Here's why I".  *[not stated]*
 - `f12977` Adjective describing a technical capability or process.  *[not stated]*
 - `f14382` Fires on words selected to improve precision or formality.  *[not stated]*
 
-*Of 5 named shared latents: 1 stated, 4 not stated.*
+*Of 5 named shared latents: 0 stated, 5 not stated.*
 
 ### LOST — destroyed  · 0 labelled, 4 unlabelled
 
@@ -592,29 +592,29 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 12 labelled, 7 unlabelled
 
-- `f54` Noun indicating a component, guide, or feature of a system.  *[not stated]*
-- `f133` Noun indicating a place or contained area.  **[stated — CLEARLY]**
-- `f389` Offers guidance or information related to support services.  **[stated — CLEARLY]**
-- `f461` Fires on names/descriptions of crisis support resources.  **[stated — CLEARLY]**
+- `f54` Noun indicating a component, guide, or feature of a system.  **[stated — None]**
+- `f133` Noun indicating a place or contained area.  *[controls fired — cannot tell]*
+- `f389` Offers guidance or information related to support services.  **[stated — None]**
+- `f461` Fires on names/descriptions of crisis support resources.  *[not stated]*
 - `f556` Nouns or noun phrases appearing after a phrase introducing explanation or clarification.  *[not stated]*
 - `f2102` Fires on digits within phone numbers, especially near 'SAFE'.  *[not stated]*
-- `f2463` Fires on prepositions or possessive pronouns followed by "area" or "location.  **[stated — CLEARLY]**
-- `f3081` Fires on location-related words following a descriptor.  **[stated — CLEARLY]**
+- `f2463` Fires on prepositions or possessive pronouns followed by "area" or "location.  **[stated — None]**
+- `f3081` Fires on location-related words following a descriptor.  **[stated — None]**
 - `f3375` Noun following a colon or "features" keyword.  *[not stated]*
 - `f8974` Fires on the phrase "Your local" followed by "mental" or "services" after a list marker.  *[not stated]*
 - `f12532` Bolded section headings introducing advice or resources.  *[not stated]*
 - `f12758` resources" appearing after a refusal statement and before a heading.  *[not stated]*
 
-*Of 12 named shared latents: 5 stated, 7 not stated.*
+*Of 12 named shared latents: 4 stated, 7 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 0 labelled, 2 unlabelled
 
 
 ### MADE — invented  · 1 labelled, 2 unlabelled
 
-- `f16344` Nouns describing social support or aid programs.  **[stated — CLEARLY]**
+- `f16344` Nouns describing social support or aid programs.  *[not stated]*
 
-*Of 1 named made latents: 1 stated, 0 not stated.*
+*Of 1 named made latents: 0 stated, 1 not stated.*
 
 ---
 
@@ -636,29 +636,29 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 6 labelled, 9 unlabelled
 
-- `f369` Identifies file types and associated technical terms.  **[stated — CLEARLY]**
+- `f369` Identifies file types and associated technical terms.  *[not stated]*
 - `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  *[not stated]*
-- `f3858` Title or name followed by a colon.  **[stated — CLEARLY]**
-- `f5156` Identifies terms related to software add-ons and extensions.  **[stated — CLEARLY]**
-- `f5748` Fires on nouns referring to plugins or classes within a software context.  **[stated — CLEARLY]**
-- `f13527` Fires on tokens within Linux kernel-related code or documentation.  **[stated — CLEARLY]**
+- `f3858` Title or name followed by a colon.  **[stated — None]**
+- `f5156` Identifies terms related to software add-ons and extensions.  *[controls fired — cannot tell]*
+- `f5748` Fires on nouns referring to plugins or classes within a software context.  *[controls fired — cannot tell]*
+- `f13527` Fires on tokens within Linux kernel-related code or documentation.  **[stated — None]**
 
-*Of 6 named shared latents: 5 stated, 1 not stated.*
+*Of 6 named shared latents: 2 stated, 2 not stated, 2 undecidable.*
 
 ### LOST — destroyed  · 2 labelled, 4 unlabelled
 
-- `f200` Fires on terms describing software components or functionalities.  *[controls fired — cannot tell]*
-- `f3327` Begins a section heading with a colon following.  **[stated — CLEARLY]**
+- `f200` Fires on terms describing software components or functionalities.  **[stated — None]**
+- `f3327` Begins a section heading with a colon following.  **[stated — None]**
 
-*Of 2 named lost latents: 1 stated, 0 not stated, 1 undecidable.*
+*Of 2 named lost latents: 2 stated, 0 not stated.*
 
 ### MADE — invented  · 3 labelled, 3 unlabelled
 
-- `f2279` A colon followed by a capitalized token.  **[stated — CLEARLY]**
-- `f3029` Fires on mentions of software libraries or collections of tools.  *[controls fired — cannot tell]*
-- `f9425` Identifies necessary software or libraries for a task.  **[stated — CLEARLY]**
+- `f2279` A colon followed by a capitalized token.  **[stated — None]**
+- `f3029` Fires on mentions of software libraries or collections of tools.  **[stated — None]**
+- `f9425` Identifies necessary software or libraries for a task.  **[stated — None]**
 
-*Of 3 named made latents: 2 stated, 0 not stated, 1 undecidable.*
+*Of 3 named made latents: 3 stated, 0 not stated.*
 
 ---
 
@@ -681,24 +681,24 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 6 labelled, 13 unlabelled
 
 - `f275` Phrase expressing inability/limitation followed by "please" or similar.  *[not stated]*
-- `f1488` Introduces an estimation or approximation.  **[stated — CLEARLY]**
-- `f2793` Fires on punctuation following a numerical statistic or measurement.  **[stated — CLEARLY]**
+- `f1488` Introduces an estimation or approximation.  **[stated — None]**
+- `f2793` Fires on punctuation following a numerical statistic or measurement.  **[stated — None]**
 - `f7396` Conjunction "and" following a completed clause or sentence.  *[not stated]*
-- `f7641` Signals a continuation or consequence following a temporal or causal clause.  **[stated — CLEARLY]**
-- `f8059` or" followed by a numeric value or range.  **[stated — CLEARLY]**
+- `f7641` Signals a continuation or consequence following a temporal or causal clause.  **[stated — None]**
+- `f8059` or" followed by a numeric value or range.  *[controls fired — cannot tell]*
 
-*Of 6 named shared latents: 4 stated, 2 not stated.*
+*Of 6 named shared latents: 3 stated, 2 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 1 labelled, 4 unlabelled
 
-- `f15364` A numeric value immediately preceding a time unit.  **[stated — CLEARLY]**
+- `f15364` A numeric value immediately preceding a time unit.  **[stated — None]**
 
 *Of 1 named lost latents: 1 stated, 0 not stated.*
 
 ### MADE — invented  · 2 labelled, 3 unlabelled
 
 - `f582` Start of sentence or phrase introducing a new topic.  *[not stated]*
-- `f1385` Introduces a numerical value or calculation step.  **[stated — CLEARLY]**
+- `f1385` Introduces a numerical value or calculation step.  **[stated — None]**
 
 *Of 2 named made latents: 1 stated, 1 not stated.*
 
@@ -722,29 +722,29 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 8 labelled, 7 unlabelled
 
-- `f42` can" following a comma indicating a potential consequence.  **[stated — CLEARLY]**
-- `f193` will" or "would" following a phrase indicating requirement or action.  *[controls fired — cannot tell]*
+- `f42` can" following a comma indicating a potential consequence.  **[stated — None]**
+- `f193` will" or "would" following a phrase indicating requirement or action.  **[stated — None]**
 - `f272` Noun following a discourse marker or transitional phrase.  *[not stated]*
 - `f1644` Token follows a colon or dash introducing a detail.  *[not stated]*
-- `f1647` You" followed by a modal verb/phrase suggesting possibility.  **[stated — CLEARLY]**
+- `f1647` You" followed by a modal verb/phrase suggesting possibility.  **[stated — None]**
 - `f3368` Introduces a potential outcome or alternative using "What" or "works".  *[not stated]*
-- `f9787` Words indicating something is unexpected, unusual, or wrong.  *[controls fired — cannot tell]*
-- `f12065` References to a specific time or era.  **[stated — CLEARLY]**
+- `f9787` Words indicating something is unexpected, unusual, or wrong.  **[stated — None]**
+- `f12065` References to a specific time or era.  **[stated — None]**
 
-*Of 8 named shared latents: 3 stated, 3 not stated, 2 undecidable.*
+*Of 8 named shared latents: 5 stated, 3 not stated.*
 
 ### LOST — destroyed  · 4 labelled, 5 unlabelled
 
 - `f411` Fires on conjunctions and adverbs following a direct instruction.  *[not stated]*
-- `f1577` Describes clothing or style, often in context of personal preference.  **[stated — CLEARLY]**
-- `f2738` Modal verb or "to be" form following a preceding word.  **[stated — CLEARLY]**
-- `f6962` Fashion" or related terms appear in lists or categories of topics.  *[not stated]*
+- `f1577` Describes clothing or style, often in context of personal preference.  **[stated — None]**
+- `f2738` Modal verb or "to be" form following a preceding word.  **[stated — None]**
+- `f6962` Fashion" or related terms appear in lists or categories of topics.  **[stated — None]**
 
-*Of 4 named lost latents: 2 stated, 2 not stated.*
+*Of 4 named lost latents: 3 stated, 1 not stated.*
 
 ### MADE — invented  · 1 labelled, 3 unlabelled
 
-- `f12145` Tokens indicating potential negative outcomes following a preceding clause.  **[stated — CLEARLY]**
+- `f12145` Tokens indicating potential negative outcomes following a preceding clause.  **[stated — None]**
 
 *Of 1 named made latents: 1 stated, 0 not stated.*
 
@@ -768,16 +768,16 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 8 labelled, 7 unlabelled
 
-- `f979` of" following a noun defining something.  **[stated — CLEARLY]**
+- `f979` of" following a noun defining something.  **[stated — None]**
 - `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  *[not stated]*
 - `f2055` Preposition at start of a clause or phrase.  *[not stated]*
-- `f3860` Words describing dimensions/measurements following a preposition or article.  **[stated — CLEARLY]**
-- `f5043` Describes something as being higher or taller.  **[stated — CLEARLY]**
-- `f7435` Geometric shape names following introductory phrases or within lists.  **[stated — CLEARLY]**
-- `f12271` Identifies a term introduced as a variable or property.  **[stated — CLEARLY]**
+- `f3860` Words describing dimensions/measurements following a preposition or article.  **[stated — None]**
+- `f5043` Describes something as being higher or taller.  **[stated — None]**
+- `f7435` Geometric shape names following introductory phrases or within lists.  **[stated — None]**
+- `f12271` Identifies a term introduced as a variable or property.  *[not stated]*
 - `f15119` Preposition immediately following a noun describing a file path or name.  *[not stated]*
 
-*Of 8 named shared latents: 5 stated, 3 not stated.*
+*Of 8 named shared latents: 4 stated, 4 not stated.*
 
 ### LOST — destroyed  · 1 labelled, 1 unlabelled
 
@@ -809,30 +809,30 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 7 labelled, 9 unlabelled
 
 - `f438` What" at the start of a question.  *[not stated]*
-- `f585` Identifies code elements or algorithm steps.  *[controls fired — cannot tell]*
+- `f585` Identifies code elements or algorithm steps.  **[stated — None]**
 - `f1035` what" preceding "I can" or a similar phrase of ability.  *[not stated]*
 - `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  *[not stated]*
-- `f2978` Identifies a function declaration or definition.  **[stated — CLEARLY]**
-- `f3879` Identifies the start of function parameters or arguments.  **[stated — CLEARLY]**
-- `f12601` Fires on tokens introducing a function’s documentation.  **[stated — CLEARLY]**
+- `f2978` Identifies a function declaration or definition.  **[stated — None]**
+- `f3879` Identifies the start of function parameters or arguments.  **[stated — None]**
+- `f12601` Fires on tokens introducing a function’s documentation.  **[stated — None]**
 
-*Of 7 named shared latents: 3 stated, 3 not stated, 1 undecidable.*
+*Of 7 named shared latents: 4 stated, 3 not stated.*
 
 ### LOST — destroyed  · 4 labelled, 2 unlabelled
 
 - `f1171` Identifies the 'Returns' section label.  *[not stated]*
-- `f1318` Noun denoting a societal or technological structure/system.  **[stated — CLEARLY]**
+- `f1318` Noun denoting a societal or technological structure/system.  **[stated — None]**
 - `f3795` Clarifying or correcting a previous statement triggers the feature.  *[not stated]*
-- `f4193` Fires on the token "docstring" or related terms within code documentation contexts.  *[not stated]*
+- `f4193` Fires on the token "docstring" or related terms within code documentation contexts.  **[stated — None]**
 
-*Of 4 named lost latents: 1 stated, 3 not stated.*
+*Of 4 named lost latents: 2 stated, 2 not stated.*
 
 ### MADE — invented  · 2 labelled, 1 unlabelled
 
-- `f392` A relative pronoun introducing a restrictive clause.  **[stated — CLEARLY]**
-- `f886` Fires on terms related to numerical analysis and computational methods.  **[stated — CLEARLY]**
+- `f392` A relative pronoun introducing a restrictive clause.  **[stated — None]**
+- `f886` Fires on terms related to numerical analysis and computational methods.  *[not stated]*
 
-*Of 2 named made latents: 2 stated, 0 not stated.*
+*Of 2 named made latents: 1 stated, 1 not stated.*
 
 ---
 
@@ -854,28 +854,28 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 5 labelled, 10 unlabelled
 
-- `f144` Pronoun "It" referring back to the previously mentioned subject.  **[stated — CLEARLY]**
+- `f144` Pronoun "It" referring back to the previously mentioned subject.  **[stated — None]**
 - `f272` Noun following a discourse marker or transitional phrase.  *[not stated]*
-- `f411` Fires on conjunctions and adverbs following a direct instruction.  **[stated — CLEARLY]**
+- `f411` Fires on conjunctions and adverbs following a direct instruction.  *[not stated]*
 - `f1956` Even" after a colon/asterisk list marker introducing a reason.  *[not stated]*
 - `f3795` Clarifying or correcting a previous statement triggers the feature.  *[not stated]*
 
-*Of 5 named shared latents: 2 stated, 3 not stated.*
+*Of 5 named shared latents: 1 stated, 4 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 4 unlabelled
 
-- `f2766` It" introducing a new clause or expressing a feeling/observation.  **[stated — CLEARLY]**
-- `f16309` Whether" introducing a clause expressing possibility or condition.  **[stated — CLEARLY]**
+- `f2766` It" introducing a new clause or expressing a feeling/observation.  *[controls fired — cannot tell]*
+- `f16309` Whether" introducing a clause expressing possibility or condition.  **[stated — None]**
 
-*Of 2 named lost latents: 2 stated, 0 not stated.*
+*Of 2 named lost latents: 1 stated, 0 not stated, 1 undecidable.*
 
 ### MADE — invented  · 3 labelled, 2 unlabelled
 
-- `f392` A relative pronoun introducing a restrictive clause.  **[stated — CLEARLY]**
+- `f392` A relative pronoun introducing a restrictive clause.  **[stated — None]**
 - `f431` It" following an apostrophe indicating a contraction.  *[not stated]*
-- `f5263` Introduces or explains a key concept.  **[stated — CLEARLY]**
+- `f5263` Introduces or explains a key concept.  *[not stated]*
 
-*Of 3 named made latents: 2 stated, 1 not stated.*
+*Of 3 named made latents: 1 stated, 2 not stated.*
 
 ---
 
@@ -898,9 +898,9 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 4 labelled, 5 unlabelled
 
 - `f467` Fires on closing delimiters of code blocks followed by an explanation.  *[not stated]*
-- `f3461` Fires on tokens associated with feelings of attachment and dedication.  **[stated — CLEARLY]**
-- `f4299` End-of-line closure in poetic or verse-like structures.  **[stated — CLEARLY]**
-- `f14402` Fires on tokens representing expressions of love or intimacy.  **[stated — CLEARLY]**
+- `f3461` Fires on tokens associated with feelings of attachment and dedication.  **[stated — None]**
+- `f4299` End-of-line closure in poetic or verse-like structures.  **[stated — None]**
+- `f14402` Fires on tokens representing expressions of love or intimacy.  **[stated — None]**
 
 *Of 4 named shared latents: 3 stated, 1 not stated.*
 
@@ -933,36 +933,36 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 14 labelled, 6 unlabelled
 
-- `f420` Fires on currency values presented as numbers.  **[stated — CLEARLY]**
+- `f420` Fires on currency values presented as numbers.  **[stated — None]**
 - `f620` Year tokens appearing within citation or biographical context.  *[not stated]*
-- `f981` Numeric value followed by a period.  **[stated — CLEARLY]**
-- `f2505` Fires on numbers near references to large quantities.  **[stated — CLEARLY]**
-- `f8592` Fires on single digits within a longer numerical sequence.  **[stated — CLEARLY]**
+- `f981` Numeric value followed by a period.  **[stated — None]**
+- `f2505` Fires on numbers near references to large quantities.  **[stated — None]**
+- `f8592` Fires on single digits within a longer numerical sequence.  **[stated — None]**
 - `f9122` Fires on definite articles preceding a capital city.  *[not stated]*
 - `f9327` Evolution" or related forms following a colon or asterisk.  *[not stated]*
-- `f9412` Fires on the token "population" or variations thereof.  **[stated — CLEARLY]**
-- `f10138` Numbers being formatted within an f-string or similar string formatting context.  **[stated — CLEARLY]**
-- `f10834` Fires on capitalized place names, particularly cities and regions.  **[stated — CLEARLY]**
-- `f14368` Digits following a hyphen or bracket; often part of an identifier or code.  **[stated — CLEARLY]**
-- `f15127` Numbers immediately following a named entity or a numerical value.  **[stated — CLEARLY]**
-- `f15613` Fires on the token preceding a population number or description.  **[stated — CLEARLY]**
-- `f15768` Digits following a preceding character.  **[stated — CLEARLY]**
+- `f9412` Fires on the token "population" or variations thereof.  **[stated — None]**
+- `f10138` Numbers being formatted within an f-string or similar string formatting context.  **[stated — None]**
+- `f10834` Fires on capitalized place names, particularly cities and regions.  *[controls fired — cannot tell]*
+- `f14368` Digits following a hyphen or bracket; often part of an identifier or code.  *[not stated]*
+- `f15127` Numbers immediately following a named entity or a numerical value.  **[stated — None]**
+- `f15613` Fires on the token preceding a population number or description.  **[stated — None]**
+- `f15768` Digits following a preceding character.  **[stated — None]**
 
-*Of 14 named shared latents: 11 stated, 3 not stated.*
+*Of 14 named shared latents: 9 stated, 4 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 3 labelled, 2 unlabelled
 
-- `f1093` Fires on proper nouns representing city names.  **[stated — CLEARLY]**
+- `f1093` Fires on proper nouns representing city names.  **[stated — None]**
 - `f3683` A verb form of "breathe" appearing in a list or instructional context.  *[not stated]*
-- `f6977` Detects numbers formatted with comma separators.  **[stated — CLEARLY]**
+- `f6977` Detects numbers formatted with comma separators.  **[stated — None]**
 
 *Of 3 named lost latents: 2 stated, 1 not stated.*
 
 ### MADE — invented  · 1 labelled, 0 unlabelled
 
-- `f6337` The feature fires on a numerical value immediately followed by "000".  **[stated — CLEARLY]**
+- `f6337` The feature fires on a numerical value immediately followed by "000".  *[not stated]*
 
-*Of 1 named made latents: 1 stated, 0 not stated.*
+*Of 1 named made latents: 0 stated, 1 not stated.*
 
 ---
 
@@ -984,14 +984,14 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 6 labelled, 14 unlabelled
 
-- `f260` Adverb/adjective preceding a noun or noun phrase indicating qualification.  *[controls fired — cannot tell]*
-- `f303` Noun indicating a field of endeavor or area of expertise.  **[stated — PROBABLY]**
-- `f304` Introduces a more/complete/detailed/structured explanation.  **[stated — PROBABLY]**
+- `f260` Adverb/adjective preceding a noun or noun phrase indicating qualification.  *[not stated]*
+- `f303` Noun indicating a field of endeavor or area of expertise.  **[stated — None]**
+- `f304` Introduces a more/complete/detailed/structured explanation.  *[controls fired — cannot tell]*
 - `f519` Fires on a list item introducing variations.  *[not stated]*
-- `f760` research" appearing within a description of a field of study.  **[stated — PROBABLY]**
+- `f760` research" appearing within a description of a field of study.  *[not stated]*
 - `f2407` Fires on the word "Core" or "核心" following a section number.  *[not stated]*
 
-*Of 6 named shared latents: 3 stated, 2 not stated, 1 undecidable.*
+*Of 6 named shared latents: 1 stated, 4 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 0 labelled, 2 unlabelled
 
@@ -1023,18 +1023,18 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 6 labelled, 4 unlabelled
 
 - `f357` Assignment operator followed by a variable name.  *[not stated]*
-- `f1463` Catches exceptions during error handling.  **[stated — CLEARLY]**
-- `f2273` Accessing attributes or properties of an object.  *[controls fired — cannot tell]*
-- `f3412` Displays the result of a calculation or variable assignment.  **[stated — CLEARLY]**
-- `f9278` Fires on error handling blocks in code.  **[stated — CLEARLY]**
+- `f1463` Catches exceptions during error handling.  *[not stated]*
+- `f2273` Accessing attributes or properties of an object.  *[not stated]*
+- `f3412` Displays the result of a calculation or variable assignment.  **[stated — None]**
+- `f9278` Fires on error handling blocks in code.  *[not stated]*
 - `f12471` Fires on assignment operators followed by a variable name.  *[not stated]*
 
-*Of 6 named shared latents: 3 stated, 2 not stated, 1 undecidable.*
+*Of 6 named shared latents: 1 stated, 5 not stated.*
 
 ### LOST — destroyed  · 3 labelled, 1 unlabelled
 
-- `f12326` Fires on tokens representing variable types or mathematical operators within code.  **[stated — CLEARLY]**
-- `f12947` Fires on the start of a list or array declaration in code.  **[stated — CLEARLY]**
+- `f12326` Fires on tokens representing variable types or mathematical operators within code.  **[stated — None]**
+- `f12947` Fires on the start of a list or array declaration in code.  **[stated — None]**
 - `f13593` Accessing a property of an object or component using dot notation.  *[not stated]*
 
 *Of 3 named lost latents: 2 stated, 1 not stated.*
@@ -1042,9 +1042,9 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### MADE — invented  · 4 labelled, 2 unlabelled
 
 - `f4029` Defines or introduces a term/concept after an introductory phrase.  *[not stated]*
-- `f4389` Fires on tokens immediately following a function call/method invocation.  **[stated — CLEARLY]**
-- `f4569` Fires on closing curly braces immediately following a code-related element.  **[stated — CLEARLY]**
-- `f12798` Triggers on tokens associated with JSON data manipulation.  **[stated — CLEARLY]**
+- `f4389` Fires on tokens immediately following a function call/method invocation.  **[stated — None]**
+- `f4569` Fires on closing curly braces immediately following a code-related element.  **[stated — None]**
+- `f12798` Triggers on tokens associated with JSON data manipulation.  **[stated — None]**
 
 *Of 4 named made latents: 3 stated, 1 not stated.*
 
@@ -1069,12 +1069,12 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 5 labelled, 5 unlabelled
 
 - `f123` Noun following a description or label.  *[controls fired — cannot tell]*
-- `f1610` Triggered by words associated with Django model creation and serialization.  **[stated — CLEARLY]**
-- `f3018` Fires on "more" following a colon that introduces a description.  **[stated — CLEARLY]**
-- `f4261` Identifies a technical term or framework following a colon or list marker.  **[stated — CLEARLY]**
+- `f1610` Triggered by words associated with Django model creation and serialization.  **[stated — None]**
+- `f3018` Fires on "more" following a colon that introduces a description.  **[stated — None]**
+- `f4261` Identifies a technical term or framework following a colon or list marker.  *[controls fired — cannot tell]*
 - `f15235` Introduces further items in a list or expands on a previous statement.  *[controls fired — cannot tell]*
 
-*Of 5 named shared latents: 3 stated, 0 not stated, 2 undecidable.*
+*Of 5 named shared latents: 2 stated, 0 not stated, 3 undecidable.*
 
 ### LOST — destroyed  · 0 labelled, 3 unlabelled
 
@@ -1104,28 +1104,28 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 - `f123` Noun following a description or label.  *[controls fired — cannot tell]*
 - `f343` Fires on proper nouns, frequently within a list or description.  *[not stated]*
-- `f1534` Noun following a bolded heading or descriptor.  **[stated — CLEARLY]**
-- `f9931` Fires on tokens related to water-based power generation infrastructure.  **[stated — CLEARLY]**
-- `f14742` Fires on a capitalized term introduced by a colon.  **[stated — CLEARLY]**
+- `f1534` Noun following a bolded heading or descriptor.  **[stated — None]**
+- `f9931` Fires on tokens related to water-based power generation infrastructure.  *[not stated]*
+- `f14742` Fires on a capitalized term introduced by a colon.  **[stated — None]**
 
-*Of 5 named shared latents: 3 stated, 1 not stated, 1 undecidable.*
+*Of 5 named shared latents: 2 stated, 2 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 0 labelled, 7 unlabelled
 
 
 ### MADE — invented  · 9 labelled, 7 unlabelled
 
-- `f1153` Introduces a label or definition, frequently followed by a colon.  *[controls fired — cannot tell]*
-- `f1623` Section heading or definition introduction.  **[stated — CLEARLY]**
+- `f1153` Introduces a label or definition, frequently followed by a colon.  **[stated — None]**
+- `f1623` Section heading or definition introduction.  **[stated — None]**
 - `f3129` Fires on nouns representing classifications or specific items.  *[controls fired — cannot tell]*
 - `f3183` Noun or noun phrase following a preposition or related to project/task description.  *[not stated]*
-- `f3234` The feature fires on nouns representing places of business or storage.  **[stated — CLEARLY]**
+- `f3234` The feature fires on nouns representing places of business or storage.  **[stated — None]**
 - `f5112` Noun after a colon introducing a list or definition.  *[controls fired — cannot tell]*
-- `f5514` A geographical feature named as a body of water.  **[stated — CLEARLY]**
-- `f7687` Fires on "res" variants following a colon or preceding a word related to a process or material.  **[stated — CLEARLY]**
+- `f5514` A geographical feature named as a body of water.  **[stated — None]**
+- `f7687` Fires on "res" variants following a colon or preceding a word related to a process or material.  *[not stated]*
 - `f9004` Conjunctions introducing subsequent clauses or related points.  *[not stated]*
 
-*Of 9 named made latents: 4 stated, 2 not stated, 3 undecidable.*
+*Of 9 named made latents: 4 stated, 3 not stated, 2 undecidable.*
 
 ---
 
@@ -1147,26 +1147,26 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 8 labelled, 13 unlabelled
 
-- `f1305` Begins a phrase or clause with the indefinite article "a.  **[stated — CLEARLY]**
+- `f1305` Begins a phrase or clause with the indefinite article "a.  **[stated — None]**
 - `f1309` Designates a visual component or element for drawing/display.  *[not stated]*
 - `f1425` Fires on words denoting a specific instance or member of a group.  *[not stated]*
-- `f1546` Fires on definite articles preceding a noun or noun phrase.  **[stated — CLEARLY]**
-- `f2853` Noun phrases related to game advancement or incentives are triggered.  **[stated — CLEARLY]**
-- `f11492` Article or short word appearing directly before a phrase referencing life or death.  **[stated — PROBABLY]**
-- `f14840` Identifies the consumption of resources within a technical context.  **[stated — CLEARLY]**
+- `f1546` Fires on definite articles preceding a noun or noun phrase.  *[not stated]*
+- `f2853` Noun phrases related to game advancement or incentives are triggered.  **[stated — None]**
+- `f11492` Article or short word appearing directly before a phrase referencing life or death.  *[not stated]*
+- `f14840` Identifies the consumption of resources within a technical context.  **[stated — None]**
 - `f14973` Loss" following a list marker or colon.  *[not stated]*
 
-*Of 8 named shared latents: 5 stated, 3 not stated.*
+*Of 8 named shared latents: 3 stated, 5 not stated.*
 
 ### LOST — destroyed  · 0 labelled, 3 unlabelled
 
 
 ### MADE — invented  · 2 labelled, 6 unlabelled
 
-- `f121` A determiner or pronoun followed by a preposition or conjunction.  **[stated — PROBABLY]**
+- `f121` A determiner or pronoun followed by a preposition or conjunction.  *[not stated]*
 - `f1023` A preposition or conjunction introducing a clause detailing a game element.  *[not stated]*
 
-*Of 2 named made latents: 1 stated, 1 not stated.*
+*Of 2 named made latents: 0 stated, 2 not stated.*
 
 ---
 
@@ -1188,17 +1188,17 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 9 labelled, 3 unlabelled
 
-- `f123` Noun following a description or label.  *[controls fired — cannot tell]*
+- `f123` Noun following a description or label.  *[not stated]*
 - `f235` Fires on introductory question prompts, directly soliciting information from the user.  *[not stated]*
-- `f284` Describes a weather-related condition, often following a colon or introductory phrase.  **[stated — CLEARLY]**
+- `f284` Describes a weather-related condition, often following a colon or introductory phrase.  **[stated — None]**
 - `f343` Fires on proper nouns, frequently within a list or description.  *[not stated]*
-- `f2816` Noun marking at the end of a phrase or sentence.  **[stated — CLEARLY]**
-- `f6253` Frozen water vocabulary appearing in descriptions of weather or natural scenes.  **[stated — CLEARLY]**
-- `f9359` The feature fires on tokens related to precipitation, particularly rain.  **[stated — CLEARLY]**
-- `f9679` Fires on tokens introducing a question or request for more details.  **[stated — CLEARLY]**
+- `f2816` Noun marking at the end of a phrase or sentence.  *[not stated]*
+- `f6253` Frozen water vocabulary appearing in descriptions of weather or natural scenes.  **[stated — None]**
+- `f9359` The feature fires on tokens related to precipitation, particularly rain.  **[stated — None]**
+- `f9679` Fires on tokens introducing a question or request for more details.  **[stated — None]**
 - `f13552` Fires on abbreviations, often appearing in lists or citations.  *[not stated]*
 
-*Of 9 named shared latents: 5 stated, 3 not stated, 1 undecidable.*
+*Of 9 named shared latents: 4 stated, 5 not stated.*
 
 ### LOST — destroyed  · 1 labelled, 5 unlabelled
 
@@ -1208,7 +1208,7 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### MADE — invented  · 1 labelled, 2 unlabelled
 
-- `f3563` Noun following a verb indicating a state or action.  **[stated — CLEARLY]**
+- `f3563` Noun following a verb indicating a state or action.  **[stated — None]**
 
 *Of 1 named made latents: 1 stated, 0 not stated.*
 
@@ -1232,24 +1232,24 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 7 labelled, 9 unlabelled
 
-- `f170` Last name following a given name or title.  **[stated — CLEARLY]**
-- `f225` Fires on capitalized proper nouns within a list or structured data.  **[stated — CLEARLY]**
+- `f170` Last name following a given name or title.  **[stated — None]**
+- `f225` Fires on capitalized proper nouns within a list or structured data.  **[stated — None]**
 - `f508` Capitalized name following a colon or asterisk introducing a person.  *[not stated]*
-- `f971` Fires on author names in citations.  **[stated — CLEARLY]**
+- `f971` Fires on author names in citations.  **[stated — None]**
 - `f8971` Fires on acronyms or abbreviations referring to professional organizations/computing fields.  *[not stated]*
-- `f10913` Surname appearing after an author initial in a citation.  **[stated — CLEARLY]**
+- `f10913` Surname appearing after an author initial in a citation.  **[stated — None]**
 - `f13168` Modifying words following a legal term like "contract," "agreement," or related concepts.  *[not stated]*
 
 *Of 7 named shared latents: 4 stated, 3 not stated.*
 
 ### LOST — destroyed  · 4 labelled, 0 unlabelled
 
-- `f343` Fires on proper nouns, frequently within a list or description.  **[stated — CLEARLY]**
+- `f343` Fires on proper nouns, frequently within a list or description.  **[stated — None]**
 - `f543` Noun following a preposition or article indicating a category.  *[not stated]*
-- `f1487` Fires on long, multi-syllable words often containing Greek or Latin roots.  **[stated — PROBABLY]**
+- `f1487` Fires on long, multi-syllable words often containing Greek or Latin roots.  *[not stated]*
 - `f7099` Noun/Noun Phrase describing a quality or concept.  *[not stated]*
 
-*Of 4 named lost latents: 2 stated, 2 not stated.*
+*Of 4 named lost latents: 1 stated, 3 not stated.*
 
 ### MADE — invented  · 1 labelled, 0 unlabelled
 
@@ -1277,35 +1277,35 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 11 labelled, 9 unlabelled
 
-- `f83` Triggered by a determiner or preposition following a noun.  **[stated — CLEARLY]**
+- `f83` Triggered by a determiner or preposition following a noun.  **[stated — None]**
 - `f105` Adjective following a colon or bullet point.  *[not stated]*
-- `f260` Adverb/adjective preceding a noun or noun phrase indicating qualification.  *[controls fired — cannot tell]*
-- `f589` Adjective preceding a noun or noun phrase denoting a state or condition.  **[stated — CLEARLY]**
-- `f708` Fires on tokens referring to data handling or analysis.  *[controls fired — cannot tell]*
+- `f260` Adverb/adjective preceding a noun or noun phrase indicating qualification.  **[stated — None]**
+- `f589` Adjective preceding a noun or noun phrase denoting a state or condition.  **[stated — None]**
+- `f708` Fires on tokens referring to data handling or analysis.  **[stated — None]**
 - `f4942` Fires on the word "secret" or its variations, often used in a metaphorical sense of advantage or strategy.  *[not stated]*
-- `f6234` Adjective describing something being held or protected.  **[stated — PROBABLY]**
-- `f7765` underlying" appearing as a key concept within explanatory text.  **[stated — CLEARLY]**
-- `f9188` Fires on legal business structure terms within descriptions or lists of options.  **[stated — CLEARLY]**
-- `f9207` Identifies domain name-related terminology, particularly DNS.  **[stated — CLEARLY]**
-- `f9668` Begins a phrase or clause describing a technical service or provider.  **[stated — PROBABLY]**
+- `f6234` Adjective describing something being held or protected.  **[stated — None]**
+- `f7765` underlying" appearing as a key concept within explanatory text.  **[stated — None]**
+- `f9188` Fires on legal business structure terms within descriptions or lists of options.  **[stated — None]**
+- `f9207` Identifies domain name-related terminology, particularly DNS.  **[stated — None]**
+- `f9668` Begins a phrase or clause describing a technical service or provider.  **[stated — None]**
 
-*Of 11 named shared latents: 7 stated, 2 not stated, 2 undecidable.*
+*Of 11 named shared latents: 9 stated, 2 not stated.*
 
 ### LOST — destroyed  · 3 labelled, 5 unlabelled
 
-- `f1800` Transition word or conjunction following a phrase or clause.  **[stated — CLEARLY]**
-- `f11016` It fires on technical terms describing user data or device attributes.  **[stated — CLEARLY]**
-- `f14988` Triggered by words following phrases related to payment status or financial records.  **[stated — CLEARLY]**
+- `f1800` Transition word or conjunction following a phrase or clause.  **[stated — None]**
+- `f11016` It fires on technical terms describing user data or device attributes.  **[stated — None]**
+- `f14988` Triggered by words following phrases related to payment status or financial records.  **[stated — None]**
 
 *Of 3 named lost latents: 3 stated, 0 not stated.*
 
 ### MADE — invented  · 3 labelled, 1 unlabelled
 
 - `f40` Verbs of cognitive action following a colon or preceding a numbered list item.  *[not stated]*
-- `f519` Fires on a list item introducing variations.  *[not stated]*
-- `f4691` Fires on tokens associated with legal descriptions or historical records of land.  **[stated — CLEARLY]**
+- `f519` Fires on a list item introducing variations.  **[stated — None]**
+- `f4691` Fires on tokens associated with legal descriptions or historical records of land.  **[stated — None]**
 
-*Of 3 named made latents: 1 stated, 2 not stated.*
+*Of 3 named made latents: 2 stated, 1 not stated.*
 
 ---
 
@@ -1331,25 +1331,25 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 - `f384` Negative contractions within a list of directives.  *[not stated]*
 - `f460` Negative adverb "not" appearing mid-sentence, often negating an adjective.  *[not stated]*
 - `f529` but" following a preceding clause or phrase.  *[not stated]*
-- `f2963` Comparison introduced by "than" following a preceding descriptor.  **[stated — CLEARLY]**
-- `f3295` Introduces a new clause or aspect within a discussion of learning/goals.  **[stated — PROBABLY]**
+- `f2963` Comparison introduced by "than" following a preceding descriptor.  **[stated — None]**
+- `f3295` Introduces a new clause or aspect within a discussion of learning/goals.  **[stated — None]**
 - `f9630` A day of the week appearing within a discussion of time or planning.  *[not stated]*
 
 *Of 7 named shared latents: 2 stated, 5 not stated.*
 
 ### LOST — destroyed  · 3 labelled, 1 unlabelled
 
-- `f594` Time or duration indicators immediately following a preposition or adverb.  **[stated — PROBABLY]**
-- `f2288` A word related to time appears after a verb or prepositional phrase suggesting planning or scheduling.  **[stated — PROBABLY]**
+- `f594` Time or duration indicators immediately following a preposition or adverb.  *[not stated]*
+- `f2288` A word related to time appears after a verb or prepositional phrase suggesting planning or scheduling.  **[stated — None]**
 - `f2350` Pronoun following a description of difficulty or negotiation.  *[not stated]*
 
-*Of 3 named lost latents: 2 stated, 1 not stated.*
+*Of 3 named lost latents: 1 stated, 2 not stated.*
 
 ### MADE — invented  · 3 labelled, 5 unlabelled
 
 - `f41` Conjunctions following a comma within a sentence.  *[not stated]*
-- `f9246` rather" following a statement of intent or approach.  **[stated — CLEARLY]**
-- `f16355` Adjectives describing feeling or tone, immediately following a question about it.  *[not stated]*
+- `f9246` rather" following a statement of intent or approach.  *[not stated]*
+- `f16355` Adjectives describing feeling or tone, immediately following a question about it.  **[stated — None]**
 
 *Of 3 named made latents: 1 stated, 2 not stated.*
 
@@ -1374,16 +1374,16 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 3 labelled, 10 unlabelled
 
 - `f204` Describes a personality or characteristic using an adjective/adverb.  *[not stated]*
-- `f6823` Descriptive terms preceding artistic mediums or styles.  **[stated — CLEARLY]**
-- `f9947` Fires on tokens following descriptions of visual aesthetics or rendering styles.  **[stated — CLEARLY]**
+- `f6823` Descriptive terms preceding artistic mediums or styles.  **[stated — None]**
+- `f9947` Fires on tokens following descriptions of visual aesthetics or rendering styles.  **[stated — None]**
 
 *Of 3 named shared latents: 2 stated, 1 not stated.*
 
 ### LOST — destroyed  · 1 labelled, 2 unlabelled
 
-- `f8784` Identifies an artistic style following an example introduction.  **[stated — CLEARLY]**
+- `f8784` Identifies an artistic style following an example introduction.  *[not stated]*
 
-*Of 1 named lost latents: 1 stated, 0 not stated.*
+*Of 1 named lost latents: 0 stated, 1 not stated.*
 
 ### MADE — invented  · 0 labelled, 1 unlabelled
 
@@ -1411,16 +1411,16 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 - `f69` Past participle verbs modifying a noun.  *[not stated]*
 - `f329` Identifies variable assignments or declarations within code.  *[not stated]*
 - `f1195` Adjective/participle modifying something affected by an external force.  *[not stated]*
-- `f1913` Fires on tokens associated with the Git version control system.  **[stated — CLEARLY]**
-- `f10420` Tr" or "Tra" prefix followed by a word describing a record, trajectory, or trace.  *[not stated]*
+- `f1913` Fires on tokens associated with the Git version control system.  **[stated — None]**
+- `f10420` Tr" or "Tra" prefix followed by a word describing a record, trajectory, or trace.  **[stated — None]**
 
-*Of 5 named shared latents: 1 stated, 4 not stated.*
+*Of 5 named shared latents: 2 stated, 3 not stated.*
 
 ### LOST — destroyed  · 3 labelled, 5 unlabelled
 
-- `f1191` Fires on commands/keywords used in configuration and deployment tooling.  **[stated — CLEARLY]**
+- `f1191` Fires on commands/keywords used in configuration and deployment tooling.  **[stated — None]**
 - `f1207` Fires on articles following a "What is" question.  *[not stated]*
-- `f3788` Noun phrases describing platforms or capabilities in a business/tech context.  **[stated — CLEARLY]**
+- `f3788` Noun phrases describing platforms or capabilities in a business/tech context.  **[stated — None]**
 
 *Of 3 named lost latents: 2 stated, 1 not stated.*
 
@@ -1447,25 +1447,25 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 7 labelled, 11 unlabelled
 
-- `f584` Marks the final token of a descriptive or evaluative sentence.  **[stated — CLEARLY]**
+- `f584` Marks the final token of a descriptive or evaluative sentence.  *[not stated]*
 - `f2091` Sentence closure followed by a description or attribute of a person.  *[not stated]*
 - `f3945` Pronoun or name following a time or age indication.  *[not stated]*
 - `f5107` Fires on words describing aspects of writing or speech.  *[controls fired — cannot tell]*
-- `f5711` Fires on words describing literary devices.  **[stated — CLEARLY]**
-- `f12944` Mentions or references to the playwright Shakespeare.  **[stated — CLEARLY]**
+- `f5711` Fires on words describing literary devices.  **[stated — None]**
+- `f12944` Mentions or references to the playwright Shakespeare.  **[stated — None]**
 - `f15758` A phrase indicating the desire to provide more information about a subject.  *[not stated]*
 
-*Of 7 named shared latents: 3 stated, 3 not stated, 1 undecidable.*
+*Of 7 named shared latents: 2 stated, 4 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 0 labelled, 1 unlabelled
 
 
 ### MADE — invented  · 2 labelled, 4 unlabelled
 
-- `f8783` Triggered by the prompt requesting a poetic form.  **[stated — CLEARLY]**
+- `f8783` Triggered by the prompt requesting a poetic form.  *[not stated]*
 - `f14382` Fires on words selected to improve precision or formality.  *[not stated]*
 
-*Of 2 named made latents: 1 stated, 1 not stated.*
+*Of 2 named made latents: 0 stated, 2 not stated.*
 
 ---
 
@@ -1488,20 +1488,20 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 13 labelled, 3 unlabelled
 
 - `f176` Fires on `__name__` checks for program entry points.  *[not stated]*
-- `f326` Fires on attribute names within HTML, code, or configuration files.  **[stated — CLEARLY]**
-- `f1191` Fires on commands/keywords used in configuration and deployment tooling.  **[stated — CLEARLY]**
-- `f1784` Fires on data structure/object names, often preceded by a pointer or type declaration.  **[stated — CLEARLY]**
-- `f2427` Fires on the start of a JSON key, frequently following a colon.  **[stated — CLEARLY]**
+- `f326` Fires on attribute names within HTML, code, or configuration files.  **[stated — None]**
+- `f1191` Fires on commands/keywords used in configuration and deployment tooling.  **[stated — None]**
+- `f1784` Fires on data structure/object names, often preceded by a pointer or type declaration.  **[stated — None]**
+- `f2427` Fires on the start of a JSON key, frequently following a colon.  *[not stated]*
 - `f3584` Fires on command keywords initiating actions or operations.  *[not stated]*
-- `f6450` Fires on YAML keys, indicating a configuration parameter definition.  **[stated — CLEARLY]**
+- `f6450` Fires on YAML keys, indicating a configuration parameter definition.  **[stated — None]**
 - `f9666` Fires on whitespace after code comments, configurations, or directives.  *[not stated]*
 - `f9885` Fires on tokens immediately following an equals sign in a configuration setting.  *[not stated]*
 - `f12758` resources" appearing after a refusal statement and before a heading.  *[not stated]*
-- `f13316` Fires on keywords frequently used in Terraform configuration files.  **[stated — CLEARLY]**
+- `f13316` Fires on keywords frequently used in Terraform configuration files.  **[stated — None]**
 - `f13374` Fires on the token "capital" within a question-and-answer context.  *[not stated]*
-- `f15002` Identifies tokens representing strings or identifiers in code-like contexts.  **[stated — CLEARLY]**
+- `f15002` Identifies tokens representing strings or identifiers in code-like contexts.  **[stated — None]**
 
-*Of 13 named shared latents: 7 stated, 6 not stated.*
+*Of 13 named shared latents: 6 stated, 7 not stated.*
 
 ### LOST — destroyed  · 3 labelled, 2 unlabelled
 
@@ -1513,13 +1513,13 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### MADE — invented  · 5 labelled, 4 unlabelled
 
-- `f298` Fires on programming language keywords and common classes/libraries.  *[controls fired — cannot tell]*
+- `f298` Fires on programming language keywords and common classes/libraries.  **[stated — None]**
 - `f1026` Fires on calls to standard library functions, often with arguments.  *[not stated]*
-- `f6659` Fires on code-like strings, often related to cloud service APIs or resources.  **[stated — CLEARLY]**
-- `f7687` Fires on "res" variants following a colon or preceding a word related to a process or material.  **[stated — CLEARLY]**
-- `f11237` Function/method name or variable declared at the start of a line.  **[stated — CLEARLY]**
+- `f6659` Fires on code-like strings, often related to cloud service APIs or resources.  **[stated — None]**
+- `f7687` Fires on "res" variants following a colon or preceding a word related to a process or material.  *[not stated]*
+- `f11237` Function/method name or variable declared at the start of a line.  *[not stated]*
 
-*Of 5 named made latents: 3 stated, 1 not stated, 1 undecidable.*
+*Of 5 named made latents: 2 stated, 3 not stated.*
 
 ---
 
@@ -1541,17 +1541,17 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 9 labelled, 6 unlabelled
 
-- `f114` Verbs describing a machine learning process or data modification.  *[controls fired — cannot tell]*
+- `f114` Verbs describing a machine learning process or data modification.  **[stated — None]**
 - `f123` Noun following a description or label.  *[controls fired — cannot tell]*
-- `f708` Fires on tokens referring to data handling or analysis.  **[stated — CLEARLY]**
-- `f1102` Noun following a technical term or action verb.  *[controls fired — cannot tell]*
-- `f1350` Fires on nouns describing types of textual or coded information sources.  **[stated — CLEARLY]**
-- `f2516` Code" appearing within a discussion of software or programming.  **[stated — CLEARLY]**
-- `f4187` Fires on prepositions/conjunctions after words denoting large collections.  **[stated — PROBABLY]**
-- `f7915` Identifies the training data source used by the model.  **[stated — CLEARLY]**
-- `f11277` Fires on tokens representing code or code-related terminology.  *[controls fired — cannot tell]*
+- `f708` Fires on tokens referring to data handling or analysis.  **[stated — None]**
+- `f1102` Noun following a technical term or action verb.  *[not stated]*
+- `f1350` Fires on nouns describing types of textual or coded information sources.  **[stated — None]**
+- `f2516` Code" appearing within a discussion of software or programming.  **[stated — None]**
+- `f4187` Fires on prepositions/conjunctions after words denoting large collections.  *[not stated]*
+- `f7915` Identifies the training data source used by the model.  **[stated — None]**
+- `f11277` Fires on tokens representing code or code-related terminology.  **[stated — None]**
 
-*Of 9 named shared latents: 5 stated, 0 not stated, 4 undecidable.*
+*Of 9 named shared latents: 6 stated, 2 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 1 labelled, 5 unlabelled
 
@@ -1583,27 +1583,27 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 9 labelled, 3 unlabelled
 
 - `f120` Makes" or "making" following a statement of code clarity or organization.  *[not stated]*
-- `f563` Fires on tokens expressing thanks or positive farewells.  **[stated — PROBABLY]**
-- `f660` Imperative "tell" used within a direct information-seeking prompt.  **[stated — CLEARLY]**
-- `f762` Begins a response or explanation with a conversational opener.  **[stated — CLEARLY]**
-- `f2446` Fires on "Let's" following a prompt or introduction.  **[stated — PROBABLY]**
-- `f2480` Phrase offering help followed by "me.  **[stated — CLEARLY]**
-- `f4500` Phrase offering assistance/prompting interaction followed by "Let".  **[stated — CLEARLY]**
-- `f6077` A verb indicating voluntary release or allowance, often implying a change of state.  **[stated — PROBABLY]**
+- `f563` Fires on tokens expressing thanks or positive farewells.  *[not stated]*
+- `f660` Imperative "tell" used within a direct information-seeking prompt.  **[stated — None]**
+- `f762` Begins a response or explanation with a conversational opener.  **[stated — None]**
+- `f2446` Fires on "Let's" following a prompt or introduction.  *[not stated]*
+- `f2480` Phrase offering help followed by "me.  **[stated — None]**
+- `f4500` Phrase offering assistance/prompting interaction followed by "Let".  **[stated — None]**
+- `f6077` A verb indicating voluntary release or allowance, often implying a change of state.  **[stated — None]**
 - `f12739` Fires on "!" immediately after a phrase conveying assistance or a request.  *[not stated]*
 
-*Of 9 named shared latents: 7 stated, 2 not stated.*
+*Of 9 named shared latents: 5 stated, 4 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 2 unlabelled
 
-- `f2122` A word signifying finality or termination, often within a sequence.  **[stated — CLEARLY]**
-- `f6152` Fires on variations of "ready" indicating a state of readiness or anticipation.  *[not stated]*
+- `f2122` A word signifying finality or termination, often within a sequence.  **[stated — None]**
+- `f6152` Fires on variations of "ready" indicating a state of readiness or anticipation.  **[stated — None]**
 
-*Of 2 named lost latents: 1 stated, 1 not stated.*
+*Of 2 named lost latents: 2 stated, 0 not stated.*
 
 ### MADE — invented  · 1 labelled, 0 unlabelled
 
-- `f1307` Fires on tokens representing "work units" in a productivity or task management context.  **[stated — CLEARLY]**
+- `f1307` Fires on tokens representing "work units" in a productivity or task management context.  **[stated — None]**
 
 *Of 1 named made latents: 1 stated, 0 not stated.*
 
@@ -1627,28 +1627,28 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 3 labelled, 4 unlabelled
 
-- `f5651` The feature fires on the act of transforming data or values into a different form.  **[stated — CLEARLY]**
-- `f6203` Refers to a color or color-related term within a descriptive context.  **[stated — CLEARLY]**
+- `f5651` The feature fires on the act of transforming data or values into a different form.  *[controls fired — cannot tell]*
+- `f6203` Refers to a color or color-related term within a descriptive context.  **[stated — None]**
 - `f9152` Fires on the token "hashtag" or abbreviation "ht" within promotional text.  *[not stated]*
 
-*Of 3 named shared latents: 2 stated, 1 not stated.*
+*Of 3 named shared latents: 1 stated, 1 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 6 labelled, 2 unlabelled
 
-- `f395` Variable or expression assignment/declaration.  **[stated — CLEARLY]**
-- `f4391` Fires on hexadecimal numbers preceded by a zero or "0x".  **[stated — CLEARLY]**
-- `f9135` Variable assignment with type conversion (int, float) triggers the feature.  **[stated — PROBABLY]**
+- `f395` Variable or expression assignment/declaration.  **[stated — None]**
+- `f4391` Fires on hexadecimal numbers preceded by a zero or "0x".  *[not stated]*
+- `f9135` Variable assignment with type conversion (int, float) triggers the feature.  *[not stated]*
 - `f9339` A numeric value appearing within a ternary operator.  *[not stated]*
-- `f12189` It fires on dictionary/object keys with a numeric value following.  **[stated — CLEARLY]**
-- `f13395` Verbs following a prepositional phrase or indicating modification.  **[stated — CLEARLY]**
+- `f12189` It fires on dictionary/object keys with a numeric value following.  *[not stated]*
+- `f13395` Verbs following a prepositional phrase or indicating modification.  *[not stated]*
 
-*Of 6 named lost latents: 5 stated, 1 not stated.*
+*Of 6 named lost latents: 1 stated, 5 not stated.*
 
 ### MADE — invented  · 3 labelled, 2 unlabelled
 
-- `f4481` Identifies CSS-related terms, frequently within a code or definition context.  **[stated — CLEARLY]**
-- `f5845` Color codes indicated by a hash symbol immediately following a 'color' keyword.  **[stated — CLEARLY]**
-- `f6218` Fires on color-related terms within code or design contexts.  **[stated — CLEARLY]**
+- `f4481` Identifies CSS-related terms, frequently within a code or definition context.  **[stated — None]**
+- `f5845` Color codes indicated by a hash symbol immediately following a 'color' keyword.  **[stated — None]**
+- `f6218` Fires on color-related terms within code or design contexts.  **[stated — None]**
 
 *Of 3 named made latents: 3 stated, 0 not stated.*
 
@@ -1672,27 +1672,27 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 11 labelled, 10 unlabelled
 
-- `f41` Conjunctions following a comma within a sentence.  **[stated — CLEARLY]**
-- `f83` Triggered by a determiner or preposition following a noun.  **[stated — CLEARLY]**
+- `f41` Conjunctions following a comma within a sentence.  **[stated — None]**
+- `f83` Triggered by a determiner or preposition following a noun.  **[stated — None]**
 - `f369` Identifies file types and associated technical terms.  *[not stated]*
-- `f484` Conjunctions following a clause ending with punctuation.  **[stated — CLEARLY]**
-- `f514` Indefinite article followed by a noun denoting a group or entity.  **[stated — CLEARLY]**
+- `f484` Conjunctions following a clause ending with punctuation.  **[stated — None]**
+- `f514` Indefinite article followed by a noun denoting a group or entity.  **[stated — None]**
 - `f529` but" following a preceding clause or phrase.  *[not stated]*
 - `f749` Conjunction "and" concluding a declarative sentence or clause.  *[not stated]*
-- `f1425` Fires on words denoting a specific instance or member of a group.  **[stated — CLEARLY]**
-- `f1583` Triggers on words initiating requests or inquiries about LLM tools and processes.  **[stated — CLEARLY]**
-- `f2223` References to specific machine learning models or libraries.  **[stated — CLEARLY]**
+- `f1425` Fires on words denoting a specific instance or member of a group.  **[stated — None]**
+- `f1583` Triggers on words initiating requests or inquiries about LLM tools and processes.  **[stated — None]**
+- `f2223` References to specific machine learning models or libraries.  **[stated — None]**
 - `f4928` Fires on "or" indicating a selection or alternative option.  *[controls fired — cannot tell]*
 
 *Of 11 named shared latents: 7 stated, 3 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 3 labelled, 4 unlabelled
 
-- `f4029` Defines or introduces a term/concept after an introductory phrase.  **[stated — CLEARLY]**
-- `f4425` Identifies keywords related to server setup and execution.  **[stated — CLEARLY]**
+- `f4029` Defines or introduces a term/concept after an introductory phrase.  *[controls fired — cannot tell]*
+- `f4425` Identifies keywords related to server setup and execution.  **[stated — None]**
 - `f12520` Conjunctions following multiple noun phrases describing a person.  *[not stated]*
 
-*Of 3 named lost latents: 2 stated, 1 not stated.*
+*Of 3 named lost latents: 1 stated, 1 not stated, 1 undecidable.*
 
 ### MADE — invented  · 1 labelled, 0 unlabelled
 
@@ -1723,14 +1723,14 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 - `f41` Conjunctions following a comma within a sentence.  *[not stated]*
 - `f213` Fires on "Do" followed by a pronoun form of "you.  *[not stated]*
 - `f289` Adverbs or conjunctions introducing negative consequences or violations.  *[not stated]*
-- `f373` Presence of words related to sexual content, often in response to requests.  **[stated — CLEARLY]**
+- `f373` Presence of words related to sexual content, often in response to requests.  **[stated — None]**
 - `f484` Conjunctions following a clause ending with punctuation.  *[not stated]*
-- `f931` Conjunction following a noun/noun phrase.  **[stated — CLEARLY]**
-- `f1889` Fires on tokens indicating mental or emotional distress, often after phrases like "if you are.  **[stated — CLEARLY]**
+- `f931` Conjunction following a noun/noun phrase.  **[stated — None]**
+- `f1889` Fires on tokens indicating mental or emotional distress, often after phrases like "if you are.  **[stated — None]**
 - `f2532` and" following "Key improvements" or "Error Handling" phrases.  *[not stated]*
-- `f4928` Fires on "or" indicating a selection or alternative option.  **[stated — CLEARLY]**
-- `f5036` Conjunction following a clause end.  **[stated — CLEARLY]**
-- `f9277` Fires on words describing intense desires or impulses.  **[stated — CLEARLY]**
+- `f4928` Fires on "or" indicating a selection or alternative option.  **[stated — None]**
+- `f5036` Conjunction following a clause end.  **[stated — None]**
+- `f9277` Fires on words describing intense desires or impulses.  **[stated — None]**
 
 *Of 11 named shared latents: 6 stated, 5 not stated.*
 
@@ -1738,19 +1738,19 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 - `f75` A preposition introducing a medical condition or history.  *[not stated]*
 - `f105` Adjective following a colon or bullet point.  *[not stated]*
-- `f389` Offers guidance or information related to support services.  **[stated — PROBABLY]**
+- `f389` Offers guidance or information related to support services.  **[stated — None]**
 - `f4009` Prohibiting exploitation/abuse of children.  *[not stated]*
-- `f4991` Fires on words/phrases following "If you are having thoughts".  **[stated — CLEARLY]**
-- `f8235` Words indicating restriction or avoidance of explicit material.  **[stated — PROBABLY]**
+- `f4991` Fires on words/phrases following "If you are having thoughts".  **[stated — None]**
+- `f8235` Words indicating restriction or avoidance of explicit material.  **[stated — None]**
 
 *Of 6 named lost latents: 3 stated, 3 not stated.*
 
 ### MADE — invented  · 2 labelled, 3 unlabelled
 
-- `f109` Preposition/conjunction following an introductory phrase.  **[stated — CLEARLY]**
+- `f109` Preposition/conjunction following an introductory phrase.  *[not stated]*
 - `f3035` having" introduced by "If you are" in a crisis/harm-prevention context.  *[not stated]*
 
-*Of 2 named made latents: 1 stated, 1 not stated.*
+*Of 2 named made latents: 0 stated, 2 not stated.*
 
 ---
 
@@ -1772,24 +1772,24 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 3 labelled, 9 unlabelled
 
-- `f777` Colon followed by a heading or short phrase introducing a list item.  *[not stated]*
-- `f912` Introductory phrases denoting foundational knowledge or concepts.  **[stated — CLEARLY]**
-- `f14455` Why" or "Why" introduced as the start of an explanatory phrase.  **[stated — CLEARLY]**
+- `f777` Colon followed by a heading or short phrase introducing a list item.  **[stated — None]**
+- `f912` Introductory phrases denoting foundational knowledge or concepts.  *[controls fired — cannot tell]*
+- `f14455` Why" or "Why" introduced as the start of an explanatory phrase.  **[stated — None]**
 
-*Of 3 named shared latents: 2 stated, 1 not stated.*
+*Of 3 named shared latents: 2 stated, 0 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 1 labelled, 1 unlabelled
 
-- `f8363` Fires on words related to understanding, often appearing at the beginning of a phrase.  **[stated — CLEARLY]**
+- `f8363` Fires on words related to understanding, often appearing at the beginning of a phrase.  **[stated — None]**
 
 *Of 1 named lost latents: 1 stated, 0 not stated.*
 
 ### MADE — invented  · 2 labelled, 3 unlabelled
 
 - `f2279` A colon followed by a capitalized token.  *[not stated]*
-- `f4261` Identifies a technical term or framework following a colon or list marker.  *[controls fired — cannot tell]*
+- `f4261` Identifies a technical term or framework following a colon or list marker.  **[stated — None]**
 
-*Of 2 named made latents: 0 stated, 1 not stated, 1 undecidable.*
+*Of 2 named made latents: 1 stated, 1 not stated.*
 
 ---
 
@@ -1812,18 +1812,18 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 6 labelled, 9 unlabelled
 
 - `f42` can" following a comma indicating a potential consequence.  *[not stated]*
-- `f193` will" or "would" following a phrase indicating requirement or action.  **[stated — CLEARLY]**
-- `f311` Pronoun following "how" or "what" introducing an explanation.  **[stated — CLEARLY]**
-- `f2394` Fires on modal verbs followed by "be" or a verb of necessity.  **[stated — CLEARLY]**
-- `f5013` A modal verb ("would") introduced by a question prompt.  **[stated — CLEARLY]**
-- `f11892` Pronoun following "how" introducing an explanation.  **[stated — CLEARLY]**
+- `f193` will" or "would" following a phrase indicating requirement or action.  **[stated — None]**
+- `f311` Pronoun following "how" or "what" introducing an explanation.  *[not stated]*
+- `f2394` Fires on modal verbs followed by "be" or a verb of necessity.  **[stated — None]**
+- `f5013` A modal verb ("would") introduced by a question prompt.  **[stated — None]**
+- `f11892` Pronoun following "how" introducing an explanation.  **[stated — None]**
 
-*Of 6 named shared latents: 5 stated, 1 not stated.*
+*Of 6 named shared latents: 4 stated, 2 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 4 unlabelled
 
 - `f2734` Preposition followed by a verb or noun in a list context.  *[not stated]*
-- `f5593` Fires on tokens within legal contexts, especially those related to courts, arbitration, or conflict resolution.  **[stated — CLEARLY]**
+- `f5593` Fires on tokens within legal contexts, especially those related to courts, arbitration, or conflict resolution.  **[stated — None]**
 
 *Of 2 named lost latents: 1 stated, 1 not stated.*
 
@@ -1853,13 +1853,13 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 5 labelled, 8 unlabelled
 
-- `f419` Sensory description of a person or object.  **[stated — PROBABLY]**
+- `f419` Sensory description of a person or object.  *[not stated]*
 - `f1200` Adjectives or descriptive terms appearing near product or feature names.  *[not stated]*
 - `f2615` Fires on nouns often associated with fortitude or concrete objects.  *[not stated]*
-- `f3588` Sentence-initial adverbial phrases indicating a shift in time or perspective.  **[stated — CLEARLY]**
-- `f8552` Now" at the start of a clause or sentence.  **[stated — CLEARLY]**
+- `f3588` Sentence-initial adverbial phrases indicating a shift in time or perspective.  **[stated — None]**
+- `f8552` Now" at the start of a clause or sentence.  **[stated — None]**
 
-*Of 5 named shared latents: 3 stated, 2 not stated.*
+*Of 5 named shared latents: 2 stated, 3 not stated.*
 
 ### LOST — destroyed  · 0 labelled, 1 unlabelled
 
@@ -1888,9 +1888,9 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 5 labelled, 10 unlabelled
 
 - `f269` The feature fires on a capitalized word appearing within a list or definition.  *[not stated]*
-- `f473` Fires on capitalized place names immediately following a bolded label.  **[stated — CLEARLY]**
-- `f852` Identifies language names beginning with "He" or containing "Hel".  **[stated — CLEARLY]**
-- `f3937` Fires on variations of the name "El" appearing within a proper noun or title.  **[stated — CLEARLY]**
+- `f473` Fires on capitalized place names immediately following a bolded label.  **[stated — None]**
+- `f852` Identifies language names beginning with "He" or containing "Hel".  **[stated — None]**
+- `f3937` Fires on variations of the name "El" appearing within a proper noun or title.  **[stated — None]**
 - `f7716` Fires on "help" following a pronoun indicating the recipient of assistance.  *[not stated]*
 
 *Of 5 named shared latents: 3 stated, 2 not stated.*
@@ -1924,18 +1924,18 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 10 labelled, 4 unlabelled
 
-- `f635` Identifies a data type or property definition within code or data structures.  **[stated — CLEARLY]**
+- `f635` Identifies a data type or property definition within code or data structures.  **[stated — None]**
 - `f1171` Identifies the 'Returns' section label.  *[not stated]*
-- `f1237` Preposition "de" often used to denote possession, origin, or relationship.  **[stated — CLEARLY]**
-- `f1421` Fires on mentions of Python or closely related terms, often within a technical context.  **[stated — CLEARLY]**
-- `f1634` Fires on mentions of the JSON data format or related terms.  **[stated — CLEARLY]**
+- `f1237` Preposition "de" often used to denote possession, origin, or relationship.  **[stated — None]**
+- `f1421` Fires on mentions of Python or closely related terms, often within a technical context.  **[stated — None]**
+- `f1634` Fires on mentions of the JSON data format or related terms.  **[stated — None]**
 - `f3293` Fires on the token "of" when introducing a series or set.  *[not stated]*
-- `f4291` Preposition following a noun or noun phrase.  **[stated — CLEARLY]**
-- `f6180` Preposition "of" following a statement of restriction.  **[stated — PROBABLY]**
-- `f8466` The feature fires on words describing data structures like dictionaries or maps.  **[stated — CLEARLY]**
+- `f4291` Preposition following a noun or noun phrase.  **[stated — None]**
+- `f6180` Preposition "of" following a statement of restriction.  *[not stated]*
+- `f8466` The feature fires on words describing data structures like dictionaries or maps.  **[stated — None]**
 - `f9955` Fires on prepositions/conjunctions following a list marker.  *[not stated]*
 
-*Of 10 named shared latents: 7 stated, 3 not stated.*
+*Of 10 named shared latents: 6 stated, 4 not stated.*
 
 ### LOST — destroyed  · 0 labelled, 0 unlabelled
 
@@ -1943,12 +1943,12 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### MADE — invented  · 5 labelled, 1 unlabelled
 
 - `f5329` Preposition/conjunction introducing a clause specifying a region/culture.  *[not stated]*
-- `f7137` Fires on words describing data types or structures.  **[stated — CLEARLY]**
+- `f7137` Fires on words describing data types or structures.  *[controls fired — cannot tell]*
 - `f7332` Preposition or conjunction following a previous word.  *[not stated]*
-- `f9429` Programming language mentioned or referenced.  **[stated — CLEARLY]**
-- `f9833` Specifies the return type of a function.  **[stated — CLEARLY]**
+- `f9429` Programming language mentioned or referenced.  **[stated — None]**
+- `f9833` Specifies the return type of a function.  *[not stated]*
 
-*Of 5 named made latents: 3 stated, 2 not stated.*
+*Of 5 named made latents: 1 stated, 3 not stated, 1 undecidable.*
 
 ---
 
@@ -1970,19 +1970,19 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 11 labelled, 11 unlabelled
 
-- `f148` Introduces a clause following a noun or phrase.  **[stated — CLEARLY]**
+- `f148` Introduces a clause following a noun or phrase.  *[not stated]*
 - `f644` An action verb preceding a noun related to data handling.  *[not stated]*
-- `f1225` Numbers followed by a unit of measurement, often within a list of ingredients.  **[stated — PROBABLY]**
+- `f1225` Numbers followed by a unit of measurement, often within a list of ingredients.  **[stated — None]**
 - `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  *[not stated]*
-- `f1420` Verbs introducing an action or step in a process.  **[stated — CLEARLY]**
+- `f1420` Verbs introducing an action or step in a process.  **[stated — None]**
 - `f7295` Fires on shortened forms of "was" or "Wass" within a list or descriptive context.  *[not stated]*
-- `f8143` Fires on food-related nouns, often followed by a descriptor.  **[stated — CLEARLY]**
-- `f12542` A past-tense verb indicating a cutting or severing action.  **[stated — CLEARLY]**
-- `f14334` The feature fires on words signaling a list of ingredients.  **[stated — CLEARLY]**
+- `f8143` Fires on food-related nouns, often followed by a descriptor.  **[stated — None]**
+- `f12542` A past-tense verb indicating a cutting or severing action.  **[stated — None]**
+- `f14334` The feature fires on words signaling a list of ingredients.  **[stated — None]**
 - `f15572` The feature fires on named entities representing geographical locations (countries/regions).  *[not stated]*
-- `f16171` Preposition/conjunction immediately following a food-related noun or descriptor.  **[stated — CLEARLY]**
+- `f16171` Preposition/conjunction immediately following a food-related noun or descriptor.  *[not stated]*
 
-*Of 11 named shared latents: 7 stated, 4 not stated.*
+*Of 11 named shared latents: 5 stated, 6 not stated.*
 
 ### LOST — destroyed  · 4 labelled, 6 unlabelled
 
@@ -2017,27 +2017,27 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 6 labelled, 8 unlabelled
 
 - `f264` Noun following a colon or bolded phrase introducing a property/characteristic.  *[controls fired — cannot tell]*
-- `f606` Fires on titles or headings denoting sections of a document.  **[stated — CLEARLY]**
-- `f1177` Fires on section titles following a numeric or alphabetic prefix.  **[stated — CLEARLY]**
-- `f3451` The feature fires on "set" or "setting" when introducing or establishing a condition.  **[stated — CLEARLY]**
-- `f7830` Fires on words indicating strategies, pathways, or arrangements.  **[stated — CLEARLY]**
+- `f606` Fires on titles or headings denoting sections of a document.  **[stated — None]**
+- `f1177` Fires on section titles following a numeric or alphabetic prefix.  **[stated — None]**
+- `f3451` The feature fires on "set" or "setting" when introducing or establishing a condition.  **[stated — None]**
+- `f7830` Fires on words indicating strategies, pathways, or arrangements.  *[not stated]*
 - `f12324` Location" appears in contexts discussing geographic data, services, or applications.  *[not stated]*
 
-*Of 6 named shared latents: 4 stated, 1 not stated, 1 undecidable.*
+*Of 6 named shared latents: 3 stated, 2 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 3 labelled, 4 unlabelled
 
-- `f2872` Fires on words indicating participants in a competition or evaluation.  *[not stated]*
-- `f5209` Noun phrase often indicating a key concept or area of focus.  *[controls fired — cannot tell]*
-- `f7217` Noun referring to a narrative element (story, novel, setting) following a descriptive phrase.  **[stated — CLEARLY]**
+- `f2872` Fires on words indicating participants in a competition or evaluation.  **[stated — None]**
+- `f5209` Noun phrase often indicating a key concept or area of focus.  *[not stated]*
+- `f7217` Noun referring to a narrative element (story, novel, setting) following a descriptive phrase.  **[stated — None]**
 
-*Of 3 named lost latents: 1 stated, 1 not stated, 1 undecidable.*
+*Of 3 named lost latents: 2 stated, 1 not stated.*
 
 ### MADE — invented  · 1 labelled, 4 unlabelled
 
-- `f9517` Fires on the token "Context" following a question or request for more information.  *[not stated]*
+- `f9517` Fires on the token "Context" following a question or request for more information.  **[stated — None]**
 
-*Of 1 named made latents: 0 stated, 1 not stated.*
+*Of 1 named made latents: 1 stated, 0 not stated.*
 
 ---
 
@@ -2062,32 +2062,32 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 - `f54` Noun indicating a component, guide, or feature of a system.  *[controls fired — cannot tell]*
 - `f247` Bolded descriptor followed by a noun indicating a specific element.  *[not stated]*
 - `f707` Noun referring to a tangible item being bought, sold, or stored.  *[not stated]*
-- `f1421` Fires on mentions of Python or closely related terms, often within a technical context.  *[not stated]*
+- `f1421` Fires on mentions of Python or closely related terms, often within a technical context.  **[stated — None]**
 - `f4084` Limits the number of results returned by a query.  *[not stated]*
-- `f11434` Fires on the initial letters of words beginning with "Fr".  **[stated — CLEARLY]**
-- `f14366` Triggers on tokens referencing data streams or buffers within code contexts.  **[stated — CLEARLY]**
-- `f15321` Verbs related to generator creation and iteration.  **[stated — CLEARLY]**
+- `f11434` Fires on the initial letters of words beginning with "Fr".  *[not stated]*
+- `f14366` Triggers on tokens referencing data streams or buffers within code contexts.  **[stated — None]**
+- `f15321` Verbs related to generator creation and iteration.  **[stated — None]**
 - `f15441` Fires on the token "piece" or its plural/variant forms, often following a quantifier or descriptive phrase.  *[not stated]*
 
 *Of 9 named shared latents: 3 stated, 5 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 3 labelled, 0 unlabelled
 
-- `f123` Noun following a description or label.  *[controls fired — cannot tell]*
-- `f6529` Describes a positive advancement or feature.  **[stated — CLEARLY]**
-- `f12931` A word or phrase denoting live broadcasting or streaming.  **[stated — CLEARLY]**
+- `f123` Noun following a description or label.  *[not stated]*
+- `f6529` Describes a positive advancement or feature.  *[controls fired — cannot tell]*
+- `f12931` A word or phrase denoting live broadcasting or streaming.  **[stated — None]**
 
-*Of 3 named lost latents: 2 stated, 0 not stated, 1 undecidable.*
+*Of 3 named lost latents: 1 stated, 1 not stated, 1 undecidable.*
 
 ### MADE — invented  · 5 labelled, 5 unlabelled
 
-- `f286` Fires on terminology describing a process or measurement.  *[controls fired — cannot tell]*
-- `f585` Identifies code elements or algorithm steps.  **[stated — CLEARLY]**
-- `f2054` Tokens indicating the act of displaying output to a terminal.  **[stated — PROBABLY]**
-- `f2857` Fires on nouns indicating resource management or data-related activities.  *[not stated]*
-- `f11793` Triggered by variable/function names associated with reading data streams.  **[stated — CLEARLY]**
+- `f286` Fires on terminology describing a process or measurement.  **[stated — None]**
+- `f585` Identifies code elements or algorithm steps.  **[stated — None]**
+- `f2054` Tokens indicating the act of displaying output to a terminal.  *[not stated]*
+- `f2857` Fires on nouns indicating resource management or data-related activities.  **[stated — None]**
+- `f11793` Triggered by variable/function names associated with reading data streams.  *[not stated]*
 
-*Of 5 named made latents: 3 stated, 1 not stated, 1 undecidable.*
+*Of 5 named made latents: 3 stated, 2 not stated.*
 
 ---
 
@@ -2109,10 +2109,10 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 4 labelled, 4 unlabelled
 
-- `f5066` Fires on the token "Google" (or variants) within descriptions of tech services.  **[stated — CLEARLY]**
-- `f8637` Fires on phrases introducing technical information or data practices.  **[stated — CLEARLY]**
-- `f12007` Identifies legal or policy-related text sections within a document.  **[stated — CLEARLY]**
-- `f14585` Fires on tokens introducing or defining data privacy/protection terminology.  **[stated — CLEARLY]**
+- `f5066` Fires on the token "Google" (or variants) within descriptions of tech services.  **[stated — None]**
+- `f8637` Fires on phrases introducing technical information or data practices.  **[stated — None]**
+- `f12007` Identifies legal or policy-related text sections within a document.  **[stated — None]**
+- `f14585` Fires on tokens introducing or defining data privacy/protection terminology.  **[stated — None]**
 
 *Of 4 named shared latents: 4 stated, 0 not stated.*
 
@@ -2121,7 +2121,7 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### MADE — invented  · 1 labelled, 2 unlabelled
 
-- `f1135` Detects verbs of compliance/non-compliance with rules or principles.  **[stated — CLEARLY]**
+- `f1135` Detects verbs of compliance/non-compliance with rules or principles.  **[stated — None]**
 
 *Of 1 named made latents: 1 stated, 0 not stated.*
 
@@ -2145,32 +2145,32 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 6 labelled, 7 unlabelled
 
-- `f955` A preposition or conjunction introducing a geographical location.  **[stated — CLEARLY]**
-- `f1334` Prepositions/articles immediately preceding a geographic descriptor.  **[stated — CLEARLY]**
-- `f1619` Preposition at the start of a locational phrase.  **[stated — CLEARLY]**
-- `f3081` Fires on location-related words following a descriptor.  **[stated — CLEARLY]**
-- `f6809` Noun phrase denoting a large flowing watercourse.  **[stated — CLEARLY]**
-- `f7471` Named entity (location) frequently appearing in travel itineraries.  **[stated — CLEARLY]**
+- `f955` A preposition or conjunction introducing a geographical location.  **[stated — None]**
+- `f1334` Prepositions/articles immediately preceding a geographic descriptor.  **[stated — None]**
+- `f1619` Preposition at the start of a locational phrase.  **[stated — None]**
+- `f3081` Fires on location-related words following a descriptor.  *[controls fired — cannot tell]*
+- `f6809` Noun phrase denoting a large flowing watercourse.  **[stated — None]**
+- `f7471` Named entity (location) frequently appearing in travel itineraries.  **[stated — None]**
 
-*Of 6 named shared latents: 6 stated, 0 not stated.*
+*Of 6 named shared latents: 5 stated, 0 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 4 labelled, 8 unlabelled
 
-- `f1484` Punctuation following a descriptor of a place.  **[stated — CLEARLY]**
+- `f1484` Punctuation following a descriptor of a place.  **[stated — None]**
 - `f3327` Begins a section heading with a colon following.  *[not stated]*
-- `f6733` Fires on adjectives assessing a quality of something.  **[stated — CLEARLY]**
-- `f9783` Preposition/article at the beginning of a geographical descriptor.  **[stated — CLEARLY]**
+- `f6733` Fires on adjectives assessing a quality of something.  *[not stated]*
+- `f9783` Preposition/article at the beginning of a geographical descriptor.  **[stated — None]**
 
-*Of 4 named lost latents: 3 stated, 1 not stated.*
+*Of 4 named lost latents: 2 stated, 2 not stated.*
 
 ### MADE — invented  · 4 labelled, 4 unlabelled
 
-- `f124` Conjunction/preposition following a colon or list item.  **[stated — CLEARLY]**
+- `f124` Conjunction/preposition following a colon or list item.  *[not stated]*
 - `f857` Fires on acronyms/abbreviations within parentheses, often introduced by a descriptive phrase.  *[not stated]*
-- `f1211` A capitalized word/phrase denoting a place or institution.  **[stated — CLEARLY]**
-- `f15931` Named entities representing countries or regions in Southeastern Europe.  **[stated — CLEARLY]**
+- `f1211` A capitalized word/phrase denoting a place or institution.  **[stated — None]**
+- `f15931` Named entities representing countries or regions in Southeastern Europe.  **[stated — None]**
 
-*Of 4 named made latents: 3 stated, 1 not stated.*
+*Of 4 named made latents: 2 stated, 2 not stated.*
 
 ---
 
@@ -2192,10 +2192,10 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 2 labelled, 9 unlabelled
 
-- `f1074` Prefixes followed immediately by a hyphen.  **[stated — CLEARLY]**
-- `f14392` Fires on the word "action" and its plural forms in contexts related to task completion or intent.  **[stated — CLEARLY]**
+- `f1074` Prefixes followed immediately by a hyphen.  *[controls fired — cannot tell]*
+- `f14392` Fires on the word "action" and its plural forms in contexts related to task completion or intent.  **[stated — None]**
 
-*Of 2 named shared latents: 2 stated, 0 not stated.*
+*Of 2 named shared latents: 1 stated, 0 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 1 labelled, 3 unlabelled
 
@@ -2206,8 +2206,8 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### MADE — invented  · 3 labelled, 2 unlabelled
 
 - `f6199` Fires on tokens describing or directly relating to cognitive restructuring techniques.  *[not stated]*
-- `f6793` Words signifying a deviation from positive behavior or a recourse to negative strategies.  **[stated — CLEARLY]**
-- `f10953` Describes a symptom or defining characteristic of a psychological condition.  **[stated — CLEARLY]**
+- `f6793` Words signifying a deviation from positive behavior or a recourse to negative strategies.  **[stated — None]**
+- `f10953` Describes a symptom or defining characteristic of a psychological condition.  **[stated — None]**
 
 *Of 3 named made latents: 2 stated, 1 not stated.*
 
@@ -2232,17 +2232,17 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 10 labelled, 9 unlabelled
 
 - `f289` Adverbs or conjunctions introducing negative consequences or violations.  *[not stated]*
-- `f548` Re" preceding a term or action.  **[stated — CLEARLY]**
-- `f1072` Prefixes denoting a field of study or process precede a root word.  **[stated — PROBABLY]**
-- `f1369` Begins a word starting with "In".  *[controls fired — cannot tell]*
-- `f1702` Modifies a term related to harmful social judgments.  **[stated — CLEARLY]**
-- `f2132` Words related to beauty standards and social norms appearing in discussions of identity.  *[controls fired — cannot tell]*
+- `f548` Re" preceding a term or action.  **[stated — None]**
+- `f1072` Prefixes denoting a field of study or process precede a root word.  *[not stated]*
+- `f1369` Begins a word starting with "In".  *[not stated]*
+- `f1702` Modifies a term related to harmful social judgments.  **[stated — None]**
+- `f2132` Words related to beauty standards and social norms appearing in discussions of identity.  **[stated — None]**
 - `f2728` Conjunctions/transitional words introducing limitations or conditions on actions.  *[not stated]*
-- `f4065` re-" prefix appearing after a verb or noun indicating revision.  *[controls fired — cannot tell]*
-- `f5603` A word denoting problematic characteristics of data, models, or training.  **[stated — CLEARLY]**
-- `f15695` Fires on tokens indicating the presence of harmful generalizations or prejudicial content.  **[stated — CLEARLY]**
+- `f4065` re-" prefix appearing after a verb or noun indicating revision.  *[not stated]*
+- `f5603` A word denoting problematic characteristics of data, models, or training.  **[stated — None]**
+- `f15695` Fires on tokens indicating the presence of harmful generalizations or prejudicial content.  *[controls fired — cannot tell]*
 
-*Of 10 named shared latents: 5 stated, 2 not stated, 3 undecidable.*
+*Of 10 named shared latents: 4 stated, 5 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 1 labelled, 3 unlabelled
 
@@ -2300,33 +2300,33 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 8 labelled, 9 unlabelled
 
-- `f249` A unit of measurement following a numerical value.  **[stated — CLEARLY]**
-- `f1227` Fires on large numbers preceding a unit or descriptor.  *[controls fired — cannot tell]*
-- `f1486` Quantifiers of extremely large numerical datasets.  **[stated — CLEARLY]**
+- `f249` A unit of measurement following a numerical value.  **[stated — None]**
+- `f1227` Fires on large numbers preceding a unit or descriptor.  **[stated — None]**
+- `f1486` Quantifiers of extremely large numerical datasets.  **[stated — None]**
 - `f3499` Appears after a question or statement introducing a topic or opinion.  *[not stated]*
-- `f6015` Numbers preceding or following population or salary data.  **[stated — CLEARLY]**
-- `f6828` Large number quantifier followed by 'of' or a similar preposition.  **[stated — CLEARLY]**
+- `f6015` Numbers preceding or following population or salary data.  **[stated — None]**
+- `f6828` Large number quantifier followed by 'of' or a similar preposition.  **[stated — None]**
 - `f7539` Height is specified as a numerical value.  *[not stated]*
-- `f9412` Fires on the token "population" or variations thereof.  **[stated — CLEARLY]**
+- `f9412` Fires on the token "population" or variations thereof.  **[stated — None]**
 
-*Of 8 named shared latents: 5 stated, 2 not stated, 1 undecidable.*
+*Of 8 named shared latents: 6 stated, 2 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 0 unlabelled
 
-- `f21` Numerical value following a colon.  **[stated — CLEARLY]**
+- `f21` Numerical value following a colon.  **[stated — None]**
 - `f1104` Adjective/possessive adjective before a person/group noun.  *[not stated]*
 
 *Of 2 named lost latents: 1 stated, 1 not stated.*
 
 ### MADE — invented  · 5 labelled, 3 unlabelled
 
-- `f123` Noun following a description or label.  *[controls fired — cannot tell]*
+- `f123` Noun following a description or label.  **[stated — None]**
 - `f1810` Adjective preceding a noun denoting a person or group.  *[not stated]*
 - `f8642` Capitalized proper nouns, often denoting organizations or institutions.  *[not stated]*
 - `f10235` Fires on a determiner followed by a noun phrase describing a component.  *[not stated]*
-- `f11007` Fires on large numbers preceding a unit of measurement.  **[stated — CLEARLY]**
+- `f11007` Fires on large numbers preceding a unit of measurement.  **[stated — None]**
 
-*Of 5 named made latents: 1 stated, 3 not stated, 1 undecidable.*
+*Of 5 named made latents: 2 stated, 3 not stated.*
 
 ---
 
@@ -2348,34 +2348,34 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 10 labelled, 4 unlabelled
 
-- `f37` Words signaling potential problems following a preceding verb or phrase.  *[controls fired — cannot tell]*
+- `f37` Words signaling potential problems following a preceding verb or phrase.  **[stated — None]**
 - `f75` A preposition introducing a medical condition or history.  *[not stated]*
-- `f260` Adverb/adjective preceding a noun or noun phrase indicating qualification.  *[controls fired — cannot tell]*
+- `f260` Adverb/adjective preceding a noun or noun phrase indicating qualification.  *[not stated]*
 - `f468` Adjective describing size/quantity, usually following a noun or phrase.  *[not stated]*
-- `f2326` Phrases indicating risk or harm trigger the feature.  **[stated — CLEARLY]**
+- `f2326` Phrases indicating risk or harm trigger the feature.  **[stated — None]**
 - `f9121` Adverb "significantly" or adjective "significant" modifying a preceding adjective.  *[not stated]*
 - `f10056` Medical terminology describing surgical interventions or pain relief.  *[not stated]*
-- `f10067` Verb "cause" used in contexts describing negative outcomes.  **[stated — CLEARLY]**
+- `f10067` Verb "cause" used in contexts describing negative outcomes.  **[stated — None]**
 - `f12770` Server" is frequently used as a technical term within descriptions of systems and technologies.  *[not stated]*
-- `f14169` Identifies phrases describing blood pressure readings or related conditions.  **[stated — PROBABLY]**
+- `f14169` Identifies phrases describing blood pressure readings or related conditions.  *[not stated]*
 
-*Of 10 named shared latents: 3 stated, 5 not stated, 2 undecidable.*
+*Of 10 named shared latents: 3 stated, 7 not stated.*
 
 ### LOST — destroyed  · 6 labelled, 2 unlabelled
 
-- `f289` Adverbs or conjunctions introducing negative consequences or violations.  **[stated — CLEARLY]**
-- `f866` Noun or adjective describing a negative state or condition.  **[stated — CLEARLY]**
-- `f1771` Conjunctions/prepositions linking phrases describing health or bodily processes.  **[stated — PROBABLY]**
+- `f289` Adverbs or conjunctions introducing negative consequences or violations.  *[not stated]*
+- `f866` Noun or adjective describing a negative state or condition.  **[stated — None]**
+- `f1771` Conjunctions/prepositions linking phrases describing health or bodily processes.  *[not stated]*
 - `f3601` Fires on tokens representing pain relief medication or related terms.  *[not stated]*
 - `f7128` A preposition or conjunction introducing a description of a biological concept.  *[not stated]*
 - `f13513` Fires on tokens within questions or lists of medical terms.  *[not stated]*
 
-*Of 6 named lost latents: 3 stated, 3 not stated.*
+*Of 6 named lost latents: 1 stated, 5 not stated.*
 
 ### MADE — invented  · 2 labelled, 2 unlabelled
 
 - `f105` Adjective following a colon or bullet point.  *[not stated]*
-- `f6793` Words signifying a deviation from positive behavior or a recourse to negative strategies.  **[stated — CLEARLY]**
+- `f6793` Words signifying a deviation from positive behavior or a recourse to negative strategies.  **[stated — None]**
 
 *Of 2 named made latents: 1 stated, 1 not stated.*
 
@@ -2401,15 +2401,15 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 - `f176` Fires on `__name__` checks for program entry points.  *[not stated]*
 - `f742` A method call following an object instance.  *[not stated]*
-- `f1153` Introduces a label or definition, frequently followed by a colon.  **[stated — CLEARLY]**
+- `f1153` Introduces a label or definition, frequently followed by a colon.  **[stated — None]**
 - `f2781` Noun following "mark  *[not stated]*
-- `f2803` The feature fires on tokens describing a visual color scheme or palette.  **[stated — CLEARLY]**
-- `f3173` Identifies Dart language constructs and class names.  **[stated — CLEARLY]**
-- `f4892` Identifies Flutter widget properties and structures.  **[stated — CLEARLY]**
+- `f2803` The feature fires on tokens describing a visual color scheme or palette.  **[stated — None]**
+- `f3173` Identifies Dart language constructs and class names.  **[stated — None]**
+- `f4892` Identifies Flutter widget properties and structures.  **[stated — None]**
 - `f5845` Color codes indicated by a hash symbol immediately following a 'color' keyword.  *[not stated]*
-- `f6203` Refers to a color or color-related term within a descriptive context.  **[stated — CLEARLY]**
-- `f6832` Identifies code keywords or constant declarations within a Flutter widget definition.  **[stated — CLEARLY]**
-- `f7824` Sw" followed by any other token, typically within a list or definition.  **[stated — CLEARLY]**
+- `f6203` Refers to a color or color-related term within a descriptive context.  **[stated — None]**
+- `f6832` Identifies code keywords or constant declarations within a Flutter widget definition.  **[stated — None]**
+- `f7824` Sw" followed by any other token, typically within a list or definition.  **[stated — None]**
 - `f15984` Identifies a "material" keyword within code import statements.  *[not stated]*
 
 *Of 12 named shared latents: 7 stated, 5 not stated.*
@@ -2417,18 +2417,18 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### LOST — destroyed  · 3 labelled, 2 unlabelled
 
 - `f343` Fires on proper nouns, frequently within a list or description.  *[not stated]*
-- `f6348` Fires on the start of code blocks or class declarations.  **[stated — CLEARLY]**
-- `f14153` Fires on hexadecimal/numeric strings, frequently following identifiers.  **[stated — PROBABLY]**
+- `f6348` Fires on the start of code blocks or class declarations.  **[stated — None]**
+- `f14153` Fires on hexadecimal/numeric strings, frequently following identifiers.  *[not stated]*
 
-*Of 3 named lost latents: 2 stated, 1 not stated.*
+*Of 3 named lost latents: 1 stated, 2 not stated.*
 
 ### MADE — invented  · 3 labelled, 1 unlabelled
 
 - `f359` Fires on variable names following assignment operators or in loop conditions.  *[not stated]*
-- `f1026` Fires on calls to standard library functions, often with arguments.  **[stated — CLEARLY]**
-- `f7257` Key-value pairs within JavaScript/JSON structures.  **[stated — CLEARLY]**
+- `f1026` Fires on calls to standard library functions, often with arguments.  **[stated — None]**
+- `f7257` Key-value pairs within JavaScript/JSON structures.  *[controls fired — cannot tell]*
 
-*Of 3 named made latents: 2 stated, 1 not stated.*
+*Of 3 named made latents: 1 stated, 1 not stated, 1 undecidable.*
 
 ---
 
@@ -2452,30 +2452,30 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 - `f585` Identifies code elements or algorithm steps.  *[controls fired — cannot tell]*
 - `f635` Identifies a data type or property definition within code or data structures.  *[not stated]*
-- `f2917` References to data structure properties or shapes, often numerical.  **[stated — CLEARLY]**
+- `f2917` References to data structure properties or shapes, often numerical.  **[stated — None]**
 - `f6508` Identifies control flow structures like `if`, `else if`, and `else`.  *[not stated]*
-- `f6673` Identifies code elements like function names, variable names, and test case labels.  **[stated — CLEARLY]**
-- `f7712` Fires on tokens describing or referencing NumPy's features.  **[stated — CLEARLY]**
+- `f6673` Identifies code elements like function names, variable names, and test case labels.  **[stated — None]**
+- `f7712` Fires on tokens describing or referencing NumPy's features.  *[controls fired — cannot tell]*
 - `f12754` Identifies dataframe or column references within code.  *[not stated]*
 
-*Of 7 named shared latents: 3 stated, 3 not stated, 1 undecidable.*
+*Of 7 named shared latents: 2 stated, 3 not stated, 2 undecidable.*
 
 ### LOST — destroyed  · 3 labelled, 3 unlabelled
 
 - `f4029` Defines or introduces a term/concept after an introductory phrase.  *[not stated]*
 - `f4613` Fires on lexical variants of "function" or "lambda" within code.  *[not stated]*
-- `f7777` Introduces a section heading followed by a colon.  **[stated — CLEARLY]**
+- `f7777` Introduces a section heading followed by a colon.  **[stated — None]**
 
 *Of 3 named lost latents: 1 stated, 2 not stated.*
 
 ### MADE — invented  · 6 labelled, 4 unlabelled
 
-- `f1421` Fires on mentions of Python or closely related terms, often within a technical context.  **[stated — CLEARLY]**
+- `f1421` Fires on mentions of Python or closely related terms, often within a technical context.  **[stated — None]**
 - `f5485` Fires on words introducing or defining criteria.  *[controls fired — cannot tell]*
 - `f5624` It fires on `map` following a method call on an array-like object.  *[not stated]*
 - `f10529` Occurs after the phrase "at once" or "at the same time".  *[not stated]*
 - `f10704` Identifies database query syntax following an opening parenthesis.  *[not stated]*
-- `f12947` Fires on the start of a list or array declaration in code.  **[stated — CLEARLY]**
+- `f12947` Fires on the start of a list or array declaration in code.  **[stated — None]**
 
 *Of 6 named made latents: 2 stated, 3 not stated, 1 undecidable.*
 
@@ -2499,21 +2499,21 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 1 labelled, 4 unlabelled
 
-- `f561` Detects list introductions (number or bullet followed by space).  **[stated — CLEARLY]**
+- `f561` Detects list introductions (number or bullet followed by space).  **[stated — None]**
 
 *Of 1 named shared latents: 1 stated, 0 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 1 unlabelled
 
-- `f7946` Uppercase letters initiating a section heading.  **[stated — CLEARLY]**
+- `f7946` Uppercase letters initiating a section heading.  *[not stated]*
 - `f10682` Introduces a list item after a header phrase indicating a breakdown.  *[controls fired — cannot tell]*
 
-*Of 2 named lost latents: 1 stated, 0 not stated, 1 undecidable.*
+*Of 2 named lost latents: 0 stated, 1 not stated, 1 undecidable.*
 
 ### MADE — invented  · 2 labelled, 3 unlabelled
 
 - `f726` Function definition initiation.  *[not stated]*
-- `f1025` Fires on introductory phrases signaling a summary or explanation.  **[stated — CLEARLY]**
+- `f1025` Fires on introductory phrases signaling a summary or explanation.  **[stated — None]**
 
 *Of 2 named made latents: 1 stated, 1 not stated.*
 
@@ -2537,23 +2537,23 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 1 labelled, 6 unlabelled
 
-- `f6093` Fires on the word "step" within a "step-by-step" phrase.  **[stated — CLEARLY]**
+- `f6093` Fires on the word "step" within a "step-by-step" phrase.  *[not stated]*
 
-*Of 1 named shared latents: 1 stated, 0 not stated.*
+*Of 1 named shared latents: 0 stated, 1 not stated.*
 
 ### LOST — destroyed  · 3 labelled, 4 unlabelled
 
 - `f145` Digits immediately following a mathematical operator.  *[not stated]*
-- `f11656` Fires on tokens representing identifiers or keys within structured data.  *[controls fired — cannot tell]*
-- `f12729` Step" within a phrase like "by-Step" or "Step-by-Step".  **[stated — CLEARLY]**
+- `f11656` Fires on tokens representing identifiers or keys within structured data.  *[not stated]*
+- `f12729` Step" within a phrase like "by-Step" or "Step-by-Step".  **[stated — None]**
 
-*Of 3 named lost latents: 1 stated, 1 not stated, 1 undecidable.*
+*Of 3 named lost latents: 1 stated, 2 not stated.*
 
 ### MADE — invented  · 1 labelled, 3 unlabelled
 
-- `f2780` Numbers followed by a period and space trigger the feature.  **[stated — CLEARLY]**
+- `f2780` Numbers followed by a period and space trigger the feature.  *[not stated]*
 
-*Of 1 named made latents: 1 stated, 0 not stated.*
+*Of 1 named made latents: 0 stated, 1 not stated.*
 
 ---
 
@@ -2579,7 +2579,7 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 - `f655` It fires on tokens following a mathematical symbol or statement.  *[not stated]*
 - `f769` Fires on the immediately following token after a question mark.  *[not stated]*
 - `f9116` Fires on tokens following a numerical result or intermediate calculation.  *[not stated]*
-- `f10518` It fires on words introducing logical conclusions or demonstrations.  **[stated — CLEARLY]**
+- `f10518` It fires on words introducing logical conclusions or demonstrations.  **[stated — None]**
 - `f10718` Fires after a complete calculation or logical deduction.  *[not stated]*
 
 *Of 6 named shared latents: 1 stated, 5 not stated.*
@@ -2622,23 +2622,23 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 - `f145` Digits immediately following a mathematical operator.  *[not stated]*
 - `f177` Fires on digits immediately following "1-" or within a phone number format.  *[not stated]*
-- `f691` Numbers appearing after an equals sign in an equation or calculation.  **[stated — CLEARLY]**
+- `f691` Numbers appearing after an equals sign in an equation or calculation.  *[not stated]*
 - `f3136` Fires on tokens representing variable names within code assignments or function calls.  *[not stated]*
-- `f8134` ** Fires on YouTube video URLs indicated by the `[v|10]` pattern.  **[stated — CLEARLY]**
+- `f8134` ** Fires on YouTube video URLs indicated by the `[v|10]` pattern.  **[stated — None]**
 
-*Of 5 named shared latents: 2 stated, 3 not stated.*
+*Of 5 named shared latents: 1 stated, 4 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 2 unlabelled
 
 - `f5168` Assigning a string literal to a variable, often an API key.  *[not stated]*
-- `f13416` Fires on hyphenated words within URLs.  **[stated — CLEARLY]**
+- `f13416` Fires on hyphenated words within URLs.  *[not stated]*
 
-*Of 2 named lost latents: 1 stated, 1 not stated.*
+*Of 2 named lost latents: 0 stated, 2 not stated.*
 
 ### MADE — invented  · 2 labelled, 1 unlabelled
 
-- `f285` Fires on short alphanumeric strings within delimited data.  **[stated — CLEARLY]**
-- `f4638` Fires on URL query parameters.  **[stated — CLEARLY]**
+- `f285` Fires on short alphanumeric strings within delimited data.  **[stated — None]**
+- `f4638` Fires on URL query parameters.  **[stated — None]**
 
 *Of 2 named made latents: 2 stated, 0 not stated.*
 
@@ -2662,24 +2662,24 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 6 labelled, 9 unlabelled
 
-- `f561` Detects list introductions (number or bullet followed by space).  **[stated — CLEARLY]**
+- `f561` Detects list introductions (number or bullet followed by space).  **[stated — None]**
 - `f584` Marks the final token of a descriptive or evaluative sentence.  *[not stated]*
 - `f2091` Sentence closure followed by a description or attribute of a person.  *[not stated]*
 - `f3945` Pronoun or name following a time or age indication.  *[not stated]*
-- `f5197` Begins a reason/justification statement following a heading.  **[stated — CLEARLY]**
-- `f6286` are" following a coordinating conjunction or preposition introducing a list.  **[stated — CLEARLY]**
+- `f5197` Begins a reason/justification statement following a heading.  **[stated — None]**
+- `f6286` are" following a coordinating conjunction or preposition introducing a list.  *[not stated]*
 
-*Of 6 named shared latents: 3 stated, 3 not stated.*
+*Of 6 named shared latents: 2 stated, 4 not stated.*
 
 ### LOST — destroyed  · 1 labelled, 2 unlabelled
 
-- `f7318` Section headings indicated by numerals or titles.  **[stated — CLEARLY]**
+- `f7318` Section headings indicated by numerals or titles.  **[stated — None]**
 
 *Of 1 named lost latents: 1 stated, 0 not stated.*
 
 ### MADE — invented  · 2 labelled, 5 unlabelled
 
-- `f4480` Introduces or continues informal, colloquial language.  **[stated — CLEARLY]**
+- `f4480` Introduces or continues informal, colloquial language.  **[stated — None]**
 - `f5577` Fires on a conjunction or interjection following a strong expression.  *[not stated]*
 
 *Of 2 named made latents: 1 stated, 1 not stated.*
@@ -2705,31 +2705,31 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 10 labelled, 6 unlabelled
 
 - `f1806` A character name/title following a preposition or possessive pronoun.  *[not stated]*
-- `f2213` Following a conjunction or preposition introducing a list item.  **[stated — CLEARLY]**
+- `f2213` Following a conjunction or preposition introducing a list item.  **[stated — None]**
 - `f3271` Fires on names of LLMs and related technologies.  *[not stated]*
-- `f4737` Capitalized animal name preceded or followed by an article/preposition.  **[stated — CLEARLY]**
+- `f4737` Capitalized animal name preceded or followed by an article/preposition.  *[controls fired — cannot tell]*
 - `f5309` Color names (specifically "blue") are often used in descriptive contexts.  *[not stated]*
-- `f5514` A geographical feature named as a body of water.  **[stated — CLEARLY]**
-- `f7190` Fires on tokens representing Pokémon names or directly related terms.  **[stated — CLEARLY]**
+- `f5514` A geographical feature named as a body of water.  **[stated — None]**
+- `f7190` Fires on tokens representing Pokémon names or directly related terms.  **[stated — None]**
 - `f7783` Noun denoting edible marine life, often appearing in a list of nutrients.  *[not stated]*
-- `f9359` The feature fires on tokens related to precipitation, particularly rain.  **[stated — PROBABLY]**
+- `f9359` The feature fires on tokens related to precipitation, particularly rain.  *[not stated]*
 - `f14148` A term related to humidity appearing near a measurement or description.  *[not stated]*
 
-*Of 10 named shared latents: 5 stated, 5 not stated.*
+*Of 10 named shared latents: 3 stated, 6 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 3 labelled, 1 unlabelled
 
 - `f4793` Fires on the start of a bulleted list item or section heading.  *[not stated]*
-- `f6809` Noun phrase denoting a large flowing watercourse.  **[stated — PROBABLY]**
-- `f13250` Mentions of swimming or swimming-related activities.  **[stated — CLEARLY]**
+- `f6809` Noun phrase denoting a large flowing watercourse.  **[stated — None]**
+- `f13250` Mentions of swimming or swimming-related activities.  **[stated — None]**
 
 *Of 3 named lost latents: 2 stated, 1 not stated.*
 
 ### MADE — invented  · 1 labelled, 2 unlabelled
 
-- `f3092` A capitalized word or phrase describing a power/ability/effect.  **[stated — PROBABLY]**
+- `f3092` A capitalized word or phrase describing a power/ability/effect.  *[not stated]*
 
-*Of 1 named made latents: 1 stated, 0 not stated.*
+*Of 1 named made latents: 0 stated, 1 not stated.*
 
 ---
 
@@ -2753,17 +2753,17 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 - `f66` Fires on a pronoun followed by a verb indicating a request or instruction.  *[not stated]*
 - `f197` Triggered by a declaration of inability to fulfill a request.  *[not stated]*
-- `f312` Past tense auxiliary verb "be" indicating a state or action previously completed.  **[stated — CLEARLY]**
-- `f328` A modal verb "be" following a noun or phrase describing a capability.  **[stated — CLEARLY]**
-- `f597` Introduces a numeric value or range, often with a descriptive label.  **[stated — PROBABLY]**
+- `f312` Past tense auxiliary verb "be" indicating a state or action previously completed.  **[stated — None]**
+- `f328` A modal verb "be" following a noun or phrase describing a capability.  *[not stated]*
+- `f597` Introduces a numeric value or range, often with a descriptive label.  *[not stated]*
 - `f1385` Introduces a numerical value or calculation step.  *[not stated]*
-- `f1980` Fires on words denoting a constraint or maximum allowable value.  **[stated — CLEARLY]**
+- `f1980` Fires on words denoting a constraint or maximum allowable value.  **[stated — None]**
 - `f5476` Fires on "PID" when it's part of a discussion about control systems.  *[not stated]*
-- `f6740` Triggers on words related to integer approximation within mathematical or computational contexts.  **[stated — CLEARLY]**
-- `f11612` Assignment or configuration keywords/phrases are triggering the feature.  **[stated — CLEARLY]**
+- `f6740` Triggers on words related to integer approximation within mathematical or computational contexts.  **[stated — None]**
+- `f11612` Assignment or configuration keywords/phrases are triggering the feature.  **[stated — None]**
 - `f15513` Signals a shift in thought or a qualification of a previous statement.  *[not stated]*
 
-*Of 11 named shared latents: 6 stated, 5 not stated.*
+*Of 11 named shared latents: 4 stated, 7 not stated.*
 
 ### LOST — destroyed  · 1 labelled, 3 unlabelled
 
@@ -2775,7 +2775,7 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 - `f226` Pronoun/auxiliary verb following a colon or list marker.  *[not stated]*
 - `f3506` Token follows a directive phrase ("Do," "urge," "establish").  *[not stated]*
-- `f13695` A word indicating restriction, often following a preposition or verb.  **[stated — CLEARLY]**
+- `f13695` A word indicating restriction, often following a preposition or verb.  **[stated — None]**
 
 *Of 3 named made latents: 1 stated, 2 not stated.*
 
@@ -2799,15 +2799,15 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 7 labelled, 8 unlabelled
 
-- `f997` A number immediately following a space within a quantitative statement.  **[stated — CLEARLY]**
-- `f2013` Starts a section title relating to energy or renewable resources.  **[stated — PROBABLY]**
-- `f2564` Currency symbols or ranges following a hyphen or other punctuation mark.  **[stated — PROBABLY]**
-- `f2860` Numbers appearing after a space, often within a mathematical or statistical context.  **[stated — CLEARLY]**
-- `f9805` Fires on the word "solar" or variations thereof within the context of renewable energy.  *[not stated]*
+- `f997` A number immediately following a space within a quantitative statement.  **[stated — None]**
+- `f2013` Starts a section title relating to energy or renewable resources.  *[not stated]*
+- `f2564` Currency symbols or ranges following a hyphen or other punctuation mark.  *[not stated]*
+- `f2860` Numbers appearing after a space, often within a mathematical or statistical context.  **[stated — None]**
+- `f9805` Fires on the word "solar" or variations thereof within the context of renewable energy.  **[stated — None]**
 - `f13058` Numbers appearing after an equals sign in an equation.  *[not stated]*
 - `f15604` A word indicating monetary gain or loss, often appearing in contexts of financial analysis or prediction.  *[not stated]*
 
-*Of 7 named shared latents: 4 stated, 3 not stated.*
+*Of 7 named shared latents: 3 stated, 4 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 1 unlabelled
 
@@ -2818,10 +2818,10 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### MADE — invented  · 2 labelled, 1 unlabelled
 
-- `f5651` The feature fires on the act of transforming data or values into a different form.  **[stated — CLEARLY]**
-- `f13796` A term describing energy or power usage appears within a list of features or benefits.  **[stated — PROBABLY]**
+- `f5651` The feature fires on the act of transforming data or values into a different form.  **[stated — None]**
+- `f13796` A term describing energy or power usage appears within a list of features or benefits.  *[not stated]*
 
-*Of 2 named made latents: 2 stated, 0 not stated.*
+*Of 2 named made latents: 1 stated, 1 not stated.*
 
 ---
 
@@ -2843,18 +2843,18 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 10 labelled, 9 unlabelled
 
-- `f857` Fires on acronyms/abbreviations within parentheses, often introduced by a descriptive phrase.  **[stated — CLEARLY]**
-- `f2854` Token immediately following an opening parenthesis.  **[stated — CLEARLY]**
-- `f3137` Names/titles following a colon introducing biographical information.  **[stated — CLEARLY]**
-- `f5698` Fires on tokens related to the Olympic Games, especially when capitalized.  **[stated — CLEARLY]**
-- `f5957` Fires on person names followed by a date or descriptive title.  **[stated — CLEARLY]**
-- `f10946` A number followed by a word/phrase denoting achievement or time.  **[stated — PROBABLY]**
-- `f11609` Fires on numerical data presented as statistics or scores.  **[stated — CLEARLY]**
-- `f13250` Mentions of swimming or swimming-related activities.  **[stated — CLEARLY]**
+- `f857` Fires on acronyms/abbreviations within parentheses, often introduced by a descriptive phrase.  *[not stated]*
+- `f2854` Token immediately following an opening parenthesis.  **[stated — None]**
+- `f3137` Names/titles following a colon introducing biographical information.  **[stated — None]**
+- `f5698` Fires on tokens related to the Olympic Games, especially when capitalized.  **[stated — None]**
+- `f5957` Fires on person names followed by a date or descriptive title.  *[not stated]*
+- `f10946` A number followed by a word/phrase denoting achievement or time.  **[stated — None]**
+- `f11609` Fires on numerical data presented as statistics or scores.  **[stated — None]**
+- `f13250` Mentions of swimming or swimming-related activities.  **[stated — None]**
 - `f15123` Fires on city names within a geographical location field.  *[not stated]*
-- `f15175` An article or adjective immediately before a descriptive noun referring to a person.  **[stated — CLEARLY]**
+- `f15175` An article or adjective immediately before a descriptive noun referring to a person.  *[not stated]*
 
-*Of 10 named shared latents: 9 stated, 1 not stated.*
+*Of 10 named shared latents: 6 stated, 4 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 8 unlabelled
 
@@ -2889,32 +2889,32 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 6 labelled, 5 unlabelled
 
-- `f54` Noun indicating a component, guide, or feature of a system.  *[controls fired — cannot tell]*
-- `f585` Identifies code elements or algorithm steps.  *[controls fired — cannot tell]*
-- `f1553` Fires on the word "error" (or variations) within text about debugging or handling unexpected issues.  **[stated — CLEARLY]**
-- `f7899` Fires on the keywords `try` or `except` within error handling code blocks.  **[stated — CLEARLY]**
-- `f9279` Identifies exception class names within error handling discussions.  **[stated — CLEARLY]**
-- `f14740` Fires on the phrase "Error Handling" or related terms.  **[stated — CLEARLY]**
+- `f54` Noun indicating a component, guide, or feature of a system.  **[stated — None]**
+- `f585` Identifies code elements or algorithm steps.  **[stated — None]**
+- `f1553` Fires on the word "error" (or variations) within text about debugging or handling unexpected issues.  **[stated — None]**
+- `f7899` Fires on the keywords `try` or `except` within error handling code blocks.  **[stated — None]**
+- `f9279` Identifies exception class names within error handling discussions.  **[stated — None]**
+- `f14740` Fires on the phrase "Error Handling" or related terms.  **[stated — None]**
 
-*Of 6 named shared latents: 4 stated, 0 not stated, 2 undecidable.*
+*Of 6 named shared latents: 6 stated, 0 not stated.*
 
 ### LOST — destroyed  · 4 labelled, 6 unlabelled
 
 - `f123` Noun following a description or label.  *[controls fired — cannot tell]*
-- `f1421` Fires on mentions of Python or closely related terms, often within a technical context.  **[stated — CLEARLY]**
-- `f2500` Technical terms or instructions introduced by a colon or within a list.  **[stated — CLEARLY]**
-- `f8483` Triggered by words related to event handling and callbacks.  **[stated — CLEARLY]**
+- `f1421` Fires on mentions of Python or closely related terms, often within a technical context.  **[stated — None]**
+- `f2500` Technical terms or instructions introduced by a colon or within a list.  *[controls fired — cannot tell]*
+- `f8483` Triggered by words related to event handling and callbacks.  **[stated — None]**
 
-*Of 4 named lost latents: 3 stated, 0 not stated, 1 undecidable.*
+*Of 4 named lost latents: 2 stated, 0 not stated, 2 undecidable.*
 
 ### MADE — invented  · 4 labelled, 5 unlabelled
 
 - `f892` ways" preceded by an adjective or noun.  *[not stated]*
-- `f6259` Identifies code functions and their reusability.  **[stated — CLEARLY]**
+- `f6259` Identifies code functions and their reusability.  *[not stated]*
 - `f9900` The feature fires on the word "bank" when discussing financial details or security measures.  *[not stated]*
 - `f15441` Fires on the token "piece" or its plural/variant forms, often following a quantifier or descriptive phrase.  *[not stated]*
 
-*Of 4 named made latents: 1 stated, 3 not stated.*
+*Of 4 named made latents: 0 stated, 4 not stated.*
 
 ---
 
@@ -2936,25 +2936,25 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 10 labelled, 8 unlabelled
 
-- `f303` Noun indicating a field of endeavor or area of expertise.  **[stated — CLEARLY]**
+- `f303` Noun indicating a field of endeavor or area of expertise.  *[not stated]*
 - `f1425` Fires on words denoting a specific instance or member of a group.  *[not stated]*
 - `f1723` Transition word or preposition following a comma.  *[not stated]*
-- `f2857` Fires on nouns indicating resource management or data-related activities.  **[stated — CLEARLY]**
-- `f4859` Noun phrases referring to digital applications or platforms.  **[stated — CLEARLY]**
-- `f6845` Noun relating to personal health/fitness tracking devices.  **[stated — CLEARLY]**
-- `f8839` app" or "apps" appearing in contexts describing platform availability.  **[stated — CLEARLY]**
+- `f2857` Fires on nouns indicating resource management or data-related activities.  **[stated — None]**
+- `f4859` Noun phrases referring to digital applications or platforms.  **[stated — None]**
+- `f6845` Noun relating to personal health/fitness tracking devices.  **[stated — None]**
+- `f8839` app" or "apps" appearing in contexts describing platform availability.  **[stated — None]**
 - `f10420` Tr" or "Tra" prefix followed by a word describing a record, trajectory, or trace.  *[not stated]*
-- `f11076` Food" appearing as a category item in a list.  **[stated — CLEARLY]**
+- `f11076` Food" appearing as a category item in a list.  **[stated — None]**
 - `f13737` Fires on "count" when describing or invoking a counting function.  *[not stated]*
 
-*Of 10 named shared latents: 6 stated, 4 not stated.*
+*Of 10 named shared latents: 5 stated, 5 not stated.*
 
 ### LOST — destroyed  · 0 labelled, 0 unlabelled
 
 
 ### MADE — invented  · 1 labelled, 4 unlabelled
 
-- `f1295` Fires on nouns describing physical objects used for a practical purpose.  **[stated — CLEARLY]**
+- `f1295` Fires on nouns describing physical objects used for a practical purpose.  **[stated — None]**
 
 *Of 1 named made latents: 1 stated, 0 not stated.*
 
@@ -2978,17 +2978,17 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 2 labelled, 10 unlabelled
 
-- `f3568` Fires on tokens referring to "value" within a financial context.  *[not stated]*
-- `f3903` Preposition/article following a business-related noun.  **[stated — CLEARLY]**
+- `f3568` Fires on tokens referring to "value" within a financial context.  **[stated — None]**
+- `f3903` Preposition/article following a business-related noun.  *[controls fired — cannot tell]*
 
-*Of 2 named shared latents: 1 stated, 1 not stated.*
+*Of 2 named shared latents: 1 stated, 0 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 0 labelled, 4 unlabelled
 
 
 ### MADE — invented  · 1 labelled, 2 unlabelled
 
-- `f912` Introductory phrases denoting foundational knowledge or concepts.  **[stated — PROBABLY]**
+- `f912` Introductory phrases denoting foundational knowledge or concepts.  **[stated — None]**
 
 *Of 1 named made latents: 1 stated, 0 not stated.*
 
@@ -3012,34 +3012,34 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 7 labelled, 9 unlabelled
 
-- `f142` Fires on nouns that follow a verb indicating a decision or action.  **[stated — CLEARLY]**
+- `f142` Fires on nouns that follow a verb indicating a decision or action.  *[not stated]*
 - `f419` Sensory description of a person or object.  *[not stated]*
-- `f643` Noun immediately following a description of a process or function.  *[controls fired — cannot tell]*
-- `f2145` It" initiating a new clause or sentence.  **[stated — CLEARLY]**
-- `f2976` Noun following a preposition, typically indicating a source or influence.  **[stated — PROBABLY]**
-- `f9615` Fires on tokens representing concepts or words associated with magic or supernatural abilities.  **[stated — CLEARLY]**
-- `f14001` A noun describing a ritual or ceremony following a description or introduction.  **[stated — CLEARLY]**
+- `f643` Noun immediately following a description of a process or function.  *[not stated]*
+- `f2145` It" initiating a new clause or sentence.  *[not stated]*
+- `f2976` Noun following a preposition, typically indicating a source or influence.  *[not stated]*
+- `f9615` Fires on tokens representing concepts or words associated with magic or supernatural abilities.  **[stated — None]**
+- `f14001` A noun describing a ritual or ceremony following a description or introduction.  **[stated — None]**
 
-*Of 7 named shared latents: 5 stated, 1 not stated, 1 undecidable.*
+*Of 7 named shared latents: 2 stated, 5 not stated.*
 
 ### LOST — destroyed  · 6 labelled, 5 unlabelled
 
-- `f908` Verb indicating continuation or preservation of a state.  **[stated — PROBABLY]**
+- `f908` Verb indicating continuation or preservation of a state.  *[not stated]*
 - `f1818` Noun phrase indicating a key term or subject within the passage.  *[controls fired — cannot tell]*
 - `f2520` The feature fires on the word "sign" or its variants indicating agreement or approval.  *[not stated]*
-- `f10896` Noun following a description of something's importance or role.  *[controls fired — cannot tell]*
+- `f10896` Noun following a description of something's importance or role.  *[not stated]*
 - `f12285` Fires on the word "Innovation" or abbreviations thereof.  *[not stated]*
 - `f13187` A word describing a protective measure following a preposition or conjunction.  *[not stated]*
 
-*Of 6 named lost latents: 1 stated, 3 not stated, 2 undecidable.*
+*Of 6 named lost latents: 0 stated, 5 not stated, 1 undecidable.*
 
 ### MADE — invented  · 3 labelled, 4 unlabelled
 
-- `f236` Pronoun referring back to a named entity.  **[stated — CLEARLY]**
-- `f989` Adjective modifying a term relating to customs or heritage.  **[stated — CLEARLY]**
+- `f236` Pronoun referring back to a named entity.  *[not stated]*
+- `f989` Adjective modifying a term relating to customs or heritage.  **[stated — None]**
 - `f3214` Fires on tokens representing formal legal agreements.  *[not stated]*
 
-*Of 3 named made latents: 2 stated, 1 not stated.*
+*Of 3 named made latents: 1 stated, 2 not stated.*
 
 ---
 
@@ -3062,17 +3062,17 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 10 labelled, 3 unlabelled
 
 - `f278` the" immediately following a discussion of value or significance.  *[not stated]*
-- `f334` Fires on "the" at the start of a clause or introductory phrase.  **[stated — CLEARLY]**
-- `f934` The" initiating a phrase or clause.  **[stated — CLEARLY]**
+- `f334` Fires on "the" at the start of a clause or introductory phrase.  *[not stated]*
+- `f934` The" initiating a phrase or clause.  **[stated — None]**
 - `f1464` The" preceding a descriptor of a wide-ranging entity.  *[controls fired — cannot tell]*
-- `f2849` Noun phrases related to work, income, or financial status.  **[stated — CLEARLY]**
+- `f2849` Noun phrases related to work, income, or financial status.  **[stated — None]**
 - `f3015` A preposition/conjunction introducing a clause describing skills or resources.  *[not stated]*
-- `f5959` the" immediately following a preposition indicating purpose or reason.  **[stated — CLEARLY]**
-- `f8507` Focuses on terms indicating applied knowledge or practical skill development.  **[stated — CLEARLY]**
-- `f15082` for" following a verb or preposition indicating preparation.  **[stated — CLEARLY]**
+- `f5959` the" immediately following a preposition indicating purpose or reason.  *[not stated]*
+- `f8507` Focuses on terms indicating applied knowledge or practical skill development.  **[stated — None]**
+- `f15082` for" following a verb or preposition indicating preparation.  *[not stated]*
 - `f16373` The" following a verb or prepositional phrase indicating destination or action.  *[not stated]*
 
-*Of 10 named shared latents: 6 stated, 3 not stated, 1 undecidable.*
+*Of 10 named shared latents: 3 stated, 6 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 1 labelled, 0 unlabelled
 
@@ -3108,36 +3108,36 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 15 labelled, 4 unlabelled
 
 - `f197` Triggered by a declaration of inability to fulfill a request.  *[not stated]*
-- `f264` Noun following a colon or bolded phrase introducing a property/characteristic.  *[controls fired — cannot tell]*
+- `f264` Noun following a colon or bolded phrase introducing a property/characteristic.  **[stated — None]**
 - `f289` Adverbs or conjunctions introducing negative consequences or violations.  *[not stated]*
-- `f373` Presence of words related to sexual content, often in response to requests.  **[stated — CLEARLY]**
-- `f626` Words associated with pornography or sexual themes.  **[stated — CLEARLY]**
-- `f957` Noun referring to a sensitive topic, often following a colon or list marker.  **[stated — CLEARLY]**
-- `f1534` Noun following a bolded heading or descriptor.  **[stated — CLEARLY]**
+- `f373` Presence of words related to sexual content, often in response to requests.  **[stated — None]**
+- `f626` Words associated with pornography or sexual themes.  **[stated — None]**
+- `f957` Noun referring to a sensitive topic, often following a colon or list marker.  **[stated — None]**
+- `f1534` Noun following a bolded heading or descriptor.  **[stated — None]**
 - `f1690` Fires on bolded terms introduced by an asterisk and short explanation.  *[not stated]*
 - `f2857` Fires on nouns indicating resource management or data-related activities.  *[not stated]*
-- `f3400` Triggers on prevention-related terms following a discussion of errors or potential problems.  **[stated — CLEARLY]**
-- `f4009` Prohibiting exploitation/abuse of children.  **[stated — CLEARLY]**
-- `f8235` Words indicating restriction or avoidance of explicit material.  *[not stated]*
-- `f13251` Noun or noun phrase directly related to child safety/exploitation following a statement of importance or restriction.  **[stated — CLEARLY]**
-- `f13961` The word "exploitation" appears in contexts discussing ethical concerns and potential harm.  **[stated — CLEARLY]**
-- `f14839` Fires on tokens associated with ethical restrictions on content creation.  **[stated — CLEARLY]**
+- `f3400` Triggers on prevention-related terms following a discussion of errors or potential problems.  **[stated — None]**
+- `f4009` Prohibiting exploitation/abuse of children.  **[stated — None]**
+- `f8235` Words indicating restriction or avoidance of explicit material.  **[stated — None]**
+- `f13251` Noun or noun phrase directly related to child safety/exploitation following a statement of importance or restriction.  **[stated — None]**
+- `f13961` The word "exploitation" appears in contexts discussing ethical concerns and potential harm.  **[stated — None]**
+- `f14839` Fires on tokens associated with ethical restrictions on content creation.  **[stated — None]**
 
-*Of 15 named shared latents: 9 stated, 5 not stated, 1 undecidable.*
+*Of 15 named shared latents: 11 stated, 4 not stated.*
 
 ### LOST — destroyed  · 4 labelled, 2 unlabelled
 
 - `f123` Noun following a description or label.  *[controls fired — cannot tell]*
-- `f1103` Auxiliary verb followed by "legal" or "serious consequences.  **[stated — PROBABLY]**
+- `f1103` Auxiliary verb followed by "legal" or "serious consequences.  *[not stated]*
 - `f1641` Conjunctions/discourse markers introducing potential downsides or anxieties.  *[not stated]*
-- `f2393` Fires on capitalized proper nouns or noun phrases introduced by a preceding article or preposition.  **[stated — CLEARLY]**
+- `f2393` Fires on capitalized proper nouns or noun phrases introduced by a preceding article or preposition.  *[not stated]*
 
-*Of 4 named lost latents: 2 stated, 1 not stated, 1 undecidable.*
+*Of 4 named lost latents: 0 stated, 3 not stated, 1 undecidable.*
 
 ### MADE — invented  · 2 labelled, 0 unlabelled
 
-- `f1324` Noun denoting a group engaged in illegal or harmful actions.  **[stated — CLEARLY]**
-- `f3682` Identifies a capitalized term following a colon or list marker.  **[stated — CLEARLY]**
+- `f1324` Noun denoting a group engaged in illegal or harmful actions.  **[stated — None]**
+- `f3682` Identifies a capitalized term following a colon or list marker.  **[stated — None]**
 
 *Of 2 named made latents: 2 stated, 0 not stated.*
 
@@ -3161,31 +3161,31 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 7 labelled, 8 unlabelled
 
-- `f247` Bolded descriptor followed by a noun indicating a specific element.  *[not stated]*
-- `f1318` Noun denoting a societal or technological structure/system.  **[stated — CLEARLY]**
-- `f3827` Fires on the word "information" and its cognates/transliterations.  **[stated — CLEARLY]**
-- `f5234` Fires on words indicating user interface feedback or error messages.  **[stated — CLEARLY]**
-- `f7336` Prepositional phrase or conjunction followed by a noun/pronoun.  **[stated — PROBABLY]**
+- `f247` Bolded descriptor followed by a noun indicating a specific element.  *[controls fired — cannot tell]*
+- `f1318` Noun denoting a societal or technological structure/system.  **[stated — None]**
+- `f3827` Fires on the word "information" and its cognates/transliterations.  **[stated — None]**
+- `f5234` Fires on words indicating user interface feedback or error messages.  **[stated — None]**
+- `f7336` Prepositional phrase or conjunction followed by a noun/pronoun.  *[not stated]*
 - `f13395` Verbs following a prepositional phrase or indicating modification.  *[not stated]*
 - `f14771` Fires on logging level keywords immediately following a colon or within a function call.  *[not stated]*
 
-*Of 7 named shared latents: 4 stated, 3 not stated.*
+*Of 7 named shared latents: 3 stated, 3 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 1 labelled, 2 unlabelled
 
-- `f543` Noun following a preposition or article indicating a category.  *[not stated]*
+- `f543` Noun following a preposition or article indicating a category.  **[stated — None]**
 
-*Of 1 named lost latents: 0 stated, 1 not stated.*
+*Of 1 named lost latents: 1 stated, 0 not stated.*
 
 ### MADE — invented  · 5 labelled, 4 unlabelled
 
-- `f525` Noun/noun phrase following an introductory phrase like "Provide," "notes," or "information.  **[stated — CLEARLY]**
+- `f525` Noun/noun phrase following an introductory phrase like "Provide," "notes," or "information.  **[stated — None]**
 - `f863` Data" following a colon or bullet point in a list.  *[not stated]*
-- `f2054` Tokens indicating the act of displaying output to a terminal.  **[stated — PROBABLY]**
-- `f3337` The feature triggers on requests for user input.  **[stated — PROBABLY]**
-- `f9829` A verb or verb phrase suggesting an update or display action.  *[controls fired — cannot tell]*
+- `f2054` Tokens indicating the act of displaying output to a terminal.  **[stated — None]**
+- `f3337` The feature triggers on requests for user input.  *[not stated]*
+- `f9829` A verb or verb phrase suggesting an update or display action.  **[stated — None]**
 
-*Of 5 named made latents: 3 stated, 1 not stated, 1 undecidable.*
+*Of 5 named made latents: 3 stated, 2 not stated.*
 
 ---
 
@@ -3216,20 +3216,20 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### LOST — destroyed  · 6 labelled, 1 unlabelled
 
 - `f757` First token of a character's dialogue turn.  *[not stated]*
-- `f2766` It" introducing a new clause or expressing a feeling/observation.  **[stated — CLEARLY]**
-- `f2816` Noun marking at the end of a phrase or sentence.  *[controls fired — cannot tell]*
-- `f3377` Verb of cognition following a clause or phrase introducing a topic.  **[stated — CLEARLY]**
+- `f2766` It" introducing a new clause or expressing a feeling/observation.  *[not stated]*
+- `f2816` Noun marking at the end of a phrase or sentence.  **[stated — None]**
+- `f3377` Verb of cognition following a clause or phrase introducing a topic.  *[not stated]*
 - `f4341` Article at start of a descriptive phrase.  *[not stated]*
-- `f14421` Preposition following a pronoun or noun.  **[stated — CLEARLY]**
+- `f14421` Preposition following a pronoun or noun.  *[not stated]*
 
-*Of 6 named lost latents: 3 stated, 2 not stated, 1 undecidable.*
+*Of 6 named lost latents: 1 stated, 5 not stated.*
 
 ### MADE — invented  · 2 labelled, 0 unlabelled
 
-- `f123` Noun following a description or label.  *[controls fired — cannot tell]*
+- `f123` Noun following a description or label.  *[not stated]*
 - `f1144` Preposition/conjunction following a noun.  *[not stated]*
 
-*Of 2 named made latents: 0 stated, 1 not stated, 1 undecidable.*
+*Of 2 named made latents: 0 stated, 2 not stated.*
 
 ---
 
@@ -3251,17 +3251,17 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 4 labelled, 3 unlabelled
 
-- `f777` Colon followed by a heading or short phrase introducing a list item.  *[not stated]*
-- `f1066` Fires on function words within a phrase referencing political entities/actions.  **[stated — CLEARLY]**
-- `f2091` Sentence closure followed by a description or attribute of a person.  **[stated — CLEARLY]**
+- `f777` Colon followed by a heading or short phrase introducing a list item.  *[controls fired — cannot tell]*
+- `f1066` Fires on function words within a phrase referencing political entities/actions.  **[stated — None]**
+- `f2091` Sentence closure followed by a description or attribute of a person.  *[controls fired — cannot tell]*
 - `f3945` Pronoun or name following a time or age indication.  *[not stated]*
 
-*Of 4 named shared latents: 2 stated, 2 not stated.*
+*Of 4 named shared latents: 1 stated, 1 not stated, 2 undecidable.*
 
 ### LOST — destroyed  · 2 labelled, 4 unlabelled
 
 - `f297` Fires on a period followed by a horizontal bar character.  *[not stated]*
-- `f6647` Fires after a colon introducing a list of advantages/disadvantages.  **[stated — CLEARLY]**
+- `f6647` Fires after a colon introducing a list of advantages/disadvantages.  **[stated — None]**
 
 *Of 2 named lost latents: 1 stated, 1 not stated.*
 
@@ -3291,34 +3291,34 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 9 labelled, 6 unlabelled
 
-- `f136` That" introducing a dependent clause.  *[controls fired — cannot tell]*
-- `f138` Conjunction introducing a contrasting statement mid-sentence.  **[stated — CLEARLY]**
+- `f136` That" introducing a dependent clause.  **[stated — None]**
+- `f138` Conjunction introducing a contrasting statement mid-sentence.  *[not stated]*
 - `f374` Expression of understanding or learning, often following a statement of fact.  *[not stated]*
-- `f908` Verb indicating continuation or preservation of a state.  **[stated — PROBABLY]**
-- `f2568` Conjunctions or transitional phrases followed by a comma or period.  **[stated — CLEARLY]**
+- `f908` Verb indicating continuation or preservation of a state.  *[not stated]*
+- `f2568` Conjunctions or transitional phrases followed by a comma or period.  *[not stated]*
 - `f3709` Fires on tokens marking the start of a new argumentative point.  *[not stated]*
 - `f5222` Fires on tokens within phrases related to organizing or categorizing information.  *[controls fired — cannot tell]*
-- `f7005` Fires on instances of "think" or "believe" used to express a personal belief or opinion.  **[stated — CLEARLY]**
-- `f10159` Fires on terms defining or referring to gender/sex identity.  *[not stated]*
+- `f7005` Fires on instances of "think" or "believe" used to express a personal belief or opinion.  **[stated — None]**
+- `f10159` Fires on terms defining or referring to gender/sex identity.  **[stated — None]**
 
-*Of 9 named shared latents: 4 stated, 3 not stated, 2 undecidable.*
+*Of 9 named shared latents: 3 stated, 5 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 1 labelled, 4 unlabelled
 
-- `f14214` Words introducing explanations or clarifications.  *[not stated]*
+- `f14214` Words introducing explanations or clarifications.  **[stated — None]**
 
-*Of 1 named lost latents: 0 stated, 1 not stated.*
+*Of 1 named lost latents: 1 stated, 0 not stated.*
 
 ### MADE — invented  · 6 labelled, 7 unlabelled
 
-- `f382` how" introducing an explanatory clause.  **[stated — CLEARLY]**
+- `f382` how" introducing an explanatory clause.  *[not stated]*
 - `f384` Negative contractions within a list of directives.  *[not stated]*
 - `f1140` Question word at the beginning of a sentence or clause.  *[not stated]*
-- `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  **[stated — CLEARLY]**
+- `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  *[not stated]*
 - `f2658` Bel" preceded by a list marker or within a description.  *[not stated]*
-- `f10052` Fires on "believe" or its variants following a positive affirmation.  **[stated — CLEARLY]**
+- `f10052` Fires on "believe" or its variants following a positive affirmation.  *[not stated]*
 
-*Of 6 named made latents: 3 stated, 3 not stated.*
+*Of 6 named made latents: 0 stated, 6 not stated.*
 
 ---
 
@@ -3343,19 +3343,19 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 - `f123` Noun following a description or label.  *[controls fired — cannot tell]*
 - `f343` Fires on proper nouns, frequently within a list or description.  *[not stated]*
 - `f2369` Fires on terms denoting a screen or terminal output location.  *[not stated]*
-- `f4105` Describes computational resources or hardware specifications.  **[stated — CLEARLY]**
-- `f8811` Conjunctions/prepositions introducing subordinate clauses or phrases.  *[controls fired — cannot tell]*
+- `f4105` Describes computational resources or hardware specifications.  **[stated — None]**
+- `f8811` Conjunctions/prepositions introducing subordinate clauses or phrases.  *[not stated]*
 - `f11217` Word "Case" at the start of a title/heading.  *[not stated]*
 - `f12710` Bolded text referring to a computer motherboard.  *[not stated]*
-- `f13395` Verbs following a prepositional phrase or indicating modification.  **[stated — CLEARLY]**
+- `f13395` Verbs following a prepositional phrase or indicating modification.  *[not stated]*
 
-*Of 8 named shared latents: 2 stated, 4 not stated, 2 undecidable.*
+*Of 8 named shared latents: 1 stated, 6 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 1 labelled, 5 unlabelled
 
-- `f7336` Prepositional phrase or conjunction followed by a noun/pronoun.  *[controls fired — cannot tell]*
+- `f7336` Prepositional phrase or conjunction followed by a noun/pronoun.  *[not stated]*
 
-*Of 1 named lost latents: 0 stated, 0 not stated, 1 undecidable.*
+*Of 1 named lost latents: 0 stated, 1 not stated.*
 
 ### MADE — invented  · 0 labelled, 2 unlabelled
 
@@ -3381,25 +3381,25 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 5 labelled, 10 unlabelled
 
 - `f15` Noun ending in -ness or -ful appearing after a preposition or describing a quality.  *[not stated]*
-- `f389` Offers guidance or information related to support services.  **[stated — CLEARLY]**
-- `f3461` Fires on tokens associated with feelings of attachment and dedication.  **[stated — CLEARLY]**
-- `f4248` Noun phrases indicating social interaction or group behavior.  **[stated — CLEARLY]**
+- `f389` Offers guidance or information related to support services.  **[stated — None]**
+- `f3461` Fires on tokens associated with feelings of attachment and dedication.  **[stated — None]**
+- `f4248` Noun phrases indicating social interaction or group behavior.  **[stated — None]**
 - `f15422` Fires on a proper noun immediately following a comma.  *[not stated]*
 
 *Of 5 named shared latents: 3 stated, 2 not stated.*
 
 ### LOST — destroyed  · 3 labelled, 1 unlabelled
 
-- `f7336` Prepositional phrase or conjunction followed by a noun/pronoun.  **[stated — CLEARLY]**
+- `f7336` Prepositional phrase or conjunction followed by a noun/pronoun.  **[stated — None]**
 - `f8538` Preposition/pronoun following "resources[[  *[not stated]*
-- `f10771` Introduces a categorized list or breakdown of items.  *[not stated]*
+- `f10771` Introduces a categorized list or breakdown of items.  *[controls fired — cannot tell]*
 
-*Of 3 named lost latents: 1 stated, 2 not stated.*
+*Of 3 named lost latents: 1 stated, 1 not stated, 1 undecidable.*
 
 ### MADE — invented  · 2 labelled, 3 unlabelled
 
-- `f1353` Tokens related to family and parenting, often after a preposition.  **[stated — CLEARLY]**
-- `f5123` It fires on tokens indicating relationships *between* entities.  **[stated — CLEARLY]**
+- `f1353` Tokens related to family and parenting, often after a preposition.  **[stated — None]**
+- `f5123` It fires on tokens indicating relationships *between* entities.  **[stated — None]**
 
 *Of 2 named made latents: 2 stated, 0 not stated.*
 
@@ -3423,26 +3423,26 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 6 labelled, 10 unlabelled
 
-- `f343` Fires on proper nouns, frequently within a list or description.  **[stated — CLEARLY]**
-- `f725` A preposition or conjunction connecting phrases relating to physical activity or location.  **[stated — PROBABLY]**
+- `f343` Fires on proper nouns, frequently within a list or description.  **[stated — None]**
+- `f725` A preposition or conjunction connecting phrases relating to physical activity or location.  **[stated — None]**
 - `f1534` Noun following a bolded heading or descriptor.  *[not stated]*
-- `f4136` The feature fires on words related to organized excursions or trips.  **[stated — CLEARLY]**
+- `f4136` The feature fires on words related to organized excursions or trips.  **[stated — None]**
 - `f8567` Proper noun, often a place name, appearing in a sentence of surprising information.  *[not stated]*
-- `f10635` It fires on words associated with air travel or controlled aerial movement.  **[stated — CLEARLY]**
+- `f10635` It fires on words associated with air travel or controlled aerial movement.  **[stated — None]**
 
 *Of 6 named shared latents: 4 stated, 2 not stated.*
 
 ### LOST — destroyed  · 3 labelled, 2 unlabelled
 
-- `f2786` Mentions of public transportation or travel methods trigger the feature.  **[stated — CLEARLY]**
+- `f2786` Mentions of public transportation or travel methods trigger the feature.  *[controls fired — cannot tell]*
 - `f2815` The feature fires on the name of a town or city.  *[not stated]*
-- `f10937` Fires on nouns or noun phrases describing specific companies, products, or services within travel.  **[stated — CLEARLY]**
+- `f10937` Fires on nouns or noun phrases describing specific companies, products, or services within travel.  *[not stated]*
 
-*Of 3 named lost latents: 2 stated, 1 not stated.*
+*Of 3 named lost latents: 0 stated, 2 not stated, 1 undecidable.*
 
 ### MADE — invented  · 1 labelled, 1 unlabelled
 
-- `f10513` Noun describing a type of aircraft or flying object.  **[stated — PROBABLY]**
+- `f10513` Noun describing a type of aircraft or flying object.  **[stated — None]**
 
 *Of 1 named made latents: 1 stated, 0 not stated.*
 
@@ -3467,13 +3467,13 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 8 labelled, 10 unlabelled
 
 - `f72` Period followed by a philosophical assertion or declaration.  *[not stated]*
-- `f451` Value or range immediately preceding a punctuation mark.  **[stated — CLEARLY]**
+- `f451` Value or range immediately preceding a punctuation mark.  **[stated — None]**
 - `f777` Colon followed by a heading or short phrase introducing a list item.  *[not stated]*
 - `f1017` Fires on punctuation ending a sentence or clause, followed by a space.  *[not stated]*
 - `f1932` Preposition introducing a subordinate clause.  *[not stated]*
-- `f1980` Fires on words denoting a constraint or maximum allowable value.  **[stated — CLEARLY]**
+- `f1980` Fires on words denoting a constraint or maximum allowable value.  **[stated — None]**
 - `f2777` A noun or pronoun referring to the body/physiology following a verb of action.  *[not stated]*
-- `f5982` Named entity – specifically brand names and product categories relating to mobile phones.  **[stated — PROBABLY]**
+- `f5982` Named entity – specifically brand names and product categories relating to mobile phones.  **[stated — None]**
 
 *Of 8 named shared latents: 3 stated, 5 not stated.*
 
@@ -3487,7 +3487,7 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 - `f297` Fires on a period followed by a horizontal bar character.  *[not stated]*
 - `f2176` Introduces a point following a colon and potentially bolded text.  *[not stated]*
-- `f3209` Fires on tokens describing a physical connection or power source.  **[stated — CLEARLY]**
+- `f3209` Fires on tokens describing a physical connection or power source.  **[stated — None]**
 
 *Of 3 named made latents: 1 stated, 2 not stated.*
 
@@ -3511,30 +3511,30 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 8 labelled, 3 unlabelled
 
-- `f134` Beginning of a code statement or block.  **[stated — CLEARLY]**
+- `f134` Beginning of a code statement or block.  **[stated — None]**
 - `f1131` Detects triple quotes used to delimit docstrings.  *[not stated]*
-- `f2194` Starts a block of code following a docstring or comment.  **[stated — CLEARLY]**
+- `f2194` Starts a block of code following a docstring or comment.  *[controls fired — cannot tell]*
 - `f2749` Preposition followed by a pronoun or noun.  *[not stated]*
 - `f6754` Starts a multiline string definition.  *[not stated]*
-- `f11353` Fires on code-related tokens often within function calls or declarations.  **[stated — CLEARLY]**
-- `f12752` Identifies short code tokens, especially those defining UI elements.  **[stated — CLEARLY]**
-- `f14804` Detects the start of a `try` block in code.  **[stated — CLEARLY]**
+- `f11353` Fires on code-related tokens often within function calls or declarations.  **[stated — None]**
+- `f12752` Identifies short code tokens, especially those defining UI elements.  **[stated — None]**
+- `f14804` Detects the start of a `try` block in code.  **[stated — None]**
 
-*Of 8 named shared latents: 5 stated, 3 not stated.*
+*Of 8 named shared latents: 4 stated, 3 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 2 labelled, 2 unlabelled
 
-- `f2876` Captures uppercase letters within names, abbreviations, or model names.  **[stated — CLEARLY]**
+- `f2876` Captures uppercase letters within names, abbreviations, or model names.  *[not stated]*
 - `f15072` Fires on whitespace after a comment start marker.  *[not stated]*
 
-*Of 2 named lost latents: 1 stated, 1 not stated.*
+*Of 2 named lost latents: 0 stated, 2 not stated.*
 
 ### MADE — invented  · 5 labelled, 6 unlabelled
 
 - `f4687` Identifies tab names or related terms within a context of software or document navigation.  *[not stated]*
 - `f5395` Identifies web element locators within Selenium automation code.  *[not stated]*
 - `f6426` References to HTML canvas elements, specifically IDs or properties.  *[not stated]*
-- `f15508` Fires on references to the `Image` class and related image manipulation functions.  **[stated — CLEARLY]**
+- `f15508` Fires on references to the `Image` class and related image manipulation functions.  **[stated — None]**
 - `f15579` Fires on keys in configuration files, typically associated with resource management.  *[not stated]*
 
 *Of 5 named made latents: 1 stated, 4 not stated.*
@@ -3559,25 +3559,25 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 12 labelled, 6 unlabelled
 
-- `f543` Noun following a preposition or article indicating a category.  **[stated — PROBABLY]**
+- `f543` Noun following a preposition or article indicating a category.  *[not stated]*
 - `f1255` Fires on bolded, capitalized terms describing specific capabilities or techniques.  *[not stated]*
 - `f1500` A word introducing explanation or reason following a pause or introductory phrase.  *[not stated]*
-- `f2650` Emotion words appearing in descriptions of character behavior or internal states.  **[stated — CLEARLY]**
-- `f3213` Keywords related to responsibility and accountability frequently trigger the feature.  **[stated — CLEARLY]**
-- `f3262` A symptom word following a colon or after a question about experiencing symptoms.  **[stated — CLEARLY]**
-- `f4909` Psychological terminology appearing in a discussion of human behavior.  **[stated — CLEARLY]**
-- `f5967` Fires on tokens indicating criticism or negative assessment.  **[stated — CLEARLY]**
-- `f6199` Fires on tokens describing or directly relating to cognitive restructuring techniques.  **[stated — CLEARLY]**
-- `f13395` Verbs following a prepositional phrase or indicating modification.  **[stated — PROBABLY]**
+- `f2650` Emotion words appearing in descriptions of character behavior or internal states.  **[stated — None]**
+- `f3213` Keywords related to responsibility and accountability frequently trigger the feature.  **[stated — None]**
+- `f3262` A symptom word following a colon or after a question about experiencing symptoms.  *[not stated]*
+- `f4909` Psychological terminology appearing in a discussion of human behavior.  **[stated — None]**
+- `f5967` Fires on tokens indicating criticism or negative assessment.  **[stated — None]**
+- `f6199` Fires on tokens describing or directly relating to cognitive restructuring techniques.  **[stated — None]**
+- `f13395` Verbs following a prepositional phrase or indicating modification.  *[not stated]*
 - `f14084` Fires on "responsible" when describing duties or legal obligations.  *[not stated]*
-- `f16032` Fires on lexical tokens related to apologizing.  **[stated — CLEARLY]**
+- `f16032` Fires on lexical tokens related to apologizing.  **[stated — None]**
 
-*Of 12 named shared latents: 9 stated, 3 not stated.*
+*Of 12 named shared latents: 6 stated, 6 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 0 unlabelled
 
 - `f123` Noun following a description or label.  *[controls fired — cannot tell]*
-- `f964` Or" conjunctions within safety/ethical guidelines restrictions.  **[stated — CLEARLY]**
+- `f964` Or" conjunctions within safety/ethical guidelines restrictions.  **[stated — None]**
 
 *Of 2 named lost latents: 1 stated, 0 not stated, 1 undecidable.*
 
@@ -3604,29 +3604,29 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 10 labelled, 7 unlabelled
 
-- `f187` Fires on a capitalized name likely representing a person.  **[stated — CLEARLY]**
-- `f343` Fires on proper nouns, frequently within a list or description.  **[stated — CLEARLY]**
+- `f187` Fires on a capitalized name likely representing a person.  **[stated — None]**
+- `f343` Fires on proper nouns, frequently within a list or description.  *[controls fired — cannot tell]*
 - `f459` Introduces an imminent danger or complication in a story.  *[not stated]*
-- `f1091` Noun referencing an animal following a descriptive phrase.  **[stated — CLEARLY]**
-- `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  **[stated — CLEARLY]**
-- `f3937` Fires on variations of the name "El" appearing within a proper noun or title.  **[stated — CLEARLY]**
-- `f4737` Capitalized animal name preceded or followed by an article/preposition.  **[stated — CLEARLY]**
-- `f11378` Fires on capitalized proper nouns, frequently denoting organizations or places.  **[stated — CLEARLY]**
-- `f12645` Fires on animal names, particularly those denoting large mammals.  **[stated — CLEARLY]**
-- `f14142` A preposition or article immediately following a noun or pronoun.  **[stated — CLEARLY]**
+- `f1091` Noun referencing an animal following a descriptive phrase.  **[stated — None]**
+- `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  *[not stated]*
+- `f3937` Fires on variations of the name "El" appearing within a proper noun or title.  **[stated — None]**
+- `f4737` Capitalized animal name preceded or followed by an article/preposition.  **[stated — None]**
+- `f11378` Fires on capitalized proper nouns, frequently denoting organizations or places.  **[stated — None]**
+- `f12645` Fires on animal names, particularly those denoting large mammals.  **[stated — None]**
+- `f14142` A preposition or article immediately following a noun or pronoun.  **[stated — None]**
 
-*Of 10 named shared latents: 9 stated, 1 not stated.*
+*Of 10 named shared latents: 7 stated, 2 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 1 labelled, 4 unlabelled
 
-- `f3411` A noun or pronoun following an observation verb or preposition.  **[stated — CLEARLY]**
+- `f3411` A noun or pronoun following an observation verb or preposition.  **[stated — None]**
 
 *Of 1 named lost latents: 1 stated, 0 not stated.*
 
 ### MADE — invented  · 2 labelled, 2 unlabelled
 
-- `f2616` A title/role followed by a name.  **[stated — CLEARLY]**
-- `f4420` Fires on capitalized proper nouns, often indicating a character or entity.  **[stated — CLEARLY]**
+- `f2616` A title/role followed by a name.  **[stated — None]**
+- `f4420` Fires on capitalized proper nouns, often indicating a character or entity.  **[stated — None]**
 
 *Of 2 named made latents: 2 stated, 0 not stated.*
 
@@ -3651,13 +3651,13 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 6 labelled, 9 unlabelled
 
 - `f3716` Noun following an adjective describing a characteristic.  *[not stated]*
-- `f5224` Refers to a collective of individuals working together.  **[stated — CLEARLY]**
+- `f5224` Refers to a collective of individuals working together.  *[controls fired — cannot tell]*
 - `f5859` Fires on tokens following a confirmation or inquiry.  *[not stated]*
-- `f9524` Fires on words associated with the genre of rap music.  *[not stated]*
-- `f11478` Capitalized "Team" appearing within a list or descriptive phrase.  **[stated — CLEARLY]**
+- `f9524` Fires on words associated with the genre of rap music.  **[stated — None]**
+- `f11478` Capitalized "Team" appearing within a list or descriptive phrase.  **[stated — None]**
 - `f14742` Fires on a capitalized term introduced by a colon.  *[not stated]*
 
-*Of 6 named shared latents: 2 stated, 4 not stated.*
+*Of 6 named shared latents: 2 stated, 3 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 1 labelled, 1 unlabelled
 
@@ -3691,13 +3691,13 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 5 labelled, 10 unlabelled
 
-- `f2622` Fires on a brand or franchise name.  **[stated — CLEARLY]**
-- `f2689` Determiner/possessive pronoun followed by a noun referring to a film.  **[stated — CLEARLY]**
-- `f5929` Identifies named entities of superhero characters or teams.  **[stated — CLEARLY]**
-- `f10783` Fires on proper nouns related to Disney and its subsidiaries.  **[stated — CLEARLY]**
-- `f16253` Fires on titles following a colon in bibliographic citations.  **[stated — CLEARLY]**
+- `f2622` Fires on a brand or franchise name.  **[stated — None]**
+- `f2689` Determiner/possessive pronoun followed by a noun referring to a film.  *[not stated]*
+- `f5929` Identifies named entities of superhero characters or teams.  **[stated — None]**
+- `f10783` Fires on proper nouns related to Disney and its subsidiaries.  **[stated — None]**
+- `f16253` Fires on titles following a colon in bibliographic citations.  **[stated — None]**
 
-*Of 5 named shared latents: 5 stated, 0 not stated.*
+*Of 5 named shared latents: 4 stated, 1 not stated.*
 
 ### LOST — destroyed  · 1 labelled, 4 unlabelled
 
@@ -3731,19 +3731,19 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 5 labelled, 5 unlabelled
 
-- `f284` Describes a weather-related condition, often following a colon or introductory phrase.  **[stated — PROBABLY]**
-- `f2059` Noun phrases describing weather phenomena, often with an intensity rating.  *[controls fired — cannot tell]*
-- `f2463` Fires on prepositions or possessive pronouns followed by "area" or "location.  **[stated — PROBABLY]**
-- `f3800` Fires on nouns/noun phrases detailing impacts of climate change/disasters.  **[stated — PROBABLY]**
-- `f9359` The feature fires on tokens related to precipitation, particularly rain.  **[stated — CLEARLY]**
+- `f284` Describes a weather-related condition, often following a colon or introductory phrase.  **[stated — None]**
+- `f2059` Noun phrases describing weather phenomena, often with an intensity rating.  **[stated — None]**
+- `f2463` Fires on prepositions or possessive pronouns followed by "area" or "location.  **[stated — None]**
+- `f3800` Fires on nouns/noun phrases detailing impacts of climate change/disasters.  **[stated — None]**
+- `f9359` The feature fires on tokens related to precipitation, particularly rain.  **[stated — None]**
 
-*Of 5 named shared latents: 4 stated, 0 not stated, 1 undecidable.*
+*Of 5 named shared latents: 5 stated, 0 not stated.*
 
 ### LOST — destroyed  · 1 labelled, 0 unlabelled
 
-- `f6726` Fires on nouns indicating negative outcomes or crises.  **[stated — PROBABLY]**
+- `f6726` Fires on nouns indicating negative outcomes or crises.  *[not stated]*
 
-*Of 1 named lost latents: 1 stated, 0 not stated.*
+*Of 1 named lost latents: 0 stated, 1 not stated.*
 
 ### MADE — invented  · 1 labelled, 0 unlabelled
 
@@ -3771,26 +3771,26 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 4 labelled, 4 unlabelled
 
-- `f253` Following "Think" or "Imagine" with a prepositional phrase.  **[stated — CLEARLY]**
-- `f2655` Fires on the token "think" (and its variations) when used as a directive to consider or analyze something.  **[stated — CLEARLY]**
-- `f3341` Article following an introductory phrase comparing something to something else.  **[stated — CLEARLY]**
-- `f10353` Follows an introductory phrase suggesting a comparison or analogy.  **[stated — CLEARLY]**
+- `f253` Following "Think" or "Imagine" with a prepositional phrase.  **[stated — None]**
+- `f2655` Fires on the token "think" (and its variations) when used as a directive to consider or analyze something.  *[not stated]*
+- `f3341` Article following an introductory phrase comparing something to something else.  **[stated — None]**
+- `f10353` Follows an introductory phrase suggesting a comparison or analogy.  **[stated — None]**
 
-*Of 4 named shared latents: 4 stated, 0 not stated.*
+*Of 4 named shared latents: 3 stated, 1 not stated.*
 
 ### LOST — destroyed  · 3 labelled, 2 unlabelled
 
 - `f1618` The feature fires on tokens following "formerly" or equivalent temporal/historical indicators.  *[not stated]*
-- `f5711` Fires on words describing literary devices.  **[stated — CLEARLY]**
-- `f7413` Think of" followed by "it.  **[stated — CLEARLY]**
+- `f5711` Fires on words describing literary devices.  **[stated — None]**
+- `f7413` Think of" followed by "it.  **[stated — None]**
 
 *Of 3 named lost latents: 2 stated, 1 not stated.*
 
 ### MADE — invented  · 1 labelled, 0 unlabelled
 
-- `f24` A phrase signaling an explication or organization of information.  **[stated — CLEARLY]**
+- `f24` A phrase signaling an explication or organization of information.  *[controls fired — cannot tell]*
 
-*Of 1 named made latents: 1 stated, 0 not stated.*
+*Of 1 named made latents: 0 stated, 0 not stated, 1 undecidable.*
 
 ---
 
@@ -3814,22 +3814,22 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 - `f24` A phrase signaling an explication or organization of information.  *[controls fired — cannot tell]*
 - `f63` Adjectives modifying nouns describing attributes or capabilities.  *[not stated]*
-- `f123` Noun following a description or label.  *[controls fired — cannot tell]*
+- `f123` Noun following a description or label.  *[not stated]*
 - `f655` It fires on tokens following a mathematical symbol or statement.  *[not stated]*
-- `f787` Identifies an answer choice (A, B, C, D, a, option) within a multiple-choice context.  **[stated — CLEARLY]**
+- `f787` Identifies an answer choice (A, B, C, D, a, option) within a multiple-choice context.  *[not stated]*
 - `f2029` Adjectives or adjectival phrases expressing a quality or state.  *[not stated]*
 - `f4024` Fires on "look at" following "Let's".  *[not stated]*
-- `f5112` Noun after a colon introducing a list or definition.  **[stated — CLEARLY]**
+- `f5112` Noun after a colon introducing a list or definition.  **[stated — None]**
 - `f15908` Adjective describing a statement as "false".  *[not stated]*
 
-*Of 9 named shared latents: 2 stated, 5 not stated, 2 undecidable.*
+*Of 9 named shared latents: 1 stated, 7 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 2 labelled, 0 unlabelled
 
 - `f9037` Adjective "proper" used to describe correctness or suitability.  *[not stated]*
-- `f16354` Triggers on "eliminate" following an introductory phrase listing options.  **[stated — CLEARLY]**
+- `f16354` Triggers on "eliminate" following an introductory phrase listing options.  *[not stated]*
 
-*Of 2 named lost latents: 1 stated, 1 not stated.*
+*Of 2 named lost latents: 0 stated, 2 not stated.*
 
 ### MADE — invented  · 2 labelled, 2 unlabelled
 
@@ -3858,14 +3858,14 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 2 labelled, 6 unlabelled
 
-- `f3209` Fires on tokens describing a physical connection or power source.  **[stated — CLEARLY]**
-- `f5357` Fires on technical terms describing hardware components or interfaces.  **[stated — CLEARLY]**
+- `f3209` Fires on tokens describing a physical connection or power source.  **[stated — None]**
+- `f5357` Fires on technical terms describing hardware components or interfaces.  **[stated — None]**
 
 *Of 2 named shared latents: 2 stated, 0 not stated.*
 
 ### LOST — destroyed  · 3 labelled, 4 unlabelled
 
-- `f59` Fires on code-related keywords and identifiers.  **[stated — CLEARLY]**
+- `f59` Fires on code-related keywords and identifiers.  **[stated — None]**
 - `f743` A noun or noun phrase followed by a quantity.  *[not stated]*
 - `f5522` Ham" appears within lists or descriptions of items or categories.  *[not stated]*
 
@@ -3873,8 +3873,8 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### MADE — invented  · 2 labelled, 1 unlabelled
 
-- `f808` Fires on technical terms related to Apple's ecosystem and development platforms.  **[stated — CLEARLY]**
-- `f12468` Preposition introducing a path or method of traversal.  **[stated — CLEARLY]**
+- `f808` Fires on technical terms related to Apple's ecosystem and development platforms.  **[stated — None]**
+- `f12468` Preposition introducing a path or method of traversal.  **[stated — None]**
 
 *Of 2 named made latents: 2 stated, 0 not stated.*
 
@@ -3898,10 +3898,10 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 4 labelled, 2 unlabelled
 
-- `f1438` Fires on C/C++ language elements appearing at the start of a line or definition.  **[stated — CLEARLY]**
-- `f2162` Fires on closing delimiters in code.  **[stated — CLEARLY]**
+- `f1438` Fires on C/C++ language elements appearing at the start of a line or definition.  **[stated — None]**
+- `f2162` Fires on closing delimiters in code.  **[stated — None]**
 - `f7912` Prints an error message when a file or resource is not found.  *[not stated]*
-- `f12923` Fires on the end of a line of code after a semicolon.  **[stated — CLEARLY]**
+- `f12923` Fires on the end of a line of code after a semicolon.  **[stated — None]**
 
 *Of 4 named shared latents: 3 stated, 1 not stated.*
 
@@ -3909,19 +3909,19 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 - `f163` Fires on code after a closing curly brace.  *[not stated]*
 - `f2552` Fires on tokens following an assignment or return statement.  *[not stated]*
-- `f3143` Marks the start of a code definition or block.  **[stated — CLEARLY]**
+- `f3143` Marks the start of a code definition or block.  *[controls fired — cannot tell]*
 - `f3731` Identifies variable names immediately following an opening parenthesis or semicolon within code.  *[not stated]*
 
-*Of 4 named lost latents: 1 stated, 3 not stated.*
+*Of 4 named lost latents: 0 stated, 3 not stated, 1 undecidable.*
 
 ### MADE — invented  · 4 labelled, 1 unlabelled
 
-- `f4541` Whitespace before a programming keyword or function definition.  **[stated — PROBABLY]**
+- `f4541` Whitespace before a programming keyword or function definition.  *[not stated]*
 - `f6090` Assignment of a numeric value to a variable in code.  *[not stated]*
 - `f6316` Numbers immediately following a code identifier or operation.  *[not stated]*
 - `f9972` C++ include statements with angle bracket syntax.  *[not stated]*
 
-*Of 4 named made latents: 1 stated, 3 not stated.*
+*Of 4 named made latents: 0 stated, 4 not stated.*
 
 ---
 
@@ -3943,16 +3943,16 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 8 labelled, 8 unlabelled
 
-- `f24` A phrase signaling an explication or organization of information.  *[controls fired — cannot tell]*
-- `f264` Noun following a colon or bolded phrase introducing a property/characteristic.  *[controls fired — cannot tell]*
+- `f24` A phrase signaling an explication or organization of information.  **[stated — None]**
+- `f264` Noun following a colon or bolded phrase introducing a property/characteristic.  **[stated — None]**
 - `f297` Fires on a period followed by a horizontal bar character.  *[not stated]*
-- `f606` Fires on titles or headings denoting sections of a document.  **[stated — CLEARLY]**
-- `f1177` Fires on section titles following a numeric or alphabetic prefix.  **[stated — CLEARLY]**
+- `f606` Fires on titles or headings denoting sections of a document.  **[stated — None]**
+- `f1177` Fires on section titles following a numeric or alphabetic prefix.  *[not stated]*
 - `f2516` Code" appearing within a discussion of software or programming.  *[not stated]*
 - `f6040` Noun phrase marking the start of a descriptive section.  *[not stated]*
-- `f13364` The feature triggers on the word "Content" or its variants, typically within a programming or data retrieval context.  **[stated — CLEARLY]**
+- `f13364` The feature triggers on the word "Content" or its variants, typically within a programming or data retrieval context.  **[stated — None]**
 
-*Of 8 named shared latents: 3 stated, 3 not stated, 2 undecidable.*
+*Of 8 named shared latents: 4 stated, 4 not stated.*
 
 ### LOST — destroyed  · 0 labelled, 3 unlabelled
 
@@ -3980,21 +3980,21 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 6 labelled, 11 unlabelled
 
-- `f114` Verbs describing a machine learning process or data modification.  **[stated — CLEARLY]**
-- `f291` Conjunction following a list element or clause end.  *[controls fired — cannot tell]*
-- `f519` Fires on a list item introducing variations.  **[stated — CLEARLY]**
-- `f708` Fires on tokens referring to data handling or analysis.  **[stated — CLEARLY]**
+- `f114` Verbs describing a machine learning process or data modification.  *[controls fired — cannot tell]*
+- `f291` Conjunction following a list element or clause end.  *[not stated]*
+- `f519` Fires on a list item introducing variations.  **[stated — None]**
+- `f708` Fires on tokens referring to data handling or analysis.  **[stated — None]**
 - `f1308` Triggers on a verb or noun indicating data manipulation preceding a process.  *[controls fired — cannot tell]*
-- `f8827` Data" or "datasets" immediately following a possessive or descriptive phrase.  **[stated — CLEARLY]**
+- `f8827` Data" or "datasets" immediately following a possessive or descriptive phrase.  **[stated — None]**
 
-*Of 6 named shared latents: 4 stated, 0 not stated, 2 undecidable.*
+*Of 6 named shared latents: 3 stated, 1 not stated, 2 undecidable.*
 
 ### LOST — destroyed  · 4 labelled, 7 unlabelled
 
-- `f1373` References to array or list sizes/lengths.  **[stated — CLEARLY]**
-- `f4350` Fires on the beginning of a bolded list item.  **[stated — CLEARLY]**
-- `f9954` Noun referring to a measurable attribute or count.  **[stated — CLEARLY]**
-- `f14164` A key phrase related to ETL processes.  **[stated — CLEARLY]**
+- `f1373` References to array or list sizes/lengths.  **[stated — None]**
+- `f4350` Fires on the beginning of a bolded list item.  **[stated — None]**
+- `f9954` Noun referring to a measurable attribute or count.  **[stated — None]**
+- `f14164` A key phrase related to ETL processes.  **[stated — None]**
 
 *Of 4 named lost latents: 4 stated, 0 not stated.*
 
@@ -4024,24 +4024,24 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 9 labelled, 6 unlabelled
 
-- `f123` Noun following a description or label.  *[controls fired — cannot tell]*
-- `f343` Fires on proper nouns, frequently within a list or description.  **[stated — CLEARLY]**
-- `f366` Fires on LLM names and associated versions/designations.  **[stated — CLEARLY]**
-- `f1217` Fires on capitalized named entities frequently mentioned as tools or resources.  **[stated — CLEARLY]**
+- `f123` Noun following a description or label.  **[stated — None]**
+- `f343` Fires on proper nouns, frequently within a list or description.  **[stated — None]**
+- `f366` Fires on LLM names and associated versions/designations.  **[stated — None]**
+- `f1217` Fires on capitalized named entities frequently mentioned as tools or resources.  **[stated — None]**
 - `f1314` Commas following named entities in lists.  *[not stated]*
-- `f1583` Triggers on words initiating requests or inquiries about LLM tools and processes.  **[stated — CLEARLY]**
-- `f2445` Begins a word starting with "Ch" in a list or technical specification.  **[stated — CLEARLY]**
+- `f1583` Triggers on words initiating requests or inquiries about LLM tools and processes.  **[stated — None]**
+- `f2445` Begins a word starting with "Ch" in a list or technical specification.  **[stated — None]**
 - `f13395` Verbs following a prepositional phrase or indicating modification.  *[not stated]*
-- `f13910` Fires on proper nouns denoting specific LLMs in a comparison list.  **[stated — CLEARLY]**
+- `f13910` Fires on proper nouns denoting specific LLMs in a comparison list.  **[stated — None]**
 
-*Of 9 named shared latents: 6 stated, 2 not stated, 1 undecidable.*
+*Of 9 named shared latents: 7 stated, 2 not stated.*
 
 ### LOST — destroyed  · 5 labelled, 3 unlabelled
 
 - `f543` Noun following a preposition or article indicating a category.  *[not stated]*
-- `f1085` Fires on the token preceding the name of a company.  **[stated — CLEARLY]**
+- `f1085` Fires on the token preceding the name of a company.  **[stated — None]**
 - `f1296` Numbers within lists or code, often representing data elements.  *[not stated]*
-- `f8420` Fires on words and phrases representing company names or business entities.  **[stated — CLEARLY]**
+- `f8420` Fires on words and phrases representing company names or business entities.  **[stated — None]**
 - `f12957` Preposition/conjunction introducing a clause describing historical context.  *[not stated]*
 
 *Of 5 named lost latents: 2 stated, 3 not stated.*
@@ -4050,9 +4050,9 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 - `f1102` Noun following a technical term or action verb.  *[not stated]*
 - `f1114` Mentions of pricing or tiers associated with software or services.  *[not stated]*
-- `f2787` Fires on brand names or trademark symbols.  **[stated — CLEARLY]**
-- `f3057` Capitalized proper nouns, frequently names or titles.  **[stated — CLEARLY]**
-- `f10595` Fires on platform/service names followed by a high strength score.  **[stated — CLEARLY]**
+- `f2787` Fires on brand names or trademark symbols.  **[stated — None]**
+- `f3057` Capitalized proper nouns, frequently names or titles.  **[stated — None]**
+- `f10595` Fires on platform/service names followed by a high strength score.  **[stated — None]**
 
 *Of 5 named made latents: 3 stated, 2 not stated.*
 
@@ -4076,16 +4076,16 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 1 labelled, 3 unlabelled
 
-- `f2780` Numbers followed by a period and space trigger the feature.  **[stated — CLEARLY]**
+- `f2780` Numbers followed by a period and space trigger the feature.  **[stated — None]**
 
 *Of 1 named shared latents: 1 stated, 0 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 7 unlabelled
 
 - `f1576` The feature fires on the word "email" and its related forms.  *[not stated]*
-- `f1678` The feature fires on words associated with positive sentiment and expression of feeling.  **[stated — PROBABLY]**
+- `f1678` The feature fires on words associated with positive sentiment and expression of feeling.  *[not stated]*
 
-*Of 2 named lost latents: 1 stated, 1 not stated.*
+*Of 2 named lost latents: 0 stated, 2 not stated.*
 
 ### MADE — invented  · 1 labelled, 4 unlabelled
 
@@ -4115,34 +4115,34 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 - `f14` Preposition "of" introducing a clarifying or descriptive phrase.  *[not stated]*
 - `f204` Describes a personality or characteristic using an adjective/adverb.  *[not stated]*
-- `f315` Preposition "for" followed by a noun or noun phrase.  **[stated — CLEARLY]**
+- `f315` Preposition "for" followed by a noun or noun phrase.  **[stated — None]**
 - `f411` Fires on conjunctions and adverbs following a direct instruction.  *[not stated]*
-- `f1648` A preposition or conjunction within a clause describing company size or structure.  **[stated — CLEARLY]**
-- `f4654` The feature fires on words indicating positive assessment of service.  **[stated — CLEARLY]**
+- `f1648` A preposition or conjunction within a clause describing company size or structure.  **[stated — None]**
+- `f4654` The feature fires on words indicating positive assessment of service.  **[stated — None]**
 - `f5621` An adjective describing fame following a noun or noun phrase.  *[not stated]*
 - `f7887` Prepositions/conjunctions following a question or statement about motivations.  *[not stated]*
-- `f10436` A person or entity is described as "known for" something.  **[stated — CLEARLY]**
+- `f10436` A person or entity is described as "known for" something.  **[stated — None]**
 
 *Of 9 named shared latents: 4 stated, 5 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 6 unlabelled
 
 - `f5722` The feature fires on the token "inventory" or related words (stock, stocking, warehouse) indicating a discussion of mate  *[not stated]*
-- `f8180` Fires on place names associated with shipping or logistics.  **[stated — PROBABLY]**
+- `f8180` Fires on place names associated with shipping or logistics.  *[not stated]*
 
-*Of 2 named lost latents: 1 stated, 1 not stated.*
+*Of 2 named lost latents: 0 stated, 2 not stated.*
 
 ### MADE — invented  · 7 labelled, 3 unlabelled
 
 - `f389` Offers guidance or information related to support services.  *[not stated]*
-- `f688` Possessive form of a noun indicating ownership or affiliation.  *[controls fired — cannot tell]*
-- `f1735` Fires on capitalized words within lists or descriptions of organizations.  **[stated — CLEARLY]**
-- `f4441` A word related to vehicles appearing in a discussion of transportation or logistics.  **[stated — PROBABLY]**
-- `f7786` Fires on tokens indicating logistics processes or modes of transport.  **[stated — CLEARLY]**
-- `f10276` Noun phrase indicating a characteristic of workplace or organizational culture.  **[stated — CLEARLY]**
-- `f10648` Fires on words frequently associated with HR processes and job descriptions.  **[stated — CLEARLY]**
+- `f688` Possessive form of a noun indicating ownership or affiliation.  **[stated — None]**
+- `f1735` Fires on capitalized words within lists or descriptions of organizations.  **[stated — None]**
+- `f4441` A word related to vehicles appearing in a discussion of transportation or logistics.  *[not stated]*
+- `f7786` Fires on tokens indicating logistics processes or modes of transport.  **[stated — None]**
+- `f10276` Noun phrase indicating a characteristic of workplace or organizational culture.  **[stated — None]**
+- `f10648` Fires on words frequently associated with HR processes and job descriptions.  **[stated — None]**
 
-*Of 7 named made latents: 5 stated, 1 not stated, 1 undecidable.*
+*Of 7 named made latents: 5 stated, 2 not stated.*
 
 ---
 
@@ -4164,20 +4164,20 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 7 labelled, 12 unlabelled
 
-- `f47` to" following a directive or preparatory word.  **[stated — CLEARLY]**
+- `f47` to" following a directive or preparatory word.  **[stated — None]**
 - `f66` Fires on a pronoun followed by a verb indicating a request or instruction.  *[not stated]*
-- `f95` Preposition "to" introducing an action or goal.  **[stated — CLEARLY]**
-- `f492` to" following a request or statement of need/purpose.  *[controls fired — cannot tell]*
+- `f95` Preposition "to" introducing an action or goal.  **[stated — None]**
+- `f492` to" following a request or statement of need/purpose.  **[stated — None]**
 - `f563` Fires on tokens expressing thanks or positive farewells.  *[not stated]*
-- `f2428` Indicates a level of importance or urgency within a system.  **[stated — CLEARLY]**
-- `f7786` Fires on tokens indicating logistics processes or modes of transport.  **[stated — CLEARLY]**
+- `f2428` Indicates a level of importance or urgency within a system.  **[stated — None]**
+- `f7786` Fires on tokens indicating logistics processes or modes of transport.  **[stated — None]**
 
-*Of 7 named shared latents: 4 stated, 2 not stated, 1 undecidable.*
+*Of 7 named shared latents: 5 stated, 2 not stated.*
 
 ### LOST — destroyed  · 3 labelled, 1 unlabelled
 
 - `f2966` Fires on capitalized variations of "Sch" used as abbreviations or titles.  *[not stated]*
-- `f3417` Preposition following a phrase about maximizing/optimizing.  **[stated — CLEARLY]**
+- `f3417` Preposition following a phrase about maximizing/optimizing.  **[stated — None]**
 - `f6125` Fires on "to" preceding a verb expressing a negative action or state.  *[not stated]*
 
 *Of 3 named lost latents: 1 stated, 2 not stated.*
@@ -4212,21 +4212,21 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 7 labelled, 4 unlabelled
 
-- `f809` Preposition/conjunction following a phrase about monetary performance.  **[stated — PROBABLY]**
-- `f1386` Follows a term or concept in financial analysis, often introducing related information.  **[stated — CLEARLY]**
+- `f809` Preposition/conjunction following a phrase about monetary performance.  *[not stated]*
+- `f1386` Follows a term or concept in financial analysis, often introducing related information.  **[stated — None]**
 - `f2010` A term related to financial lending appears after a preposition.  *[not stated]*
-- `f2854` Token immediately following an opening parenthesis.  **[stated — CLEARLY]**
+- `f2854` Token immediately following an opening parenthesis.  **[stated — None]**
 - `f5204` Introduces a synonymous term, often using "also called".  *[not stated]*
-- `f5304` Tokens following a colon introducing financial terminology.  **[stated — CLEARLY]**
-- `f5450` Preposition/conjunction following a noun related to financial options.  **[stated — CLEARLY]**
+- `f5304` Tokens following a colon introducing financial terminology.  **[stated — None]**
+- `f5450` Preposition/conjunction following a noun related to financial options.  **[stated — None]**
 
-*Of 7 named shared latents: 5 stated, 2 not stated.*
+*Of 7 named shared latents: 4 stated, 3 not stated.*
 
 ### LOST — destroyed  · 1 labelled, 9 unlabelled
 
-- `f14826` Mentions of risk or its variants directly follow a descriptor or introductory phrase.  *[not stated]*
+- `f14826` Mentions of risk or its variants directly follow a descriptor or introductory phrase.  **[stated — None]**
 
-*Of 1 named lost latents: 0 stated, 1 not stated.*
+*Of 1 named lost latents: 1 stated, 0 not stated.*
 
 ### MADE — invented  · 1 labelled, 5 unlabelled
 
@@ -4254,30 +4254,30 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 7 labelled, 10 unlabelled
 
-- `f63` Adjectives modifying nouns describing attributes or capabilities.  **[stated — CLEARLY]**
-- `f127` Article "a" following a noun/noun phrase introducing a descriptor.  **[stated — PROBABLY]**
+- `f63` Adjectives modifying nouns describing attributes or capabilities.  *[not stated]*
+- `f127` Article "a" following a noun/noun phrase introducing a descriptor.  *[not stated]*
 - `f246` An adjective immediately following a colon or bullet point in a list of options.  *[not stated]*
-- `f260` Adverb/adjective preceding a noun or noun phrase indicating qualification.  *[controls fired — cannot tell]*
+- `f260` Adverb/adjective preceding a noun or noun phrase indicating qualification.  **[stated — None]**
 - `f304` Introduces a more/complete/detailed/structured explanation.  *[controls fired — cannot tell]*
-- `f519` Fires on a list item introducing variations.  **[stated — CLEARLY]**
-- `f3007` Fires on the word "common" used as an adjective describing prevalence.  **[stated — CLEARLY]**
+- `f519` Fires on a list item introducing variations.  *[not stated]*
+- `f3007` Fires on the word "common" used as an adjective describing prevalence.  **[stated — None]**
 
-*Of 7 named shared latents: 4 stated, 1 not stated, 2 undecidable.*
+*Of 7 named shared latents: 2 stated, 4 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 3 labelled, 6 unlabelled
 
-- `f8838` A word or phrase signifying a course of action or next steps, often following a description of a situation.  **[stated — CLEARLY]**
+- `f8838` A word or phrase signifying a course of action or next steps, often following a description of a situation.  **[stated — None]**
 - `f9049` Fires on the token "Child" when discussing potential harm or protection of minors.  *[not stated]*
-- `f12545` Fires on "fine-tuning" or related terms within the context of LLMs.  **[stated — PROBABLY]**
+- `f12545` Fires on "fine-tuning" or related terms within the context of LLMs.  **[stated — None]**
 
 *Of 3 named lost latents: 2 stated, 1 not stated.*
 
 ### MADE — invented  · 2 labelled, 5 unlabelled
 
-- `f585` Identifies code elements or algorithm steps.  *[not stated]*
+- `f585` Identifies code elements or algorithm steps.  **[stated — None]**
 - `f1191` Fires on commands/keywords used in configuration and deployment tooling.  *[not stated]*
 
-*Of 2 named made latents: 0 stated, 2 not stated.*
+*Of 2 named made latents: 1 stated, 1 not stated.*
 
 ---
 
@@ -4299,33 +4299,33 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 8 labelled, 5 unlabelled
 
-- `f64` Opening curly brace following a function declaration or definition.  **[stated — CLEARLY]**
+- `f64` Opening curly brace following a function declaration or definition.  **[stated — None]**
 - `f176` Fires on `__name__` checks for program entry points.  *[not stated]*
 - `f1591` Code constructors initializing a variable named `data`.  *[not stated]*
-- `f2591` Assigning a value to a variable using the assignment operator.  **[stated — CLEARLY]**
+- `f2591` Assigning a value to a variable using the assignment operator.  **[stated — None]**
 - `f6834` Accessing an array element using an integer index.  *[not stated]*
-- `f7119` First token of a function/method declaration.  **[stated — CLEARLY]**
-- `f10722` Fires on tokens marking the start of a function/method definition or parameters.  **[stated — CLEARLY]**
-- `f14017` Fires on "message" when used to report errors or provide information.  **[stated — PROBABLY]**
+- `f7119` First token of a function/method declaration.  **[stated — None]**
+- `f10722` Fires on tokens marking the start of a function/method definition or parameters.  **[stated — None]**
+- `f14017` Fires on "message" when used to report errors or provide information.  *[not stated]*
 
-*Of 8 named shared latents: 5 stated, 3 not stated.*
+*Of 8 named shared latents: 4 stated, 4 not stated.*
 
 ### LOST — destroyed  · 6 labelled, 2 unlabelled
 
-- `f569` Identifies variable names declared or assigned within code blocks.  **[stated — CLEARLY]**
+- `f569` Identifies variable names declared or assigned within code blocks.  **[stated — None]**
 - `f1848` A technical term or command related to media conversion or streaming.  *[not stated]*
-- `f2293` Identifies C/C++ preprocessor macros or variable initializations.  **[stated — CLEARLY]**
-- `f4359` Marks the start of a new code block or function definition.  **[stated — CLEARLY]**
-- `f13604` Variable declaration within a class block.  **[stated — CLEARLY]**
+- `f2293` Identifies C/C++ preprocessor macros or variable initializations.  **[stated — None]**
+- `f4359` Marks the start of a new code block or function definition.  *[controls fired — cannot tell]*
+- `f13604` Variable declaration within a class block.  **[stated — None]**
 - `f14882` Detects the `args` parameter in a `main` method signature.  *[not stated]*
 
-*Of 6 named lost latents: 4 stated, 2 not stated.*
+*Of 6 named lost latents: 3 stated, 2 not stated, 1 undecidable.*
 
 ### MADE — invented  · 3 labelled, 3 unlabelled
 
 - `f2876` Captures uppercase letters within names, abbreviations, or model names.  *[not stated]*
 - `f3830` Fires on import statements referencing the `android.os` package.  *[not stated]*
-- `f5312` Fires on class names within Android development code contexts.  **[stated — CLEARLY]**
+- `f5312` Fires on class names within Android development code contexts.  **[stated — None]**
 
 *Of 3 named made latents: 1 stated, 2 not stated.*
 
@@ -4349,24 +4349,24 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 3 labelled, 11 unlabelled
 
-- `f1950` Named entity – country or region name.  *[not stated]*
+- `f1950` Named entity – country or region name.  **[stated — None]**
 - `f6172` A preposition introducing a cost or usage metric.  *[not stated]*
 - `f11051` Serial communication initialization, frequently using the term "serial".  *[not stated]*
 
-*Of 3 named shared latents: 0 stated, 3 not stated.*
+*Of 3 named shared latents: 1 stated, 2 not stated.*
 
 ### LOST — destroyed  · 1 labelled, 5 unlabelled
 
-- `f13591` Fires on terms describing IoT or related technologies.  **[stated — CLEARLY]**
+- `f13591` Fires on terms describing IoT or related technologies.  **[stated — None]**
 
 *Of 1 named lost latents: 1 stated, 0 not stated.*
 
 ### MADE — invented  · 4 labelled, 1 unlabelled
 
-- `f1295` Fires on nouns describing physical objects used for a practical purpose.  **[stated — CLEARLY]**
-- `f1554` Fires on tokens describing network technologies or services.  **[stated — CLEARLY]**
+- `f1295` Fires on nouns describing physical objects used for a practical purpose.  **[stated — None]**
+- `f1554` Fires on tokens describing network technologies or services.  **[stated — None]**
 - `f1668` A noun or noun phrase referring to a production or manufacturing activity.  *[not stated]*
-- `f12843` Fires on terms describing cellular networks and related technologies.  **[stated — CLEARLY]**
+- `f12843` Fires on terms describing cellular networks and related technologies.  **[stated — None]**
 
 *Of 4 named made latents: 3 stated, 1 not stated.*
 
@@ -4394,11 +4394,11 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 - `f476` Past tense auxiliary verb followed by "have" or "heard.  *[not stated]*
 - `f556` Nouns or noun phrases appearing after a phrase introducing explanation or clarification.  *[not stated]*
 - `f753` Fires on adverbs or adverbial phrases describing how something is done.  *[not stated]*
-- `f1504` Adverb of frequency or prevalence following a clause.  **[stated — CLEARLY]**
-- `f1812` Adjective following "most" or "least" describing a category or option.  **[stated — CLEARLY]**
-- `f3007` Fires on the word "common" used as an adjective describing prevalence.  **[stated — CLEARLY]**
-- `f4976` Fires on adverbs or adjectives indicating repeated action.  **[stated — CLEARLY]**
-- `f9030` A numerical value representing pi or a related term.  **[stated — CLEARLY]**
+- `f1504` Adverb of frequency or prevalence following a clause.  **[stated — None]**
+- `f1812` Adjective following "most" or "least" describing a category or option.  **[stated — None]**
+- `f3007` Fires on the word "common" used as an adjective describing prevalence.  **[stated — None]**
+- `f4976` Fires on adverbs or adjectives indicating repeated action.  **[stated — None]**
+- `f9030` A numerical value representing pi or a related term.  **[stated — None]**
 
 *Of 9 named shared latents: 5 stated, 4 not stated.*
 
@@ -4406,7 +4406,7 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 - `f328` A modal verb "be" following a noun or phrase describing a capability.  *[not stated]*
 - `f2054` Tokens indicating the act of displaying output to a terminal.  *[not stated]*
-- `f4773` The feature fires on tokens referring to measures of central tendency.  **[stated — CLEARLY]**
+- `f4773` The feature fires on tokens referring to measures of central tendency.  **[stated — None]**
 - `f7659` Feature fires on terms denoting physical size or scale.  *[not stated]*
 - `f8445` Fires on tokens following contractions of "you are" or the word "refer".  *[not stated]*
 
@@ -4416,8 +4416,8 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 - `f411` Fires on conjunctions and adverbs following a direct instruction.  *[not stated]*
 - `f769` Fires on the immediately following token after a question mark.  *[not stated]*
-- `f886` Fires on terms related to numerical analysis and computational methods.  **[stated — CLEARLY]**
-- `f14541` Mentions or calculations involving the mathematical constant pi.  **[stated — CLEARLY]**
+- `f886` Fires on terms related to numerical analysis and computational methods.  **[stated — None]**
+- `f14541` Mentions or calculations involving the mathematical constant pi.  **[stated — None]**
 
 *Of 4 named made latents: 2 stated, 2 not stated.*
 
@@ -4441,38 +4441,38 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 12 labelled, 2 unlabelled
 
-- `f83` Triggered by a determiner or preposition following a noun.  **[stated — CLEARLY]**
-- `f207` Possessive pronoun following a preposition.  *[controls fired — cannot tell]*
-- `f380` Fires on possessive pronouns following advice/consideration phrases.  **[stated — CLEARLY]**
-- `f1718` Identifies C# code elements (keywords, types, libraries).  **[stated — CLEARLY]**
-- `f1993` Fires on C# language keywords and framework namespaces/classes.  **[stated — CLEARLY]**
-- `f2783` Possessive pronoun "your" followed by a noun or noun phrase.  **[stated — CLEARLY]**
-- `f3250` Annotations preceding class or struct definitions.  *[controls fired — cannot tell]*
-- `f4075` Fires on tokens associated with ASP.NET MVC controller actions and related components.  **[stated — PROBABLY]**
-- `f4164` Fires on words signifying data structures or their representation.  *[controls fired — cannot tell]*
-- `f10170` Identifies ORM annotations and database schema keywords.  **[stated — PROBABLY]**
-- `f14094` Fires on code tokens related to data models and ORM frameworks.  **[stated — CLEARLY]**
-- `f15698` Triggers on method calls or LINQ operations within code blocks.  **[stated — PROBABLY]**
+- `f83` Triggered by a determiner or preposition following a noun.  **[stated — None]**
+- `f207` Possessive pronoun following a preposition.  **[stated — None]**
+- `f380` Fires on possessive pronouns following advice/consideration phrases.  **[stated — None]**
+- `f1718` Identifies C# code elements (keywords, types, libraries).  **[stated — None]**
+- `f1993` Fires on C# language keywords and framework namespaces/classes.  **[stated — None]**
+- `f2783` Possessive pronoun "your" followed by a noun or noun phrase.  **[stated — None]**
+- `f3250` Annotations preceding class or struct definitions.  *[not stated]*
+- `f4075` Fires on tokens associated with ASP.NET MVC controller actions and related components.  *[not stated]*
+- `f4164` Fires on words signifying data structures or their representation.  **[stated — None]**
+- `f10170` Identifies ORM annotations and database schema keywords.  **[stated — None]**
+- `f14094` Fires on code tokens related to data models and ORM frameworks.  **[stated — None]**
+- `f15698` Triggers on method calls or LINQ operations within code blocks.  *[not stated]*
 
-*Of 12 named shared latents: 9 stated, 0 not stated, 3 undecidable.*
+*Of 12 named shared latents: 9 stated, 3 not stated.*
 
 ### LOST — destroyed  · 4 labelled, 1 unlabelled
 
-- `f3266` Trigger on database schema definitions referencing indexes or keys.  **[stated — PROBABLY]**
-- `f7195` Signals the start of a new class declaration.  *[controls fired — cannot tell]*
-- `f9694` Preposition introducing a database table reference.  **[stated — PROBABLY]**
+- `f3266` Trigger on database schema definitions referencing indexes or keys.  *[not stated]*
+- `f7195` Signals the start of a new class declaration.  *[not stated]*
+- `f9694` Preposition introducing a database table reference.  *[not stated]*
 - `f13744` Fires on words indicating fictional content or genres.  *[not stated]*
 
-*Of 4 named lost latents: 2 stated, 1 not stated, 1 undecidable.*
+*Of 4 named lost latents: 0 stated, 4 not stated.*
 
 ### MADE — invented  · 4 labelled, 5 unlabelled
 
-- `f477` the" at the start of a descriptive phrase.  *[not stated]*
-- `f688` Possessive form of a noun indicating ownership or affiliation.  *[controls fired — cannot tell]*
-- `f3440` Identifies inheritance or method calls relating to classes.  *[not stated]*
-- `f11722` Names of ORM and database persistence frameworks.  **[stated — PROBABLY]**
+- `f477` the" at the start of a descriptive phrase.  **[stated — None]**
+- `f688` Possessive form of a noun indicating ownership or affiliation.  **[stated — None]**
+- `f3440` Identifies inheritance or method calls relating to classes.  **[stated — None]**
+- `f11722` Names of ORM and database persistence frameworks.  **[stated — None]**
 
-*Of 4 named made latents: 1 stated, 2 not stated, 1 undecidable.*
+*Of 4 named made latents: 4 stated, 0 not stated.*
 
 ---
 
@@ -4496,31 +4496,31 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 - `f521` First-person pronoun followed by an adjective expressing emotion.  *[not stated]*
 - `f892` ways" preceded by an adjective or noun.  *[not stated]*
-- `f1599` The feature fires on the token "free" or variations thereof, often highlighting something offered without charge.  **[stated — CLEARLY]**
-- `f3427` Triggers on the phrase "You can" followed by a token.  **[stated — CLEARLY]**
+- `f1599` The feature fires on the token "free" or variations thereof, often highlighting something offered without charge.  **[stated — None]**
+- `f3427` Triggers on the phrase "You can" followed by a token.  *[not stated]*
 - `f4241` Right" appears following a preceding word or phrase denoting a statement or perspective.  *[not stated]*
 
-*Of 5 named shared latents: 2 stated, 3 not stated.*
+*Of 5 named shared latents: 1 stated, 4 not stated.*
 
 ### LOST — destroyed  · 5 labelled, 3 unlabelled
 
 - `f1719` Introduces a subjective assessment of humor or entertainment.  *[not stated]*
-- `f5614` Modifies a descriptor of tone or formality, often in a list or options.  **[stated — CLEARLY]**
+- `f5614` Modifies a descriptor of tone or formality, often in a list or options.  *[not stated]*
 - `f9132` Preposition followed by a form of "subjective.  *[not stated]*
 - `f14705` Introduces a list or set of options/ideas.  *[controls fired — cannot tell]*
-- `f16161` Triggered by a request for user customization or preference.  **[stated — CLEARLY]**
+- `f16161` Triggered by a request for user customization or preference.  **[stated — None]**
 
-*Of 5 named lost latents: 2 stated, 2 not stated, 1 undecidable.*
+*Of 5 named lost latents: 1 stated, 3 not stated, 1 undecidable.*
 
 ### MADE — invented  · 5 labelled, 3 unlabelled
 
 - `f63` Adjectives modifying nouns describing attributes or capabilities.  *[not stated]*
 - `f677` Verbs indicating an attempt, often preceded by "I'd" or "I'll".  *[not stated]*
-- `f4951` A word or phrase indicating dismissal or disregard.  *[not stated]*
-- `f8042` Fires on a validating affirmation following a user query.  **[stated — CLEARLY]**
-- `f15855` to" following a phrase indicating allowance or reassurance.  **[stated — CLEARLY]**
+- `f4951` A word or phrase indicating dismissal or disregard.  **[stated — None]**
+- `f8042` Fires on a validating affirmation following a user query.  **[stated — None]**
+- `f15855` to" following a phrase indicating allowance or reassurance.  **[stated — None]**
 
-*Of 5 named made latents: 2 stated, 3 not stated.*
+*Of 5 named made latents: 3 stated, 2 not stated.*
 
 ---
 
@@ -4543,24 +4543,24 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 8 labelled, 3 unlabelled
 
 - `f24` A phrase signaling an explication or organization of information.  *[controls fired — cannot tell]*
-- `f66` Fires on a pronoun followed by a verb indicating a request or instruction.  *[not stated]*
+- `f66` Fires on a pronoun followed by a verb indicating a request or instruction.  **[stated — None]**
 - `f174` Pronoun ("we") initiates a new clause or sentence.  *[not stated]*
-- `f376` Fires on the first-person pronoun "I" at the beginning of a sentence or clause.  **[stated — CLEARLY]**
-- `f398` First-person pronoun following a refusal/limitation phrase.  **[stated — CLEARLY]**
-- `f712` Fires on contracted forms of "I" or "will".  **[stated — PROBABLY]**
-- `f2672` Pronoun "I" followed by a contraction apostrophe.  **[stated — CLEARLY]**
-- `f13638` Introduces a categorized list or breakdown.  **[stated — CLEARLY]**
+- `f376` Fires on the first-person pronoun "I" at the beginning of a sentence or clause.  *[not stated]*
+- `f398` First-person pronoun following a refusal/limitation phrase.  *[not stated]*
+- `f712` Fires on contracted forms of "I" or "will".  *[not stated]*
+- `f2672` Pronoun "I" followed by a contraction apostrophe.  **[stated — None]**
+- `f13638` Introduces a categorized list or breakdown.  **[stated — None]**
 
-*Of 8 named shared latents: 5 stated, 2 not stated, 1 undecidable.*
+*Of 8 named shared latents: 3 stated, 4 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 4 labelled, 0 unlabelled
 
 - `f1477` Introduces a list of items or possibilities.  *[controls fired — cannot tell]*
-- `f2145` It" initiating a new clause or sentence.  **[stated — CLEARLY]**
-- `f2923` Third-person pronoun referring to an agent performing an action.  **[stated — CLEARLY]**
-- `f13557` Pronoun usage signaling a future action or continuation of interaction.  **[stated — CLEARLY]**
+- `f2145` It" initiating a new clause or sentence.  **[stated — None]**
+- `f2923` Third-person pronoun referring to an agent performing an action.  *[not stated]*
+- `f13557` Pronoun usage signaling a future action or continuation of interaction.  **[stated — None]**
 
-*Of 4 named lost latents: 3 stated, 0 not stated, 1 undecidable.*
+*Of 4 named lost latents: 2 stated, 1 not stated, 1 undecidable.*
 
 ### MADE — invented  · 0 labelled, 0 unlabelled
 
@@ -4585,19 +4585,19 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 11 labelled, 5 unlabelled
 
-- `f690` The feature fires on tokens describing a quality or aspect considered positive or relaxing.  **[stated — PROBABLY]**
-- `f1305` Begins a phrase or clause with the indefinite article "a.  **[stated — CLEARLY]**
-- `f1346` Fires on tokens related to food descriptions, recipes, or cuisines.  **[stated — CLEARLY]**
-- `f3691` Verbs indicating consumption, often with a strong or unusual object.  **[stated — CLEARLY]**
-- `f6651` Fires on tokens following prepositions/conjunctions introducing personal preferences.  **[stated — PROBABLY]**
+- `f690` The feature fires on tokens describing a quality or aspect considered positive or relaxing.  **[stated — None]**
+- `f1305` Begins a phrase or clause with the indefinite article "a.  **[stated — None]**
+- `f1346` Fires on tokens related to food descriptions, recipes, or cuisines.  **[stated — None]**
+- `f3691` Verbs indicating consumption, often with a strong or unusual object.  **[stated — None]**
+- `f6651` Fires on tokens following prepositions/conjunctions introducing personal preferences.  *[not stated]*
 - `f9235` The feature fires on the token "meet" when it indicates fulfilling a goal or standard.  *[not stated]*
-- `f9277` Fires on words describing intense desires or impulses.  **[stated — CLEARLY]**
-- `f9308` Fires on the word "ice" or "cream" when discussing food/dessert.  **[stated — PROBABLY]**
+- `f9277` Fires on words describing intense desires or impulses.  **[stated — None]**
+- `f9308` Fires on the word "ice" or "cream" when discussing food/dessert.  *[not stated]*
 - `f11331` A word denoting sweetness immediately following a colon or asterisk.  *[not stated]*
 - `f11781` Introduces a negative constraint or caution regarding food items.  *[not stated]*
 - `f15640` Words relating to influencing opinions or actions, often with a positive connotation.  *[not stated]*
 
-*Of 11 named shared latents: 7 stated, 4 not stated.*
+*Of 11 named shared latents: 5 stated, 6 not stated.*
 
 ### LOST — destroyed  · 0 labelled, 3 unlabelled
 
@@ -4628,18 +4628,18 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 6 labelled, 12 unlabelled
 
-- `f260` Adverb/adjective preceding a noun or noun phrase indicating qualification.  **[stated — CLEARLY]**
+- `f260` Adverb/adjective preceding a noun or noun phrase indicating qualification.  *[not stated]*
 - `f291` Conjunction following a list element or clause end.  *[not stated]*
 - `f668` Fires on tokens representing systems, environments, or realms of activity.  *[controls fired — cannot tell]*
-- `f7575` Identifies and uses "survey" (and variants) within a list or explanation.  **[stated — CLEARLY]**
-- `f9262` Preposition/conjunction introducing a list of disparate systems/databases.  **[stated — CLEARLY]**
-- `f10276` Noun phrase indicating a characteristic of workplace or organizational culture.  **[stated — CLEARLY]**
+- `f7575` Identifies and uses "survey" (and variants) within a list or explanation.  **[stated — None]**
+- `f9262` Preposition/conjunction introducing a list of disparate systems/databases.  **[stated — None]**
+- `f10276` Noun phrase indicating a characteristic of workplace or organizational culture.  **[stated — None]**
 
-*Of 6 named shared latents: 4 stated, 1 not stated, 1 undecidable.*
+*Of 6 named shared latents: 3 stated, 2 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 3 labelled, 7 unlabelled
 
-- `f1576` The feature fires on the word "email" and its related forms.  **[stated — PROBABLY]**
+- `f1576` The feature fires on the word "email" and its related forms.  **[stated — None]**
 - `f11952` Fires on mentions of cloud storage platforms.  *[not stated]*
 - `f15017` Preposition or conjunction at the start of a clause/phrase.  *[not stated]*
 
@@ -4647,10 +4647,10 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### MADE — invented  · 2 labelled, 2 unlabelled
 
-- `f589` Adjective preceding a noun or noun phrase denoting a state or condition.  *[not stated]*
-- `f688` Possessive form of a noun indicating ownership or affiliation.  *[controls fired — cannot tell]*
+- `f589` Adjective preceding a noun or noun phrase denoting a state or condition.  *[controls fired — cannot tell]*
+- `f688` Possessive form of a noun indicating ownership or affiliation.  **[stated — None]**
 
-*Of 2 named made latents: 0 stated, 1 not stated, 1 undecidable.*
+*Of 2 named made latents: 1 stated, 0 not stated, 1 undecidable.*
 
 ---
 
@@ -4672,18 +4672,18 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 3 labelled, 7 unlabelled
 
-- `f1557` Identifies network-related terms, often in explanations or lists.  **[stated — CLEARLY]**
-- `f4144` Directives or keywords within Nginx configuration files.  **[stated — CLEARLY]**
-- `f4425` Identifies keywords related to server setup and execution.  **[stated — CLEARLY]**
+- `f1557` Identifies network-related terms, often in explanations or lists.  **[stated — None]**
+- `f4144` Directives or keywords within Nginx configuration files.  *[not stated]*
+- `f4425` Identifies keywords related to server setup and execution.  **[stated — None]**
 
-*Of 3 named shared latents: 3 stated, 0 not stated.*
+*Of 3 named shared latents: 2 stated, 1 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 3 unlabelled
 
-- `f59` Fires on code-related keywords and identifiers.  **[stated — CLEARLY]**
-- `f9086` The feature fires on tokens associated with directing network traffic.  **[stated — CLEARLY]**
+- `f59` Fires on code-related keywords and identifiers.  **[stated — None]**
+- `f9086` The feature fires on tokens associated with directing network traffic.  *[controls fired — cannot tell]*
 
-*Of 2 named lost latents: 2 stated, 0 not stated.*
+*Of 2 named lost latents: 1 stated, 0 not stated, 1 undecidable.*
 
 ### MADE — invented  · 1 labelled, 1 unlabelled
 
@@ -4717,8 +4717,8 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### MADE — invented  · 2 labelled, 2 unlabelled
 
-- `f12248` Noun referring to a social media platform, often followed by a preposition.  **[stated — CLEARLY]**
-- `f12500` Fires on software names, particularly those involved in virtual communication.  **[stated — CLEARLY]**
+- `f12248` Noun referring to a social media platform, often followed by a preposition.  **[stated — None]**
+- `f12500` Fires on software names, particularly those involved in virtual communication.  **[stated — None]**
 
 *Of 2 named made latents: 2 stated, 0 not stated.*
 
@@ -4742,27 +4742,27 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 5 labelled, 5 unlabelled
 
-- `f101` Fires on chess-specific vocabulary and move representations.  **[stated — CLEARLY]**
-- `f3549` Definite article at clause/sentence start.  **[stated — CLEARLY]**
+- `f101` Fires on chess-specific vocabulary and move representations.  **[stated — None]**
+- `f3549` Definite article at clause/sentence start.  **[stated — None]**
 - `f4188` Fires on mentions of cards, especially when discussing rules or patterns.  *[not stated]*
 - `f4259` Numbers indicating rank or file positions within a chess board description.  *[not stated]*
-- `f9248` Fires on the first instance of a title or position of power.  **[stated — CLEARLY]**
+- `f9248` Fires on the first instance of a title or position of power.  **[stated — None]**
 
 *Of 5 named shared latents: 3 stated, 2 not stated.*
 
 ### LOST — destroyed  · 1 labelled, 6 unlabelled
 
-- `f1546` Fires on definite articles preceding a noun or noun phrase.  **[stated — CLEARLY]**
+- `f1546` Fires on definite articles preceding a noun or noun phrase.  **[stated — None]**
 
 *Of 1 named lost latents: 1 stated, 0 not stated.*
 
 ### MADE — invented  · 3 labelled, 2 unlabelled
 
-- `f212` Definite article preceding a capitalized term.  **[stated — CLEARLY]**
-- `f308` Definite article initiating a description of a person.  *[not stated]*
+- `f212` Definite article preceding a capitalized term.  **[stated — None]**
+- `f308` Definite article initiating a description of a person.  **[stated — None]**
 - `f792` Article following a preposition.  *[not stated]*
 
-*Of 3 named made latents: 1 stated, 2 not stated.*
+*Of 3 named made latents: 2 stated, 1 not stated.*
 
 ---
 
@@ -4784,15 +4784,15 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 7 labelled, 11 unlabelled
 
-- `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  *[controls fired — cannot tell]*
+- `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  **[stated — None]**
 - `f1528` Introduces a clause or item after a list marker.  *[not stated]*
-- `f2637` A noun describing a key element or part of something.  **[stated — CLEARLY]**
-- `f3651` Fires on "of" followed by a fractional descriptor.  **[stated — PROBABLY]**
+- `f2637` A noun describing a key element or part of something.  *[controls fired — cannot tell]*
+- `f3651` Fires on "of" followed by a fractional descriptor.  *[not stated]*
 - `f5205` Fires on the prefix "comp-" when used to denote a concept or component.  *[not stated]*
-- `f10062` Fires on the word "Part" or "Parts" at the beginning of a list item.  **[stated — CLEARLY]**
+- `f10062` Fires on the word "Part" or "Parts" at the beginning of a list item.  *[not stated]*
 - `f13819` Fires on "aspect" following a question or bullet point.  *[not stated]*
 
-*Of 7 named shared latents: 3 stated, 3 not stated, 1 undecidable.*
+*Of 7 named shared latents: 1 stated, 5 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 0 labelled, 2 unlabelled
 
@@ -4801,7 +4801,7 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 - `f247` Bolded descriptor followed by a noun indicating a specific element.  *[not stated]*
 - `f13380` Preposition or article followed by a noun related to brain anatomy/function.  *[not stated]*
-- `f13602` Verbs indicating removal or clearance of an object or substance.  **[stated — CLEARLY]**
+- `f13602` Verbs indicating removal or clearance of an object or substance.  **[stated — None]**
 
 *Of 3 named made latents: 1 stated, 2 not stated.*
 
@@ -4825,24 +4825,24 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 6 labelled, 6 unlabelled
 
-- `f15` Noun ending in -ness or -ful appearing after a preposition or describing a quality.  **[stated — PROBABLY]**
+- `f15` Noun ending in -ness or -ful appearing after a preposition or describing a quality.  *[not stated]*
 - `f54` Noun indicating a component, guide, or feature of a system.  *[not stated]*
-- `f2688` Fires on words introducing explanations or summaries.  **[stated — CLEARLY]**
-- `f3213` Keywords related to responsibility and accountability frequently trigger the feature.  **[stated — CLEARLY]**
-- `f6786` Noun following "have" or "has" indicating possession or availability.  *[controls fired — cannot tell]*
-- `f14084` Fires on "responsible" when describing duties or legal obligations.  **[stated — CLEARLY]**
+- `f2688` Fires on words introducing explanations or summaries.  *[not stated]*
+- `f3213` Keywords related to responsibility and accountability frequently trigger the feature.  **[stated — None]**
+- `f6786` Noun following "have" or "has" indicating possession or availability.  *[not stated]*
+- `f14084` Fires on "responsible" when describing duties or legal obligations.  **[stated — None]**
 
-*Of 6 named shared latents: 4 stated, 1 not stated, 1 undecidable.*
+*Of 6 named shared latents: 2 stated, 4 not stated.*
 
 ### LOST — destroyed  · 5 labelled, 4 unlabelled
 
-- `f123` Noun following a description or label.  *[controls fired — cannot tell]*
-- `f1103` Auxiliary verb followed by "legal" or "serious consequences.  **[stated — PROBABLY]**
-- `f1802` Noun referring to formal rules or legal frameworks.  **[stated — CLEARLY]**
+- `f123` Noun following a description or label.  **[stated — None]**
+- `f1103` Auxiliary verb followed by "legal" or "serious consequences.  *[not stated]*
+- `f1802` Noun referring to formal rules or legal frameworks.  **[stated — None]**
 - `f2500` Technical terms or instructions introduced by a colon or within a list.  *[not stated]*
 - `f9006` Noun immediately following "Legal Restrictions" or "Legal Considerations".  *[not stated]*
 
-*Of 5 named lost latents: 2 stated, 2 not stated, 1 undecidable.*
+*Of 5 named lost latents: 2 stated, 3 not stated.*
 
 ### MADE — invented  · 2 labelled, 3 unlabelled
 
@@ -4871,35 +4871,35 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 9 labelled, 12 unlabelled
 
-- `f79` Fires on proper nouns, frequently part of URLs or company names.  **[stated — CLEARLY]**
-- `f1828` Fires on names of software/tools, often in a list or code block.  **[stated — CLEARLY]**
-- `f2876` Captures uppercase letters within names, abbreviations, or model names.  **[stated — CLEARLY]**
-- `f3253` Fires on tokens starting with "Mu" or "Muc.  **[stated — CLEARLY]**
+- `f79` Fires on proper nouns, frequently part of URLs or company names.  *[not stated]*
+- `f1828` Fires on names of software/tools, often in a list or code block.  **[stated — None]**
+- `f2876` Captures uppercase letters within names, abbreviations, or model names.  *[not stated]*
+- `f3253` Fires on tokens starting with "Mu" or "Muc.  **[stated — None]**
 - `f3881` The feature fires on the root word "Motiv" and its variants within a list of reasons or drivers.  *[not stated]*
-- `f8624` Identifies mentions and variations of the PDF file format.  **[stated — CLEARLY]**
+- `f8624` Identifies mentions and variations of the PDF file format.  **[stated — None]**
 - `f8774` pip" command within a bash code block.  *[not stated]*
-- `f11482` The feature triggers on the word "tools" or its translation in various languages.  **[stated — CLEARLY]**
-- `f14115` Fires on variations of "command line" or "CLI" within the context of software usage.  *[not stated]*
+- `f11482` The feature triggers on the word "tools" or its translation in various languages.  **[stated — None]**
+- `f14115` Fires on variations of "command line" or "CLI" within the context of software usage.  **[stated — None]**
 
-*Of 9 named shared latents: 6 stated, 3 not stated.*
+*Of 9 named shared latents: 5 stated, 4 not stated.*
 
 ### LOST — destroyed  · 5 labelled, 3 unlabelled
 
-- `f343` Fires on proper nouns, frequently within a list or description.  *[controls fired — cannot tell]*
+- `f343` Fires on proper nouns, frequently within a list or description.  *[not stated]*
 - `f699` Accessing or setting object properties within code.  *[not stated]*
-- `f1848` A technical term or command related to media conversion or streaming.  **[stated — CLEARLY]**
-- `f14658` A capitalized word or phrase that introduces a named entity (service, tool, product).  **[stated — CLEARLY]**
-- `f14972` Identifies executable paths and command invocation sequences.  **[stated — CLEARLY]**
+- `f1848` A technical term or command related to media conversion or streaming.  **[stated — None]**
+- `f14658` A capitalized word or phrase that introduces a named entity (service, tool, product).  **[stated — None]**
+- `f14972` Identifies executable paths and command invocation sequences.  **[stated — None]**
 
-*Of 5 named lost latents: 3 stated, 1 not stated, 1 undecidable.*
+*Of 5 named lost latents: 3 stated, 2 not stated.*
 
 ### MADE — invented  · 3 labelled, 1 unlabelled
 
-- `f956` Fires on technical terms related to software development.  **[stated — CLEARLY]**
-- `f9686` Mentions of ebook platforms or file types.  **[stated — CLEARLY]**
+- `f956` Fires on technical terms related to software development.  *[controls fired — cannot tell]*
+- `f9686` Mentions of ebook platforms or file types.  **[stated — None]**
 - `f11275` Filenames and extensions referencing compressed archive formats.  *[not stated]*
 
-*Of 3 named made latents: 2 stated, 1 not stated.*
+*Of 3 named made latents: 1 stated, 1 not stated, 1 undecidable.*
 
 ---
 
@@ -4924,30 +4924,30 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 - `f105` Adjective following a colon or bullet point.  *[not stated]*
 - `f109` Preposition/conjunction following an introductory phrase.  *[not stated]*
 - `f246` An adjective immediately following a colon or bullet point in a list of options.  *[not stated]*
-- `f260` Adverb/adjective preceding a noun or noun phrase indicating qualification.  *[controls fired — cannot tell]*
+- `f260` Adverb/adjective preceding a noun or noun phrase indicating qualification.  **[stated — None]**
 - `f373` Presence of words related to sexual content, often in response to requests.  *[not stated]*
-- `f600` Evaluative language, often related to interpersonal dynamics or emotional states.  **[stated — CLEARLY]**
+- `f600` Evaluative language, often related to interpersonal dynamics or emotional states.  **[stated — None]**
 - `f2189` Fires on ending punctuation following a statement about a sensitive topic.  *[not stated]*
-- `f3504` Adjective modifying a noun related to ethics, sustainability, or safe practices.  **[stated — CLEARLY]**
-- `f5593` Fires on tokens within legal contexts, especially those related to courts, arbitration, or conflict resolution.  **[stated — CLEARLY]**
-- `f7635` Fires when "respect" appears as a value in a list of prioritized principles.  **[stated — CLEARLY]**
-- `f8563` A word or phrase describing a skill or quality related to communication.  **[stated — CLEARLY]**
-- `f12630` Noun or adjective expressing intense negative emotion (anger, rage, etc.).  **[stated — PROBABLY]**
+- `f3504` Adjective modifying a noun related to ethics, sustainability, or safe practices.  **[stated — None]**
+- `f5593` Fires on tokens within legal contexts, especially those related to courts, arbitration, or conflict resolution.  **[stated — None]**
+- `f7635` Fires when "respect" appears as a value in a list of prioritized principles.  **[stated — None]**
+- `f8563` A word or phrase describing a skill or quality related to communication.  **[stated — None]**
+- `f12630` Noun or adjective expressing intense negative emotion (anger, rage, etc.).  **[stated — None]**
 
-*Of 12 named shared latents: 6 stated, 5 not stated, 1 undecidable.*
+*Of 12 named shared latents: 7 stated, 5 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 2 unlabelled
 
-- `f2518` Adjective immediately following a noun describing a quality.  **[stated — CLEARLY]**
+- `f2518` Adjective immediately following a noun describing a quality.  **[stated — None]**
 - `f13747` Words describing abusive or harmful language following a preposition.  *[not stated]*
 
 *Of 2 named lost latents: 1 stated, 1 not stated.*
 
 ### MADE — invented  · 1 labelled, 2 unlabelled
 
-- `f870` An adjective or adverb immediately preceding a noun describing a property.  *[not stated]*
+- `f870` An adjective or adverb immediately preceding a noun describing a property.  **[stated — None]**
 
-*Of 1 named made latents: 0 stated, 1 not stated.*
+*Of 1 named made latents: 1 stated, 0 not stated.*
 
 ---
 
@@ -4973,18 +4973,18 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 - `f148` Introduces a clause following a noun or phrase.  *[not stated]*
 - `f902` Introduces a clause or phrase describing a physical process.  *[not stated]*
 - `f1631` Marks the start of a list or enumerated point.  *[not stated]*
-- `f3327` Begins a section heading with a colon following.  **[stated — CLEARLY]**
-- `f5216` End-of-sentence conjunction or introductory phrase.  **[stated — CLEARLY]**
+- `f3327` Begins a section heading with a colon following.  *[controls fired — cannot tell]*
+- `f5216` End-of-sentence conjunction or introductory phrase.  *[not stated]*
 - `f14431` Introduces a statement or explanation with "que.  *[not stated]*
 
-*Of 7 named shared latents: 2 stated, 5 not stated.*
+*Of 7 named shared latents: 0 stated, 6 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 2 labelled, 7 unlabelled
 
 - `f1484` Punctuation following a descriptor of a place.  *[not stated]*
-- `f2136` Noun following a positive or explanatory phrase.  *[controls fired — cannot tell]*
+- `f2136` Noun following a positive or explanatory phrase.  *[not stated]*
 
-*Of 2 named lost latents: 0 stated, 1 not stated, 1 undecidable.*
+*Of 2 named lost latents: 0 stated, 2 not stated.*
 
 ### MADE — invented  · 4 labelled, 1 unlabelled
 
@@ -5015,38 +5015,38 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 11 labelled, 5 unlabelled
 
-- `f635` Identifies a data type or property definition within code or data structures.  *[controls fired — cannot tell]*
-- `f644` An action verb preceding a noun related to data handling.  **[stated — CLEARLY]**
+- `f635` Identifies a data type or property definition within code or data structures.  **[stated — None]**
+- `f644` An action verb preceding a noun related to data handling.  **[stated — None]**
 - `f1101` Following a phrase prohibiting or restricting actions.  *[not stated]*
 - `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  *[not stated]*
-- `f1421` Fires on mentions of Python or closely related terms, often within a technical context.  **[stated — CLEARLY]**
+- `f1421` Fires on mentions of Python or closely related terms, often within a technical context.  **[stated — None]**
 - `f3066` return" keyword following an error or conditional statement.  *[not stated]*
-- `f9034` Fires on keywords within code examples, specifically related to data structures.  **[stated — CLEARLY]**
+- `f9034` Fires on keywords within code examples, specifically related to data structures.  **[stated — None]**
 - `f10092` Definite article/possessive pronoun following a numeric expression.  *[not stated]*
-- `f10891` Accessing elements within data structures (lists, tensors, strings).  **[stated — CLEARLY]**
-- `f11399` Triggers on mentions of data structures within technical explanations.  *[controls fired — cannot tell]*
+- `f10891` Accessing elements within data structures (lists, tensors, strings).  **[stated — None]**
+- `f11399` Triggers on mentions of data structures within technical explanations.  **[stated — None]**
 - `f13755` Triggers on tokens beginning "Ret/Re" denoting retrieval or retrofitting processes.  *[not stated]*
 
-*Of 11 named shared latents: 4 stated, 5 not stated, 2 undecidable.*
+*Of 11 named shared latents: 6 stated, 5 not stated.*
 
 ### LOST — destroyed  · 6 labelled, 6 unlabelled
 
 - `f40` Verbs of cognitive action following a colon or preceding a numbered list item.  *[not stated]*
 - `f121` A determiner or pronoun followed by a preposition or conjunction.  *[not stated]*
-- `f1425` Fires on words denoting a specific instance or member of a group.  **[stated — CLEARLY]**
-- `f6092` Preposition following a verb or noun.  **[stated — CLEARLY]**
+- `f1425` Fires on words denoting a specific instance or member of a group.  *[not stated]*
+- `f6092` Preposition following a verb or noun.  *[not stated]*
 - `f7036` Extracts the first capture group from a successful regex match.  *[not stated]*
 - `f9248` Fires on the first instance of a title or position of power.  *[not stated]*
 
-*Of 6 named lost latents: 2 stated, 4 not stated.*
+*Of 6 named lost latents: 0 stated, 6 not stated.*
 
 ### MADE — invented  · 3 labelled, 1 unlabelled
 
 - `f1171` Identifies the 'Returns' section label.  *[not stated]*
-- `f1382` Fires on terms related to algebraic manipulation and numerical operations.  **[stated — CLEARLY]**
+- `f1382` Fires on terms related to algebraic manipulation and numerical operations.  *[not stated]*
 - `f4188` Fires on mentions of cards, especially when discussing rules or patterns.  *[not stated]*
 
-*Of 3 named made latents: 1 stated, 2 not stated.*
+*Of 3 named made latents: 0 stated, 3 not stated.*
 
 ---
 
@@ -5071,9 +5071,9 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 - `f358` Noun phrases related to military or security organizations and actions.  *[not stated]*
 - `f459` Introduces an imminent danger or complication in a story.  *[not stated]*
 - `f2290` The feature fires on words referring to insects or pest problems.  *[not stated]*
-- `f4749` Introduces a statement about the difficulty or complexity of a task.  **[stated — CLEARLY]**
+- `f4749` Introduces a statement about the difficulty or complexity of a task.  **[stated — None]**
 - `f9976` Responds to requests for inappropriate or harmful content.  *[not stated]*
-- `f14265` Describes a process or task as being overly complicated or inefficient.  **[stated — CLEARLY]**
+- `f14265` Describes a process or task as being overly complicated or inefficient.  **[stated — None]**
 - `f15964` Precedes a statement acknowledging the topic's complexity.  *[not stated]*
 
 *Of 7 named shared latents: 2 stated, 5 not stated.*
@@ -5083,9 +5083,9 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 - `f2021` Preposition or conjunction following a colon or list marker.  *[not stated]*
 - `f9043` Animal names, specifically birds, are the trigger.  *[not stated]*
 - `f14050` Adjective describing a character or object, often emphasizing cuteness or positivity.  *[not stated]*
-- `f15912` Describes a state of being uninteresting or lacking stimulation.  *[controls fired — cannot tell]*
+- `f15912` Describes a state of being uninteresting or lacking stimulation.  **[stated — None]**
 
-*Of 4 named lost latents: 0 stated, 3 not stated, 1 undecidable.*
+*Of 4 named lost latents: 1 stated, 3 not stated.*
 
 ### MADE — invented  · 0 labelled, 2 unlabelled
 
@@ -5111,18 +5111,18 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 2 labelled, 7 unlabelled
 
 - `f357` Assignment operator followed by a variable name.  *[not stated]*
-- `f13402` Fires on the token "order" (and its variants) in a transactional/logistical context.  **[stated — CLEARLY]**
+- `f13402` Fires on the token "order" (and its variants) in a transactional/logistical context.  **[stated — None]**
 
 *Of 2 named shared latents: 1 stated, 1 not stated.*
 
 ### LOST — destroyed  · 4 labelled, 2 unlabelled
 
 - `f1553` Fires on the word "error" (or variations) within text about debugging or handling unexpected issues.  *[not stated]*
-- `f3851` Function/method name immediately following a colon.  **[stated — CLEARLY]**
-- `f4793` Fires on the start of a bulleted list item or section heading.  **[stated — CLEARLY]**
-- `f8232` The feature fires on tokens associated with addressing customer issues and providing solutions.  *[controls fired — cannot tell]*
+- `f3851` Function/method name immediately following a colon.  *[not stated]*
+- `f4793` Fires on the start of a bulleted list item or section heading.  *[not stated]*
+- `f8232` The feature fires on tokens associated with addressing customer issues and providing solutions.  **[stated — None]**
 
-*Of 4 named lost latents: 2 stated, 1 not stated, 1 undecidable.*
+*Of 4 named lost latents: 1 stated, 3 not stated.*
 
 ### MADE — invented  · 1 labelled, 2 unlabelled
 
@@ -5151,35 +5151,35 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 9 labelled, 4 unlabelled
 
 - `f194` The" at the start of a clause or phrase following a colon/question mark.  *[not stated]*
-- `f234` Identifies the start of a field declaration in a data structure.  **[stated — CLEARLY]**
-- `f514` Indefinite article followed by a noun denoting a group or entity.  **[stated — CLEARLY]**
-- `f4849` Definite article at the beginning of a clause or sentence.  **[stated — CLEARLY]**
+- `f234` Identifies the start of a field declaration in a data structure.  *[not stated]*
+- `f514` Indefinite article followed by a noun denoting a group or entity.  **[stated — None]**
+- `f4849` Definite article at the beginning of a clause or sentence.  **[stated — None]**
 - `f6459` Fires on tokens naming payment processing services or methods.  *[not stated]*
 - `f8809` The" introducing a parameter name in function/method arguments.  *[not stated]*
-- `f9832` Preposition/article initiating a descriptive phrase within a domain definition.  *[controls fired — cannot tell]*
-- `f16164` Fires on prepositions or articles directly preceding a noun related to companies or business operations.  **[stated — CLEARLY]**
+- `f9832` Preposition/article initiating a descriptive phrase within a domain definition.  *[not stated]*
+- `f16164` Fires on prepositions or articles directly preceding a noun related to companies or business operations.  **[stated — None]**
 - `f16292` Fires on tokens within address fields, often indicating location data.  *[not stated]*
 
-*Of 9 named shared latents: 4 stated, 4 not stated, 1 undecidable.*
+*Of 9 named shared latents: 3 stated, 6 not stated.*
 
 ### LOST — destroyed  · 3 labelled, 5 unlabelled
 
 - `f127` Article "a" following a noun/noun phrase introducing a descriptor.  *[not stated]*
 - `f3044` Identifies the start of a code block, function, or class definition.  *[not stated]*
-- `f14988` Triggered by words following phrases related to payment status or financial records.  **[stated — CLEARLY]**
+- `f14988` Triggered by words following phrases related to payment status or financial records.  *[not stated]*
 
-*Of 3 named lost latents: 1 stated, 2 not stated.*
+*Of 3 named lost latents: 0 stated, 3 not stated.*
 
 ### MADE — invented  · 6 labelled, 1 unlabelled
 
-- `f83` Triggered by a determiner or preposition following a noun.  *[not stated]*
+- `f83` Triggered by a determiner or preposition following a noun.  **[stated — None]**
 - `f393` Sentence-initial "The".  *[not stated]*
 - `f519` Fires on a list item introducing variations.  *[not stated]*
 - `f704` the" immediately preceding a superlative adjective or adverb.  *[not stated]*
-- `f1205` Definite article at clause/phrase start.  *[not stated]*
+- `f1205` Definite article at clause/phrase start.  **[stated — None]**
 - `f15017` Preposition or conjunction at the start of a clause/phrase.  *[not stated]*
 
-*Of 6 named made latents: 0 stated, 6 not stated.*
+*Of 6 named made latents: 2 stated, 4 not stated.*
 
 ---
 
@@ -5208,9 +5208,9 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### LOST — destroyed  · 1 labelled, 3 unlabelled
 
-- `f4793` Fires on the start of a bulleted list item or section heading.  **[stated — CLEARLY]**
+- `f4793` Fires on the start of a bulleted list item or section heading.  *[not stated]*
 
-*Of 1 named lost latents: 1 stated, 0 not stated.*
+*Of 1 named lost latents: 0 stated, 1 not stated.*
 
 ### MADE — invented  · 0 labelled, 4 unlabelled
 
@@ -5235,22 +5235,22 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 7 labelled, 4 unlabelled
 
-- `f606` Fires on titles or headings denoting sections of a document.  **[stated — CLEARLY]**
-- `f1177` Fires on section titles following a numeric or alphabetic prefix.  *[controls fired — cannot tell]*
+- `f606` Fires on titles or headings denoting sections of a document.  **[stated — None]**
+- `f1177` Fires on section titles following a numeric or alphabetic prefix.  *[not stated]*
 - `f1461` Adjective describing a quality following a descriptor like "more" or "slightly more.  *[not stated]*
 - `f1644` Token follows a colon or dash introducing a detail.  *[not stated]*
-- `f7537` Fires on the token “Focus” (or variations) when used to highlight a key element.  **[stated — CLEARLY]**
+- `f7537` Fires on the token “Focus” (or variations) when used to highlight a key element.  **[stated — None]**
 - `f13267` Adjective describing a data- or system-oriented noun.  *[not stated]*
-- `f14705` Introduces a list or set of options/ideas.  **[stated — CLEARLY]**
+- `f14705` Introduces a list or set of options/ideas.  *[controls fired — cannot tell]*
 
-*Of 7 named shared latents: 3 stated, 3 not stated, 1 undecidable.*
+*Of 7 named shared latents: 2 stated, 4 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 2 labelled, 8 unlabelled
 
-- `f1477` Introduces a list of items or possibilities.  **[stated — CLEARLY]**
+- `f1477` Introduces a list of items or possibilities.  *[controls fired — cannot tell]*
 - `f15594` Mentions of checking/verifying domain or trademark availability.  *[not stated]*
 
-*Of 2 named lost latents: 1 stated, 1 not stated.*
+*Of 2 named lost latents: 0 stated, 1 not stated, 1 undecidable.*
 
 ### MADE — invented  · 1 labelled, 2 unlabelled
 
@@ -5279,7 +5279,7 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 2 labelled, 7 unlabelled
 
 - `f359` Fires on variable names following assignment operators or in loop conditions.  *[not stated]*
-- `f5562` Fires on the beginning of a section title, often preceded by a number.  **[stated — CLEARLY]**
+- `f5562` Fires on the beginning of a section title, often preceded by a number.  **[stated — None]**
 
 *Of 2 named shared latents: 1 stated, 1 not stated.*
 
@@ -5312,26 +5312,26 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 7 labelled, 8 unlabelled
 
-- `f69` Past participle verbs modifying a noun.  **[stated — CLEARLY]**
+- `f69` Past participle verbs modifying a noun.  **[stated — None]**
 - `f121` A determiner or pronoun followed by a preposition or conjunction.  *[not stated]*
-- `f369` Identifies file types and associated technical terms.  **[stated — CLEARLY]**
+- `f369` Identifies file types and associated technical terms.  *[not stated]*
 - `f1793` Detects C# code comments and preprocessor directives.  *[not stated]*
-- `f4513` Identifies public members within a C# class definition.  **[stated — CLEARLY]**
-- `f9884` Fires on the beginning of a variable or component declaration.  **[stated — CLEARLY]**
+- `f4513` Identifies public members within a C# class definition.  *[not stated]*
+- `f9884` Fires on the beginning of a variable or component declaration.  *[not stated]*
 - `f14522` Verb "apply" following a description of ability or action.  *[not stated]*
 
-*Of 7 named shared latents: 4 stated, 3 not stated.*
+*Of 7 named shared latents: 1 stated, 6 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 1 unlabelled
 
 - `f4308` An adjective of high intensity (9 or 10) describing a concept or entity.  *[not stated]*
-- `f7336` Prepositional phrase or conjunction followed by a noun/pronoun.  **[stated — CLEARLY]**
+- `f7336` Prepositional phrase or conjunction followed by a noun/pronoun.  **[stated — None]**
 
 *Of 2 named lost latents: 1 stated, 1 not stated.*
 
 ### MADE — invented  · 1 labelled, 4 unlabelled
 
-- `f1932` Preposition introducing a subordinate clause.  **[stated — CLEARLY]**
+- `f1932` Preposition introducing a subordinate clause.  **[stated — None]**
 
 *Of 1 named made latents: 1 stated, 0 not stated.*
 
@@ -5355,15 +5355,15 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 7 labelled, 7 unlabelled
 
-- `f553` Suffixes commonly used to form nouns or adjectives from other words.  **[stated — CLEARLY]**
-- `f1072` Prefixes denoting a field of study or process precede a root word.  **[stated — CLEARLY]**
-- `f1074` Prefixes followed immediately by a hyphen.  **[stated — CLEARLY]**
+- `f553` Suffixes commonly used to form nouns or adjectives from other words.  **[stated — None]**
+- `f1072` Prefixes denoting a field of study or process precede a root word.  **[stated — None]**
+- `f1074` Prefixes followed immediately by a hyphen.  *[not stated]*
 - `f2976` Noun following a preposition, typically indicating a source or influence.  *[not stated]*
 - `f7508` Mentions of photosynthesis, or related concepts, within an explanatory context.  *[not stated]*
-- `f12745` Describes a visual effect, often related to emitting or reflecting light.  **[stated — CLEARLY]**
-- `f16295` Fires on words beginning with "bio" or "biological" within technical descriptions.  **[stated — CLEARLY]**
+- `f12745` Describes a visual effect, often related to emitting or reflecting light.  **[stated — None]**
+- `f16295` Fires on words beginning with "bio" or "biological" within technical descriptions.  **[stated — None]**
 
-*Of 7 named shared latents: 5 stated, 2 not stated.*
+*Of 7 named shared latents: 4 stated, 3 not stated.*
 
 ### LOST — destroyed  · 1 labelled, 1 unlabelled
 
@@ -5397,25 +5397,25 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 - `f289` Adverbs or conjunctions introducing negative consequences or violations.  *[not stated]*
 - `f550` A preposition/pronoun immediately following a noun phrase describing harmful intent.  *[not stated]*
 - `f1103` Auxiliary verb followed by "legal" or "serious consequences.  *[not stated]*
-- `f1177` Fires on section titles following a numeric or alphabetic prefix.  **[stated — CLEARLY]**
-- `f14409` Indicates an attempt or action involving unauthorized access.  **[stated — CLEARLY]**
-- `f15208` Fires on the word "activity" when used to describe a task or event.  **[stated — CLEARLY]**
-- `f15708` Fires on a label preceded by a key/value pair denoting a category.  **[stated — CLEARLY]**
+- `f1177` Fires on section titles following a numeric or alphabetic prefix.  *[not stated]*
+- `f14409` Indicates an attempt or action involving unauthorized access.  **[stated — None]**
+- `f15208` Fires on the word "activity" when used to describe a task or event.  **[stated — None]**
+- `f15708` Fires on a label preceded by a key/value pair denoting a category.  *[controls fired — cannot tell]*
 
-*Of 7 named shared latents: 4 stated, 3 not stated.*
+*Of 7 named shared latents: 2 stated, 4 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 1 labelled, 3 unlabelled
 
-- `f1318` Noun denoting a societal or technological structure/system.  *[controls fired — cannot tell]*
+- `f1318` Noun denoting a societal or technological structure/system.  **[stated — None]**
 
-*Of 1 named lost latents: 0 stated, 0 not stated, 1 undecidable.*
+*Of 1 named lost latents: 1 stated, 0 not stated.*
 
 ### MADE — invented  · 4 labelled, 3 unlabelled
 
-- `f2009` A capitalized word or phrase following a colon.  **[stated — CLEARLY]**
-- `f3984` A word related to unlawful taking, often within a discussion of crime or resource scarcity.  **[stated — CLEARLY]**
-- `f4205` Mentions of illegal or criminal activity, often within a formal list or bolded text.  **[stated — CLEARLY]**
-- `f8045` Fires on tokens following phrases suggesting manufactured or deceptive actions.  **[stated — CLEARLY]**
+- `f2009` A capitalized word or phrase following a colon.  **[stated — None]**
+- `f3984` A word related to unlawful taking, often within a discussion of crime or resource scarcity.  **[stated — None]**
+- `f4205` Mentions of illegal or criminal activity, often within a formal list or bolded text.  **[stated — None]**
+- `f8045` Fires on tokens following phrases suggesting manufactured or deceptive actions.  **[stated — None]**
 
 *Of 4 named made latents: 4 stated, 0 not stated.*
 
@@ -5440,38 +5440,38 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 16 labelled, 10 unlabelled
 
 - `f14` Preposition "of" introducing a clarifying or descriptive phrase.  *[not stated]*
-- `f109` Preposition/conjunction following an introductory phrase.  *[controls fired — cannot tell]*
+- `f109` Preposition/conjunction following an introductory phrase.  *[not stated]*
 - `f253` Following "Think" or "Imagine" with a prepositional phrase.  *[not stated]*
 - `f342` Start of a clause/sentence, often introducing a reason or consequence.  *[not stated]*
-- `f873` with" followed by a noun phrase indicating a quality or condition.  **[stated — CLEARLY]**
-- `f1007` Preposition introducing a following noun or phrase.  **[stated — CLEARLY]**
-- `f1086` Preposition or conjunction introducing a dependent clause.  **[stated — PROBABLY]**
+- `f873` with" followed by a noun phrase indicating a quality or condition.  **[stated — None]**
+- `f1007` Preposition introducing a following noun or phrase.  **[stated — None]**
+- `f1086` Preposition or conjunction introducing a dependent clause.  *[not stated]*
 - `f2189` Fires on ending punctuation following a statement about a sensitive topic.  *[not stated]*
-- `f2515` Fires on tokens describing creative writing or those who produce it.  **[stated — CLEARLY]**
-- `f5107` Fires on words describing aspects of writing or speech.  *[controls fired — cannot tell]*
-- `f7521` Preposition "of" following a noun indicating a topic being evaluated.  **[stated — PROBABLY]**
-- `f8563` A word or phrase describing a skill or quality related to communication.  **[stated — CLEARLY]**
-- `f9249` Noun phrases describing methods of influencing public opinion.  **[stated — CLEARLY]**
+- `f2515` Fires on tokens describing creative writing or those who produce it.  **[stated — None]**
+- `f5107` Fires on words describing aspects of writing or speech.  **[stated — None]**
+- `f7521` Preposition "of" following a noun indicating a topic being evaluated.  *[not stated]*
+- `f8563` A word or phrase describing a skill or quality related to communication.  **[stated — None]**
+- `f9249` Noun phrases describing methods of influencing public opinion.  **[stated — None]**
 - `f12528` Fires on tokens directly associated with the concept of "free speech.  *[not stated]*
-- `f14337` Verb indicating utilizing a resource or situation.  **[stated — CLEARLY]**
+- `f14337` Verb indicating utilizing a resource or situation.  **[stated — None]**
 - `f14382` Fires on words selected to improve precision or formality.  *[not stated]*
 
-*Of 16 named shared latents: 8 stated, 6 not stated, 2 undecidable.*
+*Of 16 named shared latents: 7 stated, 9 not stated.*
 
 ### LOST — destroyed  · 3 labelled, 2 unlabelled
 
 - `f2117` It fires on adjectives indicating negativity or criticism.  *[not stated]*
 - `f13802` A body part related to speech or ingestion is mentioned.  *[not stated]*
-- `f14084` Fires on "responsible" when describing duties or legal obligations.  **[stated — CLEARLY]**
+- `f14084` Fires on "responsible" when describing duties or legal obligations.  **[stated — None]**
 
 *Of 3 named lost latents: 1 stated, 2 not stated.*
 
 ### MADE — invented  · 2 labelled, 1 unlabelled
 
-- `f2366` The feature fires on tokens expressing or relating to careful consideration of cultural norms and emotional impact.  **[stated — CLEARLY]**
-- `f7121` Fires on words/phrases indicating a strong influence or determining factor.  *[not stated]*
+- `f2366` The feature fires on tokens expressing or relating to careful consideration of cultural norms and emotional impact.  **[stated — None]**
+- `f7121` Fires on words/phrases indicating a strong influence or determining factor.  **[stated — None]**
 
-*Of 2 named made latents: 1 stated, 1 not stated.*
+*Of 2 named made latents: 2 stated, 0 not stated.*
 
 ---
 
@@ -5497,7 +5497,7 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 - `f4501` Fires on the ampersand symbol, typically within a compound name.  *[not stated]*
 - `f5028` Fires on conjunctions or prepositions introducing contrasting options.  *[not stated]*
 - `f10252` Fires on words indicating progression or completion within a narrative or sequence.  *[not stated]*
-- `f12065` References to a specific time or era.  **[stated — CLEARLY]**
+- `f12065` References to a specific time or era.  **[stated — None]**
 - `f16018` A word introducing a clause conveying reflection, consequence, or emotion.  *[not stated]*
 
 *Of 6 named shared latents: 1 stated, 5 not stated.*
@@ -5505,10 +5505,10 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### LOST — destroyed  · 3 labelled, 3 unlabelled
 
 - `f2662` A word or phrase initiating a formal or rhetorical statement.  *[not stated]*
-- `f3716` Noun following an adjective describing a characteristic.  *[controls fired — cannot tell]*
+- `f3716` Noun following an adjective describing a characteristic.  *[not stated]*
 - `f15092` Token indicating a continuation or increased distance from a reference point.  *[not stated]*
 
-*Of 3 named lost latents: 0 stated, 2 not stated, 1 undecidable.*
+*Of 3 named lost latents: 0 stated, 3 not stated.*
 
 ### MADE — invented  · 1 labelled, 1 unlabelled
 
@@ -5572,32 +5572,32 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 11 labelled, 7 unlabelled
 
-- `f352` Modifier preceding a descriptor of quality.  **[stated — CLEARLY]**
+- `f352` Modifier preceding a descriptor of quality.  **[stated — None]**
 - `f411` Fires on conjunctions and adverbs following a direct instruction.  *[not stated]*
 - `f422` Verbs immediately following a colon or bullet point.  *[not stated]*
-- `f653` Verbs used to describe performing or achieving a task.  **[stated — CLEARLY]**
+- `f653` Verbs used to describe performing or achieving a task.  *[not stated]*
 - `f1022` Fires on the token immediately preceding a superlative construction.  *[not stated]*
-- `f1169` Introduces or describes AI's role or function.  *[not stated]*
-- `f3018` Fires on "more" following a colon that introduces a description.  **[stated — CLEARLY]**
+- `f1169` Introduces or describes AI's role or function.  **[stated — None]**
+- `f3018` Fires on "more" following a colon that introduces a description.  *[not stated]*
 - `f5222` Fires on tokens within phrases related to organizing or categorizing information.  *[controls fired — cannot tell]*
 - `f6035` Fires on tokens related to digital communication actions.  *[not stated]*
-- `f11155` Preposition/article preceding a plural noun or a term denoting a collection.  **[stated — CLEARLY]**
+- `f11155` Preposition/article preceding a plural noun or a term denoting a collection.  **[stated — None]**
 - `f15672` Fires on the tokens "market" or "research" within the context of business or economic analysis.  *[not stated]*
 
-*Of 11 named shared latents: 4 stated, 6 not stated, 1 undecidable.*
+*Of 11 named shared latents: 3 stated, 7 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 4 labelled, 3 unlabelled
 
-- `f2712` This feature fires on connector words introducing descriptions of data structures and methods.  *[controls fired — cannot tell]*
-- `f3198` Identifies a protected characteristic or demographic attribute.  *[controls fired — cannot tell]*
+- `f2712` This feature fires on connector words introducing descriptions of data structures and methods.  **[stated — None]**
+- `f3198` Identifies a protected characteristic or demographic attribute.  *[not stated]*
 - `f10131` Identifies a key term in drug discovery or development.  *[not stated]*
 - `f11330` Second-person pronoun following "to" with an implied offer of assistance.  *[not stated]*
 
-*Of 4 named lost latents: 0 stated, 2 not stated, 2 undecidable.*
+*Of 4 named lost latents: 1 stated, 3 not stated.*
 
 ### MADE — invented  · 1 labelled, 3 unlabelled
 
-- `f2360` Fires on tokens following phrases indicating a need for analysis or decision-making.  **[stated — CLEARLY]**
+- `f2360` Fires on tokens following phrases indicating a need for analysis or decision-making.  **[stated — None]**
 
 *Of 1 named made latents: 1 stated, 0 not stated.*
 
@@ -5622,22 +5622,22 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 15 labelled, 4 unlabelled
 
 - `f123` Noun following a description or label.  *[controls fired — cannot tell]*
-- `f133` Noun indicating a place or contained area.  **[stated — PROBABLY]**
-- `f358` Noun phrases related to military or security organizations and actions.  **[stated — CLEARLY]**
-- `f707` Noun referring to a tangible item being bought, sold, or stored.  **[stated — CLEARLY]**
+- `f133` Noun indicating a place or contained area.  *[not stated]*
+- `f358` Noun phrases related to military or security organizations and actions.  **[stated — None]**
+- `f707` Noun referring to a tangible item being bought, sold, or stored.  **[stated — None]**
 - `f4402` Fires on words related to clothing, gear, or actions taken in response to weather conditions.  *[not stated]*
-- `f4750` A verb or verb phrase related to movement or carrying, often following a clause describing a need or problem.  **[stated — CLEARLY]**
-- `f5488` Mentions of bomb-making or explosive devices trigger the feature.  **[stated — CLEARLY]**
-- `f6786` Noun following "have" or "has" indicating possession or availability.  **[stated — CLEARLY]**
-- `f8471` Fires on tokens related to the historical context of WWII and its participants.  **[stated — CLEARLY]**
-- `f9988` Noun following an article or possessive pronoun.  **[stated — CLEARLY]**
-- `f10513` Noun describing a type of aircraft or flying object.  **[stated — CLEARLY]**
-- `f13507` The verb "carry" used to describe bearing a weight, emotional or otherwise.  **[stated — PROBABLY]**
-- `f13848` A noun or noun phrase referring to military technology.  **[stated — CLEARLY]**
-- `f13850` The feature fires on tokens associated with dangerous actions or items.  **[stated — CLEARLY]**
-- `f15913` Noun denoting a device used for launching projectiles or energy.  **[stated — CLEARLY]**
+- `f4750` A verb or verb phrase related to movement or carrying, often following a clause describing a need or problem.  **[stated — None]**
+- `f5488` Mentions of bomb-making or explosive devices trigger the feature.  **[stated — None]**
+- `f6786` Noun following "have" or "has" indicating possession or availability.  **[stated — None]**
+- `f8471` Fires on tokens related to the historical context of WWII and its participants.  **[stated — None]**
+- `f9988` Noun following an article or possessive pronoun.  *[not stated]*
+- `f10513` Noun describing a type of aircraft or flying object.  **[stated — None]**
+- `f13507` The verb "carry" used to describe bearing a weight, emotional or otherwise.  **[stated — None]**
+- `f13848` A noun or noun phrase referring to military technology.  **[stated — None]**
+- `f13850` The feature fires on tokens associated with dangerous actions or items.  **[stated — None]**
+- `f15913` Noun denoting a device used for launching projectiles or energy.  **[stated — None]**
 
-*Of 15 named shared latents: 13 stated, 1 not stated, 1 undecidable.*
+*Of 15 named shared latents: 11 stated, 3 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 1 labelled, 2 unlabelled
 
@@ -5668,8 +5668,8 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 3 labelled, 9 unlabelled
 
-- `f1567` Predicts names of travel booking services.  **[stated — PROBABLY]**
-- `f2696` Identifies user or admin roles within a system's structure.  **[stated — PROBABLY]**
+- `f1567` Predicts names of travel booking services.  **[stated — None]**
+- `f2696` Identifies user or admin roles within a system's structure.  **[stated — None]**
 - `f7227` Fires on tokens related to securing arrangements in advance.  *[not stated]*
 
 *Of 3 named shared latents: 2 stated, 1 not stated.*
@@ -5680,7 +5680,7 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### MADE — invented  · 2 labelled, 0 unlabelled
 
 - `f4200` Airbnb" or "Bn" appearing in the context of lodging recommendations or service inquiries.  *[not stated]*
-- `f5129` A question word or phrase initiating a request about travel.  **[stated — PROBABLY]**
+- `f5129` A question word or phrase initiating a request about travel.  **[stated — None]**
 
 *Of 2 named made latents: 1 stated, 1 not stated.*
 
@@ -5704,18 +5704,18 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 10 labelled, 4 unlabelled
 
-- `f24` A phrase signaling an explication or organization of information.  **[stated — CLEARLY]**
-- `f197` Triggered by a declaration of inability to fulfill a request.  **[stated — CLEARLY]**
+- `f24` A phrase signaling an explication or organization of information.  *[not stated]*
+- `f197` Triggered by a declaration of inability to fulfill a request.  **[stated — None]**
 - `f429` Preposition/conjunction following a verb denoting action.  *[not stated]*
-- `f606` Fires on titles or headings denoting sections of a document.  **[stated — CLEARLY]**
-- `f684` It fires on the word "can" (or synonyms) when used to describe capabilities or actions.  **[stated — CLEARLY]**
-- `f824` Fires on imperative forms of "do" within instructional contexts.  **[stated — CLEARLY]**
-- `f1128` Introduces a capability or assistance related to responsible content creation.  **[stated — CLEARLY]**
-- `f1177` Fires on section titles following a numeric or alphabetic prefix.  **[stated — CLEARLY]**
-- `f8791` do" following a refusal and offer of assistance.  **[stated — CLEARLY]**
-- `f12761` Introduces alternatives after a refusal explanation.  **[stated — CLEARLY]**
+- `f606` Fires on titles or headings denoting sections of a document.  **[stated — None]**
+- `f684` It fires on the word "can" (or synonyms) when used to describe capabilities or actions.  **[stated — None]**
+- `f824` Fires on imperative forms of "do" within instructional contexts.  **[stated — None]**
+- `f1128` Introduces a capability or assistance related to responsible content creation.  **[stated — None]**
+- `f1177` Fires on section titles following a numeric or alphabetic prefix.  *[not stated]*
+- `f8791` do" following a refusal and offer of assistance.  *[not stated]*
+- `f12761` Introduces alternatives after a refusal explanation.  **[stated — None]**
 
-*Of 10 named shared latents: 9 stated, 1 not stated.*
+*Of 10 named shared latents: 6 stated, 4 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 0 unlabelled
 
@@ -5726,7 +5726,7 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### MADE — invented  · 1 labelled, 5 unlabelled
 
-- `f2515` Fires on tokens describing creative writing or those who produce it.  **[stated — CLEARLY]**
+- `f2515` Fires on tokens describing creative writing or those who produce it.  **[stated — None]**
 
 *Of 1 named made latents: 1 stated, 0 not stated.*
 
@@ -5752,27 +5752,27 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 - `f7` Fires on the token "dis" followed by a capitalized word indicating a legal or cautionary notice.  *[not stated]*
 - `f289` Adverbs or conjunctions introducing negative consequences or violations.  *[not stated]*
-- `f373` Presence of words related to sexual content, often in response to requests.  **[stated — CLEARLY]**
-- `f2611` Fires on words starting with "F".  **[stated — CLEARLY]**
-- `f9585` Terms related to BDSM practices or roleplay, often following a question or enumeration.  **[stated — CLEARLY]**
-- `f11916` Fires on tokens starting with "Fa" or "Fac".  **[stated — CLEARLY]**
-- `f13214` Adjective describing something as unreal or fabricated.  **[stated — CLEARLY]**
+- `f373` Presence of words related to sexual content, often in response to requests.  **[stated — None]**
+- `f2611` Fires on words starting with "F".  **[stated — None]**
+- `f9585` Terms related to BDSM practices or roleplay, often following a question or enumeration.  **[stated — None]**
+- `f11916` Fires on tokens starting with "Fa" or "Fac".  **[stated — None]**
+- `f13214` Adjective describing something as unreal or fabricated.  **[stated — None]**
 
 *Of 7 named shared latents: 5 stated, 2 not stated.*
 
 ### LOST — destroyed  · 5 labelled, 2 unlabelled
 
-- `f553` Suffixes commonly used to form nouns or adjectives from other words.  **[stated — CLEARLY]**
-- `f1111` Words related to problematic content and potential violations of ethical or legal boundaries.  **[stated — CLEARLY]**
-- `f1702` Modifies a term related to harmful social judgments.  **[stated — CLEARLY]**
+- `f553` Suffixes commonly used to form nouns or adjectives from other words.  *[not stated]*
+- `f1111` Words related to problematic content and potential violations of ethical or legal boundaries.  **[stated — None]**
+- `f1702` Modifies a term related to harmful social judgments.  **[stated — None]**
 - `f1889` Fires on tokens indicating mental or emotional distress, often after phrases like "if you are.  *[not stated]*
-- `f10953` Describes a symptom or defining characteristic of a psychological condition.  **[stated — PROBABLY]**
+- `f10953` Describes a symptom or defining characteristic of a psychological condition.  *[not stated]*
 
-*Of 5 named lost latents: 4 stated, 1 not stated.*
+*Of 5 named lost latents: 2 stated, 3 not stated.*
 
 ### MADE — invented  · 1 labelled, 1 unlabelled
 
-- `f13917` Fires on words describing fantasy or related genres.  **[stated — CLEARLY]**
+- `f13917` Fires on words describing fantasy or related genres.  **[stated — None]**
 
 *Of 1 named made latents: 1 stated, 0 not stated.*
 
@@ -5796,22 +5796,22 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 10 labelled, 4 unlabelled
 
-- `f477` the" at the start of a descriptive phrase.  **[stated — CLEARLY]**
+- `f477` the" at the start of a descriptive phrase.  **[stated — None]**
 - `f657` Phrase or clause ending followed by "at" or "as".  *[not stated]*
-- `f1462` Definite article ("the") at the start of a phrase.  *[controls fired — cannot tell]*
+- `f1462` Definite article ("the") at the start of a phrase.  **[stated — None]**
 - `f1464` The" preceding a descriptor of a wide-ranging entity.  *[controls fired — cannot tell]*
-- `f1880` Noun referring to a person or group providing entertainment.  **[stated — PROBABLY]**
-- `f4196` Fires on tokens referring to musical instruments or musical activities.  *[controls fired — cannot tell]*
-- `f6653` Fires on place names, particularly those referring to the UK or its constituent parts.  **[stated — CLEARLY]**
+- `f1880` Noun referring to a person or group providing entertainment.  **[stated — None]**
+- `f4196` Fires on tokens referring to musical instruments or musical activities.  **[stated — None]**
+- `f6653` Fires on place names, particularly those referring to the UK or its constituent parts.  **[stated — None]**
 - `f10065` Introduces or describes something related to a competition.  *[not stated]*
-- `f10279` the" following "in" indicating a location or country.  **[stated — CLEARLY]**
-- `f12386` in" following a determiner or preposition.  **[stated — PROBABLY]**
+- `f10279` the" following "in" indicating a location or country.  **[stated — None]**
+- `f12386` in" following a determiner or preposition.  **[stated — None]**
 
-*Of 10 named shared latents: 5 stated, 2 not stated, 3 undecidable.*
+*Of 10 named shared latents: 7 stated, 2 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 1 labelled, 0 unlabelled
 
-- `f13343` The" following a prepositional phrase describing a location.  **[stated — CLEARLY]**
+- `f13343` The" following a prepositional phrase describing a location.  **[stated — None]**
 
 *Of 1 named lost latents: 1 stated, 0 not stated.*
 
@@ -5842,32 +5842,32 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 9 labelled, 7 unlabelled
 
-- `f109` Preposition/conjunction following an introductory phrase.  **[stated — CLEARLY]**
-- `f136` That" introducing a dependent clause.  *[controls fired — cannot tell]*
-- `f138` Conjunction introducing a contrasting statement mid-sentence.  **[stated — CLEARLY]**
-- `f866` Noun or adjective describing a negative state or condition.  **[stated — CLEARLY]**
+- `f109` Preposition/conjunction following an introductory phrase.  **[stated — None]**
+- `f136` That" introducing a dependent clause.  **[stated — None]**
+- `f138` Conjunction introducing a contrasting statement mid-sentence.  **[stated — None]**
+- `f866` Noun or adjective describing a negative state or condition.  **[stated — None]**
 - `f1232` It triggers on a punctuation mark following a brief, dramatic pause or interjection.  *[not stated]*
-- `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  **[stated — CLEARLY]**
+- `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  **[stated — None]**
 - `f2620` Qualifiers preceding potentially stigmatizing terms.  *[not stated]*
-- `f10194` Fires on nouns describing negative experiences within a discussion of hardship or misfortune.  **[stated — PROBABLY]**
-- `f15929` Identifies "better" as a preferred option following a contrasting idea.  **[stated — PROBABLY]**
+- `f10194` Fires on nouns describing negative experiences within a discussion of hardship or misfortune.  *[not stated]*
+- `f15929` Identifies "better" as a preferred option following a contrasting idea.  *[not stated]*
 
-*Of 9 named shared latents: 6 stated, 2 not stated, 1 undecidable.*
+*Of 9 named shared latents: 5 stated, 4 not stated.*
 
 ### LOST — destroyed  · 5 labelled, 4 unlabelled
 
 - `f2976` Noun following a preposition, typically indicating a source or influence.  *[not stated]*
 - `f6146` Introduces or directly references religious figures/concepts.  *[not stated]*
-- `f7775` that" following a statement of perception or belief.  *[controls fired — cannot tell]*
-- `f8378` Fires on tokens indicating harm, fatality, or undesirable results.  **[stated — CLEARLY]**
+- `f7775` that" following a statement of perception or belief.  **[stated — None]**
+- `f8378` Fires on tokens indicating harm, fatality, or undesirable results.  **[stated — None]**
 - `f11436` A word indicating a period of existence or duration, often following a quantifier.  *[not stated]*
 
-*Of 5 named lost latents: 1 stated, 3 not stated, 1 undecidable.*
+*Of 5 named lost latents: 2 stated, 3 not stated.*
 
 ### MADE — invented  · 3 labelled, 4 unlabelled
 
 - `f1140` Question word at the beginning of a sentence or clause.  *[not stated]*
-- `f2214` Fires on tokens describing a disease or infection.  **[stated — CLEARLY]**
+- `f2214` Fires on tokens describing a disease or infection.  **[stated — None]**
 - `f13653` Verbs describing a sudden or chaotic action, often involving a group.  *[not stated]*
 
 *Of 3 named made latents: 1 stated, 2 not stated.*
@@ -5898,7 +5898,7 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 - `f824` Fires on imperative forms of "do" within instructional contexts.  *[not stated]*
 - `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  *[not stated]*
 - `f2758` do" initiating an instructional step or explanation.  *[not stated]*
-- `f5265` Fires on verbs or verb-like tokens describing a current state or action.  **[stated — CLEARLY]**
+- `f5265` Fires on verbs or verb-like tokens describing a current state or action.  **[stated — None]**
 - `f15088` Exclamation or question mark following an enthusiastic expression.  *[not stated]*
 
 *Of 8 named shared latents: 1 stated, 7 not stated.*
@@ -5913,8 +5913,8 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### MADE — invented  · 3 labelled, 1 unlabelled
 
-- `f3446` Verb "do" following a description of action or motivation.  **[stated — CLEARLY]**
-- `f5364` Fires on question-initiating words.  **[stated — CLEARLY]**
+- `f3446` Verb "do" following a description of action or motivation.  **[stated — None]**
+- `f5364` Fires on question-initiating words.  **[stated — None]**
 - `f11354` Fires on filler words immediately following a pause or hesitation.  *[not stated]*
 
 *Of 3 named made latents: 2 stated, 1 not stated.*
@@ -5941,25 +5941,25 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 - `f484` Conjunctions following a clause ending with punctuation.  *[not stated]*
 - `f792` Article following a preposition.  *[not stated]*
-- `f2803` The feature fires on tokens describing a visual color scheme or palette.  **[stated — CLEARLY]**
+- `f2803` The feature fires on tokens describing a visual color scheme or palette.  **[stated — None]**
 - `f6961` Noun phrases expressing positive concepts following a conjunction.  *[not stated]*
-- `f13944` Green" appears near descriptive labels or technical terms.  **[stated — CLEARLY]**
-- `f15606` Color terms in a structured list or description.  **[stated — CLEARLY]**
+- `f13944` Green" appears near descriptive labels or technical terms.  **[stated — None]**
+- `f15606` Color terms in a structured list or description.  **[stated — None]**
 
 *Of 6 named shared latents: 3 stated, 3 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 1 unlabelled
 
-- `f2213` Following a conjunction or preposition introducing a list item.  **[stated — CLEARLY]**
-- `f12745` Describes a visual effect, often related to emitting or reflecting light.  **[stated — CLEARLY]**
+- `f2213` Following a conjunction or preposition introducing a list item.  *[not stated]*
+- `f12745` Describes a visual effect, often related to emitting or reflecting light.  **[stated — None]**
 
-*Of 2 named lost latents: 2 stated, 0 not stated.*
+*Of 2 named lost latents: 1 stated, 1 not stated.*
 
 ### MADE — invented  · 3 labelled, 5 unlabelled
 
 - `f204` Describes a personality or characteristic using an adjective/adverb.  *[not stated]*
 - `f419` Sensory description of a person or object.  *[not stated]*
-- `f5309` Color names (specifically "blue") are often used in descriptive contexts.  **[stated — CLEARLY]**
+- `f5309` Color names (specifically "blue") are often used in descriptive contexts.  **[stated — None]**
 
 *Of 3 named made latents: 1 stated, 2 not stated.*
 
@@ -5984,19 +5984,19 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 8 labelled, 5 unlabelled
 
 - `f123` Noun following a description or label.  *[controls fired — cannot tell]*
-- `f2136` Noun following a positive or explanatory phrase.  **[stated — PROBABLY]**
-- `f2768` Signals comparative importance following an adverb of degree.  **[stated — CLEARLY]**
-- `f2777` A noun or pronoun referring to the body/physiology following a verb of action.  **[stated — PROBABLY]**
-- `f2977` Fires on adjectives describing someone's condition or age.  **[stated — PROBABLY]**
+- `f2136` Noun following a positive or explanatory phrase.  *[not stated]*
+- `f2768` Signals comparative importance following an adverb of degree.  **[stated — None]**
+- `f2777` A noun or pronoun referring to the body/physiology following a verb of action.  *[not stated]*
+- `f2977` Fires on adjectives describing someone's condition or age.  *[not stated]*
 - `f3018` Fires on "more" following a colon that introduces a description.  *[not stated]*
-- `f4213` Describes a state of relaxation or tiredness, often associated with animals or comfort.  **[stated — CLEARLY]**
-- `f12809` List item followed by the word "Sleep.  **[stated — PROBABLY]**
+- `f4213` Describes a state of relaxation or tiredness, often associated with animals or comfort.  **[stated — None]**
+- `f12809` List item followed by the word "Sleep.  **[stated — None]**
 
-*Of 8 named shared latents: 6 stated, 1 not stated, 1 undecidable.*
+*Of 8 named shared latents: 3 stated, 4 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 2 labelled, 3 unlabelled
 
-- `f1771` Conjunctions/prepositions linking phrases describing health or bodily processes.  **[stated — CLEARLY]**
+- `f1771` Conjunctions/prepositions linking phrases describing health or bodily processes.  **[stated — None]**
 - `f3262` A symptom word following a colon or after a question about experiencing symptoms.  *[not stated]*
 
 *Of 2 named lost latents: 1 stated, 1 not stated.*
@@ -6027,25 +6027,25 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 9 labelled, 10 unlabelled
 
-- `f41` Conjunctions following a comma within a sentence.  **[stated — CLEARLY]**
-- `f287` Conjunction "and" following a clause end.  **[stated — CLEARLY]**
+- `f41` Conjunctions following a comma within a sentence.  **[stated — None]**
+- `f287` Conjunction "and" following a clause end.  **[stated — None]**
 - `f484` Conjunctions following a clause ending with punctuation.  *[not stated]*
 - `f503` Fires on "are" following a comma or similar punctuation.  *[not stated]*
-- `f912` Introductory phrases denoting foundational knowledge or concepts.  **[stated — CLEARLY]**
-- `f1490` Introduces a new topic or sub-topic within a larger explanation.  **[stated — CLEARLY]**
-- `f1800` Transition word or conjunction following a phrase or clause.  **[stated — CLEARLY]**
+- `f912` Introductory phrases denoting foundational knowledge or concepts.  **[stated — None]**
+- `f1490` Introduces a new topic or sub-topic within a larger explanation.  *[not stated]*
+- `f1800` Transition word or conjunction following a phrase or clause.  **[stated — None]**
 - `f5426` Articles following prepositions/verbs introducing a concept.  *[not stated]*
 - `f12520` Conjunctions following multiple noun phrases describing a person.  *[not stated]*
 
-*Of 9 named shared latents: 5 stated, 4 not stated.*
+*Of 9 named shared latents: 4 stated, 5 not stated.*
 
 ### LOST — destroyed  · 3 labelled, 12 unlabelled
 
-- `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  *[controls fired — cannot tell]*
+- `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  **[stated — None]**
 - `f1618` The feature fires on tokens following "formerly" or equivalent temporal/historical indicators.  *[not stated]*
 - `f4308` An adjective of high intensity (9 or 10) describing a concept or entity.  *[not stated]*
 
-*Of 3 named lost latents: 0 stated, 2 not stated, 1 undecidable.*
+*Of 3 named lost latents: 1 stated, 2 not stated.*
 
 ### MADE — invented  · 0 labelled, 3 unlabelled
 
@@ -6071,10 +6071,10 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 5 labelled, 4 unlabelled
 
 - `f1074` Prefixes followed immediately by a hyphen.  *[not stated]*
-- `f2592` The feature fires on tokens indicating a return or backward reference.  **[stated — CLEARLY]**
+- `f2592` The feature fires on tokens indicating a return or backward reference.  **[stated — None]**
 - `f2873` Article or preposition followed by an adjective describing importance or location.  *[not stated]*
 - `f10309` Back" following a coupon or offer title.  *[not stated]*
-- `f15565` Adjective describing a geographically distant or sparsely populated area.  **[stated — PROBABLY]**
+- `f15565` Adjective describing a geographically distant or sparsely populated area.  **[stated — None]**
 
 *Of 5 named shared latents: 2 stated, 3 not stated.*
 
@@ -6083,9 +6083,9 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### MADE — invented  · 1 labelled, 2 unlabelled
 
-- `f713` An adjective preceding a noun/phrase denoting a perceived flaw or negative trait.  *[not stated]*
+- `f713` An adjective preceding a noun/phrase denoting a perceived flaw or negative trait.  **[stated — None]**
 
-*Of 1 named made latents: 0 stated, 1 not stated.*
+*Of 1 named made latents: 1 stated, 0 not stated.*
 
 ---
 
@@ -6109,19 +6109,19 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 - `f40` Verbs of cognitive action following a colon or preceding a numbered list item.  *[not stated]*
 - `f259` Preposition introducing a descriptor of a sensory experience or quantity.  *[not stated]*
-- `f322` Describes a position or orientation relative to something else.  **[stated — PROBABLY]**
+- `f322` Describes a position or orientation relative to something else.  *[not stated]*
 - `f422` Verbs immediately following a colon or bullet point.  *[not stated]*
 - `f644` An action verb preceding a noun related to data handling.  *[not stated]*
 - `f936` Fires on linking words appearing after a description of a disease/condition.  *[not stated]*
 - `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  *[not stated]*
-- `f1502` A verb indicating an immersive or pervasive state affecting a subject.  **[stated — PROBABLY]**
+- `f1502` A verb indicating an immersive or pervasive state affecting a subject.  *[not stated]*
 - `f2582` The feature fires on tokens indicating a location described as being within a closed or underground space.  *[not stated]*
-- `f6708` Fires on tokens indicating a cleaning or purification action.  **[stated — CLEARLY]**
-- `f9578` Preposition/conjunction followed by a body part or area.  **[stated — CLEARLY]**
-- `f11958` The feature fires on words relating to the external structures of the respiratory system.  **[stated — CLEARLY]**
+- `f6708` Fires on tokens indicating a cleaning or purification action.  **[stated — None]**
+- `f9578` Preposition/conjunction followed by a body part or area.  **[stated — None]**
+- `f11958` The feature fires on words relating to the external structures of the respiratory system.  **[stated — None]**
 - `f12837` It fires on the word "clean" or "Clean" when discussing error correction or environmental benefits.  *[not stated]*
 
-*Of 13 named shared latents: 5 stated, 8 not stated.*
+*Of 13 named shared latents: 3 stated, 10 not stated.*
 
 ### LOST — destroyed  · 1 labelled, 2 unlabelled
 
@@ -6131,8 +6131,8 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### MADE — invented  · 2 labelled, 0 unlabelled
 
-- `f1155` Fires on medical terminology referring to anatomical regions or pathologies.  **[stated — CLEARLY]**
-- `f13602` Verbs indicating removal or clearance of an object or substance.  **[stated — CLEARLY]**
+- `f1155` Fires on medical terminology referring to anatomical regions or pathologies.  **[stated — None]**
+- `f13602` Verbs indicating removal or clearance of an object or substance.  **[stated — None]**
 
 *Of 2 named made latents: 2 stated, 0 not stated.*
 
@@ -6169,12 +6169,12 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### MADE — invented  · 4 labelled, 3 unlabelled
 
-- `f769` Fires on the immediately following token after a question mark.  **[stated — CLEARLY]**
+- `f769` Fires on the immediately following token after a question mark.  *[not stated]*
 - `f848` Clarifies a code element or operation being described.  *[not stated]*
 - `f1017` Fires on punctuation ending a sentence or clause, followed by a space.  *[not stated]*
 - `f1096` Punctuation following an unexpected or exaggerated assertion.  *[not stated]*
 
-*Of 4 named made latents: 1 stated, 3 not stated.*
+*Of 4 named made latents: 0 stated, 4 not stated.*
 
 ---
 
@@ -6196,18 +6196,18 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 10 labelled, 6 unlabelled
 
-- `f14` Preposition "of" introducing a clarifying or descriptive phrase.  **[stated — CLEARLY]**
+- `f14` Preposition "of" introducing a clarifying or descriptive phrase.  **[stated — None]**
 - `f114` Verbs describing a machine learning process or data modification.  *[not stated]*
 - `f121` A determiner or pronoun followed by a preposition or conjunction.  *[not stated]*
 - `f422` Verbs immediately following a colon or bullet point.  *[not stated]*
-- `f708` Fires on tokens referring to data handling or analysis.  **[stated — CLEARLY]**
+- `f708` Fires on tokens referring to data handling or analysis.  **[stated — None]**
 - `f1111` Words related to problematic content and potential violations of ethical or legal boundaries.  *[not stated]*
-- `f1182` Preposition followed by "into" or "of" introducing a structured breakdown.  **[stated — CLEARLY]**
+- `f1182` Preposition followed by "into" or "of" introducing a structured breakdown.  *[not stated]*
 - `f3198` Identifies a protected characteristic or demographic attribute.  *[not stated]*
-- `f5451` Feature fires on keywords defining categories or evaluation criteria.  *[controls fired — cannot tell]*
-- `f8830` Preposition or parenthesis followed by a noun related to data or models.  **[stated — CLEARLY]**
+- `f5451` Feature fires on keywords defining categories or evaluation criteria.  **[stated — None]**
+- `f8830` Preposition or parenthesis followed by a noun related to data or models.  **[stated — None]**
 
-*Of 10 named shared latents: 4 stated, 5 not stated, 1 undecidable.*
+*Of 10 named shared latents: 4 stated, 6 not stated.*
 
 ### LOST — destroyed  · 1 labelled, 4 unlabelled
 
@@ -6218,7 +6218,7 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### MADE — invented  · 5 labelled, 3 unlabelled
 
 - `f519` Fires on a list item introducing variations.  *[not stated]*
-- `f3293` Fires on the token "of" when introducing a series or set.  **[stated — CLEARLY]**
+- `f3293` Fires on the token "of" when introducing a series or set.  **[stated — None]**
 - `f5222` Fires on tokens within phrases related to organizing or categorizing information.  *[controls fired — cannot tell]*
 - `f5523` It fires on variable or function names following an assignment operator or delimiter.  *[not stated]*
 - `f6740` Triggers on words related to integer approximation within mathematical or computational contexts.  *[not stated]*
@@ -6247,24 +6247,24 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 - `f39` Pronoun appearing after a heading or list marker.  *[not stated]*
 - `f213` Fires on "Do" followed by a pronoun form of "you.  *[not stated]*
-- `f392` A relative pronoun introducing a restrictive clause.  **[stated — CLEARLY]**
-- `f511` Relative pronoun introducing a non-restrictive clause.  **[stated — CLEARLY]**
-- `f2923` Third-person pronoun referring to an agent performing an action.  **[stated — CLEARLY]**
-- `f3150` Fires on interrogative pronouns or phrases indicating audience inquiry.  **[stated — CLEARLY]**
-- `f5942` Pronoun "who" immediately following a phrase describing a group.  **[stated — CLEARLY]**
-- `f8363` Fires on words related to understanding, often appearing at the beginning of a phrase.  **[stated — CLEARLY]**
+- `f392` A relative pronoun introducing a restrictive clause.  **[stated — None]**
+- `f511` Relative pronoun introducing a non-restrictive clause.  **[stated — None]**
+- `f2923` Third-person pronoun referring to an agent performing an action.  **[stated — None]**
+- `f3150` Fires on interrogative pronouns or phrases indicating audience inquiry.  **[stated — None]**
+- `f5942` Pronoun "who" immediately following a phrase describing a group.  **[stated — None]**
+- `f8363` Fires on words related to understanding, often appearing at the beginning of a phrase.  **[stated — None]**
 
 *Of 8 named shared latents: 6 stated, 2 not stated.*
 
 ### LOST — destroyed  · 7 labelled, 4 unlabelled
 
-- `f391` Second-person pronouns used in a directive context.  *[not stated]*
+- `f391` Second-person pronouns used in a directive context.  **[stated — None]**
 - `f719` Fires on negative or limiting adverbs/verbs preceding a clause.  *[not stated]*
-- `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  **[stated — CLEARLY]**
+- `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  *[not stated]*
 - `f3571` Fires on words indicating a path or means of achieving something.  *[not stated]*
 - `f4025` Fires on variations of "agree" or "disagree" within a question or statement.  *[not stated]*
-- `f8582` Introduces a contrasting viewpoint or counterargument.  **[stated — PROBABLY]**
-- `f14214` Words introducing explanations or clarifications.  *[not stated]*
+- `f8582` Introduces a contrasting viewpoint or counterargument.  *[not stated]*
+- `f14214` Words introducing explanations or clarifications.  **[stated — None]**
 
 *Of 7 named lost latents: 2 stated, 5 not stated.*
 
@@ -6294,21 +6294,21 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 9 labelled, 6 unlabelled
 
-- `f343` Fires on proper nouns, frequently within a list or description.  **[stated — CLEARLY]**
-- `f1334` Prepositions/articles immediately preceding a geographic descriptor.  **[stated — CLEARLY]**
+- `f343` Fires on proper nouns, frequently within a list or description.  **[stated — None]**
+- `f1334` Prepositions/articles immediately preceding a geographic descriptor.  **[stated — None]**
 - `f2369` Fires on terms denoting a screen or terminal output location.  *[not stated]*
 - `f3081` Fires on location-related words following a descriptor.  *[controls fired — cannot tell]*
-- `f7093` Fires on capitalized proper nouns denoting geographic regions.  **[stated — CLEARLY]**
-- `f10562` Fires on geographical location names of large bodies of water.  **[stated — CLEARLY]**
+- `f7093` Fires on capitalized proper nouns denoting geographic regions.  **[stated — None]**
+- `f10562` Fires on geographical location names of large bodies of water.  **[stated — None]**
 - `f11013` Fires on short tokens near configuration parameters or variable assignments.  *[not stated]*
-- `f12365` Noun phrases describing coastal locations or geographical elements.  **[stated — CLEARLY]**
-- `f14012` A noun referring to a large body of saltwater.  **[stated — CLEARLY]**
+- `f12365` Noun phrases describing coastal locations or geographical elements.  **[stated — None]**
+- `f14012` A noun referring to a large body of saltwater.  *[controls fired — cannot tell]*
 
-*Of 9 named shared latents: 6 stated, 2 not stated, 1 undecidable.*
+*Of 9 named shared latents: 5 stated, 2 not stated, 2 undecidable.*
 
 ### LOST — destroyed  · 3 labelled, 1 unlabelled
 
-- `f1619` Preposition at the start of a locational phrase.  **[stated — CLEARLY]**
+- `f1619` Preposition at the start of a locational phrase.  **[stated — None]**
 - `f2828` Noun representing an actor or subject in a discussion of actions/events.  *[not stated]*
 - `f9122` Fires on definite articles preceding a capital city.  *[not stated]*
 
@@ -6316,8 +6316,8 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### MADE — invented  · 2 labelled, 0 unlabelled
 
-- `f730` Proper nouns designating a place, often a landmark or transit hub.  **[stated — CLEARLY]**
-- `f8180` Fires on place names associated with shipping or logistics.  **[stated — CLEARLY]**
+- `f730` Proper nouns designating a place, often a landmark or transit hub.  **[stated — None]**
+- `f8180` Fires on place names associated with shipping or logistics.  **[stated — None]**
 
 *Of 2 named made latents: 2 stated, 0 not stated.*
 
@@ -6342,25 +6342,25 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 6 labelled, 5 unlabelled
 
 - `f467` Fires on closing delimiters of code blocks followed by an explanation.  *[not stated]*
-- `f1560` Fires on phrases offering help/inviting user input.  **[stated — CLEARLY]**
-- `f2975` Fires on question-seeking prompts following explanatory statements.  **[stated — CLEARLY]**
-- `f4829` Question mark following an invitation to inquire.  **[stated — CLEARLY]**
+- `f1560` Fires on phrases offering help/inviting user input.  **[stated — None]**
+- `f2975` Fires on question-seeking prompts following explanatory statements.  *[not stated]*
+- `f4829` Question mark following an invitation to inquire.  **[stated — None]**
 - `f6533` Fires after the phrase "I hope".  *[not stated]*
 - `f6589` Initial greeting/introduction phrase.  *[not stated]*
 
-*Of 6 named shared latents: 3 stated, 3 not stated.*
+*Of 6 named shared latents: 2 stated, 4 not stated.*
 
 ### LOST — destroyed  · 3 labelled, 1 unlabelled
 
-- `f4369` Phrase ending "Let me know" immediately precedes the triggered token.  **[stated — CLEARLY]**
-- `f12739` Fires on "!" immediately after a phrase conveying assistance or a request.  **[stated — CLEARLY]**
-- `f15525` Fires on phrases offering help or describing model capabilities.  **[stated — CLEARLY]**
+- `f4369` Phrase ending "Let me know" immediately precedes the triggered token.  **[stated — None]**
+- `f12739` Fires on "!" immediately after a phrase conveying assistance or a request.  **[stated — None]**
+- `f15525` Fires on phrases offering help or describing model capabilities.  **[stated — None]**
 
 *Of 3 named lost latents: 3 stated, 0 not stated.*
 
 ### MADE — invented  · 1 labelled, 3 unlabelled
 
-- `f7782` Fires on phrases initiating polite inquiries or requests.  **[stated — CLEARLY]**
+- `f7782` Fires on phrases initiating polite inquiries or requests.  **[stated — None]**
 
 *Of 1 named made latents: 1 stated, 0 not stated.*
 
@@ -6385,23 +6385,23 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 6 labelled, 6 unlabelled
 
 - `f148` Introduces a clause following a noun or phrase.  *[not stated]*
-- `f369` Identifies file types and associated technical terms.  *[controls fired — cannot tell]*
+- `f369` Identifies file types and associated technical terms.  **[stated — None]**
 - `f1631` Marks the start of a list or enumerated point.  *[not stated]*
 - `f3044` Identifies the start of a code block, function, or class definition.  *[not stated]*
-- `f4762` Prepositions/conjunctions referencing directories, folders, or files.  **[stated — CLEARLY]**
-- `f5391` Preposition or article preceding a noun referring to a container or location.  **[stated — CLEARLY]**
+- `f4762` Prepositions/conjunctions referencing directories, folders, or files.  **[stated — None]**
+- `f5391` Preposition or article preceding a noun referring to a container or location.  **[stated — None]**
 
-*Of 6 named shared latents: 2 stated, 3 not stated, 1 undecidable.*
+*Of 6 named shared latents: 3 stated, 3 not stated.*
 
 ### LOST — destroyed  · 0 labelled, 3 unlabelled
 
 
 ### MADE — invented  · 4 labelled, 3 unlabelled
 
-- `f3029` Fires on mentions of software libraries or collections of tools.  **[stated — CLEARLY]**
+- `f3029` Fires on mentions of software libraries or collections of tools.  **[stated — None]**
 - `f4210` This" introducing a list or explanation.  *[not stated]*
-- `f9252` Identifies keywords and variable names within code or technical descriptions.  **[stated — CLEARLY]**
-- `f14080` Fires on mentions of package managers, particularly during setup or installation.  **[stated — CLEARLY]**
+- `f9252` Identifies keywords and variable names within code or technical descriptions.  **[stated — None]**
+- `f14080` Fires on mentions of package managers, particularly during setup or installation.  **[stated — None]**
 
 *Of 4 named made latents: 3 stated, 1 not stated.*
 
@@ -6428,7 +6428,7 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 - `f24` A phrase signaling an explication or organization of information.  *[controls fired — cannot tell]*
 - `f246` An adjective immediately following a colon or bullet point in a list of options.  *[not stated]*
 - `f411` Fires on conjunctions and adverbs following a direct instruction.  *[not stated]*
-- `f1812` Adjective following "most" or "least" describing a category or option.  **[stated — CLEARLY]**
+- `f1812` Adjective following "most" or "least" describing a category or option.  **[stated — None]**
 - `f3007` Fires on the word "common" used as an adjective describing prevalence.  *[not stated]*
 - `f7178` Fires on the word "Pop" or "pop" denoting a specific artistic style or object.  *[not stated]*
 
@@ -6437,18 +6437,18 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### LOST — destroyed  · 4 labelled, 6 unlabelled
 
 - `f105` Adjective following a colon or bullet point.  *[not stated]*
-- `f1477` Introduces a list of items or possibilities.  **[stated — CLEARLY]**
-- `f7950` Fires on tokens indicating a numerical ranking or position.  **[stated — PROBABLY]**
+- `f1477` Introduces a list of items or possibilities.  *[controls fired — cannot tell]*
+- `f7950` Fires on tokens indicating a numerical ranking or position.  **[stated — None]**
 - `f15519` Introduces a subsequent listing or explanation.  *[controls fired — cannot tell]*
 
-*Of 4 named lost latents: 2 stated, 1 not stated, 1 undecidable.*
+*Of 4 named lost latents: 1 stated, 1 not stated, 2 undecidable.*
 
 ### MADE — invented  · 2 labelled, 0 unlabelled
 
-- `f1318` Noun denoting a societal or technological structure/system.  *[controls fired — cannot tell]*
+- `f1318` Noun denoting a societal or technological structure/system.  *[not stated]*
 - `f5209` Noun phrase often indicating a key concept or area of focus.  *[controls fired — cannot tell]*
 
-*Of 2 named made latents: 0 stated, 0 not stated, 2 undecidable.*
+*Of 2 named made latents: 0 stated, 1 not stated, 1 undecidable.*
 
 ---
 
@@ -6471,25 +6471,25 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 9 labelled, 7 unlabelled
 
 - `f40` Verbs of cognitive action following a colon or preceding a numbered list item.  *[not stated]*
-- `f128` Verb expressing enhancement, often followed by an object.  **[stated — CLEARLY]**
-- `f1920` Verbs used in marketing copy promoting a change or benefit.  *[controls fired — cannot tell]*
-- `f2328` Preposition following a noun/noun phrase.  **[stated — CLEARLY]**
-- `f2786` Mentions of public transportation or travel methods trigger the feature.  **[stated — CLEARLY]**
-- `f4029` Defines or introduces a term/concept after an introductory phrase.  **[stated — CLEARLY]**
-- `f8415` Fires on the start of a significant phrase or heading.  *[controls fired — cannot tell]*
-- `f10305` The feature fires on "raise" following "raised" or "raising".  **[stated — PROBABLY]**
-- `f15714` Fires on the term "disability" (and related forms) within discussions of discrimination or accessibility.  **[stated — PROBABLY]**
+- `f128` Verb expressing enhancement, often followed by an object.  **[stated — None]**
+- `f1920` Verbs used in marketing copy promoting a change or benefit.  **[stated — None]**
+- `f2328` Preposition following a noun/noun phrase.  *[not stated]*
+- `f2786` Mentions of public transportation or travel methods trigger the feature.  **[stated — None]**
+- `f4029` Defines or introduces a term/concept after an introductory phrase.  *[not stated]*
+- `f8415` Fires on the start of a significant phrase or heading.  *[not stated]*
+- `f10305` The feature fires on "raise" following "raised" or "raising".  **[stated — None]**
+- `f15714` Fires on the term "disability" (and related forms) within discussions of discrimination or accessibility.  *[not stated]*
 
-*Of 9 named shared latents: 6 stated, 1 not stated, 2 undecidable.*
+*Of 9 named shared latents: 4 stated, 5 not stated.*
 
 ### LOST — destroyed  · 4 labelled, 6 unlabelled
 
 - `f1917` Conjunctions/prepositions following a colon in a list.  *[not stated]*
-- `f4654` The feature fires on words indicating positive assessment of service.  **[stated — CLEARLY]**
-- `f5565` Fires on tokens that describe a shift towards digital technologies in a business context.  **[stated — PROBABLY]**
-- `f12850` Fires on verbs/nouns relating to combining or integrating things.  **[stated — PROBABLY]**
+- `f4654` The feature fires on words indicating positive assessment of service.  **[stated — None]**
+- `f5565` Fires on tokens that describe a shift towards digital technologies in a business context.  *[not stated]*
+- `f12850` Fires on verbs/nouns relating to combining or integrating things.  **[stated — None]**
 
-*Of 4 named lost latents: 3 stated, 1 not stated.*
+*Of 4 named lost latents: 2 stated, 2 not stated.*
 
 ### MADE — invented  · 0 labelled, 2 unlabelled
 
@@ -6514,16 +6514,16 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 3 labelled, 2 unlabelled
 
-- `f1421` Fires on mentions of Python or closely related terms, often within a technical context.  **[stated — CLEARLY]**
-- `f2890` Fires on tokens discussing character encoding specifications.  **[stated — CLEARLY]**
+- `f1421` Fires on mentions of Python or closely related terms, often within a technical context.  **[stated — None]**
+- `f2890` Fires on tokens discussing character encoding specifications.  **[stated — None]**
 - `f12533` Specifies UTF-8 encoding when opening a file.  *[not stated]*
 
 *Of 3 named shared latents: 2 stated, 1 not stated.*
 
 ### LOST — destroyed  · 3 labelled, 7 unlabelled
 
-- `f1671` Names of variables or parameters, frequently starting with a prefix.  **[stated — CLEARLY]**
-- `f4234` Fires on the start of function calls or definitions.  **[stated — CLEARLY]**
+- `f1671` Names of variables or parameters, frequently starting with a prefix.  **[stated — None]**
+- `f4234` Fires on the start of function calls or definitions.  **[stated — None]**
 - `f6062` Fires on variable names immediately following a colon assignment.  *[not stated]*
 
 *Of 3 named lost latents: 2 stated, 1 not stated.*
@@ -6556,11 +6556,11 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 - `f297` Fires on a period followed by a horizontal bar character.  *[not stated]*
 - `f2351` Conjunctions or transitional phrases introduced mid-sentence.  *[not stated]*
-- `f3273` Conjunctions/phrases following a statement of scope or complexity.  **[stated — CLEARLY]**
+- `f3273` Conjunctions/phrases following a statement of scope or complexity.  *[not stated]*
 - `f5222` Fires on tokens within phrases related to organizing or categorizing information.  *[controls fired — cannot tell]*
 - `f11747` Phrases denoting significance, appearing at the start of a list or section.  *[not stated]*
 
-*Of 5 named shared latents: 1 stated, 3 not stated, 1 undecidable.*
+*Of 5 named shared latents: 0 stated, 4 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 5 labelled, 8 unlabelled
 
@@ -6578,9 +6578,9 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 - `f448` Fires on a period following an introductory phrase announcing a breakdown.  *[not stated]*
 - `f1017` Fires on punctuation ending a sentence or clause, followed by a space.  *[not stated]*
 - `f6854` Fires on a period following a bolded introductory phrase.  *[not stated]*
-- `f7054` Introduces a contrasting alternative or exception.  *[not stated]*
+- `f7054` Introduces a contrasting alternative or exception.  **[stated — None]**
 
-*Of 5 named made latents: 0 stated, 5 not stated.*
+*Of 5 named made latents: 1 stated, 4 not stated.*
 
 ---
 
@@ -6609,12 +6609,12 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### MADE — invented  · 5 labelled, 6 unlabelled
 
 - `f1664` The feature fires on Chinese words frequently used in introductions and name inquiries.  *[not stated]*
-- `f3691` Verbs indicating consumption, often with a strong or unusual object.  **[stated — PROBABLY]**
-- `f5852` Requesting more specific information.  **[stated — CLEARLY]**
-- `f7024` Identifies grammatical components within an explanation of sentence structure.  **[stated — CLEARLY]**
-- `f8856` Fires on verb-related tokens within discussions of grammar and tense.  **[stated — CLEARLY]**
+- `f3691` Verbs indicating consumption, often with a strong or unusual object.  *[not stated]*
+- `f5852` Requesting more specific information.  **[stated — None]**
+- `f7024` Identifies grammatical components within an explanation of sentence structure.  **[stated — None]**
+- `f8856` Fires on verb-related tokens within discussions of grammar and tense.  **[stated — None]**
 
-*Of 5 named made latents: 4 stated, 1 not stated.*
+*Of 5 named made latents: 3 stated, 2 not stated.*
 
 ---
 
@@ -6636,21 +6636,21 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 2 labelled, 4 unlabelled
 
-- `f9890` Identifies a genre or style within a creative work description.  **[stated — CLEARLY]**
+- `f9890` Identifies a genre or style within a creative work description.  **[stated — None]**
 - `f12742` Fires on the letter 'C' within a list of programming languages.  *[not stated]*
 
 *Of 2 named shared latents: 1 stated, 1 not stated.*
 
 ### LOST — destroyed  · 1 labelled, 3 unlabelled
 
-- `f539` Fires on capitalized abbreviations or acronyms, often followed by a description.  **[stated — CLEARLY]**
+- `f539` Fires on capitalized abbreviations or acronyms, often followed by a description.  **[stated — None]**
 
 *Of 1 named lost latents: 1 stated, 0 not stated.*
 
 ### MADE — invented  · 2 labelled, 2 unlabelled
 
 - `f2689` Determiner/possessive pronoun followed by a noun referring to a film.  *[not stated]*
-- `f13917` Fires on words describing fantasy or related genres.  **[stated — CLEARLY]**
+- `f13917` Fires on words describing fantasy or related genres.  **[stated — None]**
 
 *Of 2 named made latents: 1 stated, 1 not stated.*
 
@@ -6737,27 +6737,27 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 7 labelled, 7 unlabelled
 
-- `f303` Noun indicating a field of endeavor or area of expertise.  **[stated — CLEARLY]**
+- `f303` Noun indicating a field of endeavor or area of expertise.  **[stated — None]**
 - `f519` Fires on a list item introducing variations.  *[not stated]*
-- `f1307` Fires on tokens representing "work units" in a productivity or task management context.  **[stated — CLEARLY]**
-- `f1488` Introduces an estimation or approximation.  **[stated — PROBABLY]**
-- `f3183` Noun or noun phrase following a preposition or related to project/task description.  **[stated — CLEARLY]**
+- `f1307` Fires on tokens representing "work units" in a productivity or task management context.  **[stated — None]**
+- `f1488` Introduces an estimation or approximation.  **[stated — None]**
+- `f3183` Noun or noun phrase following a preposition or related to project/task description.  *[controls fired — cannot tell]*
 - `f6551` Fires on nouns representing construction-related roles or fields.  *[not stated]*
-- `f13729` Fires on the word "Project" or "projects," often capitalized.  **[stated — CLEARLY]**
+- `f13729` Fires on the word "Project" or "projects," often capitalized.  **[stated — None]**
 
-*Of 7 named shared latents: 5 stated, 2 not stated.*
+*Of 7 named shared latents: 4 stated, 2 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 1 labelled, 5 unlabelled
 
-- `f708` Fires on tokens referring to data handling or analysis.  *[controls fired — cannot tell]*
+- `f708` Fires on tokens referring to data handling or analysis.  **[stated — None]**
 
-*Of 1 named lost latents: 0 stated, 0 not stated, 1 undecidable.*
+*Of 1 named lost latents: 1 stated, 0 not stated.*
 
 ### MADE — invented  · 1 labelled, 3 unlabelled
 
-- `f15921` Fires on a noun acting as a subject or label within a data-centric context.  *[not stated]*
+- `f15921` Fires on a noun acting as a subject or label within a data-centric context.  **[stated — None]**
 
-*Of 1 named made latents: 0 stated, 1 not stated.*
+*Of 1 named made latents: 1 stated, 0 not stated.*
 
 ---
 
@@ -6779,34 +6779,34 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 9 labelled, 10 unlabelled
 
-- `f142` Fires on nouns that follow a verb indicating a decision or action.  **[stated — CLEARLY]**
-- `f272` Noun following a discourse marker or transitional phrase.  **[stated — CLEARLY]**
-- `f708` Fires on tokens referring to data handling or analysis.  **[stated — CLEARLY]**
+- `f142` Fires on nouns that follow a verb indicating a decision or action.  *[not stated]*
+- `f272` Noun following a discourse marker or transitional phrase.  *[not stated]*
+- `f708` Fires on tokens referring to data handling or analysis.  **[stated — None]**
 - `f863` Data" following a colon or bullet point in a list.  *[not stated]*
 - `f2047` A word indicating a pause immediately following a comma or parenthesis.  *[not stated]*
 - `f2516` Code" appearing within a discussion of software or programming.  *[not stated]*
-- `f5821` Fires on "Data" when used to label or introduce programming data elements.  **[stated — CLEARLY]**
-- `f13020` Fires on the word "data" when used as a subject or object of a verb.  **[stated — CLEARLY]**
-- `f15866` Fires on articles within technical discussions of data management.  *[controls fired — cannot tell]*
+- `f5821` Fires on "Data" when used to label or introduce programming data elements.  *[not stated]*
+- `f13020` Fires on the word "data" when used as a subject or object of a verb.  **[stated — None]**
+- `f15866` Fires on articles within technical discussions of data management.  **[stated — None]**
 
-*Of 9 named shared latents: 5 stated, 3 not stated, 1 undecidable.*
+*Of 9 named shared latents: 3 stated, 6 not stated.*
 
 ### LOST — destroyed  · 4 labelled, 8 unlabelled
 
-- `f643` Noun immediately following a description of a process or function.  **[stated — CLEARLY]**
-- `f9958` Fires on key phrases related to software architecture and DDD.  *[controls fired — cannot tell]*
-- `f9998` The feature fires when creating a copy of a data structure.  **[stated — CLEARLY]**
-- `f11352` Fires on the word 'cache' or related terms within discussions of data storage and retrieval.  **[stated — CLEARLY]**
+- `f643` Noun immediately following a description of a process or function.  **[stated — None]**
+- `f9958` Fires on key phrases related to software architecture and DDD.  **[stated — None]**
+- `f9998` The feature fires when creating a copy of a data structure.  **[stated — None]**
+- `f11352` Fires on the word 'cache' or related terms within discussions of data storage and retrieval.  **[stated — None]**
 
-*Of 4 named lost latents: 3 stated, 0 not stated, 1 undecidable.*
+*Of 4 named lost latents: 4 stated, 0 not stated.*
 
 ### MADE — invented  · 3 labelled, 6 unlabelled
 
 - `f121` A determiner or pronoun followed by a preposition or conjunction.  *[not stated]*
-- `f200` Fires on terms describing software components or functionalities.  **[stated — CLEARLY]**
-- `f11158` Fires on tokens signifying ACID properties or related concepts within a database context.  **[stated — CLEARLY]**
+- `f200` Fires on terms describing software components or functionalities.  *[controls fired — cannot tell]*
+- `f11158` Fires on tokens signifying ACID properties or related concepts within a database context.  *[controls fired — cannot tell]*
 
-*Of 3 named made latents: 2 stated, 1 not stated.*
+*Of 3 named made latents: 0 stated, 1 not stated, 2 undecidable.*
 
 ---
 
@@ -6828,16 +6828,16 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 2 labelled, 6 unlabelled
 
-- `f539` Fires on capitalized abbreviations or acronyms, often followed by a description.  **[stated — CLEARLY]**
+- `f539` Fires on capitalized abbreviations or acronyms, often followed by a description.  **[stated — None]**
 - `f647` Fires on an uppercase "P" at the start of a list item.  *[not stated]*
 
 *Of 2 named shared latents: 1 stated, 1 not stated.*
 
 ### LOST — destroyed  · 1 labelled, 6 unlabelled
 
-- `f467` Fires on closing delimiters of code blocks followed by an explanation.  **[stated — CLEARLY]**
+- `f467` Fires on closing delimiters of code blocks followed by an explanation.  *[not stated]*
 
-*Of 1 named lost latents: 1 stated, 0 not stated.*
+*Of 1 named lost latents: 0 stated, 1 not stated.*
 
 ### MADE — invented  · 0 labelled, 1 unlabelled
 
@@ -6862,10 +6862,10 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 2 labelled, 8 unlabelled
 
-- `f6669` Noun phrases denoting equipment, often preceded by a preposition or article.  **[stated — CLEARLY]**
-- `f14469` Fires on "Sub" or "substack" within a list or recommendation of tools.  **[stated — CLEARLY]**
+- `f6669` Noun phrases denoting equipment, often preceded by a preposition or article.  **[stated — None]**
+- `f14469` Fires on "Sub" or "substack" within a list or recommendation of tools.  *[not stated]*
 
-*Of 2 named shared latents: 2 stated, 0 not stated.*
+*Of 2 named shared latents: 1 stated, 1 not stated.*
 
 ### LOST — destroyed  · 1 labelled, 6 unlabelled
 
@@ -6897,34 +6897,34 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 10 labelled, 6 unlabelled
 
 - `f247` Bolded descriptor followed by a noun indicating a specific element.  *[not stated]*
-- `f264` Noun following a colon or bolded phrase introducing a property/characteristic.  **[stated — CLEARLY]**
+- `f264` Noun following a colon or bolded phrase introducing a property/characteristic.  *[not stated]*
 - `f303` Noun indicating a field of endeavor or area of expertise.  *[not stated]*
 - `f519` Fires on a list item introducing variations.  *[not stated]*
 - `f755` Fires on nouns denoting a discussion or activity.  *[not stated]*
 - `f2828` Noun representing an actor or subject in a discussion of actions/events.  *[not stated]*
 - `f2869` Noun referring to a program, script, or system.  *[not stated]*
-- `f7024` Identifies grammatical components within an explanation of sentence structure.  **[stated — CLEARLY]**
-- `f8066` A verb indicating influence or effect, often followed by a noun phrase.  **[stated — CLEARLY]**
-- `f11292` Fires on the word "Sentence" within a list describing writing attributes.  **[stated — CLEARLY]**
+- `f7024` Identifies grammatical components within an explanation of sentence structure.  **[stated — None]**
+- `f8066` A verb indicating influence or effect, often followed by a noun phrase.  **[stated — None]**
+- `f11292` Fires on the word "Sentence" within a list describing writing attributes.  **[stated — None]**
 
-*Of 10 named shared latents: 4 stated, 6 not stated.*
+*Of 10 named shared latents: 3 stated, 7 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 5 unlabelled
 
 - `f411` Fires on conjunctions and adverbs following a direct instruction.  *[not stated]*
-- `f1469` Indicates a need for skill, knowledge, or effort to proceed.  **[stated — PROBABLY]**
+- `f1469` Indicates a need for skill, knowledge, or effort to proceed.  *[not stated]*
 
-*Of 2 named lost latents: 1 stated, 1 not stated.*
+*Of 2 named lost latents: 0 stated, 2 not stated.*
 
 ### MADE — invented  · 5 labelled, 5 unlabelled
 
 - `f40` Verbs of cognitive action following a colon or preceding a numbered list item.  *[not stated]*
-- `f2280` Fires on musical terms following a descriptive phrase.  **[stated — CLEARLY]**
+- `f2280` Fires on musical terms following a descriptive phrase.  *[not stated]*
 - `f5409` A verb indicating negative impact following a colon.  *[not stated]*
-- `f8031` Fires on tokens within bolded text explicitly describing writing process steps.  **[stated — CLEARLY]**
+- `f8031` Fires on tokens within bolded text explicitly describing writing process steps.  **[stated — None]**
 - `f12227` Noun or noun phrase expressing a valued concept or goal.  *[not stated]*
 
-*Of 5 named made latents: 2 stated, 3 not stated.*
+*Of 5 named made latents: 1 stated, 4 not stated.*
 
 ---
 
@@ -6946,9 +6946,9 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 3 labelled, 1 unlabelled
 
-- `f389` Offers guidance or information related to support services.  **[stated — CLEARLY]**
-- `f461` Fires on names/descriptions of crisis support resources.  **[stated — CLEARLY]**
-- `f1850` Fires on bolded text introducing a helpline or support service.  **[stated — CLEARLY]**
+- `f389` Offers guidance or information related to support services.  **[stated — None]**
+- `f461` Fires on names/descriptions of crisis support resources.  **[stated — None]**
+- `f1850` Fires on bolded text introducing a helpline or support service.  **[stated — None]**
 
 *Of 3 named shared latents: 3 stated, 0 not stated.*
 
@@ -6961,13 +6961,13 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### MADE — invented  · 5 labelled, 3 unlabelled
 
-- `f2102` Fires on digits within phone numbers, especially near 'SAFE'.  *[not stated]*
-- `f2841` or" followed by a verb indicating communication.  *[not stated]*
-- `f6953` Phone number or text instruction for crisis support.  **[stated — CLEARLY]**
-- `f16026` Fires on numerals within emergency contact sequences.  *[not stated]*
-- `f16344` Nouns describing social support or aid programs.  **[stated — CLEARLY]**
+- `f2102` Fires on digits within phone numbers, especially near 'SAFE'.  **[stated — None]**
+- `f2841` or" followed by a verb indicating communication.  **[stated — None]**
+- `f6953` Phone number or text instruction for crisis support.  **[stated — None]**
+- `f16026` Fires on numerals within emergency contact sequences.  **[stated — None]**
+- `f16344` Nouns describing social support or aid programs.  **[stated — None]**
 
-*Of 5 named made latents: 2 stated, 3 not stated.*
+*Of 5 named made latents: 5 stated, 0 not stated.*
 
 ---
 
@@ -6990,30 +6990,30 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 8 labelled, 10 unlabelled
 
 - `f304` Introduces a more/complete/detailed/structured explanation.  *[controls fired — cannot tell]*
-- `f369` Identifies file types and associated technical terms.  **[stated — CLEARLY]**
-- `f514` Indefinite article followed by a noun denoting a group or entity.  **[stated — CLEARLY]**
+- `f369` Identifies file types and associated technical terms.  **[stated — None]**
+- `f514` Indefinite article followed by a noun denoting a group or entity.  *[not stated]*
 - `f1425` Fires on words denoting a specific instance or member of a group.  *[not stated]*
 - `f3151` The feature fires on the word "full" or its capitalized variants.  *[not stated]*
-- `f8507` Focuses on terms indicating applied knowledge or practical skill development.  **[stated — CLEARLY]**
-- `f12406` A determiner ("whole" or "entire") modifying a noun phrase describing a collective entity.  **[stated — CLEARLY]**
-- `f14605` Fires on words naming software types following a description of a role.  **[stated — CLEARLY]**
+- `f8507` Focuses on terms indicating applied knowledge or practical skill development.  *[controls fired — cannot tell]*
+- `f12406` A determiner ("whole" or "entire") modifying a noun phrase describing a collective entity.  *[controls fired — cannot tell]*
+- `f14605` Fires on words naming software types following a description of a role.  **[stated — None]**
 
-*Of 8 named shared latents: 5 stated, 2 not stated, 1 undecidable.*
+*Of 8 named shared latents: 2 stated, 3 not stated, 3 undecidable.*
 
 ### LOST — destroyed  · 4 labelled, 10 unlabelled
 
 - `f422` Verbs immediately following a colon or bullet point.  *[not stated]*
-- `f450` Preposition introducing a noun phrase specifying a relationship.  **[stated — CLEARLY]**
-- `f589` Adjective preceding a noun or noun phrase denoting a state or condition.  *[controls fired — cannot tell]*
-- `f1421` Fires on mentions of Python or closely related terms, often within a technical context.  **[stated — PROBABLY]**
+- `f450` Preposition introducing a noun phrase specifying a relationship.  *[controls fired — cannot tell]*
+- `f589` Adjective preceding a noun or noun phrase denoting a state or condition.  *[not stated]*
+- `f1421` Fires on mentions of Python or closely related terms, often within a technical context.  *[not stated]*
 
-*Of 4 named lost latents: 2 stated, 1 not stated, 1 undecidable.*
+*Of 4 named lost latents: 0 stated, 3 not stated, 1 undecidable.*
 
 ### MADE — invented  · 1 labelled, 2 unlabelled
 
-- `f15432` Identifies the Angular framework or related concepts within a text.  *[not stated]*
+- `f15432` Identifies the Angular framework or related concepts within a text.  **[stated — None]**
 
-*Of 1 named made latents: 0 stated, 1 not stated.*
+*Of 1 named made latents: 1 stated, 0 not stated.*
 
 ---
 
@@ -7037,18 +7037,18 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 - `f121` A determiner or pronoun followed by a preposition or conjunction.  *[not stated]*
 - `f1425` Fires on words denoting a specific instance or member of a group.  *[not stated]*
-- `f8147` Mentions a visual component like a carousel or slider.  *[controls fired — cannot tell]*
+- `f8147` Mentions a visual component like a carousel or slider.  **[stated — None]**
 
-*Of 3 named shared latents: 0 stated, 2 not stated, 1 undecidable.*
+*Of 3 named shared latents: 1 stated, 2 not stated.*
 
 ### LOST — destroyed  · 6 labelled, 10 unlabelled
 
 - `f3392` References to social networking sites or related actions.  *[not stated]*
-- `f4793` Fires on the start of a bulleted list item or section heading.  *[not stated]*
-- `f4853` Predicts tokens related to Instagram content creation.  **[stated — CLEARLY]**
+- `f4793` Fires on the start of a bulleted list item or section heading.  **[stated — None]**
+- `f4853` Predicts tokens related to Instagram content creation.  *[not stated]*
 - `f9560` Fires on mentions of Instagram or its Stories feature.  *[not stated]*
 - `f12078` Bolded word after a colon introducing a definition/explanation.  *[not stated]*
-- `f15434` Image references, often with accompanying captions or descriptions.  **[stated — CLEARLY]**
+- `f15434` Image references, often with accompanying captions or descriptions.  **[stated — None]**
 
 *Of 6 named lost latents: 2 stated, 4 not stated.*
 
@@ -7078,19 +7078,19 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 11 labelled, 9 unlabelled
 
-- `f69` Past participle verbs modifying a noun.  *[controls fired — cannot tell]*
+- `f69` Past participle verbs modifying a noun.  **[stated — None]**
 - `f585` Identifies code elements or algorithm steps.  *[controls fired — cannot tell]*
-- `f607` Defines or initializes a class or function.  **[stated — CLEARLY]**
-- `f635` Identifies a data type or property definition within code or data structures.  **[stated — CLEARLY]**
-- `f644` An action verb preceding a noun related to data handling.  **[stated — CLEARLY]**
+- `f607` Defines or initializes a class or function.  **[stated — None]**
+- `f635` Identifies a data type or property definition within code or data structures.  **[stated — None]**
+- `f644` An action verb preceding a noun related to data handling.  **[stated — None]**
 - `f3653` Sentence-initial word or phrase.  *[not stated]*
 - `f7063` Adjective modifying a preceding noun.  *[not stated]*
-- `f7641` Signals a continuation or consequence following a temporal or causal clause.  **[stated — CLEARLY]**
-- `f8466` The feature fires on words describing data structures like dictionaries or maps.  **[stated — CLEARLY]**
-- `f11612` Assignment or configuration keywords/phrases are triggering the feature.  **[stated — CLEARLY]**
-- `f11901` List initialization with an empty array literal.  **[stated — CLEARLY]**
+- `f7641` Signals a continuation or consequence following a temporal or causal clause.  **[stated — None]**
+- `f8466` The feature fires on words describing data structures like dictionaries or maps.  **[stated — None]**
+- `f11612` Assignment or configuration keywords/phrases are triggering the feature.  **[stated — None]**
+- `f11901` List initialization with an empty array literal.  **[stated — None]**
 
-*Of 11 named shared latents: 7 stated, 2 not stated, 2 undecidable.*
+*Of 11 named shared latents: 8 stated, 2 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 6 labelled, 6 unlabelled
 
@@ -7098,18 +7098,18 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 - `f589` Adjective preceding a noun or noun phrase denoting a state or condition.  *[not stated]*
 - `f2501` Verbs immediately following an instruction to perform a computation.  *[not stated]*
 - `f7732` Triggered by phrases indicating data/file creation for testing or demonstration.  *[not stated]*
-- `f9293` Fires on variations of "user" associated with configuration or authentication.  **[stated — CLEARLY]**
-- `f16148` Identifies when type checking or inference occurs (compile or runtime).  **[stated — CLEARLY]**
+- `f9293` Fires on variations of "user" associated with configuration or authentication.  **[stated — None]**
+- `f16148` Identifies when type checking or inference occurs (compile or runtime).  *[not stated]*
 
-*Of 6 named lost latents: 2 stated, 4 not stated.*
+*Of 6 named lost latents: 1 stated, 5 not stated.*
 
 ### MADE — invented  · 3 labelled, 4 unlabelled
 
 - `f1098` A verb indicating control or verification, often preceded by "be" or a similar auxiliary.  *[not stated]*
-- `f2284` Fires on opening curly brace preceding JSON object construction.  **[stated — CLEARLY]**
-- `f9160` Triggers on the start of an instruction to create something.  **[stated — CLEARLY]**
+- `f2284` Fires on opening curly brace preceding JSON object construction.  **[stated — None]**
+- `f9160` Triggers on the start of an instruction to create something.  *[not stated]*
 
-*Of 3 named made latents: 2 stated, 1 not stated.*
+*Of 3 named made latents: 1 stated, 2 not stated.*
 
 ---
 
@@ -7135,18 +7135,18 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 - `f121` A determiner or pronoun followed by a preposition or conjunction.  *[not stated]*
 - `f194` The" at the start of a clause or phrase following a colon/question mark.  *[not stated]*
 - `f334` Fires on "the" at the start of a clause or introductory phrase.  *[not stated]*
-- `f393` Sentence-initial "The".  **[stated — CLEARLY]**
+- `f393` Sentence-initial "The".  *[not stated]*
 - `f635` Identifies a data type or property definition within code or data structures.  *[not stated]*
-- `f2054` Tokens indicating the act of displaying output to a terminal.  **[stated — CLEARLY]**
+- `f2054` Tokens indicating the act of displaying output to a terminal.  *[controls fired — cannot tell]*
 - `f3316` Verbs immediately following code that produces output.  *[not stated]*
-- `f3689` Fires on tokens referencing or directly involving regular expression syntax or usage.  **[stated — CLEARLY]**
-- `f6549` Triggered by phrases requesting or implying an information retrieval action.  **[stated — CLEARLY]**
+- `f3689` Fires on tokens referencing or directly involving regular expression syntax or usage.  **[stated — None]**
+- `f6549` Triggered by phrases requesting or implying an information retrieval action.  **[stated — None]**
 
-*Of 10 named shared latents: 4 stated, 5 not stated, 1 undecidable.*
+*Of 10 named shared latents: 2 stated, 6 not stated, 2 undecidable.*
 
 ### LOST — destroyed  · 3 labelled, 2 unlabelled
 
-- `f1205` Definite article at clause/phrase start.  **[stated — CLEARLY]**
+- `f1205` Definite article at clause/phrase start.  **[stated — None]**
 - `f3542` Fires on mentions of text editing software or related tools.  *[not stated]*
 - `f8809` The" introducing a parameter name in function/method arguments.  *[not stated]*
 
@@ -7154,9 +7154,9 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### MADE — invented  · 1 labelled, 1 unlabelled
 
-- `f667` A definite article ("the") preceding a noun phrase.  *[controls fired — cannot tell]*
+- `f667` A definite article ("the") preceding a noun phrase.  **[stated — None]**
 
-*Of 1 named made latents: 0 stated, 0 not stated, 1 undecidable.*
+*Of 1 named made latents: 1 stated, 0 not stated.*
 
 ---
 
@@ -7178,15 +7178,15 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 7 labelled, 4 unlabelled
 
-- `f134` Beginning of a code statement or block.  **[stated — CLEARLY]**
-- `f1438` Fires on C/C++ language elements appearing at the start of a line or definition.  *[controls fired — cannot tell]*
-- `f6163` A type specifier (int, bool, etc.) directly precedes the marked token.  **[stated — PROBABLY]**
+- `f134` Beginning of a code statement or block.  **[stated — None]**
+- `f1438` Fires on C/C++ language elements appearing at the start of a line or definition.  **[stated — None]**
+- `f6163` A type specifier (int, bool, etc.) directly precedes the marked token.  *[not stated]*
 - `f6164` First token inside a `for` loop body.  *[not stated]*
-- `f6701` Code initialization or declaration following a control structure.  **[stated — CLEARLY]**
-- `f9201` Triggers on the word "random" or its variants, often indicating a process of generating unpredictable values.  **[stated — CLEARLY]**
-- `f9295` Marks the beginning of a code definition or declaration.  **[stated — CLEARLY]**
+- `f6701` Code initialization or declaration following a control structure.  **[stated — None]**
+- `f9201` Triggers on the word "random" or its variants, often indicating a process of generating unpredictable values.  **[stated — None]**
+- `f9295` Marks the beginning of a code definition or declaration.  **[stated — None]**
 
-*Of 7 named shared latents: 5 stated, 1 not stated, 1 undecidable.*
+*Of 7 named shared latents: 5 stated, 2 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 3 unlabelled
 
@@ -7197,10 +7197,10 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### MADE — invented  · 4 labelled, 2 unlabelled
 
-- `f6775` Identifiers following a type declaration or within a function definition.  **[stated — PROBABLY]**
+- `f6775` Identifiers following a type declaration or within a function definition.  **[stated — None]**
 - `f9972` C++ include statements with angle bracket syntax.  *[not stated]*
-- `f14236` Integer data type declarations or operations trigger the feature.  **[stated — CLEARLY]**
-- `f15481` Fires on the start of a function definition or code block.  **[stated — CLEARLY]**
+- `f14236` Integer data type declarations or operations trigger the feature.  **[stated — None]**
+- `f15481` Fires on the start of a function definition or code block.  **[stated — None]**
 
 *Of 4 named made latents: 3 stated, 1 not stated.*
 
@@ -7225,29 +7225,29 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 5 labelled, 7 unlabelled
 
 - `f1000` Fires on a noun denoting a field of study, process, or abstract concept.  *[not stated]*
-- `f1593` Fires on code comments or function return statements demonstrating usage.  *[not stated]*
-- `f2000` Fires on words introducing or elaborating on abstract concepts or theorems.  **[stated — CLEARLY]**
-- `f2955` Feature fires on terms referring to graph components (nodes/vertices).  **[stated — CLEARLY]**
-- `f3905` Noun denoting a physical component within a technical system.  **[stated — CLEARLY]**
+- `f1593` Fires on code comments or function return statements demonstrating usage.  **[stated — None]**
+- `f2000` Fires on words introducing or elaborating on abstract concepts or theorems.  **[stated — None]**
+- `f2955` Feature fires on terms referring to graph components (nodes/vertices).  **[stated — None]**
+- `f3905` Noun denoting a physical component within a technical system.  **[stated — None]**
 
-*Of 5 named shared latents: 3 stated, 2 not stated.*
+*Of 5 named shared latents: 4 stated, 1 not stated.*
 
 ### LOST — destroyed  · 4 labelled, 2 unlabelled
 
 - `f123` Noun following a description or label.  *[controls fired — cannot tell]*
-- `f777` Colon followed by a heading or short phrase introducing a list item.  *[not stated]*
+- `f777` Colon followed by a heading or short phrase introducing a list item.  *[controls fired — cannot tell]*
 - `f897` Fires on company names or project names often presented as abbreviations.  *[not stated]*
-- `f2869` Noun referring to a program, script, or system.  *[not stated]*
+- `f2869` Noun referring to a program, script, or system.  **[stated — None]**
 
-*Of 4 named lost latents: 0 stated, 3 not stated, 1 undecidable.*
+*Of 4 named lost latents: 1 stated, 1 not stated, 2 undecidable.*
 
 ### MADE — invented  · 3 labelled, 2 unlabelled
 
-- `f286` Fires on terminology describing a process or measurement.  **[stated — CLEARLY]**
+- `f286` Fires on terminology describing a process or measurement.  *[controls fired — cannot tell]*
 - `f3880` Passive voice verb followed by "as" or a synonym.  *[not stated]*
-- `f6215` Fires on the start of a code definition or method.  **[stated — CLEARLY]**
+- `f6215` Fires on the start of a code definition or method.  **[stated — None]**
 
-*Of 3 named made latents: 2 stated, 1 not stated.*
+*Of 3 named made latents: 1 stated, 1 not stated, 1 undecidable.*
 
 ---
 
@@ -7269,32 +7269,32 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 4 labelled, 2 unlabelled
 
-- `f267` Detects a space before a closing code construct.  **[stated — CLEARLY]**
+- `f267` Detects a space before a closing code construct.  *[controls fired — cannot tell]*
 - `f915` Identifiers immediately following a colon or within a dictionary access.  *[not stated]*
-- `f1090` Closing curly brace after a semicolon or delimiter in code.  **[stated — CLEARLY]**
-- `f6689` Triggers on the opening of a style block within HTML.  **[stated — CLEARLY]**
+- `f1090` Closing curly brace after a semicolon or delimiter in code.  **[stated — None]**
+- `f6689` Triggers on the opening of a style block within HTML.  **[stated — None]**
 
-*Of 4 named shared latents: 3 stated, 1 not stated.*
+*Of 4 named shared latents: 2 stated, 1 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 4 labelled, 4 unlabelled
 
 - `f447` Identifies code blocks starting with a variable declaration.  *[not stated]*
 - `f1558` Error messages following a conditional check (e.g., if, else).  *[not stated]*
-- `f6467` Space before a closing brace/bracket in a data structure definition.  **[stated — CLEARLY]**
-- `f9785` Fires on code tokens within code snippets or block delimiters.  **[stated — CLEARLY]**
+- `f6467` Space before a closing brace/bracket in a data structure definition.  **[stated — None]**
+- `f9785` Fires on code tokens within code snippets or block delimiters.  **[stated — None]**
 
 *Of 4 named lost latents: 2 stated, 2 not stated.*
 
 ### MADE — invented  · 6 labelled, 3 unlabelled
 
 - `f1016` Fires on opening HTML tags or elements.  *[not stated]*
-- `f3475` Fires on CSS property names or values within style declarations.  **[stated — CLEARLY]**
-- `f4460` Beginning of a code block or object definition.  **[stated — CLEARLY]**
-- `f5798` Fires on closing delimiters in code or structured data.  *[controls fired — cannot tell]*
-- `f6967` Selectors or method calls targeting DOM elements.  **[stated — CLEARLY]**
+- `f3475` Fires on CSS property names or values within style declarations.  **[stated — None]**
+- `f4460` Beginning of a code block or object definition.  **[stated — None]**
+- `f5798` Fires on closing delimiters in code or structured data.  **[stated — None]**
+- `f6967` Selectors or method calls targeting DOM elements.  **[stated — None]**
 - `f15465` Closes a JSX component block before exporting or defining a function.  *[not stated]*
 
-*Of 6 named made latents: 3 stated, 2 not stated, 1 undecidable.*
+*Of 6 named made latents: 4 stated, 2 not stated.*
 
 ---
 
@@ -7316,25 +7316,25 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 1 labelled, 4 unlabelled
 
-- `f2722` Phrase "Please read the" followed by "important disclaimers" or "disclaimer.  **[stated — CLEARLY]**
+- `f2722` Phrase "Please read the" followed by "important disclaimers" or "disclaimer.  **[stated — None]**
 
 *Of 1 named shared latents: 1 stated, 0 not stated.*
 
 ### LOST — destroyed  · 3 labelled, 3 unlabelled
 
-- `f123` Noun following a description or label.  *[controls fired — cannot tell]*
-- `f297` Fires on a period followed by a horizontal bar character.  **[stated — CLEARLY]**
-- `f2668` Fires on the token following an introductory phrase promising a comprehensive overview.  *[not stated]*
+- `f123` Noun following a description or label.  *[not stated]*
+- `f297` Fires on a period followed by a horizontal bar character.  *[not stated]*
+- `f2668` Fires on the token following an introductory phrase promising a comprehensive overview.  **[stated — None]**
 
-*Of 3 named lost latents: 1 stated, 1 not stated, 1 undecidable.*
+*Of 3 named lost latents: 1 stated, 2 not stated.*
 
 ### MADE — invented  · 5 labelled, 3 unlabelled
 
-- `f448` Fires on a period following an introductory phrase announcing a breakdown.  **[stated — CLEARLY]**
+- `f448` Fires on a period following an introductory phrase announcing a breakdown.  **[stated — None]**
 - `f853` Please" followed by "the" triggers the feature.  *[not stated]*
-- `f1656` Triggers on the beginning of a disclaimer.  **[stated — CLEARLY]**
-- `f9400` Disclaimers appearing after a period or other sentence-ending punctuation.  **[stated — CLEARLY]**
-- `f13025` Signals the introduction of a list or summary section.  **[stated — CLEARLY]**
+- `f1656` Triggers on the beginning of a disclaimer.  **[stated — None]**
+- `f9400` Disclaimers appearing after a period or other sentence-ending punctuation.  **[stated — None]**
+- `f13025` Signals the introduction of a list or summary section.  **[stated — None]**
 
 *Of 5 named made latents: 4 stated, 1 not stated.*
 
@@ -7358,16 +7358,16 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 8 labelled, 10 unlabelled
 
-- `f2280` Fires on musical terms following a descriptive phrase.  **[stated — CLEARLY]**
-- `f2445` Begins a word starting with "Ch" in a list or technical specification.  **[stated — CLEARLY]**
+- `f2280` Fires on musical terms following a descriptive phrase.  **[stated — None]**
+- `f2445` Begins a word starting with "Ch" in a list or technical specification.  **[stated — None]**
 - `f3000` The feature triggers on requests for creative writing output, specifically involving song lyrics or writing songs.  *[not stated]*
-- `f3405` Fires on musical chord terms, often with a numerical suffix.  **[stated — CLEARLY]**
-- `f4196` Fires on tokens referring to musical instruments or musical activities.  **[stated — CLEARLY]**
-- `f5568` Fires on a key term within a technical explanation or definition.  *[controls fired — cannot tell]*
-- `f14658` A capitalized word or phrase that introduces a named entity (service, tool, product).  **[stated — PROBABLY]**
-- `f15982` Noun relating to musical instruments or techniques, often following a colon or introductory phrase.  **[stated — CLEARLY]**
+- `f3405` Fires on musical chord terms, often with a numerical suffix.  **[stated — None]**
+- `f4196` Fires on tokens referring to musical instruments or musical activities.  **[stated — None]**
+- `f5568` Fires on a key term within a technical explanation or definition.  *[not stated]*
+- `f14658` A capitalized word or phrase that introduces a named entity (service, tool, product).  *[not stated]*
+- `f15982` Noun relating to musical instruments or techniques, often following a colon or introductory phrase.  **[stated — None]**
 
-*Of 8 named shared latents: 6 stated, 1 not stated, 1 undecidable.*
+*Of 8 named shared latents: 5 stated, 3 not stated.*
 
 ### LOST — destroyed  · 0 labelled, 3 unlabelled
 
@@ -7398,24 +7398,24 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 7 labelled, 2 unlabelled
 
-- `f24` A phrase signaling an explication or organization of information.  **[stated — CLEARLY]**
+- `f24` A phrase signaling an explication or organization of information.  **[stated — None]**
 - `f86` Follows introductory phrases signaling a structured explanation.  *[controls fired — cannot tell]*
-- `f121` A determiner or pronoun followed by a preposition or conjunction.  *[controls fired — cannot tell]*
+- `f121` A determiner or pronoun followed by a preposition or conjunction.  *[not stated]*
 - `f590` Preposition/adverb followed by "on" indicating notes or details.  *[not stated]*
-- `f1182` Preposition followed by "into" or "of" introducing a structured breakdown.  **[stated — CLEARLY]**
-- `f7991` I'll structure [token]" or "I'll organize [token]" triggers the feature.  **[stated — PROBABLY]**
-- `f11291` into" following a statement of categorization or breakdown.  *[controls fired — cannot tell]*
+- `f1182` Preposition followed by "into" or "of" introducing a structured breakdown.  **[stated — None]**
+- `f7991` I'll structure [token]" or "I'll organize [token]" triggers the feature.  *[controls fired — cannot tell]*
+- `f11291` into" following a statement of categorization or breakdown.  **[stated — None]**
 
-*Of 7 named shared latents: 3 stated, 1 not stated, 3 undecidable.*
+*Of 7 named shared latents: 3 stated, 2 not stated, 2 undecidable.*
 
 ### LOST — destroyed  · 4 labelled, 3 unlabelled
 
-- `f519` Fires on a list item introducing variations.  **[stated — PROBABLY]**
-- `f1248` A conjunction or preposition introducing a numbered or categorized list.  **[stated — CLEARLY]**
-- `f3342` Fires on words following a colon introducing a financial term or rating.  **[stated — PROBABLY]**
+- `f519` Fires on a list item introducing variations.  *[not stated]*
+- `f1248` A conjunction or preposition introducing a numbered or categorized list.  **[stated — None]**
+- `f3342` Fires on words following a colon introducing a financial term or rating.  *[not stated]*
 - `f9558` Nouns related to think tanks, research institutions, or analysis of geopolitical events.  *[not stated]*
 
-*Of 4 named lost latents: 3 stated, 1 not stated.*
+*Of 4 named lost latents: 1 stated, 3 not stated.*
 
 ### MADE — invented  · 1 labelled, 1 unlabelled
 
@@ -7444,28 +7444,28 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 7 labelled, 5 unlabelled
 
 - `f290` Defines a function/method using a colon.  *[not stated]*
-- `f1421` Fires on mentions of Python or closely related terms, often within a technical context.  **[stated — PROBABLY]**
-- `f3733` Fires on the word "order" within a context of sequential instructions or arrangements.  **[stated — CLEARLY]**
+- `f1421` Fires on mentions of Python or closely related terms, often within a technical context.  **[stated — None]**
+- `f3733` Fires on the word "order" within a context of sequential instructions or arrangements.  **[stated — None]**
 - `f3921` in" following "range" indicates iteration.  *[not stated]*
 - `f4441` A word related to vehicles appearing in a discussion of transportation or logistics.  *[not stated]*
-- `f9236` A term describing a counting or arrangement problem.  **[stated — CLEARLY]**
+- `f9236` A term describing a counting or arrangement problem.  **[stated — None]**
 - `f14379` The feature fires on verbs indicating finding or determining a solution.  *[not stated]*
 
 *Of 7 named shared latents: 3 stated, 4 not stated.*
 
 ### LOST — destroyed  · 1 labelled, 0 unlabelled
 
-- `f940` Variable/identifier declaration after a comment or code keyword.  **[stated — CLEARLY]**
+- `f940` Variable/identifier declaration after a comment or code keyword.  *[not stated]*
 
-*Of 1 named lost latents: 1 stated, 0 not stated.*
+*Of 1 named lost latents: 0 stated, 1 not stated.*
 
 ### MADE — invented  · 3 labelled, 2 unlabelled
 
 - `f1754` Fires on tokens indicating a mathematical product.  *[not stated]*
-- `f5954` Identifies variables or data structures used in graph/search algorithms.  *[controls fired — cannot tell]*
+- `f5954` Identifies variables or data structures used in graph/search algorithms.  **[stated — None]**
 - `f7920` Fires on terms related to genetic algorithms and evolutionary computation.  *[not stated]*
 
-*Of 3 named made latents: 0 stated, 2 not stated, 1 undecidable.*
+*Of 3 named made latents: 1 stated, 2 not stated.*
 
 ---
 
@@ -7487,19 +7487,19 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 11 labelled, 6 unlabelled
 
-- `f798` Definite article initiating a list point.  **[stated — CLEARLY]**
+- `f798` Definite article initiating a list point.  *[not stated]*
 - `f1080` Adjective immediately preceding a noun at sentence/clause end.  *[not stated]*
 - `f1481` Fires on the token "one" when used to denote singularity.  *[not stated]*
-- `f4246` Identifies terms related to tabular data structures.  **[stated — CLEARLY]**
-- `f5282` Identifies font attributes (size, name, style) within formatting instructions.  **[stated — CLEARLY]**
-- `f6044` Fires on the indefinite article "un" at the beginning of a clause.  **[stated — CLEARLY]**
-- `f7332` Preposition or conjunction following a previous word.  **[stated — CLEARLY]**
-- `f9033` Fires on tokens referring to the religion or adherents of Islam.  **[stated — CLEARLY]**
-- `f10615` Fires on references to specific religious texts.  **[stated — CLEARLY]**
-- `f10801` Words describing book elements or the book-creation process.  **[stated — CLEARLY]**
+- `f4246` Identifies terms related to tabular data structures.  *[not stated]*
+- `f5282` Identifies font attributes (size, name, style) within formatting instructions.  **[stated — None]**
+- `f6044` Fires on the indefinite article "un" at the beginning of a clause.  **[stated — None]**
+- `f7332` Preposition or conjunction following a previous word.  **[stated — None]**
+- `f9033` Fires on tokens referring to the religion or adherents of Islam.  *[not stated]*
+- `f10615` Fires on references to specific religious texts.  **[stated — None]**
+- `f10801` Words describing book elements or the book-creation process.  **[stated — None]**
 - `f14219` Fires on indefinite articles at the start of a list or explanation.  *[not stated]*
 
-*Of 11 named shared latents: 8 stated, 3 not stated.*
+*Of 11 named shared latents: 5 stated, 6 not stated.*
 
 ### LOST — destroyed  · 1 labelled, 2 unlabelled
 
@@ -7534,23 +7534,23 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 8 labelled, 15 unlabelled
 
-- `f400` Linking verb "to be" introducing an assessment or declaration.  **[stated — CLEARLY]**
-- `f411` Fires on conjunctions and adverbs following a direct instruction.  **[stated — CLEARLY]**
+- `f400` Linking verb "to be" introducing an assessment or declaration.  **[stated — None]**
+- `f411` Fires on conjunctions and adverbs following a direct instruction.  *[not stated]*
 - `f449` Fires on a possessive pronoun immediately following a noun.  *[not stated]*
-- `f465` is/are" at the start of a descriptive or evaluative clause.  **[stated — CLEARLY]**
-- `f516` Introduces a difficult or complex topic being discussed.  **[stated — PROBABLY]**
-- `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  **[stated — CLEARLY]**
-- `f11163` Follows a statement asserting criticality or significance.  **[stated — PROBABLY]**
+- `f465` is/are" at the start of a descriptive or evaluative clause.  **[stated — None]**
+- `f516` Introduces a difficult or complex topic being discussed.  **[stated — None]**
+- `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  *[not stated]*
+- `f11163` Follows a statement asserting criticality or significance.  **[stated — None]**
 - `f13125` Fires on a definite article following a verb or preposition.  *[not stated]*
 
-*Of 8 named shared latents: 6 stated, 2 not stated.*
+*Of 8 named shared latents: 4 stated, 4 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 4 unlabelled
 
 - `f5650` Fires on the word "Migration" or related terms within the context of database management.  *[not stated]*
-- `f6793` Words signifying a deviation from positive behavior or a recourse to negative strategies.  **[stated — PROBABLY]**
+- `f6793` Words signifying a deviation from positive behavior or a recourse to negative strategies.  *[not stated]*
 
-*Of 2 named lost latents: 1 stated, 1 not stated.*
+*Of 2 named lost latents: 0 stated, 2 not stated.*
 
 ### MADE — invented  · 1 labelled, 5 unlabelled
 
@@ -7579,29 +7579,29 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 8 labelled, 7 unlabelled
 
 - `f304` Introduces a more/complete/detailed/structured explanation.  *[not stated]*
-- `f813` Adjectives describing teams or players' performance/status.  **[stated — CLEARLY]**
-- `f3206` Fires on tokens following possessive pronouns/determiners referring to teams/players.  **[stated — PROBABLY]**
-- `f6556` Follows a verb indicating a manner or intensity.  **[stated — PROBABLY]**
-- `f9495` Adjectives modifying a noun denoting a positive condition or desired outcome.  **[stated — PROBABLY]**
-- `f9916` Noun indicating a skill, attribute, or action within a sporting context.  **[stated — CLEARLY]**
-- `f12542` A past-tense verb indicating a cutting or severing action.  **[stated — CLEARLY]**
+- `f813` Adjectives describing teams or players' performance/status.  **[stated — None]**
+- `f3206` Fires on tokens following possessive pronouns/determiners referring to teams/players.  **[stated — None]**
+- `f6556` Follows a verb indicating a manner or intensity.  *[not stated]*
+- `f9495` Adjectives modifying a noun denoting a positive condition or desired outcome.  *[not stated]*
+- `f9916` Noun indicating a skill, attribute, or action within a sporting context.  **[stated — None]**
+- `f12542` A past-tense verb indicating a cutting or severing action.  *[not stated]*
 - `f14296` Verbs or nouns associated with the act of killing or terminating something.  *[not stated]*
 
-*Of 8 named shared latents: 6 stated, 2 not stated.*
+*Of 8 named shared latents: 3 stated, 5 not stated.*
 
 ### LOST — destroyed  · 3 labelled, 4 unlabelled
 
-- `f1628` Adjectives preceding a noun describing a character or object.  **[stated — CLEARLY]**
-- `f9611` An adjective expressing quality or approval following an introductory phrase.  **[stated — PROBABLY]**
+- `f1628` Adjectives preceding a noun describing a character or object.  *[not stated]*
+- `f9611` An adjective expressing quality or approval following an introductory phrase.  *[not stated]*
 - `f13777` Describes a momentary, non-verbal signal of emotion or understanding.  *[not stated]*
 
-*Of 3 named lost latents: 2 stated, 1 not stated.*
+*Of 3 named lost latents: 0 stated, 3 not stated.*
 
 ### MADE — invented  · 1 labelled, 1 unlabelled
 
-- `f7830` Fires on words indicating strategies, pathways, or arrangements.  **[stated — CLEARLY]**
+- `f7830` Fires on words indicating strategies, pathways, or arrangements.  *[controls fired — cannot tell]*
 
-*Of 1 named made latents: 1 stated, 0 not stated.*
+*Of 1 named made latents: 0 stated, 0 not stated, 1 undecidable.*
 
 ---
 
@@ -7623,16 +7623,16 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 8 labelled, 10 unlabelled
 
-- `f400` Linking verb "to be" introducing an assessment or declaration.  **[stated — CLEARLY]**
-- `f449` Fires on a possessive pronoun immediately following a noun.  **[stated — PROBABLY]**
+- `f400` Linking verb "to be" introducing an assessment or declaration.  **[stated — None]**
+- `f449` Fires on a possessive pronoun immediately following a noun.  *[not stated]*
 - `f516` Introduces a difficult or complex topic being discussed.  *[not stated]*
-- `f1008` Contraction of "is" used to introduce an explanation or clarification.  **[stated — CLEARLY]**
-- `f1577` Describes clothing or style, often in context of personal preference.  *[not stated]*
-- `f1644` Token follows a colon or dash introducing a detail.  **[stated — CLEARLY]**
-- `f3220` Fires on a determiner/pronoun immediately following a positive descriptor.  **[stated — PROBABLY]**
+- `f1008` Contraction of "is" used to introduce an explanation or clarification.  **[stated — None]**
+- `f1577` Describes clothing or style, often in context of personal preference.  **[stated — None]**
+- `f1644` Token follows a colon or dash introducing a detail.  **[stated — None]**
+- `f3220` Fires on a determiner/pronoun immediately following a positive descriptor.  *[not stated]*
 - `f12447` Identifies "good practice" as a positive recommendation.  *[not stated]*
 
-*Of 8 named shared latents: 5 stated, 3 not stated.*
+*Of 8 named shared latents: 4 stated, 4 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 4 unlabelled
 
@@ -7646,11 +7646,11 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 - `f199` Fires on forms of "have" at the end of a clause.  *[not stated]*
 - `f431` It" following an apostrophe indicating a contraction.  *[not stated]*
 - `f815` It fires on words relating to remembering or past events, often after a phrase indicating reflection or recall.  *[not stated]*
-- `f1309` Designates a visual component or element for drawing/display.  *[controls fired — cannot tell]*
+- `f1309` Designates a visual component or element for drawing/display.  **[stated — None]**
 - `f2705` Contraction of "it is" appearing within a discussion of a sensitive topic.  *[not stated]*
 - `f13744` Fires on words indicating fictional content or genres.  *[not stated]*
 
-*Of 6 named made latents: 0 stated, 5 not stated, 1 undecidable.*
+*Of 6 named made latents: 1 stated, 5 not stated.*
 
 ---
 
@@ -7672,13 +7672,13 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 7 labelled, 9 unlabelled
 
-- `f511` Relative pronoun introducing a non-restrictive clause.  **[stated — CLEARLY]**
-- `f968` It triggers on words related to risk assessment and strategic actions in wagering scenarios.  **[stated — CLEARLY]**
+- `f511` Relative pronoun introducing a non-restrictive clause.  **[stated — None]**
+- `f968` It triggers on words related to risk assessment and strategic actions in wagering scenarios.  **[stated — None]**
 - `f2683` Fires on the name of a contender or team mentioned as strong or consistent.  *[not stated]*
 - `f2793` Fires on punctuation following a numerical statistic or measurement.  *[not stated]*
 - `f3892` Refers to "flop" when describing a card game deal.  *[not stated]*
-- `f4188` Fires on mentions of cards, especially when discussing rules or patterns.  **[stated — CLEARLY]**
-- `f9951` It fires on relative pronouns introducing explanatory clauses.  **[stated — CLEARLY]**
+- `f4188` Fires on mentions of cards, especially when discussing rules or patterns.  **[stated — None]**
+- `f9951` It fires on relative pronouns introducing explanatory clauses.  **[stated — None]**
 
 *Of 7 named shared latents: 4 stated, 3 not stated.*
 
@@ -7692,11 +7692,11 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### MADE — invented  · 3 labelled, 4 unlabelled
 
-- `f392` A relative pronoun introducing a restrictive clause.  **[stated — CLEARLY]**
-- `f1293` Tokens following conjunctions or transitional phrases indicating continuation.  **[stated — CLEARLY]**
-- `f2326` Phrases indicating risk or harm trigger the feature.  **[stated — CLEARLY]**
+- `f392` A relative pronoun introducing a restrictive clause.  **[stated — None]**
+- `f1293` Tokens following conjunctions or transitional phrases indicating continuation.  *[not stated]*
+- `f2326` Phrases indicating risk or harm trigger the feature.  **[stated — None]**
 
-*Of 3 named made latents: 3 stated, 0 not stated.*
+*Of 3 named made latents: 2 stated, 1 not stated.*
 
 ---
 
@@ -7718,33 +7718,33 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 11 labelled, 11 unlabelled
 
-- `f42` can" following a comma indicating a potential consequence.  **[stated — CLEARLY]**
-- `f49` Fires on the verb "can" when used to express ability or possibility.  **[stated — CLEARLY]**
+- `f42` can" following a comma indicating a potential consequence.  **[stated — None]**
+- `f49` Fires on the verb "can" when used to express ability or possibility.  **[stated — None]**
 - `f384` Negative contractions within a list of directives.  *[not stated]*
-- `f399` Pronoun/possessive pronoun following a verb/preposition.  **[stated — PROBABLY]**
-- `f550` A preposition/pronoun immediately following a noun phrase describing harmful intent.  **[stated — CLEARLY]**
-- `f697` Modal verb/auxiliary following a potential action/consequence.  **[stated — CLEARLY]**
-- `f951` Noun phrase indicating a strategic business objective or positioning.  **[stated — CLEARLY]**
-- `f3746` Introduces a contrast or alternative after a preceding idea.  **[stated — PROBABLY]**
-- `f6703` Fires on tokens related to power dynamics within discussions of ethics/harm.  **[stated — CLEARLY]**
+- `f399` Pronoun/possessive pronoun following a verb/preposition.  *[not stated]*
+- `f550` A preposition/pronoun immediately following a noun phrase describing harmful intent.  *[not stated]*
+- `f697` Modal verb/auxiliary following a potential action/consequence.  **[stated — None]**
+- `f951` Noun phrase indicating a strategic business objective or positioning.  **[stated — None]**
+- `f3746` Introduces a contrast or alternative after a preceding idea.  **[stated — None]**
+- `f6703` Fires on tokens related to power dynamics within discussions of ethics/harm.  **[stated — None]**
 - `f7123` Fires on tokens associated with the setting or discussion of costs.  *[not stated]*
-- `f14772` Noun phrases describing market structures or legal concepts, frequently following a colon or hyphen.  **[stated — PROBABLY]**
+- `f14772` Noun phrases describing market structures or legal concepts, frequently following a colon or hyphen.  **[stated — None]**
 
-*Of 11 named shared latents: 9 stated, 2 not stated.*
+*Of 11 named shared latents: 7 stated, 4 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 1 unlabelled
 
-- `f2019` Pronoun referencing a character/entity within a description or dialogue.  **[stated — PROBABLY]**
-- `f8513` Fires on tokens signifying enhanced power or influence over a system.  **[stated — CLEARLY]**
+- `f2019` Pronoun referencing a character/entity within a description or dialogue.  *[not stated]*
+- `f8513` Fires on tokens signifying enhanced power or influence over a system.  *[controls fired — cannot tell]*
 
-*Of 2 named lost latents: 2 stated, 0 not stated.*
+*Of 2 named lost latents: 0 stated, 1 not stated, 1 undecidable.*
 
 ### MADE — invented  · 2 labelled, 0 unlabelled
 
-- `f289` Adverbs or conjunctions introducing negative consequences or violations.  **[stated — PROBABLY]**
-- `f13695` A word indicating restriction, often following a preposition or verb.  **[stated — CLEARLY]**
+- `f289` Adverbs or conjunctions introducing negative consequences or violations.  **[stated — None]**
+- `f13695` A word indicating restriction, often following a preposition or verb.  *[not stated]*
 
-*Of 2 named made latents: 2 stated, 0 not stated.*
+*Of 2 named made latents: 1 stated, 1 not stated.*
 
 ---
 
@@ -7767,16 +7767,16 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 9 labelled, 9 unlabelled
 
 - `f297` Fires on a period followed by a horizontal bar character.  *[not stated]*
-- `f451` Value or range immediately preceding a punctuation mark.  *[controls fired — cannot tell]*
-- `f655` It fires on tokens following a mathematical symbol or statement.  **[stated — CLEARLY]**
+- `f451` Value or range immediately preceding a punctuation mark.  *[not stated]*
+- `f655` It fires on tokens following a mathematical symbol or statement.  *[not stated]*
 - `f777` Colon followed by a heading or short phrase introducing a list item.  *[not stated]*
-- `f1179` Fires on tokens marking the conclusion of a mathematical step.  **[stated — CLEARLY]**
+- `f1179` Fires on tokens marking the conclusion of a mathematical step.  **[stated — None]**
 - `f3708` Identifies keywords and function definitions within code related to prime numbers.  *[not stated]*
-- `f4643` Verbs indicating evaluation or verification of a condition.  **[stated — CLEARLY]**
-- `f6553` The feature fires on tokens indicating a mathematical operation or a component of a number.  **[stated — CLEARLY]**
+- `f4643` Verbs indicating evaluation or verification of a condition.  **[stated — None]**
+- `f6553` The feature fires on tokens indicating a mathematical operation or a component of a number.  **[stated — None]**
 - `f14935` Fires on variable names within conditional logic.  *[not stated]*
 
-*Of 9 named shared latents: 4 stated, 4 not stated, 1 undecidable.*
+*Of 9 named shared latents: 3 stated, 6 not stated.*
 
 ### LOST — destroyed  · 6 labelled, 8 unlabelled
 
@@ -7785,18 +7785,18 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 - `f6552` Fires on prime numbers listed as part of a sequence or list.  *[not stated]*
 - `f7243` Numerical representation of "five" frequently appearing within code or calculations.  *[not stated]*
 - `f9623` Fires on mathematical operators or numeric literals within equations or calculations.  *[not stated]*
-- `f15597` Numbers or calculations followed by a non-alphanumeric token.  **[stated — CLEARLY]**
+- `f15597` Numbers or calculations followed by a non-alphanumeric token.  **[stated — None]**
 
 *Of 6 named lost latents: 1 stated, 5 not stated.*
 
 ### MADE — invented  · 4 labelled, 1 unlabelled
 
 - `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  *[not stated]*
-- `f2449` Fires on words associated with number theory and factorization.  **[stated — CLEARLY]**
+- `f2449` Fires on words associated with number theory and factorization.  **[stated — None]**
 - `f3649` Fires on end-of-clause punctuation/interjections expressing uncertainty or correction.  *[not stated]*
-- `f7415` Fires on numerical comparison operators or synonyms.  **[stated — CLEARLY]**
+- `f7415` Fires on numerical comparison operators or synonyms.  *[not stated]*
 
-*Of 4 named made latents: 2 stated, 2 not stated.*
+*Of 4 named made latents: 1 stated, 3 not stated.*
 
 ---
 
@@ -7818,7 +7818,7 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 1 labelled, 12 unlabelled
 
-- `f12299` Phrase requesting clarification ends with "so".  **[stated — CLEARLY]**
+- `f12299` Phrase requesting clarification ends with "so".  **[stated — None]**
 
 *Of 1 named shared latents: 1 stated, 0 not stated.*
 
@@ -7851,28 +7851,28 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 7 labelled, 5 unlabelled
 
-- `f635` Identifies a data type or property definition within code or data structures.  *[not stated]*
-- `f1055` Mathematical term preceded by a mathematical operator or description.  **[stated — CLEARLY]**
-- `f1425` Fires on words denoting a specific instance or member of a group.  **[stated — PROBABLY]**
+- `f635` Identifies a data type or property definition within code or data structures.  **[stated — None]**
+- `f1055` Mathematical term preceded by a mathematical operator or description.  **[stated — None]**
+- `f1425` Fires on words denoting a specific instance or member of a group.  *[not stated]*
 - `f1727` Noun marking of patient/cohort/subject populations in medical research.  *[not stated]*
-- `f4773` The feature fires on tokens referring to measures of central tendency.  **[stated — CLEARLY]**
-- `f7888` Fires on prepositions/articles immediately before a word relating to age.  **[stated — CLEARLY]**
-- `f9954` Noun referring to a measurable attribute or count.  **[stated — CLEARLY]**
+- `f4773` The feature fires on tokens referring to measures of central tendency.  **[stated — None]**
+- `f7888` Fires on prepositions/articles immediately before a word relating to age.  **[stated — None]**
+- `f9954` Noun referring to a measurable attribute or count.  **[stated — None]**
 
 *Of 7 named shared latents: 5 stated, 2 not stated.*
 
 ### LOST — destroyed  · 3 labelled, 8 unlabelled
 
-- `f1172` Identifies data types or variable types within code or data structures.  *[not stated]*
+- `f1172` Identifies data types or variable types within code or data structures.  **[stated — None]**
 - `f3702` Fires on tokens representing file or variable names used as arguments.  *[not stated]*
 - `f7063` Adjective modifying a preceding noun.  *[not stated]*
 
-*Of 3 named lost latents: 0 stated, 3 not stated.*
+*Of 3 named lost latents: 1 stated, 2 not stated.*
 
 ### MADE — invented  · 2 labelled, 1 unlabelled
 
 - `f5699` The feature triggers on "max" or related tokens within technical contexts.  *[not stated]*
-- `f8129` Identifies column or variable names in data analysis code.  **[stated — CLEARLY]**
+- `f8129` Identifies column or variable names in data analysis code.  **[stated — None]**
 
 *Of 2 named made latents: 1 stated, 1 not stated.*
 
@@ -7896,22 +7896,22 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 2 labelled, 5 unlabelled
 
-- `f561` Detects list introductions (number or bullet followed by space).  **[stated — CLEARLY]**
-- `f5197` Begins a reason/justification statement following a heading.  **[stated — CLEARLY]**
+- `f561` Detects list introductions (number or bullet followed by space).  **[stated — None]**
+- `f5197` Begins a reason/justification statement following a heading.  **[stated — None]**
 
 *Of 2 named shared latents: 2 stated, 0 not stated.*
 
 ### LOST — destroyed  · 3 labelled, 0 unlabelled
 
-- `f1662` Phrases explaining why something works, often marked with bold text.  **[stated — PROBABLY]**
-- `f3327` Begins a section heading with a colon following.  **[stated — CLEARLY]**
-- `f4623` Starts a bulleted list following a header indicating importance.  **[stated — CLEARLY]**
+- `f1662` Phrases explaining why something works, often marked with bold text.  *[not stated]*
+- `f3327` Begins a section heading with a colon following.  **[stated — None]**
+- `f4623` Starts a bulleted list following a header indicating importance.  **[stated — None]**
 
-*Of 3 named lost latents: 3 stated, 0 not stated.*
+*Of 3 named lost latents: 2 stated, 1 not stated.*
 
 ### MADE — invented  · 1 labelled, 1 unlabelled
 
-- `f1025` Fires on introductory phrases signaling a summary or explanation.  **[stated — CLEARLY]**
+- `f1025` Fires on introductory phrases signaling a summary or explanation.  **[stated — None]**
 
 *Of 1 named made latents: 1 stated, 0 not stated.*
 
@@ -7936,9 +7936,9 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 4 labelled, 9 unlabelled
 
 - `f123` Noun following a description or label.  *[controls fired — cannot tell]*
-- `f556` Nouns or noun phrases appearing after a phrase introducing explanation or clarification.  **[stated — CLEARLY]**
+- `f556` Nouns or noun phrases appearing after a phrase introducing explanation or clarification.  **[stated — None]**
 - `f1812` Adjective following "most" or "least" describing a category or option.  *[not stated]*
-- `f13210` Triggers on "Choose the" followed by "one.  **[stated — CLEARLY]**
+- `f13210` Triggers on "Choose the" followed by "one.  **[stated — None]**
 
 *Of 4 named shared latents: 2 stated, 1 not stated, 1 undecidable.*
 
@@ -7946,7 +7946,7 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 - `f30` Determiner/possessive pronoun initiating a clause about results.  *[not stated]*
 - `f1733` Identifies a positive descriptor following a colon or asterisk within a list.  *[not stated]*
-- `f1876` A preposition or conjunction introducing a list or specification.  **[stated — PROBABLY]**
+- `f1876` A preposition or conjunction introducing a list or specification.  **[stated — None]**
 - `f14467` Identifying instances of societal problem description/analysis.  *[not stated]*
 
 *Of 4 named lost latents: 1 stated, 3 not stated.*
@@ -7954,7 +7954,7 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### MADE — invented  · 3 labelled, 3 unlabelled
 
 - `f812` A linking word introducing a subsequent clause relating to medical applications.  *[not stated]*
-- `f2957` A word or phrase directly related to sex or reproductive health.  **[stated — CLEARLY]**
+- `f2957` A word or phrase directly related to sex or reproductive health.  **[stated — None]**
 - `f8099` Noun/noun phrase related to a source of public or media focus.  *[not stated]*
 
 *Of 3 named made latents: 1 stated, 2 not stated.*
@@ -7979,24 +7979,24 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 9 labelled, 10 unlabelled
 
-- `f83` Triggered by a determiner or preposition following a noun.  **[stated — CLEARLY]**
+- `f83` Triggered by a determiner or preposition following a noun.  *[not stated]*
 - `f121` A determiner or pronoun followed by a preposition or conjunction.  *[not stated]*
 - `f422` Verbs immediately following a colon or bullet point.  *[not stated]*
 - `f635` Identifies a data type or property definition within code or data structures.  *[not stated]*
-- `f2890` Fires on tokens discussing character encoding specifications.  **[stated — CLEARLY]**
-- `f11960` Fires on the token immediately following a preposition indicating confrontation or difficulty.  **[stated — CLEARLY]**
-- `f13978` Triggers on phrases signaling input validation failures.  **[stated — CLEARLY]**
+- `f2890` Fires on tokens discussing character encoding specifications.  **[stated — None]**
+- `f11960` Fires on the token immediately following a preposition indicating confrontation or difficulty.  *[not stated]*
+- `f13978` Triggers on phrases signaling input validation failures.  **[stated — None]**
 - `f14623` Identifies a parameter declaration within code documentation.  *[not stated]*
-- `f15462` Triggered by mentions of character encoding or handling.  **[stated — CLEARLY]**
+- `f15462` Triggered by mentions of character encoding or handling.  **[stated — None]**
 
-*Of 9 named shared latents: 5 stated, 4 not stated.*
+*Of 9 named shared latents: 3 stated, 6 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 3 unlabelled
 
 - `f519` Fires on a list item introducing variations.  *[not stated]*
-- `f14869` Determiners/auxiliary verbs indicating speculation or uncertainty in a complex context.  **[stated — PROBABLY]**
+- `f14869` Determiners/auxiliary verbs indicating speculation or uncertainty in a complex context.  *[not stated]*
 
-*Of 2 named lost latents: 1 stated, 1 not stated.*
+*Of 2 named lost latents: 0 stated, 2 not stated.*
 
 ### MADE — invented  · 1 labelled, 4 unlabelled
 
@@ -8025,7 +8025,7 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 2 labelled, 12 unlabelled
 
 - `f1065` Noun phrase immediately preceding a degree of likelihood/possibility.  *[not stated]*
-- `f5263` Introduces or explains a key concept.  **[stated — PROBABLY]**
+- `f5263` Introduces or explains a key concept.  **[stated — None]**
 
 *Of 2 named shared latents: 1 stated, 1 not stated.*
 
@@ -8034,7 +8034,7 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### MADE — invented  · 3 labelled, 2 unlabelled
 
-- `f886` Fires on terms related to numerical analysis and computational methods.  **[stated — CLEARLY]**
+- `f886` Fires on terms related to numerical analysis and computational methods.  **[stated — None]**
 - `f2793` Fires on punctuation following a numerical statistic or measurement.  *[not stated]*
 - `f10531` Fires on the word "exponent" or "exponential" within a mathematical or computational context.  *[not stated]*
 
@@ -8065,23 +8065,23 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 - `f422` Verbs immediately following a colon or bullet point.  *[not stated]*
 - `f3488` A preposition/conjunction signaling pursuit of a goal.  *[not stated]*
 - `f9729` Fires on the phrase "up" following a verb of setting or starting.  *[not stated]*
-- `f10862` Words indicating size or memory footprint following a qualifier.  **[stated — PROBABLY]**
+- `f10862` Words indicating size or memory footprint following a qualifier.  **[stated — None]**
 - `f14313` busy" appears as a named entity within technical documentation or lists.  *[not stated]*
-- `f14840` Identifies the consumption of resources within a technical context.  *[controls fired — cannot tell]*
+- `f14840` Identifies the consumption of resources within a technical context.  *[not stated]*
 
-*Of 8 named shared latents: 1 stated, 6 not stated, 1 undecidable.*
+*Of 8 named shared latents: 1 stated, 7 not stated.*
 
 ### LOST — destroyed  · 0 labelled, 3 unlabelled
 
 
 ### MADE — invented  · 4 labelled, 1 unlabelled
 
-- `f365` Preposition indicating a spatial relationship or description of a room/object.  **[stated — PROBABLY]**
-- `f419` Sensory description of a person or object.  **[stated — CLEARLY]**
-- `f1502` A verb indicating an immersive or pervasive state affecting a subject.  **[stated — PROBABLY]**
+- `f365` Preposition indicating a spatial relationship or description of a room/object.  **[stated — None]**
+- `f419` Sensory description of a person or object.  *[not stated]*
+- `f1502` A verb indicating an immersive or pervasive state affecting a subject.  *[not stated]*
 - `f2609` Take" following a warning or advice about potential danger.  *[not stated]*
 
-*Of 4 named made latents: 3 stated, 1 not stated.*
+*Of 4 named made latents: 1 stated, 3 not stated.*
 
 ---
 
@@ -8103,7 +8103,7 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 2 labelled, 8 unlabelled
 
-- `f8856` Fires on verb-related tokens within discussions of grammar and tense.  **[stated — CLEARLY]**
+- `f8856` Fires on verb-related tokens within discussions of grammar and tense.  **[stated — None]**
 - `f9870` 'a' within code snippets, specifically as a variable or attribute name.  *[not stated]*
 
 *Of 2 named shared latents: 1 stated, 1 not stated.*
@@ -8142,21 +8142,21 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 9 labelled, 5 unlabelled
 
-- `f569` Identifies variable names declared or assigned within code blocks.  **[stated — CLEARLY]**
-- `f808` Fires on technical terms related to Apple's ecosystem and development platforms.  **[stated — CLEARLY]**
-- `f3850` Assignment of boolean values to variables within code.  **[stated — CLEARLY]**
+- `f569` Identifies variable names declared or assigned within code blocks.  **[stated — None]**
+- `f808` Fires on technical terms related to Apple's ecosystem and development platforms.  **[stated — None]**
+- `f3850` Assignment of boolean values to variables within code.  **[stated — None]**
 - `f4942` Fires on the word "secret" or its variations, often used in a metaphorical sense of advantage or strategy.  *[not stated]*
-- `f5121` Variable assignment following a variable name.  **[stated — CLEARLY]**
-- `f11147` Fires on tokens representing UI layout constraints and properties.  **[stated — CLEARLY]**
+- `f5121` Variable assignment following a variable name.  **[stated — None]**
+- `f11147` Fires on tokens representing UI layout constraints and properties.  **[stated — None]**
 - `f12369` Identifies a lowercase "is" or "iso" preceding a technical term or descriptor.  *[not stated]*
-- `f13903` Fires on variable/property names accessed within error handling or manipulation.  **[stated — CLEARLY]**
-- `f16059` Fires on variable names declared or used within code.  **[stated — CLEARLY]**
+- `f13903` Fires on variable/property names accessed within error handling or manipulation.  **[stated — None]**
+- `f16059` Fires on variable names declared or used within code.  **[stated — None]**
 
 *Of 9 named shared latents: 7 stated, 2 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 3 unlabelled
 
-- `f359` Fires on variable names following assignment operators or in loop conditions.  **[stated — CLEARLY]**
+- `f359` Fires on variable names following assignment operators or in loop conditions.  **[stated — None]**
 - `f2986` CSS `display` property values.  *[not stated]*
 
 *Of 2 named lost latents: 1 stated, 1 not stated.*
@@ -8164,11 +8164,11 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### MADE — invented  · 6 labelled, 1 unlabelled
 
 - `f2175` Dismissal/Rejection of Previous Statement  *[not stated]*
-- `f3789` Fires on Swift language elements, particularly keywords, types, and function names.  **[stated — CLEARLY]**
+- `f3789` Fires on Swift language elements, particularly keywords, types, and function names.  **[stated — None]**
 - `f5501` Describes something abruptly ceasing to exist or be present.  *[not stated]*
 - `f7517` Declares a state variable using @State.  *[not stated]*
 - `f11033` Fires on the pattern of a variable name using "created" or "modified".  *[not stated]*
-- `f14817` Assignment operator followed by a variable or property name.  **[stated — CLEARLY]**
+- `f14817` Assignment operator followed by a variable or property name.  **[stated — None]**
 
 *Of 6 named made latents: 2 stated, 4 not stated.*
 
@@ -8193,17 +8193,17 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 10 labelled, 3 unlabelled
 
 - `f211` Identifies the start of a non-English word or phrase.  *[not stated]*
-- `f956` Fires on technical terms related to software development.  **[stated — CLEARLY]**
-- `f1421` Fires on mentions of Python or closely related terms, often within a technical context.  **[stated — CLEARLY]**
+- `f956` Fires on technical terms related to software development.  **[stated — None]**
+- `f1421` Fires on mentions of Python or closely related terms, often within a technical context.  **[stated — None]**
 - `f1774` Fires on the prefix "de" appearing at the beginning of a word.  *[not stated]*
-- `f2003` Fires on the token "id" or "Id" when used as a field name or identifier in a data structure.  **[stated — CLEARLY]**
+- `f2003` Fires on the token "id" or "Id" when used as a field name or identifier in a data structure.  *[not stated]*
 - `f2451` small" appearing within a categorized list or descriptive scale.  *[not stated]*
-- `f4238` Identifies short, uppercase abbreviations/variables within code-like contexts.  **[stated — CLEARLY]**
+- `f4238` Identifies short, uppercase abbreviations/variables within code-like contexts.  *[not stated]*
 - `f5673` Fires on variations of "minimum" used as abbreviations or modifiers.  *[not stated]*
 - `f10484` The feature fires on the token "micro" (and variations) in discussions of small-scale systems or targeted approaches.  *[not stated]*
-- `f13155` Triggers on tokens associated with XML processing and related terminology.  **[stated — CLEARLY]**
+- `f13155` Triggers on tokens associated with XML processing and related terminology.  **[stated — None]**
 
-*Of 10 named shared latents: 5 stated, 5 not stated.*
+*Of 10 named shared latents: 3 stated, 7 not stated.*
 
 ### LOST — destroyed  · 3 labelled, 5 unlabelled
 
@@ -8215,13 +8215,13 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### MADE — invented  · 5 labelled, 0 unlabelled
 
-- `f408` Imports a module or library.  **[stated — CLEARLY]**
+- `f408` Imports a module or library.  **[stated — None]**
 - `f790` Letter "b" in a word, often second position, within technical text.  *[not stated]*
-- `f2876` Captures uppercase letters within names, abbreviations, or model names.  **[stated — CLEARLY]**
-- `f3790` Fires on import statements in code.  **[stated — CLEARLY]**
-- `f9882` Identifies imported modules or classes within a code context.  **[stated — CLEARLY]**
+- `f2876` Captures uppercase letters within names, abbreviations, or model names.  *[not stated]*
+- `f3790` Fires on import statements in code.  **[stated — None]**
+- `f9882` Identifies imported modules or classes within a code context.  **[stated — None]**
 
-*Of 5 named made latents: 4 stated, 1 not stated.*
+*Of 5 named made latents: 3 stated, 2 not stated.*
 
 ---
 
@@ -8243,22 +8243,22 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 7 labelled, 9 unlabelled
 
-- `f24` A phrase signaling an explication or organization of information.  *[controls fired — cannot tell]*
-- `f86` Follows introductory phrases signaling a structured explanation.  **[stated — CLEARLY]**
-- `f516` Introduces a difficult or complex topic being discussed.  **[stated — PROBABLY]**
-- `f1128` Introduces a capability or assistance related to responsible content creation.  **[stated — PROBABLY]**
-- `f1405` Fires on "Here's" introducing a breakdown or explanation.  **[stated — CLEARLY]**
+- `f24` A phrase signaling an explication or organization of information.  **[stated — None]**
+- `f86` Follows introductory phrases signaling a structured explanation.  **[stated — None]**
+- `f516` Introduces a difficult or complex topic being discussed.  **[stated — None]**
+- `f1128` Introduces a capability or assistance related to responsible content creation.  **[stated — None]**
+- `f1405` Fires on "Here's" introducing a breakdown or explanation.  **[stated — None]**
 - `f2051` A word immediately following "Okay" or "Let's" indicating a response to a sensitive prompt.  *[not stated]*
 - `f2829` Fires on short, common words at the beginning of a clause.  *[not stated]*
 
-*Of 7 named shared latents: 4 stated, 2 not stated, 1 undecidable.*
+*Of 7 named shared latents: 5 stated, 2 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 4 unlabelled
 
-- `f3571` Fires on words indicating a path or means of achieving something.  **[stated — PROBABLY]**
-- `f16199` Token follows a phrase clarifying intent (e.g., "purely for...", "for informational purposes...").  **[stated — PROBABLY]**
+- `f3571` Fires on words indicating a path or means of achieving something.  *[controls fired — cannot tell]*
+- `f16199` Token follows a phrase clarifying intent (e.g., "purely for...", "for informational purposes...").  *[not stated]*
 
-*Of 2 named lost latents: 2 stated, 0 not stated.*
+*Of 2 named lost latents: 0 stated, 1 not stated, 1 undecidable.*
 
 ### MADE — invented  · 1 labelled, 1 unlabelled
 
@@ -8286,18 +8286,18 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 10 labelled, 8 unlabelled
 
-- `f37` Words signaling potential problems following a preceding verb or phrase.  *[controls fired — cannot tell]*
-- `f114` Verbs describing a machine learning process or data modification.  **[stated — PROBABLY]**
-- `f260` Adverb/adjective preceding a noun or noun phrase indicating qualification.  **[stated — CLEARLY]**
+- `f37` Words signaling potential problems following a preceding verb or phrase.  **[stated — None]**
+- `f114` Verbs describing a machine learning process or data modification.  *[not stated]*
+- `f260` Adverb/adjective preceding a noun or noun phrase indicating qualification.  **[stated — None]**
 - `f289` Adverbs or conjunctions introducing negative consequences or violations.  *[not stated]*
 - `f519` Fires on a list item introducing variations.  *[not stated]*
-- `f589` Adjective preceding a noun or noun phrase denoting a state or condition.  **[stated — CLEARLY]**
-- `f5603` A word denoting problematic characteristics of data, models, or training.  **[stated — CLEARLY]**
-- `f6671` A noun phrase denoting possibility immediately following an adjective.  **[stated — CLEARLY]**
-- `f6705` Words indicating safety, appropriateness, or restrictions after a conjunction or preposition.  **[stated — CLEARLY]**
-- `f11373` Fires on words associated with security flaws and vulnerabilities.  **[stated — CLEARLY]**
+- `f589` Adjective preceding a noun or noun phrase denoting a state or condition.  *[not stated]*
+- `f5603` A word denoting problematic characteristics of data, models, or training.  **[stated — None]**
+- `f6671` A noun phrase denoting possibility immediately following an adjective.  **[stated — None]**
+- `f6705` Words indicating safety, appropriateness, or restrictions after a conjunction or preposition.  **[stated — None]**
+- `f11373` Fires on words associated with security flaws and vulnerabilities.  **[stated — None]**
 
-*Of 10 named shared latents: 7 stated, 2 not stated, 1 undecidable.*
+*Of 10 named shared latents: 6 stated, 4 not stated.*
 
 ### LOST — destroyed  · 3 labelled, 2 unlabelled
 
@@ -8334,27 +8334,27 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 7 labelled, 6 unlabelled
 
 - `f24` A phrase signaling an explication or organization of information.  *[controls fired — cannot tell]*
-- `f123` Noun following a description or label.  *[controls fired — cannot tell]*
+- `f123` Noun following a description or label.  *[not stated]*
 - `f1080` Adjective immediately preceding a noun at sentence/clause end.  *[not stated]*
 - `f5217` List" token appearing in import statements or type annotations.  *[not stated]*
-- `f8273` Fires on list-related HTML tags and their attributes.  **[stated — CLEARLY]**
+- `f8273` Fires on list-related HTML tags and their attributes.  **[stated — None]**
 - `f10545` Adverbial modifier ending a clause or sentence.  *[not stated]*
-- `f13478` The trigger is the phrase "give me a[[ list|10]]".  **[stated — CLEARLY]**
+- `f13478` The trigger is the phrase "give me a[[ list|10]]".  *[not stated]*
 
-*Of 7 named shared latents: 2 stated, 3 not stated, 2 undecidable.*
+*Of 7 named shared latents: 1 stated, 5 not stated, 1 undecidable.*
 
 ### LOST — destroyed  · 1 labelled, 2 unlabelled
 
-- `f3129` Fires on nouns representing classifications or specific items.  **[stated — CLEARLY]**
+- `f3129` Fires on nouns representing classifications or specific items.  *[controls fired — cannot tell]*
 
-*Of 1 named lost latents: 1 stated, 0 not stated.*
+*Of 1 named lost latents: 0 stated, 0 not stated, 1 undecidable.*
 
 ### MADE — invented  · 2 labelled, 3 unlabelled
 
-- `f54` Noun indicating a component, guide, or feature of a system.  *[controls fired — cannot tell]*
+- `f54` Noun indicating a component, guide, or feature of a system.  *[not stated]*
 - `f5511` Fires on prepositions/conjunctions introducing structuring elements.  *[not stated]*
 
-*Of 2 named made latents: 0 stated, 1 not stated, 1 undecidable.*
+*Of 2 named made latents: 0 stated, 2 not stated.*
 
 ---
 
@@ -8376,20 +8376,20 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 6 labelled, 7 unlabelled
 
-- `f308` Definite article initiating a description of a person.  **[stated — CLEARLY]**
-- `f5911` Preposition/article followed by a word denoting a person affected by harm.  **[stated — CLEARLY]**
-- `f9379` Pronoun referring to a female character.  **[stated — CLEARLY]**
-- `f12520` Conjunctions following multiple noun phrases describing a person.  **[stated — CLEARLY]**
+- `f308` Definite article initiating a description of a person.  *[not stated]*
+- `f5911` Preposition/article followed by a word denoting a person affected by harm.  *[not stated]*
+- `f9379` Pronoun referring to a female character.  **[stated — None]**
+- `f12520` Conjunctions following multiple noun phrases describing a person.  **[stated — None]**
 - `f13395` Verbs following a prepositional phrase or indicating modification.  *[not stated]*
 - `f16355` Adjectives describing feeling or tone, immediately following a question about it.  *[not stated]*
 
-*Of 6 named shared latents: 4 stated, 2 not stated.*
+*Of 6 named shared latents: 2 stated, 4 not stated.*
 
 ### LOST — destroyed  · 3 labelled, 3 unlabelled
 
 - `f373` Presence of words related to sexual content, often in response to requests.  *[not stated]*
 - `f5364` Fires on question-initiating words.  *[not stated]*
-- `f12640` Refers to a female person or group after a preposition/pronoun.  **[stated — CLEARLY]**
+- `f12640` Refers to a female person or group after a preposition/pronoun.  **[stated — None]**
 
 *Of 3 named lost latents: 1 stated, 2 not stated.*
 
@@ -8399,9 +8399,9 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 - `f1920` Verbs used in marketing copy promoting a change or benefit.  *[not stated]*
 - `f3742` Possessive pronoun following a phrase expressing affection or gratitude.  *[not stated]*
 - `f5348` Pronoun/article following a term describing objectification or subjugation.  *[not stated]*
-- `f14971` A person or group being taken or held against their will.  *[not stated]*
+- `f14971` A person or group being taken or held against their will.  **[stated — None]**
 
-*Of 5 named made latents: 0 stated, 5 not stated.*
+*Of 5 named made latents: 1 stated, 4 not stated.*
 
 ---
 
@@ -8423,28 +8423,28 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 7 labelled, 7 unlabelled
 
-- `f717` It fires on array declarations, especially those using the "[]" syntax.  *[not stated]*
-- `f2865` Signals assertions, comparisons, or expected outcomes in code.  **[stated — CLEARLY]**
-- `f3117` Identifies keywords and functions commonly used in unit testing.  **[stated — CLEARLY]**
-- `f3134` Fires on identifiers referencing properties or variables within code.  **[stated — CLEARLY]**
+- `f717` It fires on array declarations, especially those using the "[]" syntax.  **[stated — None]**
+- `f2865` Signals assertions, comparisons, or expected outcomes in code.  **[stated — None]**
+- `f3117` Identifies keywords and functions commonly used in unit testing.  **[stated — None]**
+- `f3134` Fires on identifiers referencing properties or variables within code.  **[stated — None]**
 - `f3509` Comparison operators indicating a limit or threshold.  *[not stated]*
 - `f4017` Fires on the first attribute assignment within a class's `__init__` method.  *[not stated]*
-- `f12491` Defines a method within a unittest TestCase class.  **[stated — CLEARLY]**
+- `f12491` Defines a method within a unittest TestCase class.  **[stated — None]**
 
-*Of 7 named shared latents: 4 stated, 3 not stated.*
+*Of 7 named shared latents: 5 stated, 2 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 2 unlabelled
 
 - `f833` Start of line within a code or style block.  *[not stated]*
-- `f1489` Accessing properties of objects via dot notation, especially system-related.  **[stated — CLEARLY]**
+- `f1489` Accessing properties of objects via dot notation, especially system-related.  **[stated — None]**
 
 *Of 2 named lost latents: 1 stated, 1 not stated.*
 
 ### MADE — invented  · 3 labelled, 2 unlabelled
 
-- `f637` Identifies variable/function names containing a period or colon.  **[stated — CLEARLY]**
-- `f1421` Fires on mentions of Python or closely related terms, often within a technical context.  **[stated — CLEARLY]**
-- `f7497` Accessing a member of an object or variable via dot or underscore notation.  **[stated — CLEARLY]**
+- `f637` Identifies variable/function names containing a period or colon.  **[stated — None]**
+- `f1421` Fires on mentions of Python or closely related terms, often within a technical context.  **[stated — None]**
+- `f7497` Accessing a member of an object or variable via dot or underscore notation.  **[stated — None]**
 
 *Of 3 named made latents: 3 stated, 0 not stated.*
 
@@ -8468,12 +8468,12 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 4 labelled, 10 unlabelled
 
-- `f884` Fires on a bolded phrase introducing a named entity or topic.  **[stated — CLEARLY]**
+- `f884` Fires on a bolded phrase introducing a named entity or topic.  *[not stated]*
 - `f4206` Lowercase 'y' or 'Y' appearing immediately after a numeric value.  *[not stated]*
 - `f7126` Preposition or conjunction introducing a named entity in a list.  *[not stated]*
 - `f11469` A form of "draft" appearing in the context of compulsory military service.  *[not stated]*
 
-*Of 4 named shared latents: 1 stated, 3 not stated.*
+*Of 4 named shared latents: 0 stated, 4 not stated.*
 
 ### LOST — destroyed  · 0 labelled, 2 unlabelled
 
@@ -8517,8 +8517,8 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### MADE — invented  · 2 labelled, 6 unlabelled
 
-- `f6673` Identifies code elements like function names, variable names, and test case labels.  **[stated — CLEARLY]**
-- `f8859` Whitespace used as a separator in string joining/manipulation.  **[stated — CLEARLY]**
+- `f6673` Identifies code elements like function names, variable names, and test case labels.  **[stated — None]**
+- `f8859` Whitespace used as a separator in string joining/manipulation.  **[stated — None]**
 
 *Of 2 named made latents: 2 stated, 0 not stated.*
 
@@ -8542,10 +8542,10 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 6 labelled, 0 unlabelled
 
-- `f24` A phrase signaling an explication or organization of information.  **[stated — CLEARLY]**
-- `f216` Fires on "at" when it introduces a concluding section or summary.  **[stated — CLEARLY]**
-- `f657` Phrase or clause ending followed by "at" or "as".  **[stated — CLEARLY]**
-- `f1071` The very end" phrase triggers the feature.  **[stated — CLEARLY]**
+- `f24` A phrase signaling an explication or organization of information.  **[stated — None]**
+- `f216` Fires on "at" when it introduces a concluding section or summary.  **[stated — None]**
+- `f657` Phrase or clause ending followed by "at" or "as".  **[stated — None]**
+- `f1071` The very end" phrase triggers the feature.  **[stated — None]**
 - `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  *[not stated]*
 - `f3153` Triggered by the phrase "Please read the" followed by a token.  *[not stated]*
 
@@ -8556,9 +8556,9 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### MADE — invented  · 1 labelled, 0 unlabelled
 
-- `f1872` at" signals a concluding remark or location within a list.  **[stated — CLEARLY]**
+- `f1872` at" signals a concluding remark or location within a list.  *[controls fired — cannot tell]*
 
-*Of 1 named made latents: 1 stated, 0 not stated.*
+*Of 1 named made latents: 0 stated, 0 not stated, 1 undecidable.*
 
 ---
 
@@ -8580,33 +8580,33 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 ### SHARED — survived  · 7 labelled, 12 unlabelled
 
-- `f514` Indefinite article followed by a noun denoting a group or entity.  **[stated — CLEARLY]**
-- `f1066` Fires on function words within a phrase referencing political entities/actions.  **[stated — CLEARLY]**
-- `f1929` A word modifying an abstract concept or personal attribute.  **[stated — PROBABLY]**
-- `f4029` Defines or introduces a term/concept after an introductory phrase.  *[controls fired — cannot tell]*
+- `f514` Indefinite article followed by a noun denoting a group or entity.  **[stated — None]**
+- `f1066` Fires on function words within a phrase referencing political entities/actions.  **[stated — None]**
+- `f1929` A word modifying an abstract concept or personal attribute.  *[not stated]*
+- `f4029` Defines or introduces a term/concept after an introductory phrase.  **[stated — None]**
 - `f8179` Fires on the definite article following "This is".  *[not stated]*
 - `f9111` Two" appearing within a numbered sequence or heading.  *[not stated]*
-- `f11155` Preposition/article preceding a plural noun or a term denoting a collection.  *[controls fired — cannot tell]*
+- `f11155` Preposition/article preceding a plural noun or a term denoting a collection.  **[stated — None]**
 
-*Of 7 named shared latents: 3 stated, 2 not stated, 2 undecidable.*
+*Of 7 named shared latents: 4 stated, 3 not stated.*
 
 ### LOST — destroyed  · 6 labelled, 5 unlabelled
 
-- `f121` A determiner or pronoun followed by a preposition or conjunction.  **[stated — CLEARLY]**
-- `f3341` Article following an introductory phrase comparing something to something else.  *[not stated]*
+- `f121` A determiner or pronoun followed by a preposition or conjunction.  *[not stated]*
+- `f3341` Article following an introductory phrase comparing something to something else.  **[stated — None]**
 - `f3571` Fires on words indicating a path or means of achieving something.  *[not stated]*
-- `f5338` Fires on nouns denoting teams, companies, or organizations.  **[stated — CLEARLY]**
+- `f5338` Fires on nouns denoting teams, companies, or organizations.  *[not stated]*
 - `f7761` Fires on tokens describing a slow, declining, or negative progression.  *[not stated]*
 - `f12355` Verb "play/plays" following a prepositional phrase starting with "a".  *[not stated]*
 
-*Of 6 named lost latents: 2 stated, 4 not stated.*
+*Of 6 named lost latents: 1 stated, 5 not stated.*
 
 ### MADE — invented  · 2 labelled, 3 unlabelled
 
-- `f2377` Numbers followed by a token indicating a count or category.  *[not stated]*
+- `f2377` Numbers followed by a token indicating a count or category.  *[controls fired — cannot tell]*
 - `f5222` Fires on tokens within phrases related to organizing or categorizing information.  *[controls fired — cannot tell]*
 
-*Of 2 named made latents: 0 stated, 1 not stated, 1 undecidable.*
+*Of 2 named made latents: 0 stated, 0 not stated, 2 undecidable.*
 
 ---
 
@@ -8630,30 +8630,30 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 
 - `f40` Verbs of cognitive action following a colon or preceding a numbered list item.  *[not stated]*
 - `f109` Preposition/conjunction following an introductory phrase.  *[not stated]*
-- `f121` A determiner or pronoun followed by a preposition or conjunction.  **[stated — PROBABLY]**
-- `f128` Verb expressing enhancement, often followed by an object.  **[stated — CLEARLY]**
-- `f342` Start of a clause/sentence, often introducing a reason or consequence.  **[stated — CLEARLY]**
+- `f121` A determiner or pronoun followed by a preposition or conjunction.  *[not stated]*
+- `f128` Verb expressing enhancement, often followed by an object.  **[stated — None]**
+- `f342` Start of a clause/sentence, often introducing a reason or consequence.  **[stated — None]**
 - `f422` Verbs immediately following a colon or bullet point.  *[not stated]*
 - `f519` Fires on a list item introducing variations.  *[not stated]*
-- `f590` Preposition/adverb followed by "on" indicating notes or details.  **[stated — CLEARLY]**
-- `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  **[stated — CLEARLY]**
+- `f590` Preposition/adverb followed by "on" indicating notes or details.  **[stated — None]**
+- `f1267` Fires on conjunctions and prepositions connecting clauses or phrases.  **[stated — None]**
 - `f6204` Preposition "on" following "built" or "built top".  *[not stated]*
-- `f7357` Noun relating to dreaming appears in a discussion of abstract concepts.  **[stated — CLEARLY]**
-- `f12034` Verb introducing an action of broadening or enlargement.  **[stated — CLEARLY]**
-- `f13917` Fires on words describing fantasy or related genres.  **[stated — CLEARLY]**
+- `f7357` Noun relating to dreaming appears in a discussion of abstract concepts.  **[stated — None]**
+- `f12034` Verb introducing an action of broadening or enlargement.  **[stated — None]**
+- `f13917` Fires on words describing fantasy or related genres.  **[stated — None]**
 
-*Of 13 named shared latents: 8 stated, 5 not stated.*
+*Of 13 named shared latents: 7 stated, 6 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 7 unlabelled
 
-- `f102` Preposition following a noun indicating interaction or association.  *[controls fired — cannot tell]*
-- `f873` with" followed by a noun phrase indicating a quality or condition.  **[stated — CLEARLY]**
+- `f102` Preposition following a noun indicating interaction or association.  **[stated — None]**
+- `f873` with" followed by a noun phrase indicating a quality or condition.  *[not stated]*
 
-*Of 2 named lost latents: 1 stated, 0 not stated, 1 undecidable.*
+*Of 2 named lost latents: 1 stated, 1 not stated.*
 
 ### MADE — invented  · 1 labelled, 3 unlabelled
 
-- `f5617` Describes a visual element or scene within a narrative.  **[stated — CLEARLY]**
+- `f5617` Describes a visual element or scene within a narrative.  **[stated — None]**
 
 *Of 1 named made latents: 1 stated, 0 not stated.*
 
@@ -8678,35 +8678,35 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 10 labelled, 4 unlabelled
 
 - `f156` Bolded section heading, beginning with "The.  *[not stated]*
-- `f450` Preposition introducing a noun phrase specifying a relationship.  *[controls fired — cannot tell]*
-- `f493` Fires on "the" preceding a directive to read something at the end of a document.  **[stated — CLEARLY]**
-- `f1162` Preposition following a location or entity name.  **[stated — CLEARLY]**
-- `f1334` Prepositions/articles immediately preceding a geographic descriptor.  **[stated — CLEARLY]**
-- `f3610` Preposition/article following a verb or command.  **[stated — CLEARLY]**
-- `f8567` Proper noun, often a place name, appearing in a sentence of surprising information.  **[stated — CLEARLY]**
-- `f9268` Preposition "in" following a description of a place or origin.  **[stated — PROBABLY]**
-- `f14384` Noun related to oceans or seas, often with an adjective describing it.  **[stated — PROBABLY]**
-- `f15565` Adjective describing a geographically distant or sparsely populated area.  **[stated — CLEARLY]**
+- `f450` Preposition introducing a noun phrase specifying a relationship.  **[stated — None]**
+- `f493` Fires on "the" preceding a directive to read something at the end of a document.  **[stated — None]**
+- `f1162` Preposition following a location or entity name.  **[stated — None]**
+- `f1334` Prepositions/articles immediately preceding a geographic descriptor.  **[stated — None]**
+- `f3610` Preposition/article following a verb or command.  *[not stated]*
+- `f8567` Proper noun, often a place name, appearing in a sentence of surprising information.  **[stated — None]**
+- `f9268` Preposition "in" following a description of a place or origin.  **[stated — None]**
+- `f14384` Noun related to oceans or seas, often with an adjective describing it.  **[stated — None]**
+- `f15565` Adjective describing a geographically distant or sparsely populated area.  **[stated — None]**
 
-*Of 10 named shared latents: 8 stated, 1 not stated, 1 undecidable.*
+*Of 10 named shared latents: 8 stated, 2 not stated.*
 
 ### LOST — destroyed  · 2 labelled, 1 unlabelled
 
-- `f1462` Definite article ("the") at the start of a phrase.  **[stated — CLEARLY]**
-- `f12551` Word describing a dry, sandy region.  **[stated — PROBABLY]**
+- `f1462` Definite article ("the") at the start of a phrase.  **[stated — None]**
+- `f12551` Word describing a dry, sandy region.  **[stated — None]**
 
 *Of 2 named lost latents: 2 stated, 0 not stated.*
 
 ### MADE — invented  · 6 labelled, 5 unlabelled
 
-- `f477` the" at the start of a descriptive phrase.  *[not stated]*
+- `f477` the" at the start of a descriptive phrase.  *[controls fired — cannot tell]*
 - `f704` the" immediately preceding a superlative adjective or adverb.  *[not stated]*
-- `f2582` The feature fires on tokens indicating a location described as being within a closed or underground space.  **[stated — PROBABLY]**
+- `f2582` The feature fires on tokens indicating a location described as being within a closed or underground space.  **[stated — None]**
 - `f3010` Preposition or conjunction followed by a token describing a state.  *[not stated]*
 - `f6677` Preposition "of" following a question word.  *[not stated]*
-- `f10217` A noun phrase describing a place or experience within a list of travel options.  **[stated — CLEARLY]**
+- `f10217` A noun phrase describing a place or experience within a list of travel options.  **[stated — None]**
 
-*Of 6 named made latents: 2 stated, 4 not stated.*
+*Of 6 named made latents: 2 stated, 3 not stated, 1 undecidable.*
 
 ---
 
@@ -8729,27 +8729,27 @@ Unlabelled latents are counted everywhere but cannot be shown: only 1,771 of 3,3
 ### SHARED — survived  · 7 labelled, 7 unlabelled
 
 - `f94` Fires on a noun or noun phrase indicating a key component or element within a description.  *[controls fired — cannot tell]*
-- `f260` Adverb/adjective preceding a noun or noun phrase indicating qualification.  *[controls fired — cannot tell]*
-- `f589` Adjective preceding a noun or noun phrase denoting a state or condition.  **[stated — CLEARLY]**
-- `f4029` Defines or introduces a term/concept after an introductory phrase.  **[stated — CLEARLY]**
-- `f4656` Fires on adjectives/nouns denoting a baseline or established version.  **[stated — CLEARLY]**
-- `f5092` Noun phrases denoting finishes or coatings.  **[stated — CLEARLY]**
-- `f7816` Standard" appears in contexts describing established frameworks or libraries.  **[stated — CLEARLY]**
+- `f260` Adverb/adjective preceding a noun or noun phrase indicating qualification.  **[stated — None]**
+- `f589` Adjective preceding a noun or noun phrase denoting a state or condition.  *[not stated]*
+- `f4029` Defines or introduces a term/concept after an introductory phrase.  *[controls fired — cannot tell]*
+- `f4656` Fires on adjectives/nouns denoting a baseline or established version.  **[stated — None]**
+- `f5092` Noun phrases denoting finishes or coatings.  **[stated — None]**
+- `f7816` Standard" appears in contexts describing established frameworks or libraries.  *[not stated]*
 
-*Of 7 named shared latents: 5 stated, 0 not stated, 2 undecidable.*
+*Of 7 named shared latents: 3 stated, 2 not stated, 2 undecidable.*
 
 ### LOST — destroyed  · 2 labelled, 7 unlabelled
 
 - `f812` A linking word introducing a subsequent clause relating to medical applications.  *[not stated]*
-- `f8952` A noun referring to a type of plastic, often preceded by an article or preposition.  *[controls fired — cannot tell]*
+- `f8952` A noun referring to a type of plastic, often preceded by an article or preposition.  *[not stated]*
 
-*Of 2 named lost latents: 0 stated, 1 not stated, 1 undecidable.*
+*Of 2 named lost latents: 0 stated, 2 not stated.*
 
 ### MADE — invented  · 3 labelled, 1 unlabelled
 
 - `f3128` Fires on prepositions/articles after a colon/asterisk in a list.  *[not stated]*
 - `f5394` Fires on the word "traditional" in discussions of established systems or concepts.  *[not stated]*
-- `f16023` Noun/noun phrase referring to a crafting supply or tool.  **[stated — CLEARLY]**
+- `f16023` Noun/noun phrase referring to a crafting supply or tool.  **[stated — None]**
 
 *Of 3 named made latents: 1 stated, 2 not stated.*
 

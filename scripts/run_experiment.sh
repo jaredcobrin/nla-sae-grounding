@@ -216,6 +216,12 @@ backup refeature "$OUT/feature_overlap_l0_small.json" "$OUT/feature_overlap_l0_b
 #   of a wrong-label null. Caches by latent id, so re-running is cheap.
 # judge_explanations: per latent, does the explanation cover it? Seven judgements
 #   per pair -- 1 matched, 3 unrelated explanations, 3 non-firing latents.
+#   It judges the two SEGMENTS of each explanation and derives `full` as their
+#   union, rather than judging full's text directly. Judging whole explanations
+#   of differing length was not monotonic: 435 of 2,047 latents came back covered
+#   under a SUBSET of a text and not covered under the text itself. Nulls are
+#   drawn from the same segment, so a null differs from its matched arm only in
+#   that the latent does not belong to it.
 echo "=== 4/5  label latents, then judge the explanations ==="
 python "$SRC/label_features.py" --dirs "$OUT" \
     --out "$OUT/feature_labels.json" --batch 6

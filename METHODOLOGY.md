@@ -136,13 +136,13 @@ the 95th percentile of that pooled null — a measured 5% false-positive rate ra
 than a number chosen by feel.
 
 ```
-attempted     2,242      mean AUC 0.743   <- includes the half that get rejected
-                         wrong-label null 0.498
+attempted     3,329      mean AUC 0.751   <- includes the half that get rejected
+                         wrong-label null 0.485
                          threshold        0.756
-validated     1,115 (50%)   mean AUC 0.876
+validated     1,771  (53%)  mean AUC 0.880
 ```
 
-**0.743 is not the quality of the labels in use.** Kept labels average 0.876.
+**0.751 is not the quality of the labels in use.** Kept labels average 0.880.
 They sit there rather than 0.95+ because the test band is harder than what the
 generator saw, the scorer is Gemma-3-12B not a frontier model, and some latents
 are genuinely polysemantic.
@@ -191,25 +191,90 @@ Three variants, run on identical pairs:
 
 | variant | false-positive rate | AUC |
 |---|---:|---:|
-| A — plain Yes/No | **0.783** | 0.744 |
-| **B — graded, strict** (in use) | **0.075** | 0.767 |
-| C — ranking (diagnostic only) | — | 0.707 |
+| plain Yes/No | **0.783** | 0.744 |
+| graded, strict | **0.075** | 0.767 |
+| ranking (diagnostic only) | — | 0.707 |
 
 **AUC barely moved while the false-positive rate moved tenfold.** The model could
 always rank real above fake — it just would not say no. **Calibration, not
 capability**, which is why rewording fixed it and a bigger model would not have.
-Four changes did it: drop "plausibly"; state the base rate in the prompt (one or
-two sentences against ~20 latents, so `NO` is the ordinary answer); give
-uncertainty its own option; and name the observed failure modes so they can be
-banned — same broad topic, could plausibly contain it, grammatical patterns found
-in all writing.
+
+### The graded prompt was not monotonic in the explanation
+
+`full` is exactly `no_final` + `final_only` — the paragraph split is a cut, not a
+rewrite — so anything a part covers, the whole must cover. Judged directly, it
+did not:
 
 ```
-false-positive rate   6.7%    (the prompt it replaced: 78.3%)
-matcher AUC           0.807   vs unrelated explanations
-                      0.836   vs latents that never fired
-self-consistency     89.2%    across 5 explanations of one activation
+latents judged under both full and final_only     2,047
+covered under final_only, NOT under full            435   (21.3%)
+covered under full, NOT under final_only            128
 ```
+
+Two in five of `final_only`'s hits were contradicted by a text containing it
+verbatim. Holding the latent, its label, its bucket and its activation fixed and
+changing only which text the judge read moved the answer by **+15 points**, in
+every bucket alike (shared +15.3, made +16.4, lost +15.8), so it is a property of
+the text length rather than of the latents.
+
+The cause is the base-rate instruction the fix above installed. It told the judge
+the summary is "one or two sentences" — **true of 3% of real explanations**, which
+run to a median of three sentences over three paragraphs — and that most latents
+are therefore not covered. That makes the judgement relative to how much text is
+on screen: more text, each latent is a smaller share of it, same latent flips to
+absent.
+
+### What replaced it
+
+Three prompts were measured on identical pairs, with the null pool stratified
+(below). Removing the false length claim and nothing else was best on every axis
+except monotonicity; deleting the base rate entirely made the judge answer
+"covered" for ~82% of everything, so its own nulls fired and the gate discarded
+46–71 points of it. **The base rate is load-bearing; the length claim was the
+defect.**
+
+Monotonicity is not fixable by wording — all three prompts spanned a wide range
+of strictness and none came near zero. It is fixed structurally instead:
+
+**The judge never sees a whole explanation.** It judges the two segments —
+`no_final` and `final_only` — and `full` is reconstructed as their union. A union
+cannot be smaller than a part, so coverage is monotonic by construction:
+**0 violations in 2,414 latents judged under both.**
+
+Costs, both reported rather than hidden:
+
+- **The union compounds false positives.** `full` inherits both segments' errors,
+  so its FPR is higher than either alone (7.0% against 1.6% and 5.4%). Corrected
+  against its own floor, `full` still gains: 43.0% raw, 40.3% corrected.
+- **The post-gate verdict is not quite monotonic.** `full`'s null rates are the
+  union of its segments', so the two-null gate fires on it more often — 33 of
+  2,414 latents (1.4%) are `present` for a segment but `unknown` for `full`.
+  Coverage is exact; the verdict after gating inherits the compounded null.
+- A latent conveyed only by the **combination** of two segments is missed. The
+  union is a lower bound on containment.
+
+### Nulls are drawn from the same segment
+
+A null must differ from the matched arm in exactly one respect — that the latent
+does not belong to it. Drawing `null_expl` partners from a pool containing all
+variants broke that, because the variants differ in length and the judge's
+yes-rate depends on length. Measured under the old design, `null_feat` was 5.0%
+for `no_final`, 5.4% for `full` and 11.5% for `final_only`: a mixed pool inflates
+the stingy variants' floor with text from the generous one and deflates the
+generous one's. Partners now come from the same variant.
+
+```
+false-positive rate         4.6%     (the prompt it replaced: 78.3%)
+matcher AUC                 0.783    vs unrelated explanations
+                            0.808    vs latents that never fired
+monotonicity violations     0.0%     coverage; 1.4% after the gate
+FPR spread across variants  0.037    (was 0.089)
+```
+
+**Not measurable at scale: the false-negative rate.** The SAE gives free ground
+truth for false positives — a latent either fired or it did not — but nothing
+says an explanation *did* mean to mention something. A 40-pair hand audit of an
+earlier version found the judge missed 8 and over-called 0.
 
 ---
 

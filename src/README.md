@@ -10,9 +10,10 @@ are the point, not decoration.
 | 2 | `roundtrip.py` | AV → explanation → AR → reconstruction, SAE on both ends. Saves per-example FVE and cosine for four comparisons, the explanation, the source text, the latent sets, and every vector family. Also runs the **paragraph ablation** (three variants per explanation) and the **near-miss sweep** | yes |
 | 3 | `refeature.py` | re-encodes the saved vectors under the other SAE, including the near-miss neighbours. Seconds | no |
 | 4 | `label_features.py` | auto-interp: 3 candidates, held-out scoring, wrong-label null | yes |
-| 5 | `judge_explanations.py` | per latent, does the explanation cover it? Graded, against two nulls | yes |
+| 5 | `judge_explanations.py` | per latent, does the explanation cover it? Graded, against two nulls. Judges the two **segments** and derives `full` as their union, so coverage is monotonic | yes |
 | 6 | `summarize_results.py` | **every number in `RESULTS.md`** → `summary.json` + `SUMMARY.md`, each section per variant | no |
-| — | `explanation_parts.py` | splits an explanation into `full` / `no_final` / `final_only`. Anchored on the paragraph naming the final token — 250/250 on real data | no |
+| — | `explanation_parts.py` | splits an explanation into `full` / `no_final` / `final_only`. Anchored on the paragraph naming the final token — 200/200 on this run | no |
+| — | `compare_prompts.py` | scores candidate judge prompts on identical pairs: monotonicity, FPR spread, AUC. How prompt A was chosen | yes |
 
 **The tool lives in [`../trust_tool/`](../trust_tool/)** — a chat window that
 reports on every turn, plus the original command-line version over a stored
