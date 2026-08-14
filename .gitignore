@@ -5,3 +5,4 @@ __pycache__/
 *.npz
 .DS_Store
 my_reports/
+_artifacts200/
