@@ -105,7 +105,21 @@ UNKNOWN_AT = 0.5      # a null rate above this makes the verdict UNKNOWN
 OPTS = ["CLEARLY", "PROBABLY", "UNCLEAR", "NO"]
 COVERED = {"CLEARLY", "PROBABLY"}
 
-_PROMPT = """CONTEXT — how this data was produced.
+# ---------------------------------------------------------------- the prompts
+#
+# A0 is what produced every number up to and including the 200-conversation run.
+# It is kept verbatim so its results stay reproducible, and because it is the
+# reference any replacement has to beat.
+#
+# It has two known defects, both measured:
+#   * it asserts the summary "is one or two sentences". True of 3% of real AV
+#     explanations, which run to a median of 3 sentences over 3 paragraphs.
+#   * the judgement it produces is not monotonic in the explanation. `full` is
+#     literally no_final + final_only, yet 435 of 2,047 latents were judged
+#     covered under the SUBSET and not covered under the SUPERSET, against 128
+#     the legal way round. Adding text makes "covered" LESS likely, which means
+#     the question being answered is salience within the text, not containment.
+_PROMPT_A0 = """CONTEXT — how this data was produced.
 
 A language model was reading a piece of text. At one specific position, its
 internal state was captured: a snapshot of what the model was representing at
@@ -145,6 +159,113 @@ Reply with exactly one word:
   NO        the summary does not cover it"""
 
 
+# A -- MINIMAL EDIT. Identical to A0 except the false length claim is gone.
+# Keeps the base-rate quota, the "come away knowing" framing and the three
+# exclusions. Isolates one variable: if A is monotonic, the quota is not the
+# mechanism and B's bigger rewrite is unnecessary.
+_PROMPT_A = """CONTEXT — how this data was produced.
+
+A language model was reading a piece of text. At one specific position, its
+internal state was captured: a snapshot of what the model was representing at
+that moment.
+
+Two separate tools then read that same snapshot.
+
+The DESCRIBER was asked to write a short summary of what the model appeared to
+be representing there — the subject matter, entities, tone, genre, or structure
+it had picked up from the text so far. This is what the describer wrote:
+
+    {expl}
+
+The DETECTOR is a separate probe. It responds to one specific thing:
+
+    {content}
+
+YOUR TASK.
+
+Judging only from the DESCRIBER's summary above: does that summary cover the
+thing the DETECTOR responds to?
+
+Be strict. The text the summary came from contains dozens of distinguishable
+things, and the summary covers only some of them. Most detectors are therefore
+NOT covered by it, and NO is the ordinary answer.
+
+Answer yes only if a person reading the summary would come away knowing about
+this specific thing. Do NOT answer yes merely because:
+  - the summary concerns the same broad topic
+  - the text could plausibly contain it
+  - the detector describes a grammatical pattern found in all writing
+
+Reply with exactly one word:
+  CLEARLY   the summary explicitly covers it
+  PROBABLY  not stated outright, but clearly implied by it
+  UNCLEAR   genuinely cannot tell
+  NO        the summary does not cover it"""
+
+
+# B -- FULL REWRITE. Describes the real setup (SAE latents, NLA, fired-or-not),
+# drops the base-rate quota entirely, and states explicitly how to treat the
+# candidate readings the AV lists -- paragraph 3 averages ~7 quoted alternatives
+# and A0 gave the judge no guidance on them, so it improvised.
+#
+# The "may or may not have fired ... you are not told which" wording is load
+# bearing and must stay symmetric: for null_feat rows the latent genuinely did
+# not fire, and any phrasing implying otherwise destroys the false-positive
+# measurement, which is the only ground truth this judge has.
+_PROMPT_B = """CONTEXT — what this data is.
+
+A language model was reading a passage of text. At one token position its
+internal state was captured as a vector.
+
+Two independent things were derived from that vector.
+
+(1) A sparse autoencoder decomposes such a vector into LATENTS — individual
+    directions, each responding to one recurring thing. At any given position a
+    latent either fires or it does not.
+
+(2) Separately, a Natural Language Autoencoder read the same vector and wrote a
+    description of what it appeared to represent. Here is that description,
+    verbatim and complete:
+
+        {expl}
+
+THE LATENT YOU ARE SCORING responds to:
+
+        {content}
+
+This latent may or may not have fired in the vector that description was written
+from. It may equally have been taken from a different vector entirely, captured
+from unrelated text. You are not told which, and that is what you are judging.
+
+YOUR TASK.
+
+From the description alone, does it indicate that THIS latent was among those
+active in the vector it describes?
+
+You cannot see the vector or the original passage. Judge only what the
+description itself conveys.
+
+The description may assert things directly, and it may also offer several
+candidate readings or continuations. Both count: a thing the description raises
+as a likely reading is still something it conveys. Judge whether the latent's
+behaviour is among what the description points to.
+
+Do NOT answer yes merely because:
+  - the description concerns the same broad subject area
+  - the passage could plausibly have contained this
+  - the latent describes a grammatical or formatting pattern common to nearly
+    all writing, and so would fire in almost any passage
+
+Reply with exactly one word:
+  CLEARLY   the description conveys this
+  PROBABLY  not stated outright, but clearly implied
+  UNCLEAR   genuinely cannot tell
+  NO        the description does not convey this"""
+
+
+PROMPTS = {"A0": _PROMPT_A0, "A": _PROMPT_A, "B": _PROMPT_B}
+
+
 @torch.no_grad()
 def judge(model, tok, prompts, opt_ids, bs=24, log_every=40):
     """Logprob of each option's first token. One forward pass, no generation."""
@@ -178,6 +299,15 @@ def main() -> None:
     ap.add_argument("--names", nargs="+", default=None)
     ap.add_argument("--labels-json", required=True)
     ap.add_argument("--model", default="google/gemma-3-12b-it")
+    ap.add_argument("--prompt", default="A0", choices=sorted(PROMPTS),
+                    help="which matcher prompt. A0 produced every number up to "
+                         "the 200-conversation run and is the reference any "
+                         "replacement must beat; A and B are candidates.")
+    ap.add_argument("--limit-acts", type=int, default=0,
+                    help="sample this many ACTIVATIONS (all their variants) "
+                         "instead of everything. For a bake-off run: the point "
+                         "is comparing prompts, and a few hundred activations "
+                         "settles all four metrics in minutes rather than 91.")
     ap.add_argument("--sae", default="l0_small")
     ap.add_argument("--max-expl-chars", type=int, default=1200)
     ap.add_argument("--batch", type=int, default=24)
@@ -210,7 +340,17 @@ def main() -> None:
                            "shared": set(r["shared_features"]),
                            "lost": set(r["lost_features"]),
                            "made": set(r["invented_features"])})
-    print(f"[data] {len(units)} explanations across {len(a.dirs)} corpora")
+    TPL = PROMPTS[a.prompt]
+    if a.limit_acts:
+        # Sample ACTIVATIONS, never individual units -- every variant of a
+        # sampled activation must be kept, or the monotonicity check has nothing
+        # to compare full against.
+        keep = sorted({u["act"] for u in units})[:a.limit_acts]
+        units = [u for u in units if u["act"] in set(keep)]
+        print(f"[data] --limit-acts {a.limit_acts}: {len(units)} units "
+              f"over {len(keep)} activations")
+    print(f"[data] {len(units)} explanations across {len(a.dirs)} corpora"
+          f"  | prompt={a.prompt}")
 
     tok = AutoTokenizer.from_pretrained(a.model)
     tok.padding_side = "left"
@@ -230,19 +370,37 @@ def main() -> None:
         # same activation. Keying on (corpus, act) holds under any RUNS, and
         # since the corpus now yields one activation per conversation, a
         # different activation is also a different conversation.
+        #
+        # AND FROM THE SAME VARIANT. A null must differ from the matched arm in
+        # exactly ONE respect -- that the latent does not belong to it. Drawing
+        # from a mixed pool breaks that: the variants are different lengths and
+        # registers, and the judge's yes-rate depends on both. Measured on the
+        # 200-conversation run, null_feat was 5.0% for no_final, 5.4% for full
+        # and 11.5% for final_only, so a mixed pool inflates the floor of the
+        # stingy variants with text from the generous one and deflates the
+        # generous one's floor with text from the stingy ones. The comparison is
+        # then rigged in both directions at once, and matched/null stops being
+        # comparable across variants.
+        #
+        # With the pool stratified, matched-vs-own-null answers the question that
+        # actually matters: does this variant convey more, or does it merely say
+        # yes more? If final_only genuinely conveys more, its ratio stays high;
+        # if it is just chattier, its null rises with it and the ratio flattens.
+        _v = u.get("variant", "full")
         others = [j for j, w in enumerate(units)
-                  if (w["corpus"], w["act"]) != (u["corpus"], u["act"])]
+                  if (w["corpus"], w["act"]) != (u["corpus"], u["act"])
+                  and w.get("variant", "full") == _v]
         absent = sorted(usable.keys() - own)     # ground truth for the FPR
         for f in sorted(own & usable.keys()):
             desc = usable[f]["label"]
-            prompts.append(_PROMPT.format(expl=u["explanation"], content=desc))
+            prompts.append(TPL.format(expl=u["explanation"], content=desc))
             key.append((i, f, "matched"))
             for j in rng.choice(others, min(N_NULL, len(others)), replace=False):
-                prompts.append(_PROMPT.format(expl=units[int(j)]["explanation"], content=desc))
+                prompts.append(TPL.format(expl=units[int(j)]["explanation"], content=desc))
                 key.append((i, f, "null_expl"))
             for g in rng.choice(absent, min(N_NULL, len(absent)), replace=False):
-                prompts.append(_PROMPT.format(expl=u["explanation"],
-                                               content=usable[int(g)]["label"]))
+                prompts.append(TPL.format(expl=u["explanation"],
+                                       content=usable[int(g)]["label"]))
                 key.append((i, f, "null_feat"))
     n_pairs = sum(1 for k in key if k[2] == "matched")
     print(f"[work] {len(prompts)} judgements = {n_pairs} pairs x "
