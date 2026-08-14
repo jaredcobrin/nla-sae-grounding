@@ -60,7 +60,19 @@ The mean above is not the typical pair. With a 68x multiplier a single activatio
 | shared | 1,363 | 42.4% | 62.9% (n=1,363) | 5.1% | 9.7% | 4.4x | 0.878 |
 | made | 441 | 37.0% | 55.5% (n=263) | 6.3% | 9.8% | 3.8x | 0.869 |
 | lost | 471 | 25.5% | 48.4% (n=471) | 5.4% | 12.2% | 2.1x | 0.863 |
-| **REAL** (shared+lost) | 1,834 | 38.1% | | | | | |
+| **REAL** (shared+lost = F_orig) | 1,834 | 38.1% | | | | | |
+
+**Compare variants on this row, not on `shared`.** `shared` and `lost` partition F_orig, the latents genuinely in the activation, so their union is the same set for every variant — three descriptions of one activation, asked about the same latents. `shared` on its own is an *outcome* (how much the AR recovered), so a rate over it divides by a number that moves with what is being measured.
+
+- of F_orig, the AR recovered **74.3%** (`shared`); the rest was destroyed by the round trip (`lost`)
+- of F_orig, the explanation conveys **38.1%** raw, **33.2%** corrected for the judge's false-positive rate
+- split: **42.4%** of recovered latents are conveyed vs **25.5%** of destroyed ones
+
+### `made` — reported separately
+
+These latents were **never in the original activation**; the AR produced them from the text. They are not part of faithfulness to the activation, so they are kept out of the coverage rate above rather than averaged into it.
+
+- **441** invented latents, **37.0%** of them traceable to something the explanation says (chance 9.8%)
 
 - corrected for the judge's 7.23% false-positive rate: **33.2%** (correcting always lowers the raw 38.1%)
 - `shared` is **5.9x** the false-positive floor

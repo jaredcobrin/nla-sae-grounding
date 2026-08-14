@@ -99,6 +99,29 @@ def score_one(model, tok, opt_ids, tpl, spec, bs):
                  opt_ids, bs=bs)
 
 
+def _over_f_orig(s: list[dict]) -> dict:
+    """Coverage restricted to latents that were actually in the activation.
+
+    `made` latents are excluded: they are not in F_orig, so they say nothing
+    about faithfulness to the activation. They are reported alongside, not
+    folded in.
+    """
+    real = [r for r in s if r.get("bucket") in ("shared", "lost")]
+    made = [r for r in s if r.get("bucket") == "made"]
+    if not real:
+        return {}
+    return {
+        "f_orig_n": len(real),
+        "f_orig_covered": sum(1 for r in real if r["grade"] in COVERED) / len(real),
+        "f_orig_present": sum(1 for r in real if r["verdict"] == "present") / len(real),
+        "f_orig_fpr": float(np.mean([r["null_feat"] for r in real])),
+        "recovered_frac": sum(1 for r in real if r["bucket"] == "shared") / len(real),
+        "made_n": len(made),
+        "made_covered": (sum(1 for r in made if r["grade"] in COVERED) / len(made)
+                         if made else None),
+    }
+
+
 def evaluate(key, cont, units):
     """The four bars, from one prompt's raw option-logprobs."""
     grade = [OPTS[int(np.argmax(c))] for c in cont]
@@ -124,8 +147,11 @@ def evaluate(key, cont, units):
                    else "unknown" if (ne > UNKNOWN_AT or nf > UNKNOWN_AT)
                    else "present")
         u = units[i]
+        bucket = ("shared" if f in u["shared"] else
+                  "lost" if f in u["lost"] else "made")
         rows.append({"act": u["act"], "feature": f,
                      "variant": u.get("variant", "full"),
+                     "bucket": bucket,
                      "grade": g, "verdict": verdict,
                      "null_expl": ne, "null_feat": nf})
 
@@ -153,6 +179,12 @@ def evaluate(key, cont, units):
             "grades": {g: gc.get(g, 0) / len(s) for g in OPTS},
             "fpr": float(np.mean([r["null_feat"] for r in s])),
             "null_expl": float(np.mean([r["null_expl"] for r in s])),
+            # F_orig = shared + lost = the latents genuinely in the activation.
+            # Their union is the SAME set for every variant, since shared and
+            # lost partition F_orig whatever F_ar does -- so this is the rate to
+            # compare variants on. `covered` above is over every judged latent
+            # including `made`, which were never in the activation at all.
+            **_over_f_orig(s),
         }
 
     # MONOTONICITY: full contains final_only verbatim, so covered(final_only)
@@ -172,7 +204,7 @@ def evaluate(key, cont, units):
     return out
 
 
-def add_derived_full(r: dict) -> dict:
+def add_derived_full(r: dict, full_buckets: dict) -> dict:
     """Reconstruct `full` as the union of its two segments.
 
     Monotonic BY CONSTRUCTION -- full covers a latent iff some segment does, so
@@ -202,6 +234,7 @@ def add_derived_full(r: dict) -> dict:
         # measured. The grade distribution lives on the SEGMENT rows; a derived
         # row only has a coverage bit.
         derived.append({"act": act, "feature": f, "variant": "full(derived)",
+                         "bucket": full_buckets.get((act, f), "made"),
                          "grade": None, "covered": cov,
                          "verdict": ("not_present" if not cov
                                      else "unknown" if (ne > UNKNOWN_AT or nf > UNKNOWN_AT)
@@ -217,6 +250,9 @@ def add_derived_full(r: dict) -> dict:
         "unknown": vc["unknown"] / len(s),
         # no per-grade breakdown: a union has no grade, only a coverage bit
         "grades": None,
+        **{k: v for k, v in _over_f_orig(
+            [{**x, "grade": ("CLEARLY" if x["covered"] else "NO")} for x in s]
+        ).items()},
         "fpr": float(np.mean([x["null_feat"] for x in s])),
         "null_expl": float(np.mean([x["null_expl"] for x in s])),
     }
@@ -292,6 +328,15 @@ def main() -> None:
         # TEXT to be judged against it.
         full_units = {(u["corpus"], u["act"]): u for u in units
                       if u.get("variant") == "full"}
+        # full's OWN bucket map, kept before its units are dropped. A derived row
+        # needs full's shared/lost split, which comes from full's real F_ar --
+        # not from the segments, whose splits differ. (Membership of F_orig is
+        # invariant across variants; only the shared/lost split inside it moves.)
+        FULL_BUCKETS = {}
+        for (c, act), fu in full_units.items():
+            for b in ("shared", "lost", "made"):
+                for f in fu[b]:
+                    FULL_BUCKETS[(act, f)] = b
         units = [u for u in units if u.get("variant") != "full"]
         for u in units:               # ask about full's latents too
             fu = full_units.get((u["corpus"], u["act"]))
@@ -328,7 +373,7 @@ def main() -> None:
         cont = score_one(model, tok, opt_ids, PROMPTS[name], spec, a.batch)
         res[name] = evaluate(key, cont, units)
         if a.derive_full:
-            res[name] = add_derived_full(res[name])
+            res[name] = add_derived_full(res[name], FULL_BUCKETS)
         print(f"    done in {(time.time()-t0)/60:.1f} min\n")
 
     print("=" * 78)
@@ -358,7 +403,22 @@ def main() -> None:
                      100*g["NO"], 100*d["present"], 100*d["unknown"]))
         print()
 
-    print("per-variant covered rate / its own FPR:")
+    print("OVER F_orig (shared+lost only -- the latents actually in the")
+    print("activation; `made` excluded and shown separately)")
+    print("%-5s %-14s %8s %9s %9s %9s   %10s" %
+          ("", "variant", "n", "covered", "present", "own FPR", "made cov."))
+    for n, r in res.items():
+        for v, d in sorted(r["by_variant"].items()):
+            if "f_orig_n" not in d:
+                continue
+            mc = d.get("made_covered")
+            print("%-5s %-14s %8d %8.1f%% %8.1f%% %8.1f%%   %9s"
+                  % (n, v, d["f_orig_n"], 100*d["f_orig_covered"],
+                     100*d["f_orig_present"], 100*d["f_orig_fpr"],
+                     ("%.1f%%" % (100*mc)) if mc is not None else "-"))
+        print()
+
+    print("per-variant covered rate over ALL judged latents / its own FPR:")
     for n, r in res.items():
         print("  %-4s " % n + "  ".join(
             "%s %.1f%%/%.1f%%" % (v, 100*d["covered"], 100*d["fpr"])

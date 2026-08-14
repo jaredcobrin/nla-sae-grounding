@@ -326,8 +326,24 @@ def conveyance(rows: list[dict], fpr: float,
            if d["null_expl_rate"] is not None]
     null_spread = (max(_ne) - min(_ne)) if _ne else None
 
-    # REAL = shared + lost = latents genuinely in the original activation.
+    # REAL = shared + lost = the latents genuinely in the original activation.
     # `made` is excluded because those are not in the original at all.
+    #
+    # THIS IS THE DENOMINATOR TO COMPARE VARIANTS ON, and the reason is
+    # structural: shared = F_orig n F_ar and lost = F_orig - F_ar, so their union
+    # is F_orig whatever F_ar does. Verified on the 200-conversation run --
+    # all three variants give an identical real set in 200/200 activations,
+    # a mean of 20.2 latents each.
+    #
+    # So the three variants are three descriptions of the SAME activation being
+    # asked about the SAME latents. Rates over `shared` alone are not comparable
+    # across variants, because `shared` is itself an outcome: full has 14.2 of
+    # the 20.2, final_only 11.9, no_final 6.1. Dividing by a number that moves
+    # with the thing being measured mixes "did the explanation say it" with "did
+    # the AR recover it".
+    #
+    # `made` is a different question -- what the AR invents that was never there
+    # -- and is reported separately rather than folded into a coverage rate.
     real = [r for r in rows if r["bucket"] in ("shared", "lost")]
     k_real = sum(1 for r in real if r["verdict"] == "present")
     p_real = k_real / len(real) if real else None
@@ -363,10 +379,32 @@ def conveyance(rows: list[dict], fpr: float,
     us = sum(1 for r in real if r["verdict"] != "present" and r["bucket"] == "shared")
     ul = sum(1 for r in real if r["verdict"] != "present" and r["bucket"] == "lost")
 
+    made_rows = [r for r in rows if r["bucket"] == "made"]
     return {
         "n_pairs": len(rows),
         "n_activations": len(per_act),
         "by_bucket": by_bucket,
+        # The comparable quantity: coverage over F_orig, whose size does not
+        # depend on the variant. `recovered_frac` is the AR's job (how much of
+        # F_orig survived), `rate` is the explanation's job (how much of F_orig
+        # the text conveys) -- two different things over one fixed denominator.
+        "over_f_orig": {
+            "n": len(real),
+            "rate": p_real,
+            "rate_corrected_for_fpr": corrected,
+            "recovered_frac": (by_bucket["shared"]["n"] / len(real)) if real else None,
+            "conveyed_of_recovered": by_bucket["shared"]["rate"],
+            "conveyed_of_destroyed": by_bucket["lost"]["rate"],
+        },
+        # Not part of faithfulness to the original -- these were never in it.
+        "made_separately": {
+            "n": len(made_rows),
+            "rate": (sum(1 for r in made_rows if r["verdict"] == "present")
+                     / len(made_rows)) if made_rows else None,
+            "null_expl_rate": by_bucket["made"]["null_expl_rate"],
+            "note": "latents the AR invented; reported apart from the F_orig "
+                    "coverage rate because they are a different question",
+        },
         "real": {"n": len(real), "rate": p_real,
                  "rate_corrected_for_fpr": corrected, "fpr_used": fpr},
         "shared_over_fpr_floor": (by_bucket["shared"]["rate"] / fpr) if fpr else None,
@@ -652,9 +690,37 @@ def render_md(s: dict) -> str:
                  f"{d['null_feat_rate']:.1%} | "
                  f"{d['null_expl_rate']:.1%} | {d['over_null_expl']:.1f}x | "
                  f"{d['mean_label_auc']:.3f} |")
-    L += [f"| **REAL** (shared+lost) | {c['real']['n']:,} | "
+    L += [f"| **REAL** (shared+lost = F_orig) | {c['real']['n']:,} | "
           f"{c['real']['rate']:.1%} | | | | | |",
-          "",
+          ""]
+    fo = c.get("over_f_orig")
+    if fo:
+        L += ["**Compare variants on this row, not on `shared`.** `shared` and "
+              "`lost` partition F_orig, the latents genuinely in the activation, "
+              "so their union is the same set for every variant — three "
+              "descriptions of one activation, asked about the same latents. "
+              "`shared` on its own is an *outcome* (how much the AR recovered), "
+              "so a rate over it divides by a number that moves with what is "
+              "being measured.", "",
+              f"- of F_orig, the AR recovered **{fo['recovered_frac']:.1%}** "
+              f"(`shared`); the rest was destroyed by the round trip (`lost`)",
+              f"- of F_orig, the explanation conveys **{fo['rate']:.1%}** raw, "
+              f"**{fo['rate_corrected_for_fpr']:.1%}** corrected for the judge's "
+              f"false-positive rate",
+              f"- split: **{fo['conveyed_of_recovered']:.1%}** of recovered "
+              f"latents are conveyed vs **{fo['conveyed_of_destroyed']:.1%}** of "
+              f"destroyed ones", ""]
+    md = c.get("made_separately")
+    if md and md.get("rate") is not None:
+        L += ["### `made` — reported separately", "",
+              "These latents were **never in the original activation**; the AR "
+              "produced them from the text. They are not part of faithfulness to "
+              "the activation, so they are kept out of the coverage rate above "
+              "rather than averaged into it.", "",
+              f"- **{md['n']:,}** invented latents, **{md['rate']:.1%}** of them "
+              f"traceable to something the explanation says "
+              f"(chance {md['null_expl_rate']:.1%})", ""]
+    L += [
           f"- corrected for the judge's {c['real']['fpr_used']:.2%} false-positive "
           f"rate: **{c['real']['rate_corrected_for_fpr']:.1%}** "
           f"(correcting always lowers the raw {c['real']['rate']:.1%})",
