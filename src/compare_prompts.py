@@ -1,5 +1,12 @@
 """Compare matcher prompts on the same pairs, and pick one by measurement.
 
+NOT the ranking variant. matcher_bakeoff.py once tested a "Variant C" that showed
+several latents in one prompt and asked for a ranking; it was rejected as a
+measurement because it cannot produce a per-pair verdict. This file does the
+SAME per-pair judgement judge_explanations.py does -- one latent, one
+explanation, one question, answered CLEARLY / PROBABLY / UNCLEAR / NO -- and
+varies only the prompt text.
+
 WHY THIS EXISTS, SEPARATELY FROM matcher_bakeoff.py
 That file chose the CURRENT prompt (A0) and measured the two things anyone
 thought to check at the time: false-positive rate and AUC. A0 won on both, and
@@ -36,7 +43,7 @@ the text distribution, which inflates the floor of the stingy variants and
 deflates the generous one's.
 
 Usage:
-    python src/prompt_bakeoff.py --dirs results \
+    python src/compare_prompts.py --dirs results \
         --labels-json results/feature_labels.json --acts 60 --prompts A0 A B
 """
 
@@ -169,7 +176,7 @@ def main() -> None:
     ap.add_argument("--max-expl-chars", type=int, default=1200)
     ap.add_argument("--batch", type=int, default=24)
     ap.add_argument("--seed", type=int, default=0)
-    ap.add_argument("--out", default="results/prompt_bakeoff.json")
+    ap.add_argument("--out", default="results/prompt_comparison.json")
     a = ap.parse_args()
     sys.stdout.reconfigure(line_buffering=True)
     names = a.names or [Path(d).name for d in a.dirs]
