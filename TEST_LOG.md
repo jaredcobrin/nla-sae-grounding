@@ -420,3 +420,78 @@ set always rather than detected.
 A peak measured on a large card does not establish a minimum. 23.4 GB of 46 GB
 and 23.4 GB of 24.1 GB are different situations, and only the second is a
 requirement claim.
+
+---
+
+# The trust tool had never been run. Running it found four bugs.
+
+`trust_tool/` is half of what this repo offers — the README opens by saying it
+"reproduces the experiment" and "ships a tool you can talk to". The experiment
+half had been run end to end twice. The tool half had been **read** twice, and
+two crashes fixed by reading, but never **executed**.
+
+## What running it found
+
+| | bug | what it took to see it |
+|---|---|---|
+| 1 | `JE._PROMPT` no longer existed — renamed to `_PROMPT_A0` hours earlier when candidate prompts were added | importing the module |
+| 2 | `resolve_text_model(self.base, dtype=…)` — that function takes an already-loaded model, takes no `dtype`, returns one value; the call passed a path and unpacked two | the first call |
+| 3 | default mode OOMs on a 46 GB card: it holds all three 12B models, ~67 GB | the actual hardware |
+| 4 | **`--phase` released nothing** | a complete turn |
+
+Bug 4 is the one worth keeping. `_release` set `self._base = None` and called
+`empty_cache()`, and every release call sat in the correct place in the turn
+sequence. But `ask()` also holds each model in a **local**:
+
+```python
+base, tok = self._load_base()
+...
+self._release("_base", "_tok")     # attribute cleared; local still holds it
+```
+
+A local reference keeps the object alive whatever the attribute says, so nothing
+was freed until `ask()` returned — by which point all three models were resident
+and the turn died. GPU peaked at **45.5 GB against a 44.4 GB limit**. After
+`del`-ing the locals: **14.5 GB**, turn completes in 168 s.
+
+Reading the code could not have found this. The calls are all in the right
+places; they simply do nothing.
+
+`_release` now measures how much memory actually came back and warns when
+freeing a multi-gigabyte model returns under a gigabyte, so the next silent
+failure is a visible one.
+
+## Two process failures of mine, which cost more time than the bugs
+
+**`git archive` stamps files with the commit time.** An extracted `.py` can
+therefore be *older* than a `.pyc` left from a previous run, and Python keeps
+using the stale bytecode. A fix was deployed, verified present on disk by
+`grep`, and still did not take. The deploy script now clears `__pycache__` and
+touches every `.py`.
+
+**A backgrounded `nohup` inside a compound SSH command was not launching at
+all.** I re-read a ten-minute-old `app.log` three times and kept diagnosing a
+traceback that had already been fixed — while `inspect.getsource` on the same
+file showed the fix present. Check the log's mtime before trusting its contents.
+
+## Result
+
+The tool serves, and a full turn produces a complete report: Gemma replies, the
+AV describes the activation, the AR reconstructs it, the SAE buckets the latents
+and the judge scores them.
+
+```
+user     Explain in two sentences why the sky is blue.
+reply    …Rayleigh scattering, where shorter wavelengths…
+AV       "Structured FAQ format signals a direct answer to 'Why is the sky
+          blue?' — a classic science question requiring a concise explanation."
+cos 0.9966   confirmed 15   unverified 10   omitted 3   cjk False
+```
+
+The AV identified the subject from the activation alone, never seeing the text.
+
+## Still open
+
+The tool's API returns `confirmed` / `unverified` / `omitted`; the experiment and
+every document now say `shared` / `lost` / `made`. Same three sets, two
+vocabularies.
