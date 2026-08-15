@@ -210,13 +210,33 @@ class Session:
         return covered, uncovered
 
     def _release(self, *names):
+        """Drop a model and actually give the memory back.
+
+        CLEARING THE ATTRIBUTE IS NOT ENOUGH. `ask()` holds each model in a
+        LOCAL as well -- `base, tok = self._load_base()` -- and a local
+        reference keeps the object alive no matter what the attribute says.
+        Before this, --phase released nothing until ask() returned, so all
+        three 12B models accumulated and the turn died with CUDA OOM on a 46GB
+        card. The caller must `del` its locals; this asserts the memory
+        actually came back so a future caller that forgets is caught here
+        rather than at the next OOM.
+        """
         if not self.phase:
             return
+        before = (torch.cuda.memory_allocated() / 2**30
+                  if torch.cuda.is_available() else 0)
         for n in names:
             setattr(self, n, None)
         gc.collect()
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
+            after = torch.cuda.memory_allocated() / 2**30
+            # A 12B model in bf16 is ~22GB; freeing under a GB means something
+            # still holds a reference.
+            if before - after < 1.0 and before > 2.0:
+                print(f"  [warn] release({', '.join(names)}) freed only "
+                      f"{before - after:.2f} GiB of {before:.1f} GiB -- a local "
+                      f"reference is still holding the model")
 
     # ---------------------------------------------------------------- a turn
 
@@ -246,6 +266,8 @@ class Session:
                               pad_token_id=tok.pad_token_id or tok.eos_token_id)
         t.reply = tok.decode(g[0, ids.shape[1]:], skip_special_tokens=True).strip()
         self.history.append({"role": "assistant", "content": t.reply})
+        # `del` before release: the locals are what keep the model alive.
+        del base, tok, g, ids
         self._release("_base", "_tok")
 
         # --- what the NLA says that activation contained ---------------------
@@ -257,6 +279,7 @@ class Session:
         # its reply and reports no latents rather than crashing.
         expl = av.generate(V[0], temperature=1.0,
                            explanation_max_tokens=200, do_sample=True)
+        del av
         self._release("_av")
         if not expl:
             t.explanation = ""
@@ -273,6 +296,7 @@ class Session:
         v_ar = ar.reconstruct(expl).float().cpu()
         mse_B, cos = ar.score(expl, v)
         t.cos = float(cos)
+        del ar
         self._release("_ar")
 
         # --- set arithmetic on the two latent sets ---------------------------
