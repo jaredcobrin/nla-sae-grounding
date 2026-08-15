@@ -60,6 +60,13 @@ sys.path.insert(0, str(_HERE.parent / "src"))
 
 import trust_report as TR                                          # noqa: E402
 import judge_explanations as JE                                    # noqa: E402
+
+#: Which matcher prompt the tool judges with. Must be a key of JE.PROMPTS --
+#: asserted at import so a rename in the experiment breaks loudly here instead
+#: of at the first turn a user takes.
+JUDGE_PROMPT = "A"
+assert JUDGE_PROMPT in JE.PROMPTS, (
+    f"JUDGE_PROMPT={JUDGE_PROMPT!r} is not one of {sorted(JE.PROMPTS)}")
 from hf_paths import sae_variant_dir, L0_SMALL                     # noqa: E402
 
 # FVE = 1 - mean(MSE)/rawvar, and `rawvar` is a property of the ACTIVATION
@@ -150,10 +157,19 @@ class Session:
         """For each named latent, does the explanation actually state it?
 
         This is the ONLY part of a turn that involves a model judging anything --
-        the buckets above are set arithmetic. It reuses the graded prompt from
-        judge_explanations.py, which was chosen by a measured bake-off: the plain
-        Yes/No wording it replaced scored a 78.3% false-positive rate, this one
-        5.75%.
+        the buckets above are set arithmetic. It reuses the prompt the experiment
+        uses, by name, from judge_explanations.PROMPTS.
+
+        JUDGE_PROMPT is pinned to a name rather than reaching for a module
+        private. The tool previously used `JE._PROMPT`, which was renamed when
+        candidate prompts were added, and nothing caught it because the tool has
+        never been executed -- it would have raised AttributeError on the first
+        turn that judged anything.
+
+        The prompt in use is A: the graded, strict wording, minus a claim that
+        the explanation is "one or two sentences" which held for 3% of real
+        explanations. Measured false-positive rate 4.6%, against 78.3% for the
+        plain Yes/No wording it replaced.
 
         The experiment runs seven judgements per latent (1 matched + 3 unrelated
         explanations + 3 non-firing latents) to MEASURE that false-positive rate.
@@ -167,7 +183,8 @@ class Session:
             return [], []
         model, tok = self._load_base()
         opt_ids = [tok.encode(o, add_special_tokens=False)[0] for o in JE.OPTS]
-        prompts = [JE._PROMPT.format(expl=expl, content=l["label"]) for l in latents]
+        prompts = [JE.PROMPTS[JUDGE_PROMPT].format(expl=expl, content=l["label"])
+                   for l in latents]
         scores = JE.judge(model, tok, prompts, opt_ids, bs=12, log_every=10**9)
         covered, uncovered = [], []
         for l, s in zip(latents, scores):
