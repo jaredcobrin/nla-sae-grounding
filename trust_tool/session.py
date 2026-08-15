@@ -130,12 +130,25 @@ class Session:
     # ---------------------------------------------------------------- models
 
     def _load_base(self):
+        """Load Gemma and unwrap it to the text-side CausalLM.
+
+        resolve_text_model takes an ALREADY-LOADED model and unwraps it; it is
+        not a loader and takes no dtype. This called it as though it were both,
+        and unpacked two values from it, so the tool raised TypeError on the
+        first turn. It is the same load-then-unwrap pattern
+        extract_activations.py uses.
+
+        The unwrap matters rather than being ceremony: Gemma-3 arrives as
+        Gemma3ForConditionalGeneration, and reading hidden states off the
+        wrapper instead of the text model is how you get activations from the
+        wrong place.
+        """
         if self._base is None:
-            from transformers import AutoTokenizer
+            from transformers import AutoModelForCausalLM, AutoTokenizer
             from nla.arch_adapters import resolve_text_model
             self._tok = AutoTokenizer.from_pretrained(self.base)
-            m, _ = resolve_text_model(self.base, dtype=torch.bfloat16)
-            self._base = m.to(self.device).eval()
+            m = AutoModelForCausalLM.from_pretrained(self.base, dtype=torch.bfloat16)
+            self._base = resolve_text_model(m).to(self.device).eval()
         return self._base, self._tok
 
     def _load_av(self):
