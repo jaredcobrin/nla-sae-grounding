@@ -11,6 +11,7 @@ are the point, not decoration.
 | 3 | `refeature.py` | re-encodes the saved vectors under the other SAE, including the near-miss neighbours. Seconds | no |
 | 4 | `label_features.py` | auto-interp: 3 candidates, held-out scoring, wrong-label null | yes |
 | 5 | `judge_explanations.py` | per latent, does the explanation cover it? Graded, against two nulls. Judges the two **segments** and derives `full` as their union, so coverage is monotonic | yes |
+| — | `example_reports.py` | six single activations written out end to end, from the committed artefacts. No model, no GPU | no |
 | 6 | `summarize_results.py` | **every number in `RESULTS.md`** → `summary.json` + `SUMMARY.md`, each section per variant | no |
 | — | `explanation_parts.py` | splits an explanation into `full` / `no_final` / `final_only`. Anchored on the paragraph naming the final token — 200/200 on this run | no |
 | — | `compare_prompts.py` | scores candidate judge prompts on identical pairs: monotonicity, FPR spread, AUC. How prompt A was chosen | yes |

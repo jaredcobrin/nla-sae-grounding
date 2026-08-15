@@ -238,6 +238,9 @@ echo "=== 5/5  compute every reported number ==="
 python "$SRC/summarize_results.py" --dir "$OUT"
 backup summary "$OUT/SUMMARY.md" "$OUT/summary.json" "$OUT/per_example.csv" \
     "$OUT/LATENTS_BY_BUCKET.md"
+# Six worked examples, from the artefacts just written -- no model, seconds.
+# They exist so the aggregates can be spot-checked against individual cases.
+python "$SRC/example_reports.py" --dir "$OUT" --n 6
 
 cat <<EOF
 

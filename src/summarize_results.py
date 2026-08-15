@@ -996,7 +996,11 @@ def render_by_bucket(ov: dict, sm: dict, lab: dict, gr: list | None = None) -> s
                 vd = v.get("verdict") if v else None
                 if vd in tally:
                     tally[vd] += 1
-                tag = {"present": f"  **[stated — {v['grade'] if v else ''}]**",
+                # `full` is a UNION of its segments, so it has a coverage bit
+                # and no grade. Printing the grade unconditionally rendered
+                # "[stated - None]" for every full row.
+                _g = (v or {}).get("grade")
+                tag = {"present": ("  **[stated — %s]**" % _g) if _g else "  **[stated]**",
                        "not_present": "  *[not stated]*",
                        "unknown": "  *[controls fired — cannot tell]*"}.get(vd, "")
                 L.append(f"- `f{f}` {val[f]['label']}{tag}")
