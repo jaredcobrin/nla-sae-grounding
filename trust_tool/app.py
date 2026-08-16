@@ -171,7 +171,7 @@ function matchTable(cov, unc) {
     <p class="why">The only model judgement on this page — everything above is set
        arithmetic. Asked of every latent really in the activation (shared + lost).
        This judge was picked by a measured bake-off; its false-positive rate is
-       5.75%, against 78.3% for the plain yes/no wording it replaced.</p>
+       4.6%, against 78.3% for the plain yes/no wording it replaced.</p>
     ${cov.length ? '<h4>Stated in the explanation</h4><ul>' + cov.map(row).join('') + '</ul>' : ''}
     ${unc.length ? '<h4>Not stated</h4><ul>' + unc.map(row).join('') + '</ul>' : ''}
   </section>`;
@@ -199,16 +199,44 @@ function render(t) {
   window.scrollTo(0, document.body.scrollHeight);
 }
 
+// Enter sends, Shift+Enter makes a newline. Without this the textarea just
+// swallows Enter and the form never submits -- the page looks dead while
+// working perfectly, which is exactly how it first presented.
+q.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); f.requestSubmit(); }
+});
+
 f.onsubmit = async e => {
   e.preventDefault();
   const text = q.value.trim(); if (!text) return;
   q.value = ''; b.disabled = true; b.textContent = 'Thinking…';
+  // A turn loads and runs three 12B models, so say something rather than
+  // leaving the page blank for a minute or more.
+  const pending = document.createElement('div');
+  pending.className = 'turn';
+  pending.innerHTML = '<div class="meta">working… AV → AR → SAE, this takes a '
+                    + 'while (longer with --phase)</div>';
+  rep.appendChild(pending);
   try {
-    const r = await fetch('/ask', {method:'POST', body: JSON.stringify({text})});
+    const r = await fetch('/ask', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({text})});
+    if (!r.ok) throw new Error('server returned HTTP ' + r.status);
     const t = await r.json();
+    pending.remove();
     if (t.error) { rep.insertAdjacentHTML('beforeend',
         `<div class="turn warn">${esc(t.error)}</div>`); }
     else render(t);
+  } catch (err) {
+    // WITHOUT THIS the page fails silently: the button resets and nothing
+    // appears, so a render bug is indistinguishable from a server that never
+    // replied. Surface it instead.
+    pending.remove();
+    rep.insertAdjacentHTML('beforeend',
+      `<div class="turn warn">page error: ${esc(String(err && err.message || err))}
+       <br><small>the reply may have arrived — check the server log</small></div>`);
+    console.error(err);
   } finally { b.disabled = false; b.textContent = 'Send'; q.focus(); }
 };
 </script>
