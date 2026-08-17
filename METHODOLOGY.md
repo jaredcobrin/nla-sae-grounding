@@ -313,9 +313,6 @@ earlier version found the judge missed 8 and over-called 0.
 - **Regex heuristics over label text.** Used three times, wrong three times: one
   classifier called *"noun phrases denoting superhero characters"* grammatical
   because the label contains "noun".
-- **Blind bucket descriptions** (`src/describe_buckets.py`). Works and is legible,
-  but qualitative and read by eye, so **not reported in `RESULTS.md`**. With 2–3
-  labelled latents it over-reaches ~10% of the time.
 
 ---
 

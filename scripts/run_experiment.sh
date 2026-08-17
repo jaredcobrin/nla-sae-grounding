@@ -268,7 +268,6 @@ Check these before believing anything:
      inspect results/explanation_splits.json before quoting section 6
 
 Not part of the experiment, kept for reference:
-  src/describe_buckets.py     blind bucket summaries -- qualitative, unreported
   src/classify_features.py    failed its own control, see INCONCLUSIVE.md
   src/matcher_bakeoff.py      how the judge prompt was chosen (METHODOLOGY section 4)
 EOF

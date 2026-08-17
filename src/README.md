@@ -25,7 +25,6 @@ corpus. It imports `nla_av`, `sampling` and `hf_paths` from here.
 | | | |
 |---|---|---|
 | `matcher_bakeoff.py` | how the stage-5 judge prompt was chosen (METHODOLOGY §4) |
-| `describe_buckets.py` | blind bucket summaries — qualitative, not reported |
 | `classify_features.py` | failed its own control — see [INCONCLUSIVE.md](../INCONCLUSIVE.md) |
 
 ## Vendored, and why

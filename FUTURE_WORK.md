@@ -101,14 +101,14 @@ the CJK failure mode. Establish the coherent range before interpreting anything.
 
 ## 4. What the current results cannot separate
 
-- **Prior versus channel.** 54% of latents the round trip preserves were never
+- **Prior versus channel.** 52.6% of latents the round trip preserves were never
   visibly conveyed by the explanation. Separating "the AR inferred it" from "the
   judge under-detected it" needs an AR trained independently of the AV, which the
   released checkpoints do not provide.
 - **Granularity versus dictionary.** §2 compares `l0_small` and `l0_big` as if
   they differed only in sparsity; they are separately trained dictionaries.
   Sweeping several widths at fixed L0 would separate the two.
-- **n = 50, one layer.** The cheapest generalisation is other layers of the same
+- **n = 200, one layer.** The cheapest generalisation is other layers of the same
   model — Gemma Scope 2 covers all 48, and layer sensitivity is a limitation the
   NLA paper names as open.
 - **Both experiments in [INCONCLUSIVE.md](INCONCLUSIVE.md)**, which need the

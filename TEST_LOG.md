@@ -3,6 +3,12 @@
 What was actually run against real weights from this repo's layout, what broke,
 and what was fixed. Written during testing rather than reconstructed afterwards.
 
+**This is a dated log, not a description of the current state.** Sessions 1-4
+predate the final n=200 run; the numbers inside them are smoke-test numbers at
+n=6 to n=50 and several stages they describe have since changed. The reported
+results are in [RESULTS.md](RESULTS.md) and
+[results/SUMMARY.md](results/SUMMARY.md).
+
 **Why this file exists.** Everything in `src/` was moved, renamed and edited when
 this repo was assembled: files renamed, two modules vendored, all imports
 repointed, a new SAE path resolver added, and `trust_report.py` restructured. All
@@ -256,10 +262,10 @@ act 2: FVE +0.780   confirmed 14   unverified 2   omitted 7
 ```
 
 `act 0` at 0.430 is the kind of activation the gate used to discard. The tool
-handles it correctly — it reports far fewer confirmed features, which is the
-honest answer for an activation the round trip barely preserved. This is why
-`RESULTS.md` lists the gate as a limitation on the n=50 numbers: those were
-produced by the gated code and are easier than average by construction.
+handles it correctly — it reports far fewer shared latents, which is the honest
+answer for an activation the round trip barely preserved. The FVE gate this
+paragraph refers to was **removed** before the reported run: `RESULTS.md`'s
+numbers are ungated, and the FVE distribution is reported in full.
 
 ## 5. The four unrun stages: all pass
 
@@ -270,7 +276,6 @@ Full chain on 6 activations from this layout.
 | `roundtrip.py` | **pass** — peak **23,393 MiB**, `untagged 0/6`, `CJK 0/6`, SAE (`l0_big`) `L0 136.0` / `recon cos 0.9937`, health check 0.7416 |
 | `refeature.py` | **pass** — seconds, no GPU |
 | `judge_explanations.py` | **pass** — 1015 judgements in 1.6 min |
-| `describe_buckets.py` | **pass** — 36 summaries in 0.6 min |
 | `classify_features.py` | **pass**, and see below |
 
 **The judge revalidated itself on fresh data**, which is the check that matters:
@@ -299,7 +304,8 @@ suppressed its own headline rather than printing a number built on a control tha
 had stopped separating. **This is the single most reassuring thing in this log** —
 the controls are load-bearing, not decoration.
 
-Treat every session-2 number as a smoke test at n=6. `RESULTS.md` is the n=50 run.
+Treat every session-2 number as a smoke test at n=6. `RESULTS.md` is the n=200
+run, made later, on a different corpus arm, with the FVE gate removed.
 
 ## 6. Dead code found by walking every file
 
@@ -361,9 +367,9 @@ rather than refuses.
 - **A cold clone on a machine with no HuggingFace cache** — `hf_paths.py` was
   exercised against a populated cache and, separately, against an empty one for
   its error message, but not through a real cold start.
-- **Anything at n=50 from this layout.** The published numbers come from the
-  original runs; this repo has reproduced the *pipeline*, at small n, not the
-  results.
+- **Anything at scale from this layout.** As of session 2 this repo had
+  reproduced the *pipeline*, at n=6, not the results. The full n=200 run was made
+  later — see [RESULTS.md](RESULTS.md).
 
 
 ---

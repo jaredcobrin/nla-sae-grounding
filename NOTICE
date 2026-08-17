@@ -33,11 +33,14 @@ DERIVED FROM UPSTREAM, AND MODIFIED (Apache-2.0 section 4(b)):
 ORIGINAL WORK, Copyright 2026 Jared Cobrin:
 
   src/extract_activations.py    src/judge_explanations.py
-  src/roundtrip.py              src/describe_buckets.py
+  src/roundtrip.py              src/explanation_parts.py
   src/refeature.py              src/classify_features.py
-  src/label_features.py         src/trust_report.py
-  src/matcher_bakeoff.py        src/hf_paths.py
+  src/label_features.py         src/summarize_results.py
+  src/matcher_bakeoff.py        src/compare_prompts.py
+  src/example_reports.py        src/hf_paths.py
   src/sampling.py
+  trust_tool/trust_report.py    trust_tool/session.py
+  trust_tool/app.py
   everything under results/, scripts/, and all Markdown documentation
 
   `src/sampling.py` began as this author's own `experiments/baseline_fve.py`
