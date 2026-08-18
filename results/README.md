@@ -7,7 +7,7 @@ with that one command.
 
 | file | |
 |---|---|
-| **`SUMMARY.md`** | **every number quoted in [RESULTS.md](../RESULTS.md)**, as tables |
+| **`SUMMARY.md`** | **every number quoted in [RESULTS.md](../RESULTS.md)**, as tables, starting with the headline table in section 0 |
 | `summary.json` | the same, machine-readable |
 | `example_reports/` | six single activations followed end to end — the aggregates spot-checked against individual cases |
 | `per_example.csv` | one row per (activation, explanation, variant): FVE *and* cosine for all four comparisons, latent counts, Jaccard and its control, token counts, CJK/untagged flags |
@@ -27,22 +27,6 @@ figure** — that is how four errors reached an earlier write-up.
 | `feature_labels.json` | 3,329 labels, each with its **AUC** and the **wrong-label null scores** it was validated against. `reliable: true` means it beat the 95th percentile of that null; 1,771 did |
 | `grounding.json` | per (latent, explanation, variant): the grade, the verdict, **both null rates**, the label's AUC, and the latent's categories |
 | `explanation_splits.json` | the paragraph split's success rate, plus 20 splits dumped verbatim so the cut point can be eyeballed |
-
-## How the judge prompt was chosen
-
-| file | |
-|---|---|
-| `prompt_comparison.json` | prompts A0 / A / B on identical pairs — monotonicity, false-positive spread, AUC |
-| `prompt_comparison_seg.json` | prompts A / B2 under the two-segment design |
-
-These are decision evidence, not results. Nothing in `RESULTS.md` quotes them;
-[METHODOLOGY.md](../METHODOLOGY.md) section 4 describes what they measured.
-
-## Kept but not used by any reported number
-
-| file | |
-|---|---|
-| `feature_classification.json` | **failed its own control** — [INCONCLUSIVE.md](../INCONCLUSIVE.md). Kept so the numbers quoted there stay checkable |
 
 ## Not in the repo
 

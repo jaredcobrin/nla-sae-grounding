@@ -14,18 +14,10 @@ are the point, not decoration.
 | — | `example_reports.py` | six single activations written out end to end, from the committed artefacts. No model, no GPU | no |
 | 6 | `summarize_results.py` | **every number in `RESULTS.md`** → `summary.json` + `SUMMARY.md`, each section per variant | no |
 | — | `explanation_parts.py` | splits an explanation into `full` / `no_final` / `final_only`. Anchored on the paragraph naming the final token — 200/200 on this run | no |
-| — | `compare_prompts.py` | scores candidate judge prompts on identical pairs: monotonicity, FPR spread, AUC. How prompt A was chosen | yes |
 
 **The tool lives in [`../trust_tool/`](../trust_tool/)** — a chat window that
 reports on every turn, plus the original command-line version over a stored
 corpus. It imports `nla_av`, `sampling` and `hf_paths` from here.
-
-**Not part of the experiment**, kept for reference:
-
-| | | |
-|---|---|---|
-| `matcher_bakeoff.py` | how the stage-5 judge prompt was chosen (METHODOLOGY §4) |
-| `classify_features.py` | failed its own control — see [INCONCLUSIVE.md](../INCONCLUSIVE.md) |
 
 ## Vendored, and why
 

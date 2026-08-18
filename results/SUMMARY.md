@@ -155,22 +155,6 @@ A latent scored 'not present' has two readings: the AV never mentioned it, or it
 - legal direction (full YES, subset NO): 69
 
 
-## 6b. Does FVE predict grounding?
-
-loops (LessWrong, 15 May 2026) showed on this checkpoint that cutting the final paragraph costs far more reconstruction error than cutting the first two. That is about FVE. This asks whether FVE tracks what the explanation actually says about the activation.
-
-Per activation, within one variant: does a higher FVE go with a higher share of that activation's own latents being named?
-
-| variant | n | Pearson r | 95% CI | Spearman | detectable? |
-|---|---:|---:|---|---:|---|
-| `full` | 188 | -0.014 | -0.157 to +0.129 | -0.056 | no |
-| `no_final` | 191 | -0.082 | -0.221 to +0.061 | -0.113 | no |
-| `final_only` | 189 | +0.068 | -0.075 to +0.209 | +0.044 | no |
-
-- activations with fewer than 3 judged latents are dropped -- a rate over one or two latents is mostly noise
-- at this n, |r| below about 0.14 cannot be distinguished from zero. A near-zero row means **no correlation detectable at this n**, not that none exists.
-- this is the between-ACTIVATION question. The between-VARIANT one -- does the part of the text with more FVE carry more grounded content -- is section 6 above.
-
 ## 6. Paragraph ablation — which part of the explanation carries it
 
 The AV writes to a three-part shape: what kind of document this is, what it is about, and what the **final token** is doing. The third part is a different kind of claim -- about the one token the activation sits on, not the passage around it. Each variant runs through the identical pipeline; no new metric is introduced.
@@ -196,6 +180,22 @@ The AV writes to a three-part shape: what kind of document this is, what it is a
 - split: **200/200** usable, anchor rate **100%**, methods `{'anchor': 200}`
 - the cut is made at the paragraph naming the final token. A falling anchor rate means the AV's output format moved and these variants are no longer what they claim -- check `explanation_splits.json`.
 - **the variants differ in length**, so read FVE per 100 tokens beside the raw figure. Per-token does not remove the confound, it makes it visible.
+
+## 6b. Does FVE predict grounding?
+
+loops (LessWrong, 15 May 2026) showed on this checkpoint that cutting the final paragraph costs far more reconstruction error than cutting the first two. That is about FVE. This asks whether FVE tracks what the explanation actually says about the activation.
+
+Per activation, within one variant: does a higher FVE go with a higher share of that activation's own latents being named?
+
+| variant | n | Pearson r | 95% CI | Spearman | detectable? |
+|---|---:|---:|---|---:|---|
+| `full` | 188 | -0.014 | -0.157 to +0.129 | -0.056 | no |
+| `no_final` | 191 | -0.082 | -0.221 to +0.061 | -0.113 | no |
+| `final_only` | 189 | +0.068 | -0.075 to +0.209 | +0.044 | no |
+
+- activations with fewer than 3 judged latents are dropped -- a rate over one or two latents is mostly noise
+- at this n, |r| below about 0.14 cannot be distinguished from zero. A near-zero row means **no correlation detectable at this n**, not that none exists.
+- this is the between-ACTIVATION question. The between-VARIANT one -- does the part of the text with more FVE carry more grounded content -- is section 6 above.
 
 ## 7. Near-miss sweep — is the match specific to this token?
 

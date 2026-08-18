@@ -1027,37 +1027,6 @@ def render_md(s: dict) -> str:
                   "variant is unaffected. Use `rate_union` for anything "
                   "cross-variant.", ""]
 
-    fg = s.get("fve_vs_grounding")
-    if fg and fg.get("by_variant"):
-        L += ["", "## 6b. Does FVE predict grounding?", "",
-              "loops (LessWrong, 15 May 2026) showed on this checkpoint that "
-              "cutting the final paragraph costs far more reconstruction error "
-              "than cutting the first two. That is about FVE. This asks whether "
-              "FVE tracks what the explanation actually says about the "
-              "activation.", "",
-              "Per activation, within one variant: does a higher FVE go with a "
-              "higher share of that activation's own latents being named?", "",
-              "| variant | n | Pearson r | 95% CI | Spearman | detectable? |",
-              "|---|---:|---:|---|---:|---|"]
-        for v, c in fg["by_variant"].items():
-            ci = (f"{_fmt(c.get('ci_low'), '{:+.3f}')} to "
-                  f"{_fmt(c.get('ci_high'), '{:+.3f}')}")
-            L.append(f"| `{v}` | {c['n']} | {_fmt(c.get('pearson'), '{:+.3f}')} | "
-                     f"{ci} | {_fmt(c.get('spearman'), '{:+.3f}')} | "
-                     f"{'**yes**' if c.get('significant') else 'no'} |")
-        floors = [c.get("detectable_floor") for c in fg["by_variant"].values()
-                  if c.get("detectable_floor")]
-        L += ["",
-              f"- activations with fewer than {fg['min_latents']} judged latents "
-              "are dropped -- a rate over one or two latents is mostly noise",
-              (f"- at this n, |r| below about {max(floors):.2f} cannot be "
-               "distinguished from zero. A near-zero row means **no correlation "
-               "detectable at this n**, not that none exists."
-               if floors else ""),
-              "- this is the between-ACTIVATION question. The between-VARIANT "
-              "one -- does the part of the text with more FVE carry more "
-              "grounded content -- is section 6 above."]
-
     ab = s.get("ablation")
     if ab:
         L += ["", "## 6. Paragraph ablation — which part of the explanation carries it", "",
@@ -1106,6 +1075,37 @@ def render_md(s: dict) -> str:
               "- **the variants differ in length**, so read FVE per 100 tokens "
               "beside the raw figure. Per-token does not remove the confound, it "
               "makes it visible."]
+
+    fg = s.get("fve_vs_grounding")
+    if fg and fg.get("by_variant"):
+        L += ["", "## 6b. Does FVE predict grounding?", "",
+              "loops (LessWrong, 15 May 2026) showed on this checkpoint that "
+              "cutting the final paragraph costs far more reconstruction error "
+              "than cutting the first two. That is about FVE. This asks whether "
+              "FVE tracks what the explanation actually says about the "
+              "activation.", "",
+              "Per activation, within one variant: does a higher FVE go with a "
+              "higher share of that activation's own latents being named?", "",
+              "| variant | n | Pearson r | 95% CI | Spearman | detectable? |",
+              "|---|---:|---:|---|---:|---|"]
+        for v, c in fg["by_variant"].items():
+            ci = (f"{_fmt(c.get('ci_low'), '{:+.3f}')} to "
+                  f"{_fmt(c.get('ci_high'), '{:+.3f}')}")
+            L.append(f"| `{v}` | {c['n']} | {_fmt(c.get('pearson'), '{:+.3f}')} | "
+                     f"{ci} | {_fmt(c.get('spearman'), '{:+.3f}')} | "
+                     f"{'**yes**' if c.get('significant') else 'no'} |")
+        floors = [c.get("detectable_floor") for c in fg["by_variant"].values()
+                  if c.get("detectable_floor")]
+        L += ["",
+              f"- activations with fewer than {fg['min_latents']} judged latents "
+              "are dropped -- a rate over one or two latents is mostly noise",
+              (f"- at this n, |r| below about {max(floors):.2f} cannot be "
+               "distinguished from zero. A near-zero row means **no correlation "
+               "detectable at this n**, not that none exists."
+               if floors else ""),
+              "- this is the between-ACTIVATION question. The between-VARIANT "
+              "one -- does the part of the text with more FVE carry more "
+              "grounded content -- is section 6 above."]
 
     sw = s.get("distance_sweep")
     if sw:

@@ -1,8 +1,8 @@
 """Does the AV's explanation cover what is actually in the activation?
 
-THE PROMPT HERE WON A MEASURED BAKE-OFF. Do not "improve" it without re-running
-matcher_bakeoff.py — the previous wording failed catastrophically and looked
-fine while doing so.
+THE PROMPT HERE WON A MEASURED BAKE-OFF. Do not "improve" it without measuring
+a replacement the same way first — the previous wording failed catastrophically
+and looked fine while doing so.
 
     variant              FPR     TPR     AUC
     A  plain Yes/No    0.783   0.945   0.744

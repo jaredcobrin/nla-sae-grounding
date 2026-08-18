@@ -19,8 +19,8 @@
 #                entirely and most of F_ar, so they add far less than 3x. This
 #                is the least certain estimate here -- no measured rate exists.
 #   judging      the one stage the ablation really multiplies. At the measured
-#                634 judgements/min (TEST_LOG.md): 200 units = 25 min without
-#                the ablation, 600 units = 76 min with it. About +50 min.
+#                634 judgements/min: 200 units = 25 min without the ablation,
+#                600 units = 76 min with it. About +50 min.
 #
 # So the jump from a 50-activation run is mostly the 4x scale-up in labelling,
 # not the ablation. Each stage writes its output before the next starts, so a
@@ -267,7 +267,4 @@ Check these before believing anything:
      has moved and the paragraph variants are not what they claim to be --
      inspect results/explanation_splits.json before quoting section 6
 
-Not part of the experiment, kept for reference:
-  src/classify_features.py    failed its own control, see INCONCLUSIVE.md
-  src/matcher_bakeoff.py      how the judge prompt was chosen (METHODOLOGY section 4)
 EOF

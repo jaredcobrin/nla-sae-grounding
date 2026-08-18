@@ -36,7 +36,7 @@ it as "invented":
     thing -- a limitation the NLA paper names about its own method.
 
 An earlier version claimed 65-68% of MADE content latents were genuinely in
-the source document. THAT CLAIM IS WITHDRAWN -- see INCONCLUSIVE.md. It came
+the source document. THAT CLAIM IS WITHDRAWN. It came
 from a plain yes/no judge that had never been through the matcher bake-off, and
 it compared features against the WHOLE DOCUMENT when an activation sampled at one
 token position is not a claim about the whole document.
