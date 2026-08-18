@@ -628,6 +628,69 @@ def fve_vs_grounding(ov: dict, gr: dict, variants: list[str],
     return out or None
 
 
+def headline_table(ab: dict) -> dict | None:
+    """The one table the whole project hinges on.
+
+    loops (LessWrong, 15 May 2026) showed that the AV's final paragraph carries
+    most of the round-trip's FVE. This asks the question that leaves open: does
+    the final paragraph also carry more of what is genuinely IN the activation,
+    or just more of what the AR can rebuild? Four rows, same three variants
+    throughout, no new computation -- every number here already exists inside
+    ablation() and this only re-reads it:
+
+      1. FVE                     the paper's own metric
+      2. latents recovered       SAE-vs-SAE: does the AR's REBUILT VECTOR still
+                                  activate the same latents as the original,
+                                  with no text or judge involved at all
+      3. grounded, of labeled    of F_orig latents with a validated label, what
+                                  fraction the JUDGE finds the TEXT actually states
+      4. grounded, of all        row 3's same numerator over EVERY F_orig latent,
+                                  labeled or not -- conservative, since an
+                                  unlabeled latent cannot be shown as conveyed
+
+    Rows 1-2 need no judge and no labels; they are the SAE checking itself. Rows
+    3-4 are where the judge and the labels enter. If final_only tracks full on
+    BOTH kinds of row, that is the finding: two independently-obtained signals
+    (raw vector overlap, and judged text) agree on where the real content is.
+    """
+    variants = list(ab["by_variant"])
+    if "full" not in variants:
+        return None
+    full = ab["by_variant"]["full"]
+    rows = {"fve": {}, "recon_overlap": {}, "grounded_of_labeled": {},
+            "grounded_of_all": {}}
+    for v in variants:
+        e = ab["by_variant"][v]
+        fve = e["reconstruction"]["fve"]["B_ar_vs_orig"]
+        rows["fve"][v] = {"value": fve,
+                           "pct_of_full": fve / full["reconstruction"]["fve"]["B_ar_vs_orig"]}
+
+        ov_sm = e["overlap"]["l0_small"]
+        kept = ov_sm["kept"]                       # shared / (shared + lost)
+        kept_full = full["overlap"]["l0_small"]["kept"]
+        rows["recon_overlap"][v] = {"value": kept, "pct_of_full": kept / kept_full}
+
+        cv = e["conveyance"]["over_f_orig"]
+        by_bucket = e["conveyance"]["by_bucket"]
+        conveyed_n = by_bucket["shared"]["conveyed"] + by_bucket["lost"]["conveyed"]
+        rows["grounded_of_labeled"][v] = {
+            "value": cv["rate"], "n": cv["n"],
+            "pct_of_full": cv["rate"] / full["conveyance"]["over_f_orig"]["rate"]}
+
+        f_orig_all = ov_sm["totals"]["shared"] + ov_sm["totals"]["lost"]
+        rate_all = conveyed_n / f_orig_all if f_orig_all else None
+        full_ov = full["overlap"]["l0_small"]["totals"]
+        full_cv = full["conveyance"]["by_bucket"]
+        full_conveyed = full_cv["shared"]["conveyed"] + full_cv["lost"]["conveyed"]
+        full_f_orig_all = full_ov["shared"] + full_ov["lost"]
+        full_rate_all = full_conveyed / full_f_orig_all
+        rows["grounded_of_all"][v] = {
+            "value": rate_all, "n": conveyed_n, "n_total": f_orig_all,
+            "pct_of_full": (rate_all / full_rate_all) if rate_all is not None else None}
+
+    return {"variants": variants, "rows": rows}
+
+
 def distance_sweep(ov: dict, sm: dict, bg: dict) -> dict | None:
     """Section 7: is the latent match specific to THIS token?
 
@@ -710,6 +773,52 @@ def render_md(s: dict) -> str:
           if s["meta"]["n_documents"] else
           "- *(no doc_id in this run — independence unverifiable)*"),
          "",
+    ]
+    ht = s.get("headline_table")
+    if ht:
+        hv = ht["variants"]
+        hnames = {"full": "full explanation", "final_only": "final paragraph",
+                  "no_final": "first two paragraphs"}
+        hrows = ht["rows"]
+
+        def _hcell(key, fmt, x):
+            hd = hrows[key][x]
+            return (fmt(hd["value"]) if x == "full" else
+                    f"{fmt(hd['value'])} ({hd['pct_of_full']:.0%} of full)")
+
+        def _hrow(label, key, fmt):
+            return (f"| {label} | "
+                    + " | ".join(_hcell(key, fmt, x) for x in hv) + " |")
+
+        L += ["## 0. The central result", "",
+              "Does the AV's final paragraph -- shown elsewhere to carry most of "
+              "the round trip's FVE -- also carry more of what is genuinely IN "
+              "the activation, or only more of what the AR can rebuild? Rows 1-2 "
+              "need no judge or labels (the SAE checking itself); rows 3-4 are "
+              "where the judge and labels enter.", "",
+              "| | " + " | ".join(hnames.get(x, x) for x in hv) + " |",
+              "|---|" + "---:|" * len(hv),
+              _hrow("**1. FVE**", "fve", lambda x: f"{x:+.3f}"),
+              _hrow("**2. latents recovered** (SAE vs SAE, no text)",
+                    "recon_overlap", lambda x: f"{x:.1%}"),
+              _hrow("**3. grounded, of labeled** F-orig latents",
+                    "grounded_of_labeled", lambda x: f"{x:.1%}"),
+              _hrow("**4. grounded, of ALL** F-orig latents (conservative)",
+                    "grounded_of_all", lambda x: f"{x:.1%}"),
+              "",
+              f"- row 3 denominator: {hrows['grounded_of_labeled']['full']['n']:,} "
+              "labeled F-orig latents. Row 4 denominator: "
+              f"{hrows['grounded_of_all']['full']['n_total']:,} -- every F-orig "
+              "latent, whether or not it could be labeled and checked. Row 4 < "
+              "row 3 by construction: same numerator, larger denominator.",
+              "- rows 1-2 and rows 3-4 come from independent measurements: raw "
+              "SAE-latent overlap with no text or judge involved (1-2), versus "
+              "an LLM judge reading text against labelled latents (3-4). If "
+              "`final_only` tracks `full` on both, two independent signals agree "
+              "on where the content is.",
+              "", ""]
+
+    L += [
          "## 1. Reconstruction (SAE: l0_big)", "",
          "| | FVE | implied cosine |", "|---|---:|---:|"]
     names = {"A_sae_orig_vs_orig": "A  SAE vs original",
@@ -1219,6 +1328,9 @@ def main() -> None:
         "fve_vs_grounding": fve_vs_grounding(ov, gr, variants),
         "distance_sweep": distance_sweep(ov, sm, bg),
     }
+    # Reads the ablation dict just built above -- no second pass over raw files.
+    summary["headline_table"] = (headline_table(summary["ablation"])
+                                  if summary["ablation"] else None)
 
     out = Path(a.out) if a.out else d / "summary.json"
     out.write_text(json.dumps(summary, indent=2))
