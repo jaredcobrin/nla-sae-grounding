@@ -165,44 +165,19 @@ One command: corpus → round trip → SAE → labelling → judging → every n
 bash scripts/run_experiment.sh          # ~5h, mostly corpus generation
 ```
 
-**One activation per conversation, one explanation per activation.** `N_DOCS`
-(default 200) is therefore both the number of Gemma conversations generated and
-the number of *independent* samples the statistics get — nothing is nested
-inside anything else. Two activations from one response share nearly all their
-context, and two explanations of one activation turn out to be ~97% the same
-measurement (ICC 0.97 on FVE; the decomposition is in `scripts/run_experiment.sh`
-under `RUNS`). Either kind of nesting inflates the row count while narrowing
-every confidence interval.
-
-The default of 200 comes from a power calculation, not taste: at the effect size
-measured in an earlier run, ~112 independent activations are the minimum before
-§3's comparison can be called either way, and 200 leaves margin for activations
-that drop out of a bucket comparison by having no latents in one of the buckets.
-`N_DOCS=50` runs in ~1.5h but is very likely to come back inconclusive.
+`N_DOCS` (default 200) sets the number of conversations, one activation and one
+explanation each:
 
 ```bash
 N_DOCS=50 bash scripts/run_experiment.sh     # faster, underpowered
 ```
 
-**Where the conversations come from.** By default they are sampled from Gemma
-Scope's own corpus — the `tokens` array inside the `examples.safetensors` the
-setup step already downloads, holding 236,783 finished Gemma chats. It is the
-same corpus the SAE's published feature exemplars point into, so it is Gemma
-Scope's actual data rather than our reconstruction of their recipe, and the text
-is identical for anyone re-running.
-
-The alternative regenerates that corpus locally — sampling oasst1 + LMSYS
-prompts and having Gemma write each response — which is ~400 decode steps per
-conversation and adds roughly three hours:
+`ARM=rollout` regenerates the corpus with Gemma instead of sampling Gemma
+Scope's shipped one — slower, and writes a separately named parquet:
 
 ```bash
-ARM=rollout bash scripts/run_experiment.sh   # regenerate instead of sampling
+ARM=rollout bash scripts/run_experiment.sh
 ```
-
-Both write a parquet named for the arm, so switching cannot silently reuse the
-other one's activations. `METHODOLOGY.md` §2 records the one caveat: the shipped
-corpus may be in-sample for the SAE, which makes finding 1 harder to win rather
-than easier.
 
 Results land in `results/`:
 
@@ -252,62 +227,17 @@ python trust_tool/trust_report.py --parquet acts.parquet --av $AV --ar $AR --n 5
 
 ### What each turn reports
 
-**1. The AV's explanation** — what the NLA says that activation contained.
+1. the AV's explanation
+2. three latent buckets — **SHARED** (in the original and the reconstruction),
+   **LOST** (in the original only), **MADE** (in the reconstruction only) — each
+   with every latent that has a validated label
+3. all four reconstruction comparisons (A–D), FVE and cosine
+4. whether the explanation's text actually states each latent — `CLEARLY` /
+   `PROBABLY` / `UNCLEAR` / `NO`
 
-**2. Three latent buckets**, each with its total and every latent that has a
-validated label:
-
-| | |
-|---|---|
-| **SHARED** | in the original activation **and** in the AR's reconstruction — the round trip kept these |
-| **LOST** | in the original, **not** in the reconstruction |
-| **MADE** | in the reconstruction only, not found in the original |
-
-Set operations on SAE latent sets — `F_orig ∩ F_ar`, `F_orig \ F_ar`,
-`F_ar \ F_orig`. **The explanation is never read** for these; it enters only
-through the AR's reconstruction of it. **`MADE` means *not checked*, never
-*false*** — a latent lands there when the SAE did not find it in the activation,
-which can mean it is absent, or that the SAE cannot see it there.
-
-**3. All four reconstruction comparisons** (A–D), as FVE and cosine. FVE uses the
-corpus `rawvar` (0.0279) — a property of the activation distribution, which one
-turn cannot produce, so it is borrowed and the page says so.
-
-**4. Does the explanation actually say it?** Every latent genuinely in the
-activation, put to the graded matcher — `CLEARLY` / `PROBABLY` / `UNCLEAR` / `NO`.
-**The only model judgement on the page.** Its prompt was chosen by a measured
-bake-off: a 4.6% false-positive rate, against 78.3% for the plain yes/no wording
-it replaced.
-
-Sections 2 and 4 answer different questions, and the gap between them is the
-point: **58% of SHARED latents are never stated in the explanation** — the AR
-reconstructs them from context. A latent marked SHARED but `NO` survived on the
-AR's inference, not on anything the AV wrote.
-
-### Where the activation comes from
-
-**The last token of your message** — the end of the conversation as it stands just
-before Gemma starts generating. So the report answers: *what was the model
-representing when it had finished reading you?*
-
-On turn 3 that activation encodes turns 1 and 2, because the whole conversation is
-re-fed each time. Nothing is truncated: an activation already encodes every token
-before it, so a conversation simply runs until the context window fills.
-
-### Why you converse instead of pasting text
-
-The Gemma Scope 2 SAEs are fine-tuned on chat whose assistant turns were
-**generated by Gemma itself** — from their paper, *"we take open-source datasets
-of user prompts and generate responses from the corresponding Gemma models."*
-Pasted text is off that distribution: on FineWeb this same pipeline measured a
-**7-point** effect where these rollouts gave **25**. Having Gemma write the
-conversation keeps the input in-distribution. You still choose the subject.
-
-**Two caveats.** The position is a turn boundary, where the experiment samples
-*inside* a generated response — same "activation at the end of this context"
-structure, different region, and the numbers above were not measured at turn
-boundaries. And past turn 2 you are in a multi-turn context shape the experiment
-never covered.
+The activation is taken at the **last token of your message**, before Gemma
+starts generating — so the report answers what the model was representing when
+it had finished reading you.
 
 ---
 
