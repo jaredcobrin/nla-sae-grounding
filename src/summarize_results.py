@@ -63,6 +63,53 @@ def mean_ci(xs: list[float], z: float = 1.96) -> dict:
     }
 
 
+def _pearson(xs: list[float], ys: list[float]) -> float | None:
+    n = len(xs)
+    if n < 3:
+        return None
+    mx, my = st.mean(xs), st.mean(ys)
+    num = sum((a - mx) * (b - my) for a, b in zip(xs, ys))
+    den = math.sqrt(sum((a - mx) ** 2 for a in xs) * sum((b - my) ** 2 for b in ys))
+    return num / den if den else None
+
+
+def _ranks(v: list[float]) -> list[float]:
+    """Average ranks, so ties do not distort Spearman."""
+    order = sorted(range(len(v)), key=lambda i: v[i])
+    out = [0.0] * len(v)
+    i = 0
+    while i < len(order):
+        j = i
+        while j + 1 < len(order) and v[order[j + 1]] == v[order[i]]:
+            j += 1
+        avg = (i + j) / 2
+        for k in range(i, j + 1):
+            out[order[k]] = avg
+        i = j + 1
+    return out
+
+
+def corr(xs: list[float], ys: list[float]) -> dict:
+    """Pearson + Spearman with a Fisher-z 95% CI on r.
+
+    The CI is the point of this: with n around 200, |r| below about 0.14 cannot
+    be told from zero, so a near-zero r must be reported as "no correlation
+    DETECTABLE at this n", never as "no correlation".
+    """
+    n = len(xs)
+    r = _pearson(xs, ys)
+    out = {"n": n, "pearson": r, "spearman": _pearson(_ranks(xs), _ranks(ys))}
+    if r is not None and n > 3 and abs(r) < 1:
+        z = 0.5 * math.log((1 + r) / (1 - r))
+        se = 1 / math.sqrt(n - 3)
+        lo, hi = z - 1.96 * se, z + 1.96 * se
+        out["ci_low"] = math.tanh(lo)
+        out["ci_high"] = math.tanh(hi)
+        out["detectable_floor"] = math.tanh(1.96 * se)
+        out["significant"] = bool(out["ci_low"] > 0 or out["ci_high"] < 0)
+    return out
+
+
 def two_prop_z(k1: int, n1: int, k2: int, n2: int) -> float | None:
     """Pooled two-proportion z. Reported ONLY to show how much pooling inflates."""
     if not n1 or not n2:
@@ -534,6 +581,53 @@ def ablation(ov: dict, sm: dict, bg: dict, gr: dict, fpr: float,
     return out
 
 
+def fve_vs_grounding(ov: dict, gr: dict, variants: list[str],
+                     min_latents: int = 3) -> dict | None:
+    """Does a better reconstruction mean a better-GROUNDED explanation?
+
+    loops (LessWrong, 15 May 2026, "Some observations about NLA explanations")
+    showed on this same checkpoint that cutting the final paragraph costs far
+    more reconstruction error than cutting the first two. That is a statement
+    about FVE. It leaves open whether FVE tracks what the explanation actually
+    says about the activation, which is what this measures.
+
+    Two levels, and they can disagree:
+
+      * BETWEEN variants -- does the part of the text with more FVE also carry
+        more grounded content? (reported by ablation(), above)
+      * BETWEEN activations -- within one variant, is an activation the AR
+        rebuilds well also one whose latents the explanation names?
+
+    The second is the sharper test and the one FVE would need to pass to be
+    usable as a proxy for grounding. Activations with fewer than `min_latents`
+    judged latents are dropped: a rate over one or two latents is mostly noise.
+    """
+    fve = {(r["act"], r.get("variant", "full")): r["fve_B"] for r in ov["runs"]}
+    num: dict = {}
+    den: dict = {}
+    for r in gr["rows"]:
+        # F_orig only -- shared + lost is what was genuinely in the activation.
+        # `made` was not, so it cannot speak to grounding.
+        if r["bucket"] not in ("shared", "lost"):
+            continue
+        if r["verdict"] not in ("present", "not_present"):
+            continue          # `unknown` = the measurement refused itself
+        k = (r["act"], r.get("variant", "full"))
+        den[k] = den.get(k, 0) + 1
+        num[k] = num.get(k, 0) + (r["verdict"] == "present")
+
+    out: dict = {"min_latents": min_latents, "by_variant": {}}
+    for v in variants:
+        ks = [k for k in den if k[1] == v and den[k] >= min_latents and k in fve]
+        if len(ks) < 3:
+            continue
+        c = corr([fve[k] for k in ks], [num[k] / den[k] for k in ks])
+        c["n_activations_dropped"] = sum(
+            1 for k in den if k[1] == v and den[k] < min_latents)
+        out["by_variant"][v] = c
+    return out or None
+
+
 def distance_sweep(ov: dict, sm: dict, bg: dict) -> dict | None:
     """Section 7: is the latent match specific to THIS token?
 
@@ -824,6 +918,37 @@ def render_md(s: dict) -> str:
                   "variant is unaffected. Use `rate_union` for anything "
                   "cross-variant.", ""]
 
+    fg = s.get("fve_vs_grounding")
+    if fg and fg.get("by_variant"):
+        L += ["", "## 6b. Does FVE predict grounding?", "",
+              "loops (LessWrong, 15 May 2026) showed on this checkpoint that "
+              "cutting the final paragraph costs far more reconstruction error "
+              "than cutting the first two. That is about FVE. This asks whether "
+              "FVE tracks what the explanation actually says about the "
+              "activation.", "",
+              "Per activation, within one variant: does a higher FVE go with a "
+              "higher share of that activation's own latents being named?", "",
+              "| variant | n | Pearson r | 95% CI | Spearman | detectable? |",
+              "|---|---:|---:|---|---:|---|"]
+        for v, c in fg["by_variant"].items():
+            ci = (f"{_fmt(c.get('ci_low'), '{:+.3f}')} to "
+                  f"{_fmt(c.get('ci_high'), '{:+.3f}')}")
+            L.append(f"| `{v}` | {c['n']} | {_fmt(c.get('pearson'), '{:+.3f}')} | "
+                     f"{ci} | {_fmt(c.get('spearman'), '{:+.3f}')} | "
+                     f"{'**yes**' if c.get('significant') else 'no'} |")
+        floors = [c.get("detectable_floor") for c in fg["by_variant"].values()
+                  if c.get("detectable_floor")]
+        L += ["",
+              f"- activations with fewer than {fg['min_latents']} judged latents "
+              "are dropped -- a rate over one or two latents is mostly noise",
+              (f"- at this n, |r| below about {max(floors):.2f} cannot be "
+               "distinguished from zero. A near-zero row means **no correlation "
+               "detectable at this n**, not that none exists."
+               if floors else ""),
+              "- this is the between-ACTIVATION question. The between-VARIANT "
+              "one -- does the part of the text with more FVE carry more "
+              "grounded content -- is section 6 above."]
+
     ab = s.get("ablation")
     if ab:
         L += ["", "## 6. Paragraph ablation — which part of the explanation carries it", "",
@@ -1090,6 +1215,8 @@ def main() -> None:
         # The paragraph ablation: every section above, recomputed per variant.
         "ablation": (ablation(ov, sm, bg, gr, fpr, variants)
                      if has_ablation else None),
+        # Does FVE predict grounding? Between variants AND between activations.
+        "fve_vs_grounding": fve_vs_grounding(ov, gr, variants),
         "distance_sweep": distance_sweep(ov, sm, bg),
     }
 

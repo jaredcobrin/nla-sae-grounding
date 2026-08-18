@@ -1200,6 +1200,41 @@
       }
     }
   },
+  "fve_vs_grounding": {
+    "min_latents": 3,
+    "by_variant": {
+      "full": {
+        "n": 188,
+        "pearson": -0.014311326966520257,
+        "spearman": -0.05639395583676603,
+        "ci_low": -0.15710239599972547,
+        "ci_high": 0.1290658531556086,
+        "detectable_floor": 0.14311283588422274,
+        "significant": false,
+        "n_activations_dropped": 9
+      },
+      "no_final": {
+        "n": 191,
+        "pearson": -0.08172388855450499,
+        "spearman": -0.11343642169124084,
+        "ci_low": -0.22113985167005148,
+        "ci_high": 0.06096543086870719,
+        "detectable_floor": 0.14198191835688787,
+        "significant": false,
+        "n_activations_dropped": 6
+      },
+      "final_only": {
+        "n": 189,
+        "pearson": 0.06836409715811971,
+        "spearman": 0.04378755436557545,
+        "ci_low": -0.0751015956082142,
+        "ci_high": 0.20905702592439626,
+        "detectable_floor": 0.14273286615165587,
+        "significant": false,
+        "n_activations_dropped": 8
+      }
+    }
+  },
   "distance_sweep": {
     "offsets": [
       -50,
