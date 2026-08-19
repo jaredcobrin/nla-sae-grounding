@@ -6,3 +6,6 @@ __pycache__/
 .DS_Store
 my_reports/
 _artifacts200/
+
+# AI-assistant working notes -- not project content
+CLAUDE.md
