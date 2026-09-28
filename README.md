@@ -61,7 +61,7 @@ explanation actually names (r ≈ 0, n ≈ 190, see [RESULTS.md](RESULTS.md)). F
 predicts *where* the content is, not *which activations* got it right.
 
 The first two paragraphs carry comparatively little: 39% of the FVE and well
-under half of the grounded content, from over half the tokens. If that holds
+under half of the grounded content, from 44% of the tokens. If that holds
 beyond this checkpoint, it points at the training data — the warm-start format
 that produces this three-part shape asks for a document description the
 activation apparently does not encode as well as the final-token analysis does.

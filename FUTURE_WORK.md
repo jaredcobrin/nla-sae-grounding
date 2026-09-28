@@ -7,7 +7,7 @@ Three directions.
 ## 1. Restructure the pretraining format
 
 The first two paragraphs carry 39% of the round trip's FVE and under half its
-grounded content, from over half the tokens ([RESULTS.md](RESULTS.md)). The
+grounded content, from 44% of the tokens ([RESULTS.md](RESULTS.md)). The
 warm-start data asks the AV for a three-part shape — document type, subject,
 final token.
 
