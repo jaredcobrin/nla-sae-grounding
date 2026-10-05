@@ -1,3 +1,5 @@
+**Write-up:** [NLA_SAE_Evaluation_Write_Up.pdf](NLA_SAE_Evaluation_Write_Up.pdf) (Jared Cobrin, September 2026)
+
 # Does the AV's final paragraph carry more meaning, or just reconstruct better?
 
 A natural language autoencoder (NLA) reads one activation out of a language
