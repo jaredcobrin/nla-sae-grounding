@@ -28,7 +28,7 @@
 # the corpus if the parquet exists.
 #
 # The last stage writes results/summary.json and results/SUMMARY.md, which
-# contain every number quoted in RESULTS.md. Nothing else needs to be computed
+# contain every number quoted in the write-up. Nothing else needs to be computed
 # by hand -- that is how four errors reached an earlier write-up.
 set -euo pipefail
 
@@ -95,7 +95,7 @@ export PYTORCH_CUDA_ALLOC_CONF="${PYTORCH_CUDA_ALLOC_CONF:-expandable_segments:T
 # new and part stale, with nothing anywhere saying so.
 #
 # So anything already present is moved aside before stage 1. Moved, not deleted:
-# the previous run's numbers are what RESULTS.md currently quotes.
+# the previous run's numbers are what the write-up currently quotes.
 _prev=$(ls "$OUT"/feature_overlap*.json "$OUT"/grounding.json \
              "$OUT"/feature_labels.json "$OUT"/summary.json \
              "$OUT"/SUMMARY.md "$OUT"/per_example.csv \

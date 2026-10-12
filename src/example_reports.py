@@ -186,7 +186,7 @@ def main() -> None:
                      f"| {conv}… |")
 
     index += ["", "Column meanings and the verdict vocabulary are in each "
-                  "report. `RESULTS.md` has the aggregate numbers; these are "
+                  "report. the write-up has the aggregate numbers; these are "
                   "here so the aggregates can be spot-checked against "
                   "individual cases."]
     (out / "README.md").write_text("\n".join(index) + "\n")

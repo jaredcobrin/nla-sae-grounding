@@ -12,7 +12,7 @@ are the point, not decoration.
 | 4 | `label_features.py` | auto-interp: 3 candidates, held-out scoring, wrong-label null | yes |
 | 5 | `judge_explanations.py` | per latent, does the explanation cover it? Graded, against two nulls. Judges the two **segments** and derives `full` as their union, so coverage is monotonic | yes |
 | — | `example_reports.py` | six single activations written out end to end, from the committed artefacts. No model, no GPU | no |
-| 6 | `summarize_results.py` | **every number in `RESULTS.md`** → `summary.json` + `SUMMARY.md`, each section per variant | no |
+| 6 | `summarize_results.py` | **every number in the write-up** → `summary.json` + `SUMMARY.md`, each section per variant | no |
 | — | `explanation_parts.py` | splits an explanation into `full` / `no_final` / `final_only`. Anchored on the paragraph naming the final token — 200/200 on this run | no |
 
 **The tool lives in [`../trust_tool/`](../trust_tool/)** — a chat window that
@@ -52,7 +52,7 @@ against 0.76 for properly sampled rows.
   seeds until mean FVE landed in a band — selection on the very quantity being
   reported. It is now a one-shot health check that warns and continues. The
   shipped `results/feature_overlap.json` predates that change and its `gate_log`
-  really is a gate log; [`RESULTS.md`](../RESULTS.md) lists it as a limitation.
+  really is a gate log; the [write-up](../NLA_SAE_Evaluation_Write_Up.pdf) lists it as a limitation.
 - **One activation per conversation.** Two positions in one Gemma response share
   nearly all their context and are one cluster, not two samples. `load_vectors`
   takes at most one row per `doc_id`, and `SUMMARY.md` prints the conversation

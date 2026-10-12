@@ -7,7 +7,7 @@ with that one command.
 
 | file | |
 |---|---|
-| **`SUMMARY.md`** | **every number quoted in [RESULTS.md](../RESULTS.md)**, as tables, starting with the headline table in section 0 |
+| **`SUMMARY.md`** | **every number in the [write-up](../NLA_SAE_Evaluation_Write_Up.pdf)**, as tables, starting with the headline table in section 0 |
 | `summary.json` | the same, machine-readable |
 | `example_reports/` | six single activations followed end to end — the aggregates spot-checked against individual cases |
 | `per_example.csv` | one row per (activation, explanation, variant): FVE *and* cosine for all four comparisons, latent counts, Jaccard and its control, token counts, CJK/untagged flags |
@@ -36,6 +36,6 @@ activations. The corpus parquet (7.8 MB) holds the activations and source text.
 Both are excluded by `.gitignore` as binary artefacts;
 `scripts/run_experiment.sh` regenerates them.
 
-The `.npz` is what [FUTURE_WORK.md](../FUTURE_WORK.md) needs: `v_orig_sae` lets
+The `.npz` is what the follow-up experiments in the [write-up](../NLA_SAE_Evaluation_Write_Up.pdf) needs: `v_orig_sae` lets
 the SAE's own reconstruction error be subtracted out, so an effect can be
 attributed to the AR rather than confounded with SAE lossiness.
