@@ -86,8 +86,7 @@ python -c "from huggingface_hub import snapshot_download as d; \
 bash scripts/run_experiment.sh    # ~5h, mostly corpus generation
 ```
 
-Every number comes out in `results/SUMMARY.md`. The steps are in
-[METHODOLOGY.md](METHODOLOGY.md) and the individual stages in
+Every number comes out in `results/SUMMARY.md`. The individual stages are in
 [src/README.md](src/README.md). `trust_tool/` is a small chat app that shows the
 same checks on each turn of a conversation.
 

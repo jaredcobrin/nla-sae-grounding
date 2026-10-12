@@ -23,7 +23,7 @@ WHAT IT WRITES
 STATISTICAL CHOICES, MADE ONCE HERE
   * bucket comparisons are computed PER ACTIVATION and then compared across
     activations (paired t over ~50 numbers), never pooled over pairs. Pairs from
-    one activation are not independent draws -- see METHODOLOGY.md section 5.
+    one activation are not independent draws.
   * conveyance rates are corrected for the judge's measured false-positive rate
     as (p - fpr) / (1 - fpr), which always LOWERS the figure.
   * no test is run on the two SAE rows: they are the same pairs read twice.

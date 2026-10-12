@@ -172,7 +172,7 @@ def saecorpus_docs(n: int, seed: int, tok,
     whether the SAE was trained on it. If it was, the SAE's own reconstruction
     score here is in-sample and flattering to the SAE -- which makes the "NLA
     round trip beats the SAE" comparison HARDER to win, not easier, so the
-    direction is safe. See METHODOLOGY.
+    direction is safe.
 
     Works on token IDs throughout rather than decoding to text and re-applying
     the chat template: these are the exact tokens the SAE saw, and a

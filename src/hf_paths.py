@@ -23,7 +23,7 @@ REPO = "google/gemma-scope-2-12b-it"
 _REPO_DIR = "models--google--gemma-scope-2-12b-it"
 
 # Sparsity variants for layer 32, width 16k. Both are used, for different
-# questions -- see METHODOLOGY.md section 3.
+# questions: l0_small for labelling, l0_big for reconstruction.
 L0_SMALL = "layer_32_width_16k_l0_small"   # ~21 active features: labelable
 L0_BIG = "layer_32_width_16k_l0_big"       # ~120 active: strongest reconstruction
 
