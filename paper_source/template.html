@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Evaluating the Legitimacy of Natural Language Autoencoder Explanations Using Sparse Autoencoders</title>
+<style>
+@page{size:Letter;margin:.75in .95in .8in .95in;@bottom-center{content:counter(page);font-size:9pt;color:#555}}
+body{font-family:'Old Standard TT','Times New Roman',Times,serif;font-size:10pt;line-height:1.22;color:#000;margin:0}
+a{color:#000;text-decoration:none}
+h1.title{font-size:19pt;text-align:center;margin:0 0 8pt;line-height:1.15;border-top:3pt solid #000;padding-top:10pt}
+.authors{text-align:center;margin:6pt 0 2pt;font-size:10.5pt}
+.with{text-align:center;margin:4pt 0;font-size:9.5pt;color:#222}
+.rule{border:0;border-top:1pt solid #000;border-bottom:1pt solid #000;height:3pt;margin:8pt 0 10pt}
+h3.abs{text-align:center;font-size:13pt;margin:6pt 0}
+.abstract{margin:0 24pt 10pt;text-align:justify;font-size:10pt;line-height:1.24}
+h2{font-size:13.5pt;margin:13pt 0 4pt;page-break-after:avoid}
+h3{font-size:11pt;margin:9pt 0 3pt;page-break-after:avoid}
+p{margin:0 0 5pt;text-align:justify}
+ul{margin:2pt 0 5pt;padding-left:18pt}
+li{margin-bottom:2pt;text-align:justify}
+figure{margin:6pt 0;page-break-inside:avoid;text-align:center}
+figure svg{display:block;margin:4pt auto;width:100%;height:auto}
+figure.narrow svg{width:66%}
+figure.wide svg{width:82%}
+figcaption{font-size:8.6pt;text-align:justify;margin:2pt 18pt 0;line-height:1.2}
+.pair{display:flex;gap:14px}.pair>div{flex:1}
+.ex{display:flex;gap:10px;align-items:stretch;font:8.6pt/1.35 'Times New Roman',Times,serif;text-align:left}
+.ex .col{flex:1;display:flex;flex-direction:column}
+.ex .para{border-radius:4px;padding:6px 9px;margin-bottom:5px;position:relative}
+.ex .para.a{background:#fdf0ec}.ex .para.b{background:#edf2fa}
+.ex .n{position:absolute;left:-12px;top:6px;color:#888;font-size:7.5pt}
+.ex .full{width:7px;border:2px solid #8f8f87;border-left:0}
+table{border-collapse:collapse;margin:4pt auto 5pt;font-size:8.4pt;line-height:1.18;width:78%;page-break-inside:avoid}
+td{padding:2pt 6pt;border-top:.6pt solid #888;border-bottom:.6pt solid #888;text-align:left}
+td.v{text-align:right;font-weight:700;white-space:nowrap}
+tr.grp td{background:#f1f1f1;border-top:1.2pt solid #000;font-weight:700}
+tr.last td{border-bottom:1.2pt solid #000}
+.refs{font-size:9pt;line-height:1.2}
+.refs p{padding-left:16pt;text-indent:-16pt;margin-bottom:3pt;text-align:left;overflow-wrap:anywhere}
+.nobreak{break-inside:avoid}
+</style>
+</head>
+<body>
+
+<h1 class="title">Evaluating the Legitimacy of Natural Language Autoencoder Explanations Using Sparse Autoencoders</h1>
+<div class="authors"><b>Jared Cobrin</b><br>Independent</div>
+<div class="with">September 2026 &nbsp;·&nbsp; Code: github.com/jaredcobrin/nla-sae-grounding</div>
+<div class="rule"></div>
+
+<h3 class="abs">Abstract</h3>
+<div class="abstract">
+Natural Language Autoencoders (Fraser-Taliente et al., 2026) take in an activation, produce an explanation (thoughts) for it through the AV (activation verbalizer), and then rebuild that activation using the AR (activation reconstructor). It was found by loops (2026) that reconstruction error increases significantly when the final paragraph of the NLA explanation is ablated. Reconstruction, however, is not a good measure of how grounded the text is to the activation. To test groundedness, I split a set of 200 explanations, run through the AV, into three variants (the first two paragraphs, the final paragraph, and the full explanation) and did two tests using an SAE (sparse autoencoder): The first test checked how many of the original activation’s SAE latents were recovered by each variant's reconstruction, and the second test labeled these latents and had an LLM judge check which of these features were stated in each of the variant’s texts. The final paragraph had an FVE close to the full explanation (0.58 vs 0.69). Their reconstruction recovered 59% and 70% respectively of the original activation’s SAE latents, and the second test showed 42% and 43% of features found in the text respectively. The first two paragraphs had an FVE of 0.27, 30% of latents, and 20% of features. This shows the final paragraph contains a significant amount of grounded content and the first two paragraphs seem to have very little grounded content despite being 44% the length of the text of the full explanation. Across individual explanations, however, FVE does not predict groundedness: among the 188 full explanations with enough judged features, the correlation between an explanation's FVE and the share of its activation's features it states is r = -0.01 (95% CI -0.16 to 0.13). Explanations in the top quartile of FVE (mean 0.87) state 43% of their activation's features, the same as those in the bottom quartile (mean 0.42, 43%). FVE therefore cannot be used to tell how grounded any one explanation is. The bulk of these findings heavily relies on the assumption that NLAs and SAEs find a different structure.
+</div>
+
+<h2>1. Motivation</h2>
+<p>Natural Language Autoencoders (Fraser-Taliente et al., 2026) is an Automated Interpretability method, which attempts to turn raw activations into the model’s thoughts. It is done by extracting the Gemma-3-12B-IT activations at layer 32, running that activation through the AV (Activation Verbalizer), which produces the “explanation”. That explanation is then run through the AR (Activation Reconstructor) which attempts to reconstruct the original extracted activation. The two models are first warm-started. RL is performed on the AV where it is rewarded based on the AR reconstructions. NLAs have been used internally by Anthropic to evaluate behaviour of their models. They used them to find evaluation awareness in evaluation transcripts, even though the model rarely stated it. Since NLAs are being used currently, we ought to figure out how much their explanations reflect their activations.</p>
+
+<h2>2. Research Question</h2>
+<p>loops (2026) found that removing the final paragraph of an NLA explanation raised reconstruction error far more than removing either earlier paragraph. However, reconstruction error does not measure whether the paragraph is true to the activation. michaelzhang and TurnTrout (2026) trained an NLA starting from implausible explanations, and it reached nearly the same FVE as a normally trained one, while 99.3% of its statements remained implausible. The NLA authors also report that writing quality declines steadily over training even while reconstruction improves (Fraser-Taliente et al., 2026). I would like to test how true the final paragraph, full explanation and the first two paragraphs of the explanation are to the activation. I test this in two independent ways. First, without reading any text: I check how many of the original activation's SAE latents survive in each variant's reconstruction. Second, without using the AR: an LLM judge checks how many of the original activation’s SAE labeled latents (features) each variant's (First two paragraphs, final paragraph, full explanation) text states. If the final paragraph's high FVE reflects real content, it should keep a similar share of the full explanation's content on both tests as it does on FVE. I also ask a second question, which matters more for how NLAs are used: across different explanations, does a higher FVE go with a more grounded explanation? If FVE tracked groundedness, a good reconstruction would be a reason to trust an explanation; Section 4 tests this directly.</p>
+
+<h2>3. Experimental Setup</h2>
+<p>First, I recreated the NLA experiment setup, using their original repo <a href="https://github.com/kitft/natural_language_autoencoders">github.com/kitft/natural_language_autoencoders</a>. For data to feed into activations and SAE, I used Gemma Scope 2’s example corpus (McDougall et al., 2025). Because the SAE was trained on oasst1 and LMSYS-Chat-1M (McDougall et al., 2025), with Gemma-written responses, and the NLA on WildChat-1M and Ultra-FineWeb (kitft, 2026), Gemma Scope 2’s example corpus was a good middle ground for the two. Then I extracted the activations at layer 32 of Gemma-3-12B-IT. I ran those activations through the AV. The AV writes each explanation in the same three-part structure (loops, 2026), and the final paragraph always begins with "Final token." I cut each explanation once at that point, which worked for all 200 explanations, giving three variants: the full explanation, the first two paragraphs, and the final paragraph (Figure 1). Each variant was run through the AR, and their corresponding reconstruction vectors were recorded.</p>
+
+<figure>
+<div class="ex">
+  <div class="col grp">
+    <div class="para a"><span class="n">1</span>Narrative structure: a classic story setup requiring a structured retelling, with "She wasn't thinking 'girl' exactly" establishing the framing.</div>
+    <div class="para a"><span class="n">2</span>The phrase "He wasn't thinking 'girl,' exactly" signals a careful distinction or negation about the identity, setting up a nuanced emotional realization.</div>
+    <div class="para b"><span class="n">3</span>Final token "exactly" ends a negation clause ("not exactly...not exactly like a girl, exactly"), demanding a contrast — "but he didn't know," or "–but the feeling was different." or "—a thought he couldn't name." or "(but that's not the word)." or "–but something different."</div>
+  </div>
+  <div style="display:flex;flex-direction:column;width:7px;gap:6px;margin-top:0">
+    <div style="flex:2;border:2px solid #e8632f;border-left:0"></div>
+    <div style="flex:1;border:2px solid #2f74d0;border-left:0"></div>
+  </div>
+  <div style="display:flex;flex-direction:column;width:88px;gap:6px">
+    <div style="flex:2;display:flex;align-items:center;font-weight:700;font-size:9pt;color:#e8632f;line-height:1.2">First two paragraphs</div>
+    <div style="flex:1;display:flex;align-items:center;font-weight:700;font-size:9pt;color:#2f74d0;line-height:1.2">Final paragraph</div>
+  </div>
+  <div class="full"></div>
+  <div style="width:74px;display:flex;align-items:center;padding-left:4px;font-weight:700;font-size:9pt;color:#8f8f87;line-height:1.2">Full explanation</div>
+</div>
+<figcaption><b>Figure 1.</b> One AV explanation, cut into the three variants used throughout.</figcaption>
+</figure>
+
+<p>The full explanation reconstructs the original activation with a mean FVE of 0.69. The final paragraph alone reaches 0.58 (84% of the full explanation), while the first two paragraphs reach 0.27 (39%). The final paragraph is only slightly longer than the first two paragraphs (73 vs. 59 tokens) but reaches more than twice their FVE, so length alone does not explain the difference (Figure 2).</p>
+
+<figure>
+{{FIG2}}
+<figcaption><b>Figure 2.</b> (A) Mean length of each variant in tokens. (B) How well the AR reconstructs the original activation from each variant, measured as FVE (fraction of variance explained; 1 is perfect, 0 is no better than the mean activation). n = 200 activations.</figcaption>
+</figure>
+
+<h3>3.1 Test 1: Latent Recovery</h3>
+<p>I encoded the original activation and each variant's reconstruction with the SAE. An original activation’s latent counts as recovered if it is still active in the reconstruction. This test uses no text and no judge. I used the Gemma Scope 2 SAE (McDougall et al., 2025) for layer 32. Gemma Scope 2 offers two sparsity levels for this layer: l0_big where about 120 latents fire per token, and l0_small, where about 21 do. I proceeded with the sparser l0_small, as its latents could be much more reliably labeled.</p>
+<p>The final paragraph was able to recover 59% of the original latents, 11 percentage points lower than the amount recovered by the full explanation at 70%. The first two paragraphs recover 30% (Figure 3).</p>
+
+<figure class="narrow">
+{{FIG3}}
+<figcaption><b>Figure 3.</b> For each variant, the share of SAE latents active in the original activation that are still active in the AR's reconstruction. No text or judge is involved. n = 200 activations.</figcaption>
+</figure>
+
+<h3>3.2 Test 2: Grounded Features</h3>
+<p>This test involved labeling the latents (turning them into features), and judging whether those latents are stated in each variant’s text, without using the AR. Using an auto interp method (Bills et al., 2023; Paulo et al., 2025), I labeled each original activation’s latent with a short description. Gemma-3-12B-IT was shown 40 passages from the Gemma Scope 2 example corpus where it fired most strongly, and wrote three candidate labels. The best candidate was picked on held-out examples, then graded on a 32-item test, 16 positions where it fired, and 16 random positions. A label passed if its AUC (a measure of how well the label tells them apart: 0.5 is chance) was at least 0.756. Of the 3,328 labeled latents, 1,771 passed, with a mean AUC of 0.88 against 0.48 for wrong labels.</p>
+
+<p>Using Gemma-3-12B-IT as a judge, each feature from the original activation was judged against each variant, and the judge was asked whether the text describes the concept in the feature. For each feature, I also ran two baseline checks. 1. The real explanation was judged against three features that did not fire in that activation. The judge found these stated only 4.6% of the time (Figure 4), so this is the baseline the real results are compared against. 2. The real feature was judged against three unrelated explanations, which catches features generic enough to match anything.</p>
+
+<figure class="nobreak">
+<table>
+  <tr class="grp"><td colspan="2">Latent labels</td></tr>
+  <tr class="row"><td>Latents labeled</td><td class="v">3,328</td></tr>
+  <tr class="row"><td>Labels that passed validation (features)</td><td class="v">1,771 &nbsp;(53%)</td></tr>
+  <tr class="row"><td>Mean AUC, validated labels</td><td class="v">0.88</td></tr>
+  <tr class="row"><td>Mean AUC, all labels</td><td class="v">0.75</td></tr>
+  <tr class="row"><td>Mean AUC, wrong labels</td><td class="v">0.48</td></tr>
+  <tr class="grp"><td colspan="2" style="border-top:0">LLM judge baseline</td></tr>
+  <tr class="row last"><td>Features stated that did not fire</td><td class="v">4.6%</td></tr>
+</table>
+<figcaption><b>Figure 4.</b> Quality of the latent labels and the LLM judge. A label passes validation if its AUC is at least 0.756, the 95th percentile of scores given to deliberately wrong labels; AUC of 0.5 is chance. (A latent with a validated label is called a feature.) The baseline is how often the judge finds a feature stated when that feature did not fire in the activation.</figcaption>
+</figure>
+
+<p>The judge found 43% of the original's features stated in the full explanation, 42% in the final paragraph, and only 20% in the first two paragraphs, all well above the 4.6% baseline (Figure 5).</p>
+
+<figure class="narrow">
+{{FIG5}}
+<figcaption><b>Figure 5.</b> For each variant, the share of the original activation's features that the LLM judge finds stated in the text. The full explanation counts a feature as stated if either part states it. Dashed line: how often the judge finds a feature stated when that feature did not fire in the activation (4.6%). n = 200 activations.</figcaption>
+</figure>
+
+<h2>4. FVE Does Not Predict Grounding Across Explanations</h2>
+<p>The results above compare the three variants of the same explanation, and there the variant with more FVE also carries more grounded content. That is a different claim from FVE telling us how grounded an individual explanation is. FVE is the score the NLA is trained to maximise, so if it tracked groundedness, a high FVE would be a reason to trust an explanation. To test this I used the 200 full explanations. For each activation I took the FVE of its full explanation and the share of that activation's features (original SAE latents with a validated label) that the judge finds stated in the text. Activations with fewer than three judged features were dropped, because a share over one or two features is mostly noise, which leaves 188.</p>
+<p>The two are not correlated: Pearson r = -0.01 (95% CI -0.16 to 0.13) and Spearman &rho; = -0.06 (Figure 6). The first two paragraphs alone (r = -0.08) and the final paragraph alone (r = +0.07) show the same thing, and every interval includes zero. This is not because the explanations are all equally easy to reconstruct: FVE ranges from -0.45 to 0.98 across the 188 (median 0.77). Splitting them by FVE makes the same point. The 47 explanations in the top quartile of FVE (mean 0.87) state 43% of their activation's features, and the 47 in the bottom quartile (mean 0.42) also state 43%.</p>
+
+<figure class="narrow wide">
+{{FIG6}}
+<figcaption><b>Figure 6.</b> FVE of each full explanation against the share of its activation's features that the judge finds stated in the text. One point per activation (n = 188). Dashed line: the mean share stated. Pearson r = -0.01.</figcaption>
+</figure>
+
+<p>This is the result I think matters most. FVE is a good guide to which part of an explanation carries content, as Sections 3.1 and 3.2 show, but it says almost nothing about which explanations are grounded. An explanation that rebuilds its activation well is no more likely to state what the SAE finds in that activation than one that rebuilds it poorly. Two caveats apply. With 188 explanations, a correlation below about 0.14 in absolute value cannot be told apart from zero, so this rules out a moderate relationship but not a weak one. And the judge only sees the features that have a validated label, so this is a statement about the labeled part of the activation.</p>
+
+<h2>5. Discussion</h2>
+<p>Both tests agree that the final paragraph's high FVE reflects real content. Its reconstruction recovers 59% of the original's latents (vs. 70% for the full explanation: Figure 3), and its text states 42% of the original’s features (vs. 43%: Figure 5). This agreement between the two tests is informative, as the two tests rely on different parts of the pipeline to get these results. Test 1 relies on the AR, but never reads the text, and Test 2 reads the text but never uses the AR. 81% of the latents recovered in the first two paragraphs are also recovered by the final paragraph. Of the features the judge finds stated in the first two paragraphs, 78% are also stated in the final paragraph, yet the first two paragraphs make up 44% of each explanation. The NLA format spends a large portion of each explanation repeating content. This format most likely comes from the warm-start data, so it may be possible to improve, though I have not tested this. This is more evident when reading the actual content of the explanation, as much of the first two paragraphs get repeated by the final paragraph.</p>
+<p>These tests, however, do not show that FVE and groundedness move together for a given explanation, and Section 4 shows that they do not. Across full explanations, an explanation that reconstructs well is no more likely to state its activation's features (r = -0.01; Figure 6). So the agreement between the two tests holds between the parts of one explanation, while FVE is not a reliable measure of how grounded any given explanation is. This matters because FVE is the quantity the NLA is optimised for, and it is also the easiest number to read off an explanation.</p>
+
+<h2>6. Limitations</h2>
+<ul>
+  <li>The SAE is independent of the NLA, but not a source of ground truth, as a true claim may have no matching latent. The bulk of these findings heavily relies on the assumption that NLAs and SAEs find a different structure.</li>
+  <li>Test 2 covers only 53% of latents with validated labels, therefore it is possible that the ones which were not validated favour the first two paragraphs.</li>
+  <li>The full explanation was not judged directly as its score is the union of its two parts.</li>
+  <li>Small sample sizes: one model, one layer, one explanation each, 200 activations.</li>
+  <li>With 188 explanations, the FVE and grounding correlation cannot rule out a weak relationship (|r| below about 0.14 is indistinguishable from zero), and it only covers features with a validated label.</li>
+</ul>
+
+<h2>7. Next Experiments</h2>
+<ul>
+  <li>The final paragraph contains most of the signal, but much of it describes the final token itself. It would be better to know more of the model’s intentions, plans or beliefs. Therefore, I would like to train an NLA which is rewarded for the latter, and warm-started on data that spends less of each explanation on the final token and more on what the model is doing with it.</li>
+  <li>Test whether a reward that includes a groundedness term (for example the SAE overlap used here) separates well-grounded from poorly-grounded explanations at equal FVE, since FVE alone does not.</li>
+  <li>The quickest experiment is to run these same tests on an NLA known to confabulate (michaelzhang &amp; TurnTrout, 2026).</li>
+</ul>
+
+<h2>References</h2>
+<div class="refs">
+<p>Bills, S., Cammarata, N., Mossing, D., et al. (2023). Language models can explain neurons in language models. OpenAI. <a href="https://openaipublic.blob.core.windows.net/neuron-explainer/paper/index.html">https://openaipublic.blob.core.windows.net/neuron-explainer/paper/index.html</a></p>
+<p>Fraser-Taliente, K., Kantamneni, S., Ong, E., et al. (2026). Natural Language Autoencoders Produce Unsupervised Explanations of LLM Activations. Transformer Circuits Thread. <a href="https://transformer-circuits.pub/2026/nla/">https://transformer-circuits.pub/2026/nla/</a></p>
+<p>kitft. (2026). nla-gemma3-12b-L32-av [Model card]. Hugging Face. <a href="https://huggingface.co/kitft/nla-gemma3-12b-L32-av">https://huggingface.co/kitft/nla-gemma3-12b-L32-av</a></p>
+<p>loops. (2026). Some observations about NLA explanations. LessWrong. <a href="https://www.lesswrong.com/posts/ahu9BCHPFDg9AJF75/">https://www.lesswrong.com/posts/ahu9BCHPFDg9AJF75/</a></p>
+<p>McDougall, C., Conmy, A., Kramár, J., et al. (2025). Gemma Scope 2 — Technical Paper. Google DeepMind. <a href="https://storage.googleapis.com/deepmind-media/DeepMind.com/Blog/gemma-scope-2-helping-the-ai-safety-community-deepen-understanding-of-complex-language-model-behavior/Gemma_Scope_2_Technical_Paper.pdf">https://storage.googleapis.com/deepmind-media/DeepMind.com/Blog/gemma-scope-2-helping-the-ai-safety-community-deepen-understanding-of-complex-language-model-behavior/Gemma_Scope_2_Technical_Paper.pdf</a></p>
+<p>michaelzhang, &amp; TurnTrout. (2026). How robust are natural language autoencoders to initialization? LessWrong. <a href="https://www.lesswrong.com/posts/LQXWiF8PyJ5ojNsEv/">https://www.lesswrong.com/posts/LQXWiF8PyJ5ojNsEv/</a></p>
+<p>Paulo, G., Mallen, A., Juang, C., &amp; Belrose, N. (2025). Automatically Interpreting Millions of Features in Large Language Models. ICML 2025. <a href="https://arxiv.org/abs/2410.13928">https://arxiv.org/abs/2410.13928</a></p>
+</div>
+
+</body>
+</html>
