@@ -32,6 +32,15 @@ first two paragraphs seem to have very little grounded content despite being 44%
 of the length of the text of the full explanation. The bulk of these findings
 heavily relies on the assumption that NLAs and SAEs find a different structure.
 
+**FVE does not predict grounding across explanations.** Among the 188 full
+explanations with at least three judged features, the correlation between an
+explanation's FVE and the share of its activation's features it states is
+r = -0.01 (95% CI -0.16 to 0.13). The top quartile of FVE (mean 0.87) states 43%
+of features and the bottom quartile (mean 0.42) also states 43%. FVE cannot be
+used to tell how grounded any one explanation is. See Section 4 of the write-up;
+the per-activation points are in `results/fve_vs_grounding_points.csv`
+(`scripts/fve_vs_grounding_points.py`).
+
 ## Method
 
 - Gemma-3-12B-IT, layer 32, 200 activations from Gemma Scope 2's example corpus,
@@ -55,7 +64,7 @@ heavily relies on the assumption that NLAs and SAEs find a different structure.
 - Test 2 covers only 53% of latents, so it is possible that the ones which were
   not validated favour the first two paragraphs.
 - Across full explanations, FVE does not predict how many features are stated
-  (r = -0.02), so FVE is not a reliable measure of how grounded any given
+  (r = -0.01, 95% CI -0.16 to 0.13, n = 188), so FVE is not a reliable measure of how grounded any given
   explanation is.
 - Small sample: one model, one layer, one explanation each, 200 activations.
 
